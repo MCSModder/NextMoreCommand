@@ -1,6 +1,7 @@
 ﻿using System;
 using BepInEx;
 using SkySwordKill.Next;
+using SkySwordKill.Next.DialogSystem;
 
 namespace SkySwordKill.NextCommandExamplePlugin
 {
@@ -9,6 +10,7 @@ namespace SkySwordKill.NextCommandExamplePlugin
     {
         private void Awake()
         {
+            
             // 注册 CostMoney 事件
             DialogAnalysis.RegisterCommand("CostMoney",new CostMoneyEvent());
         }

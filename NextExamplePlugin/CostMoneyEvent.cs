@@ -1,6 +1,7 @@
 ﻿using System;
 using SkySwordKill.Next;
 using SkySwordKill.Next.DialogEvent;
+using SkySwordKill.Next.DialogSystem;
 
 namespace SkySwordKill.NextCommandExamplePlugin
 {
