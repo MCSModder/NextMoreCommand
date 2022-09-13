@@ -8,7 +8,7 @@
         <OutputType>Library</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
         <RootNamespace>NextPlugin</RootNamespace>
-        <AssemblyName>NextExamplePlugin</AssemblyName>
+        <AssemblyName>NextMoreCommand</AssemblyName>
         <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
     </PropertyGroup>
@@ -17,7 +17,7 @@
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
         <Optimize>false</Optimize>
-        <OutputPath>bin\Debug\</OutputPath>
+        <OutputPath>..\..\..\本地Mod测试\NextExtends\plugins</OutputPath>
         <DefineConstants>DEBUG;TRACE</DefineConstants>
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
@@ -26,42 +26,48 @@
         <PlatformTarget>AnyCPU</PlatformTarget>
         <DebugType>pdbonly</DebugType>
         <Optimize>true</Optimize>
-        <OutputPath>bin\Release\</OutputPath>
+        <OutputPath>..\..\..\本地Mod测试\NextExtends\plugins</OutputPath>
         <DefineConstants>TRACE</DefineConstants>
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <ItemGroup>
-        <Reference Include="0Harmony, Version=2.5.5.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\..\..\..\soft\steam\steamapps\common\觅长生\BepInEx\core\0Harmony.dll</HintPath>
+        <Reference Include="0Harmony">
+          <HintPath>..\..\..\..\..\workshop\content\1189490\2824349934\BepInEx\core\0Harmony.dll</HintPath>
+          <Private>False</Private>
         </Reference>
-        <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\..\..\..\soft\steam\steamapps\common\觅长生\觅长生_Data\Managed\Assembly-CSharp.dll</HintPath>
+        <Reference Include="Assembly-CSharp">
+          <HintPath>..\..\..\觅长生_Data\Managed\Assembly-CSharp.dll</HintPath>
+          <Private>False</Private>
         </Reference>
-        <Reference Include="Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\..\..\..\soft\steam\steamapps\common\觅长生\觅长生_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+        <Reference Include="BepInEx">
+          <HintPath>..\..\..\..\..\workshop\content\1189490\2824349934\BepInEx\core\BepInEx.dll</HintPath>
+          <Private>False</Private>
         </Reference>
-        <Reference Include="BepInEx, Version=5.4.17.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\..\..\..\soft\steam\steamapps\common\觅长生\BepInEx\core\BepInEx.dll</HintPath>
-        </Reference>
-        <Reference Include="Next, Version=0.3.5.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\..\..\..\soft\steam\steamapps\common\觅长生\BepInEx\plugins\Next.dll</HintPath>
+        <Reference Include="Next">
+          <HintPath>..\..\..\..\..\workshop\content\1189490\2824845357\plugins\Next.dll</HintPath>
+          <Private>False</Private>
         </Reference>
         <Reference Include="System" />
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />
         <Reference Include="System.Xml" />
-        <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\..\..\..\soft\steam\steamapps\common\觅长生\觅长生_Data\Managed\UnityEngine.dll</HintPath>
+        <Reference Include="UnityEngine">
+          <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.dll</HintPath>
+          <Private>False</Private>
         </Reference>
-        <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\..\..\..\soft\steam\steamapps\common\觅长生\觅长生_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+        <Reference Include="UnityEngine.CoreModule">
+          <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+          <Private>False</Private>
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="CostMoneyEvent.cs" />
-        <Compile Include="Main.cs" />
+        <Compile Include="MyPlugin.cs" />
+        <Compile Include="NpcJieSuanManagerPatch.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="RunTempFlowchart.cs" />
+        <Compile Include="SetTempFlowchart.cs" />
+        <Compile Include="TempFlowchart.cs" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
