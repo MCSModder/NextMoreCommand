@@ -10,7 +10,7 @@ namespace SkySwordKill.NextMoreCommand
     [DialogEvent("RunTempFlowchart")]
     public class RunTempFlowchart : IDialogEvent
     {
-        private Flowchart flowchart;
+        private Flowchart _flowchart;
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
@@ -19,32 +19,32 @@ namespace SkySwordKill.NextMoreCommand
             int ItemId = command.GetInt(2, -1);
 
             DialogAnalysis.CancelEvent();
-            flowchart = TempFlowchart.GetFlowchart(key);
+            _flowchart = TempFlowchart.GetFlowchart(key);
 
-            if (flowchart != null)
+            if (_flowchart != null)
             {
                 var index = FindIndex(tagBlock, ItemId);
                 if (index < 0)
                 {
-                    Next.Main.LogInfo("FungusEvent : 跳转FungusBlock " + tagBlock);
-                    flowchart.ExecuteBlock(tagBlock);
+                    Main.LogInfo("FungusEvent : 跳转FungusBlock " + tagBlock);
+                    _flowchart.ExecuteBlock(tagBlock);
                 }
                 else
                 {
-                    var block = flowchart.FindBlock(tagBlock);
-                    Next.Main.LogInfo( $"FungusEvent : 跳转FungusBlock {tagBlock} ItemId:{ItemId} index:{index} ");
-                    flowchart.ExecuteBlock(block, index);
+                    var block = _flowchart.FindBlock(tagBlock);
+                  Main.LogInfo( $"FungusEvent : 跳转FungusBlock {tagBlock} ItemId:{ItemId} index:{index} ");
+                    _flowchart.ExecuteBlock(block, index);
                 }
 
                 return;
             }
 
-            Next.Main.LogError("FungusEvent : 对应flowchart不存在");
+          Main.LogError("FungusEvent : 对应flowchart不存在");
         }
         
         private int FindIndex(string tagBlock, int itemId)
         {
-            var block = flowchart.FindBlock(tagBlock);
+            var block = _flowchart.FindBlock(tagBlock);
             if (block == null || itemId < 0) return -1;
             foreach (var command in block.commandList)
             {

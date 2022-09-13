@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextZerxzPlugin", "NextZerxzPlugin\NextZerxzPlugin.csproj", "{5F79F8EE-9BD4-4D1D-A72D-1C0115AD85C6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextMoreCommand", "NextMoreCommand\NextMoreCommand.csproj", "{5F79F8EE-9BD4-4D1D-A72D-1C0115AD85C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

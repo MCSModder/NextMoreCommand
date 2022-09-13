@@ -7,7 +7,7 @@
         <ProjectGuid>{5F79F8EE-9BD4-4D1D-A72D-1C0115AD85C6}</ProjectGuid>
         <OutputType>Library</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>NextPlugin</RootNamespace>
+        <RootNamespace>SkySwordKill.NextMoreCommand</RootNamespace>
         <AssemblyName>NextMoreCommand</AssemblyName>
         <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
