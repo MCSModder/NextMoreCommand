@@ -67,6 +67,7 @@
         <Compile Include="Command\RunTempFlowchart.cs" />
         <Compile Include="Command\SetNpcDeath.cs" />
         <Compile Include="Command\SetNpcTeleport.cs" />
+        <Compile Include="Command\SetShengWang.cs" />
         <Compile Include="Command\SetTeleport.cs" />
         <Compile Include="Command\SetTempFlowchart.cs" />
         <Compile Include="MyPlugin.cs" />
