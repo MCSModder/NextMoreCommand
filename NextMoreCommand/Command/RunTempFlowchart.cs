@@ -5,12 +5,14 @@ using Fungus;
 using SkySwordKill.Next.DialogEvent;
 using SkySwordKill.Next.DialogSystem;
 
-namespace SkySwordKill.NextMoreCommand
+namespace SkySwordKill.NextMoreCommand.Command
 {
+    [RegisterCommand]
     [DialogEvent("RunTempFlowchart")]
     public class RunTempFlowchart : IDialogEvent
     {
         private Flowchart _flowchart;
+        private Block _block;
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
@@ -21,32 +23,33 @@ namespace SkySwordKill.NextMoreCommand
             DialogAnalysis.CancelEvent();
             _flowchart = TempFlowchart.GetFlowchart(key);
 
-            if (_flowchart != null)
+            if (_flowchart == null)
             {
-                var index = FindIndex(tagBlock, ItemId);
-                if (index < 0)
-                {
-                    Main.LogInfo("FungusEvent : 跳转FungusBlock " + tagBlock);
-                    _flowchart.ExecuteBlock(tagBlock);
-                }
-                else
-                {
-                    var block = _flowchart.FindBlock(tagBlock);
-                  Main.LogInfo( $"FungusEvent : 跳转FungusBlock {tagBlock} ItemId:{ItemId} index:{index} ");
-                    _flowchart.ExecuteBlock(block, index);
-                }
-
+                MyLog.FungusLogError("对应flowchart不存在");
                 return;
             }
 
-          Main.LogError("FungusEvent : 对应flowchart不存在");
+            var index = FindIndex(tagBlock, ItemId);
+            if (index < 0)
+            {
+                MyLog.FungusLog($"跳转FungusBlock {tagBlock}");
+                _flowchart.ExecuteBlock(tagBlock);
+            }
+            else
+            {
+                MyLog.FungusLog($"跳转FungusBlock {tagBlock} ItemId:{ItemId} index:{index}");
+                _flowchart.ExecuteBlock(_block, index);
+            }
+
+            _block = null;
+            _flowchart = null;
         }
-        
+
         private int FindIndex(string tagBlock, int itemId)
         {
-            var block = _flowchart.FindBlock(tagBlock);
-            if (block == null || itemId < 0) return -1;
-            foreach (var command in block.commandList)
+            _block = _flowchart.FindBlock(tagBlock);
+            if (_block == null || itemId < 0) return -1;
+            foreach (var command in _block.commandList)
             {
                 if (command.ItemId == itemId) return command.CommandIndex;
             }

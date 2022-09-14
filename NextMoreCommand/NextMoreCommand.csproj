@@ -62,12 +62,18 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Attribute\RegisterCommandAttribute.cs" />
+        <Compile Include="Command\RunFungusItemId.cs" />
+        <Compile Include="Command\RunTempFlowchart.cs" />
+        <Compile Include="Command\SetNpcDeath.cs" />
+        <Compile Include="Command\SetNpcTeleport.cs" />
+        <Compile Include="Command\SetTeleport.cs" />
+        <Compile Include="Command\SetTempFlowchart.cs" />
         <Compile Include="MyPlugin.cs" />
-        <Compile Include="NpcJieSuanManagerPatch.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
-        <Compile Include="RunTempFlowchart.cs" />
-        <Compile Include="SetTempFlowchart.cs" />
-        <Compile Include="TempFlowchart.cs" />
+        <Compile Include="Utils\MyLog.cs" />
+        <Compile Include="Utils\NpcJieSuanManagerPatch.cs" />
+        <Compile Include="Utils\TempFlowchart.cs" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
