@@ -15,8 +15,8 @@ namespace SkySwordKill.NextMoreCommand.Command
         {
             var mapId = command.GetInt(0, -1);
             var sceneName = command.GetStr(1, string.Empty);
-            var npcId = command.GetInt(2, -1);
-           
+            var npcId = command.GetStr(2, string.Empty);
+
 
             var sceneNameIsEmpty = sceneName == string.Empty;
             if (mapId < 1)
@@ -30,14 +30,19 @@ namespace SkySwordKill.NextMoreCommand.Command
             else
             {
                 var msg = string.Empty;
-                if (npcId > 0)
+                if (npcId != string.Empty)
                 {
-                    NPCEx.WarpToScene(npcId, sceneName);
-                    msg += $"NPCID: {npcId}";
+                    msg += $"NPCID: [{npcId}]";
+                    var npcArr = npcId.Split(',');
+                    foreach (var npc in npcArr)
+                    {
+                        NPCEx.WarpToScene(Convert.ToInt32(npc), sceneName);
+                    }
                 }
+
                 MyLog.FungusLog($"跳转地图事件 场景名字: {sceneName} 地图ID: {mapId} {msg}");
                 AvatarTransfer.Do(mapId);
-                Tools.instance.loadMapScenes(sceneName, true);
+                Tools.instance.loadMapScenes(sceneName);
             }
         }
     }

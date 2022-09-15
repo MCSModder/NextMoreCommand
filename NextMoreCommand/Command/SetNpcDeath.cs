@@ -11,7 +11,6 @@ namespace SkySwordKill.NextMoreCommand.Command
     [DialogEvent("SetNpcDeath")]
     public class SetNpcDeath : IDialogEvent
     {
-
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
             var deathType = command.GetInt(0);
@@ -22,15 +21,12 @@ namespace SkySwordKill.NextMoreCommand.Command
             if (I != null)
             {
                 MyLog.FungusLog($"设置 Npc死亡类型{(DeathType)deathType} NpcID:{npcId}");
-                I.npcDeath.SetNpcDeath(deathType,npcId,killNpcId,after);
+                I.npcDeath.SetNpcDeath(deathType, npcId, killNpcId, after);
             }
             else
             {
                 Main.LogError("NpcJieSuanManager还没有实例化");
             }
-            
-
-
         }
     }
 }

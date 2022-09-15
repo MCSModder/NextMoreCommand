@@ -14,7 +14,7 @@ namespace SkySwordKill.NextMoreCommand.Command
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
             var sceneName = command.GetStr(0, string.Empty);
-            var npcId = command.GetInt(1, -1);
+            var npcId = command.GetStr(1, string.Empty);
            
 
             var sceneNameIsEmpty = sceneName == string.Empty;
@@ -22,13 +22,17 @@ namespace SkySwordKill.NextMoreCommand.Command
             {
                 MyLog.FungusLogError($"场景名字不能为空");
             }
-            else if(npcId < 1)
+            else if(npcId == string.Empty)
             {
-                MyLog.FungusLogError($"NPC不能为空或者小于0");
+                MyLog.FungusLogError($"NPC不能为空");
             }
             else
             {
-                NPCEx.WarpToScene(npcId, sceneName);
+                var npcArr = npcId.Split(',');
+                foreach (var npc in npcArr)
+                {
+                    NPCEx.WarpToScene(Convert.ToInt32(npc), sceneName);
+                }
                 MyLog.FungusLog($"跳转地图事件 场景名字: {sceneName}  NPCID: {npcId}");
             }
         }

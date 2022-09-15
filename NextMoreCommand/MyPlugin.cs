@@ -20,13 +20,14 @@ namespace SkySwordKill.NextMoreCommand
             RegisterCommand();
         }
 
-        private void RegisterCommand()
+        private static void RegisterCommand()
         {
             var registerCommandType = typeof(RegisterCommandAttribute);
             var types = Assembly.GetAssembly(registerCommandType).GetTypes();
-            string init = "".PadLeft(25, '=');
+            var init = "".PadLeft(25, '=');
             Main.LogInfo(init);
             Main.LogInfo($"注册指令开始.");
+            Main.LogInfo(init);
             foreach (var type in types)
             {
                 if (type.GetCustomAttributes(registerCommandType, true).Length > 0)
@@ -34,6 +35,7 @@ namespace SkySwordKill.NextMoreCommand
                     var cEvent = Activator.CreateInstance(type) as IDialogEvent;
                     Main.LogInfo($"注册指令名: {type.Name}");
                     Main.LogInfo($"注册指令类: {cEvent}");
+                    Main.LogInfo(init);
                     DialogAnalysis.RegisterCommand(type.Name, cEvent);
                 }
             }
