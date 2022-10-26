@@ -1,6 +1,6 @@
 ﻿using SkySwordKill.Next;
 
-namespace SkySwordKill.NextMoreCommand
+namespace SkySwordKill.NextMoreCommand.Utils
 {
     public class MyLog
     {

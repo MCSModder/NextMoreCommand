@@ -4,6 +4,8 @@ using System;
 using Fungus;
 using SkySwordKill.Next.DialogEvent;
 using SkySwordKill.Next.DialogSystem;
+using SkySwordKill.NextMoreCommand.Attribute;
+using SkySwordKill.NextMoreCommand.Utils;
 
 namespace SkySwordKill.NextMoreCommand.Command
 {
@@ -24,6 +26,7 @@ namespace SkySwordKill.NextMoreCommand.Command
             if (env.flowchart == null)
             {
                 Main.LogError("FungusEvent : 对应flowchart不存在");
+                return;
             }
 
             var index = FindIndex(tagBlock, itemId);

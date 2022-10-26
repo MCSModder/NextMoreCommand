@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace SkySwordKill.NextMoreCommand
+namespace SkySwordKill.NextMoreCommand.Attribute
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public class RegisterCommandAttribute:Attribute
+    public class RegisterCommandAttribute:System.Attribute
     {
-       
+        
     }
 }

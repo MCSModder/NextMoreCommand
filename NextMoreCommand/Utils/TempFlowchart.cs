@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Fungus;
-using SkySwordKill.Next.DialogSystem;
 using JetBrains.Annotations;
 
-namespace SkySwordKill.NextMoreCommand
+namespace SkySwordKill.NextMoreCommand.Utils
 {
     public class TempFlowchart
     {

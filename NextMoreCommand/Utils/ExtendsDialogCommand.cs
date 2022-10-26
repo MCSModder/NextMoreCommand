@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using SkySwordKill.Next.DialogSystem;
 
-namespace SkySwordKill.NextMoreCommand
+namespace SkySwordKill.NextMoreCommand.Utils
 {
     public static class ExtendsDialogCommand
     {

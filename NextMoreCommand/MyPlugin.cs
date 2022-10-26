@@ -7,6 +7,7 @@ using MarkerMetro.Unity.WinLegacy.Reflection;
 using SkySwordKill.Next;
 using SkySwordKill.Next.DialogEvent;
 using SkySwordKill.Next.DialogSystem;
+using SkySwordKill.NextMoreCommand.Attribute;
 
 namespace SkySwordKill.NextMoreCommand
 {
@@ -18,8 +19,8 @@ namespace SkySwordKill.NextMoreCommand
             new Harmony("skyswordkill.plugin.NextMoreCommand").PatchAll();
             // 注册事件
             RegisterCommand();
+            //RegisterEnv();
         }
-
         private static void RegisterCommand()
         {
             var registerCommandType = typeof(RegisterCommandAttribute);

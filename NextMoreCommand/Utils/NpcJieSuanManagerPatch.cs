@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
 
-namespace SkySwordKill.NextMoreCommand
+namespace SkySwordKill.NextMoreCommand.Utils
 {
     [HarmonyPatch(typeof(NpcJieSuanManager), "InitCyData")]
     public class NpcJieSuanManagerPatch

@@ -4,6 +4,8 @@ using System;
 using Fungus;
 using SkySwordKill.Next.DialogEvent;
 using SkySwordKill.Next.DialogSystem;
+using SkySwordKill.NextMoreCommand.Attribute;
+using SkySwordKill.NextMoreCommand.Utils;
 
 namespace SkySwordKill.NextMoreCommand.Command
 {
