@@ -40,7 +40,7 @@ namespace SkySwordKill.NextMoreCommand.Command
             {
                 taskMag._TaskData["Task"][taskId.ToString()]["AllIndex"].Add(index);
             }
-               
+            taskMag._TaskData["Task"][taskId.ToString()].SetField("isComplete", isFinish);
             taskMag._TaskData["Task"][taskId.ToString()].SetField("disableTask", isFinish);
             
         }
