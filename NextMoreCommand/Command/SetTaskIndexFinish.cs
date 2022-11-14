@@ -23,26 +23,27 @@ namespace SkySwordKill.NextMoreCommand.Command
 {
     static class ExtensionTask
     {
-        public static void setTaskIndex(this TaskMag instance, int taskId, int index, bool isFinish)
-        {
-            
-                if (!instance._TaskData["Task"].HasField(taskId.ToString()))
-                    return;
-                foreach (JSONObject jsonObject in instance._TaskData["Task"][taskId.ToString()]["AllIndex"].list)
-                {
-                    if (index == (int) jsonObject.n)
-                        return;
-                }
-                instance._TaskData["Task"][taskId.ToString()].SetField("NowIndex", index);
-                instance._TaskData["Task"][taskId.ToString()]["AllIndex"].Add(index);
-                instance._TaskData["Task"][taskId.ToString()].SetField("disableTask", isFinish);
-            
-        }
+        
     }
     [RegisterCommand]
     [DialogEvent("SetTaskIndexFinish")]
     public class SetTaskIndexFinish : IDialogEvent
     {
+       TaskMag  taskMag = Tools.instance.getPlayer().taskMag;
+        public  void setTaskIndex( int taskId, int index, bool isFinish)
+        {
+            
+            if (!taskMag._TaskData["Task"].HasField(taskId.ToString()))
+                return;
+            taskMag._TaskData["Task"][taskId.ToString()].SetField("NowIndex", index);
+            if (! taskMag._TaskData["Task"][taskId.ToString()]["AllIndex"].ToList().Contains(index))
+            {
+                taskMag._TaskData["Task"][taskId.ToString()]["AllIndex"].Add(index);
+            }
+               
+            taskMag._TaskData["Task"][taskId.ToString()].SetField("disableTask", isFinish);
+            
+        }
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
             MyLog.FungusLog("触发SetTaskIndexFinish");
@@ -50,7 +51,6 @@ namespace SkySwordKill.NextMoreCommand.Command
             int taskIndex = command.GetInt(1, -1);
             
             
-            var taskMag = Tools.instance.getPlayer().taskMag;
             var finalIndex = taskMag.getFinallyIndex(taskID);
             var nowIndex = taskMag.GetTaskNowIndex(taskID);
             MyLog.FungusLog($"taskID:{taskID.ToString()} taskIndex:{taskIndex.ToString()} finalIndex:{finalIndex.ToString()} nowIndex:{nowIndex.ToString()}");
@@ -66,14 +66,14 @@ namespace SkySwordKill.NextMoreCommand.Command
             if ( nowIndex == finalIndex && taskIndex == nowIndex)
             {
                 Fungus.SetTaskIndexFinish.Do(taskID, taskIndex);
-                taskMag.setTaskIndex(taskID,taskIndex,true );
+                setTaskIndex(taskID,taskIndex,true );
                 MyLog.FungusLog(string.Format("已完成任务ID为{0}，任务序号为{1}的步骤。", taskID, taskIndex));
                 MyLog.FungusLog(string.Format("任务ID为{0}的任务已完成。", taskID));
                 return;
             }
             Fungus.SetTaskIndexFinish.Do(taskID, taskIndex );
                 
-            taskMag.setTaskIndex(taskID,taskIndex ,false);
+            setTaskIndex(taskID,taskIndex ,false);
             MyLog.FungusLog(string.Format("已完成任务ID为{0}，任务序号为{1}的步骤。", taskID, taskIndex));
             callback?.Invoke();
         }
