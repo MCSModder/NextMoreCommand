@@ -13,7 +13,6 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
         private static DialogEnvironment NewEnv => new DialogEnvironment();
         public static bool StartRound(bool isBefore = true) => isBefore ? StartRoundBefore() : StartRoundAfter();
         public static bool EndRound(bool isBefore = true) => isBefore ? EndRoundBefore() : EndRoundAfter();
-        public static bool InitFight()=> TryTrigger("InitFight","开始战斗");
         public static bool FinishFight()=> TryTrigger("FinishFight","结束战斗");
         private static bool StartRoundBefore() => TryTrigger("StartRoundBefore", "回合开始前");
         private static bool StartRoundAfter() => TryTrigger("StartRoundAfter", "回合开始后");
@@ -25,17 +24,9 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
     {
         public static void Prefix(RoundManager __instance)
         {
-            if (__instance.StaticRoundNum == 0)
+            if (__instance.StaticRoundNum != 0)
             {
                 
-                if ( RoundUtils.InitFight())
-                {
-                    MyLog.FungusLog("进入开始战斗触发器");
-                }
-            }
-            else
-            {
-              
                 if (RoundUtils.StartRound())
                 {
                     MyLog.FungusLog("进入开始回合之前");
