@@ -29,7 +29,7 @@ namespace SkySwordKill.NextMoreCommand.Command
     [DialogEvent("SetTaskIndexFinish")]
     public class SetTaskIndexFinish : IDialogEvent
     {
-       TaskMag  taskMag = Tools.instance.getPlayer().taskMag;
+       public   TaskMag  taskMag => Tools.instance.getPlayer().taskMag;
         public  void setTaskIndex( int taskId, int index, bool isFinish)
         {
             

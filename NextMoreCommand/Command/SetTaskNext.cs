@@ -17,6 +17,7 @@ using MarkerMetro.Unity.WinLegacy.Reflection;
 using System.Reflection;
 using BindingFlags = System.Reflection.BindingFlags;
 using Task;
+using TaskMag = KBEngine.TaskMag;
 
 namespace SkySwordKill.NextMoreCommand.Command
 {
@@ -24,6 +25,21 @@ namespace SkySwordKill.NextMoreCommand.Command
     [DialogEvent("SetTaskNext")]
     public class SetTaskNext : IDialogEvent
     {
+        public   TaskMag  taskMag => Tools.instance.getPlayer().taskMag;
+        public  void setTaskIndex( int taskId, int index, bool isFinish)
+        {
+            
+            if (!taskMag._TaskData["Task"].HasField(taskId.ToString()))
+                return;
+            taskMag._TaskData["Task"][taskId.ToString()].SetField("NowIndex", index);
+            if (! taskMag._TaskData["Task"][taskId.ToString()]["AllIndex"].ToList().Contains(index))
+            {
+                taskMag._TaskData["Task"][taskId.ToString()]["AllIndex"].Add(index);
+            }
+               
+            taskMag._TaskData["Task"][taskId.ToString()].SetField("disableTask", isFinish);
+            
+        }
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
             MyLog.FungusLog("触发SSetTaskNext");
@@ -35,16 +51,15 @@ namespace SkySwordKill.NextMoreCommand.Command
             var nextIndex = nowIndex + 1;
             if (nowIndex > 0 )
             {
-                if ( nowIndex  < finalIndex)
-                {
-                    Fungus.SetTaskIndexFinish.Do(taskID, nextIndex);
-                    taskMag.setTaskIndex(taskID,nextIndex,false);
-                }else if (nowIndex == finalIndex)
+                if (nowIndex == finalIndex )
                 {
                     
                     Fungus.SetTaskIndexFinish.Do(taskID, nowIndex);
-                    taskMag.setTaskIndex(taskID,nowIndex,true);
+                    setTaskIndex(taskID,nowIndex,true);
+                    return;
                 }
+                Fungus.SetTaskIndexFinish.Do(taskID, nextIndex);
+                setTaskIndex(taskID,nextIndex,false);
                
             }
             callback?.Invoke();
