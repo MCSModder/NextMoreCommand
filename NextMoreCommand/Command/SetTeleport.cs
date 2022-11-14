@@ -30,7 +30,7 @@ namespace SkySwordKill.NextMoreCommand.Command
                         var npc = command.GetInt(i, -1);
                         if (npc >= 0)
                         {
-                            _npcIds.Add(npc);
+                            _npcIds.Add(NPCEx.NPCIDToNew(npc));
                         }
                     
                     }
@@ -42,7 +42,7 @@ namespace SkySwordKill.NextMoreCommand.Command
                 var npcArr = npcId.Split(',');
                 foreach (var npc in npcArr)
                 {
-                    _npcIds.Add(Convert.ToInt32(npc));
+                    _npcIds.Add(NPCEx.NPCIDToNew(Convert.ToInt32(npc)));
                 }
             }
           

@@ -1,9 +1,7 @@
-﻿using System;
-using SkySwordKill.Next;
+﻿using SkySwordKill.Next;
 using SkySwordKill.Next.DialogSystem;
-using SkySwordKill.NextMoreCommand.Utils;
 
-namespace SkySwordKill.NextMoreCommand.EnvExtesion
+namespace SkySwordKill.NextMoreCommand.EnvExtension
 {
 
     [DialogEnvQuery("GetNpcName")]
@@ -18,7 +16,7 @@ namespace SkySwordKill.NextMoreCommand.EnvExtesion
                 return "";
             }
             var name = DialogAnalysis.GetNpcName(npcId);
-            Main.LogInfo($"npcId:{npcId} name:{name}");
+            Main.LogInfo($"npcId:{npcId.ToString()} name:{name}");
             return name;
         }
     }

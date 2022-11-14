@@ -11,7 +11,7 @@ using SkySwordKill.NextMoreCommand.Attribute;
 
 namespace SkySwordKill.NextMoreCommand
 {
-    [BepInPlugin("skyswordkill.plugin.NextMoreCommand", "NextMoreCommand", "1.0.1")]
+    [BepInPlugin("skyswordkill.plugin.NextMoreCommand", "NextMoreCommand", "1.0.2")]
     public class MyPlugin : BaseUnityPlugin
     {
         private void Awake()

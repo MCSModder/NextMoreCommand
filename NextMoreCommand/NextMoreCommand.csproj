@@ -65,18 +65,20 @@
         <Compile Include="Attribute\RegisterCommandAttribute.cs" />
         <Compile Include="Command\RunFungusItemId.cs" />
         <Compile Include="Command\RunTempFlowchart.cs" />
+        <Compile Include="Command\SetNewTask.cs" />
         <Compile Include="Command\SetNpcDeath.cs" />
         <Compile Include="Command\SetNpcTeleport.cs" />
         <Compile Include="Command\SetShengWang.cs" />
+        <Compile Include="Command\SetTaskIndexFinish.cs" />
+        <Compile Include="Command\SetTaskNext.cs" />
         <Compile Include="Command\SetTeleport.cs" />
         <Compile Include="Command\SetTempFlowchart.cs" />
-        <Compile Include="EnvExtesion\GetNpcName.cs" />
+        <Compile Include="DialogTrigger\OnRound.cs" />
+        <Compile Include="EnvExtension\GetNpcName.cs" />
+        <Compile Include="HarmonyPatchs\NpcJieSuanManagerPatch.cs" />
         <Compile Include="MyPlugin.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
-        <Compile Include="TestIndex.cs" />
-        <Compile Include="Utils\ExtendsDialogCommand.cs" />
         <Compile Include="Utils\MyLog.cs" />
-        <Compile Include="Utils\NpcJieSuanManagerPatch.cs" />
         <Compile Include="Utils\TempFlowchart.cs" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -23,7 +23,7 @@ namespace SkySwordKill.NextMoreCommand.Command
             if (I != null)
             {
                 MyLog.FungusLog($"设置 Npc死亡类型{(DeathType)deathType} NpcID:{npcId}");
-                I.npcDeath.SetNpcDeath(deathType, npcId, killNpcId, after);
+                I.npcDeath.SetNpcDeath(deathType, NPCEx.NPCIDToNew(npcId), killNpcId, after);
             }
             else
             {
