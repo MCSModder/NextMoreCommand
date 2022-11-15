@@ -1,4 +1,6 @@
 ﻿using HarmonyLib;
+using SkySwordKill.Next;
+using SkySwordKill.Next.DialogEvent;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.NextMoreCommand.Utils;
 
@@ -10,14 +12,22 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
         private static bool TryTrigger(DialogEnvironment env,params string[] param)=> DialogAnalysis.TryTrigger(param,env);
         private static bool TryTrigger(bool triggerAll,params string[] param)=> DialogAnalysis.TryTrigger(param,NewEnv,triggerAll);
         private static bool TryTrigger(DialogEnvironment env,bool triggerAll,params string[] param)=> DialogAnalysis.TryTrigger(param,env,triggerAll);
-        private static DialogEnvironment NewEnv => new DialogEnvironment();
+        public static DialogEnvironment NewEnv => new DialogEnvironment()
+        {
+            fightTags = StartFight.FightTags,
+            roleID = Tools.instance.MonstarID
+        };
         public static bool StartRound(bool isBefore = true) => isBefore ? StartRoundBefore() : StartRoundAfter();
         public static bool EndRound(bool isBefore = true) => isBefore ? EndRoundBefore() : EndRoundAfter();
+        public static bool UseSkill(DialogEnvironment env  = null ,bool isBefore = true) => isBefore ? UseSkillBefore() : UseSkillAfter();
+        private static bool UseSkillBefore(DialogEnvironment env  = null) => TryTrigger(env ??NewEnv,true,"UseSkillBefore", "技能使用前");
+        private static bool UseSkillAfter(DialogEnvironment env  = null) => TryTrigger(env ??NewEnv,true,"UseSkillAfter", "技能使用后");
         public static bool FinishFight()=> TryTrigger("FinishFight","结束战斗");
         private static bool StartRoundBefore() => TryTrigger("StartRoundBefore", "回合开始前");
         private static bool StartRoundAfter() => TryTrigger("StartRoundAfter", "回合开始后");
         private static bool EndRoundBefore() => TryTrigger("EndRoundBefore", "回合结束前");
         private static bool EndRoundAfter() => TryTrigger("EndtRoundAfter", "回合结束后");
+        
     }
     [HarmonyPatch(typeof(RoundManager),nameof(RoundManager.startRound))]
     public static class OnStartRound
@@ -70,6 +80,29 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
             if (RoundUtils.FinishFight())
             {
                 MyLog.FungusLog("进入结束战斗触发器");
+            }
+        }
+    }
+    [HarmonyPatch(typeof(RoundManager),nameof(RoundManager.UseSkill))]
+    public static class OnUseSkill
+    {
+        private static RoundManager instance => RoundManager.instance;
+        public static void Prefix()
+        {
+            var env = RoundUtils.NewEnv;
+            env.customData.Add("CurSkill",instance.ChoiceSkill);
+            if (RoundUtils.UseSkill(env))
+            {
+                MyLog.FungusLog("进入技能使用前触发器");
+            }
+        }
+        public static void Postfix()
+        {
+            var env = RoundUtils.NewEnv;
+            env.customData.Add("CurSkill",instance.CurSkill);
+            if (RoundUtils.UseSkill(env,false))
+            {
+                MyLog.FungusLog("进入技能使用后触发器");
             }
         }
     }

@@ -74,6 +74,8 @@
         <Compile Include="Command\SetTeleport.cs" />
         <Compile Include="Command\SetTempFlowchart.cs" />
         <Compile Include="DialogTrigger\OnRound.cs" />
+        <Compile Include="EnvExtension\GetCurrentSkillID.cs" />
+        <Compile Include="EnvExtension\GetCurrentSkillName.cs" />
         <Compile Include="EnvExtension\GetNpcName.cs" />
         <Compile Include="HarmonyPatchs\NpcJieSuanManagerPatch.cs" />
         <Compile Include="MyPlugin.cs" />
