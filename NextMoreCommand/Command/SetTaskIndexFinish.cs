@@ -40,7 +40,7 @@ namespace SkySwordKill.NextMoreCommand.Command
                 MyLog.FungusLog(string.Format("已完成任务ID为{0}，任务序号为{1}的步骤。", taskID.ToString(), taskIndex.ToString()));
                 if (isFinish)MyLog.FungusLog(string.Format("任务ID为{0}的任务已完成。", taskID.ToString()));
             }
- 
+            callback?.Invoke();
         }
     }
 }

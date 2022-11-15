@@ -25,6 +25,7 @@ namespace SkySwordKill.NextMoreCommand.Command
             {
                 MyLog.FungusLogError($"任务ID不能为{newTask.ToString()}的任务");
             }
+            callback?.Invoke();
         }
     }
 }
