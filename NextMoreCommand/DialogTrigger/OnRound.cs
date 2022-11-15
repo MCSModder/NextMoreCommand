@@ -19,9 +19,9 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
         };
         public static bool StartRound(bool isBefore = true) => isBefore ? StartRoundBefore() : StartRoundAfter();
         public static bool EndRound(bool isBefore = true) => isBefore ? EndRoundBefore() : EndRoundAfter();
-        public static bool UseSkill(DialogEnvironment env  = null ,bool isBefore = true) => isBefore ? UseSkillBefore() : UseSkillAfter();
-        private static bool UseSkillBefore(DialogEnvironment env  = null) => TryTrigger(env ??NewEnv,true,"UseSkillBefore", "技能使用前");
-        private static bool UseSkillAfter(DialogEnvironment env  = null) => TryTrigger(env ??NewEnv,true,"UseSkillAfter", "技能使用后");
+        public static bool UseSkill(DialogEnvironment env  = null ,bool isBefore = true) => isBefore ? PlayerUseSkillBefore() : PlayerUseSkillAfter();
+        private static bool PlayerUseSkillBefore(DialogEnvironment env  = null) => TryTrigger(env ??NewEnv,true,"PlayerUseSkillBefore", "玩家技能使用前");
+        private static bool PlayerUseSkillAfter(DialogEnvironment env  = null) => TryTrigger(env ??NewEnv,true,"PlayerUseSkillAfter", "玩家技能使用后");
         public static bool FinishFight()=> TryTrigger("FinishFight","结束战斗");
         private static bool StartRoundBefore() => TryTrigger("StartRoundBefore", "回合开始前");
         private static bool StartRoundAfter() => TryTrigger("StartRoundAfter", "回合开始后");
@@ -91,18 +91,20 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
         {
             var env = RoundUtils.NewEnv;
             env.customData.Add("CurSkill",instance.ChoiceSkill);
+            var curr = instance.ChoiceSkill;
             if (RoundUtils.UseSkill(env))
             {
-                MyLog.FungusLog("进入技能使用前触发器");
+                MyLog.FungusLog("进入玩家技能使用前触发器");
             }
         }
         public static void Postfix()
         {
             var env = RoundUtils.NewEnv;
             env.customData.Add("CurSkill",instance.CurSkill);
+            var curr = instance.CurSkill;
             if (RoundUtils.UseSkill(env,false))
             {
-                MyLog.FungusLog("进入技能使用后触发器");
+                MyLog.FungusLog("进入玩家技能使用后触发器");
             }
         }
     }
