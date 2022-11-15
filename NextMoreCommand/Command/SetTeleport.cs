@@ -76,6 +76,7 @@ namespace SkySwordKill.NextMoreCommand.Command
                 AvatarTransfer.Do(_mapId);
                 Tools.instance.loadMapScenes(_sceneName);
             }
+            callback?.Invoke();
         }
     }
 }

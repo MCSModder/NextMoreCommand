@@ -15,7 +15,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
         public static DialogEnvironment NewEnv => new DialogEnvironment()
         {
             fightTags = StartFight.FightTags,
-            roleID = Tools.instance.MonstarID
+            roleID = Tools.instance.MonstarID,
         };
         public static bool StartRound(bool isBefore = true) => isBefore ? StartRoundBefore() : StartRoundAfter();
         public static bool EndRound(bool isBefore = true) => isBefore ? EndRoundBefore() : EndRoundAfter();

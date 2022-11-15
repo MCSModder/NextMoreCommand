@@ -47,6 +47,7 @@ namespace SkySwordKill.NextMoreCommand.Command
 
             _block = null;
             _flowchart = null;
+            callback?.Invoke();
         }
 
         private int FindIndex(string tagBlock, int itemId)
