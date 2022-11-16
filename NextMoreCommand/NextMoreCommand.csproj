@@ -86,6 +86,7 @@
         <Compile Include="EnvExtension\GetCurrentSkillName.cs" />
         <Compile Include="EnvExtension\GetNpcMoney.cs" />
         <Compile Include="EnvExtension\GetNpcName.cs" />
+        <Compile Include="EnvExtension\GetUseSkillID.cs" />
         <Compile Include="HarmonyPatchs\NpcJieSuanManagerPatch.cs" />
         <Compile Include="MyPlugin.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
