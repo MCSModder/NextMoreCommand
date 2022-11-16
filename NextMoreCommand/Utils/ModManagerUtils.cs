@@ -16,7 +16,6 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 {
                     return true;
                 }
-
             }
             keyCode = KeyCode.None;
             return false;

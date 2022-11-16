@@ -1,4 +1,4 @@
-﻿using SkySwordKill;
+using SkySwordKill;
 using SkySwordKill.Next;
 using System;
 using Fungus;
