@@ -18,22 +18,23 @@ namespace SkySwordKill.NextMoreCommand.Command
             var flowchartName = command.GetStr(0);
             var tagBlock = command.GetStr(1);
             
-            DialogAnalysis.CancelEvent();
-            
-
-            if (!FungusUtils.TryGetFlowchart(flowchartName,out Flowchart flowchart))
+            Main.LogInfo($"FungusEvent : RunFungusFlowchart");
+            FungusUtils.TryGetFlowchart(flowchartName, out Flowchart flowchart);
+            if (flowchart == null)
             {
                 Main.LogError($"FungusEvent : 对应{flowchartName} flowchart不存在");
                 return;
             }
 
-            if ( !flowchart.ExecuteIfHasBlock(tagBlock))
+            
+            if ( flowchart.ExecuteIfHasBlock(tagBlock))
             {
-                MyLog.FungusLogError($"Block名称不存在 {tagBlock}");
+                Main.LogInfo($"FungusEvent : 跳转FungusBlock {tagBlock}");
+               
             }
             else
             {
-                Main.LogInfo($"FungusEvent : 跳转FungusBlock {tagBlock}");
+                MyLog.FungusLogError($"Block名称不存在 {tagBlock}");
                
             }
             callback?.Invoke();

@@ -11,7 +11,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
 {
     public static class FungusUtils
     {
-        private static readonly Dictionary<string, GameObject> _flowcharts = new Dictionary<string, Flowchart>();
+        private static readonly Dictionary<string, GameObject> _flowcharts = new Dictionary<string, GameObject>();
 
         public static Dictionary<string, GameObject> Flowcharts
         {
@@ -66,8 +66,25 @@ namespace SkySwordKill.NextMoreCommand.Utils
             }
         }
 
+        public static int FindIndex(this Flowchart flowchart, string tagBlock, int itemId, out Block block)
+        {
+            block = flowchart.FindBlock(tagBlock);
+            if (block == null || itemId < 0) return -1;
+            foreach (var command in block.commandList)
+            {
+                if (command.ItemId == itemId) return command.CommandIndex;
+            }
+            return -1;
+        }
+
         public static bool TryGetFlowchart(string key, out Flowchart flowchart)
         {
+           var go = GameObject.Find($"{key}(Clone)");
+            if (go != null && go.GetComponentInChildren<Flowchart>() != null)
+            {
+                flowchart = go.GetComponentInChildren<Flowchart>();
+                return true;
+            }
             if (!Flowcharts.TryGetValue(key, out GameObject gameObject))
             {
                 flowchart = null;
@@ -75,7 +92,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
             }
 
             flowchart =Object.Instantiate(gameObject).GetComponentInChildren<Flowchart>();
-            flowchart.StopBlock()
+            flowchart.StopAllBlocks();
 
             return true;
         }
