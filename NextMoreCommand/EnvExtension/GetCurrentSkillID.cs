@@ -1,6 +1,7 @@
 ﻿using GUIPackage;
 using SkySwordKill.Next;
 using SkySwordKill.Next.DialogSystem;
+using SkySwordKill.NextMoreCommand.Utils;
 
 namespace SkySwordKill.NextMoreCommand.EnvExtension
 {
@@ -10,21 +11,16 @@ namespace SkySwordKill.NextMoreCommand.EnvExtension
     {
         public object Execute(DialogEnvQueryContext context)
         {
-
-            if (!context.Env.customData.ContainsKey("CurSkill"))
-            {
-                return -1 as object;
-            }
-
-            context.Env.customData.TryGetValue("CurSkill", out object cSkill);
+            MyLog.FungusLog($"触发GetCurrentSkillID");
+            var customData = context.Env.customData;
+            customData.TryGetValue("CurSkill", out object cSkill);
             var curSkill=cSkill as Skill;
             if (curSkill == null)
             {
-                return -1 as object;
+                return -1;
             }
-
-            var result = curSkill.SkillID;
-            return result as object;
+            MyLog.FungusLog($"SkillID:{curSkill.SkillID}");
+            return curSkill.SkillID  as object;
         }
     }
 }

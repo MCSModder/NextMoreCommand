@@ -40,6 +40,7 @@ namespace SkySwordKill.NextMoreCommand.Command
             }
 
             PlayerEx.AddShengWang(0, add, show);
+            callback?.Invoke();
         }
     }
 }

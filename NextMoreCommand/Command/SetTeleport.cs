@@ -32,11 +32,10 @@ namespace SkySwordKill.NextMoreCommand.Command
                         {
                             _npcIds.Add(NPCEx.NPCIDToNew(npc));
                         }
-                    
                     }
                 }
             }
-            else
+            else if (command.ParamList.Length == 3)
             {
                 var npcId = command.GetStr(2, string.Empty);
                 var npcArr = npcId.Split(',');
@@ -45,9 +44,6 @@ namespace SkySwordKill.NextMoreCommand.Command
                     _npcIds.Add(NPCEx.NPCIDToNew(Convert.ToInt32(npc)));
                 }
             }
-          
-           
-
 
             var sceneNameIsEmpty = _sceneName == string.Empty;
             if (_mapId < 1)
@@ -76,6 +72,7 @@ namespace SkySwordKill.NextMoreCommand.Command
                 AvatarTransfer.Do(_mapId);
                 Tools.instance.loadMapScenes(_sceneName);
             }
+            callback?.Invoke();
         }
     }
 }

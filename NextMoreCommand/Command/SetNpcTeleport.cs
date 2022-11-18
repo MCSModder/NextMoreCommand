@@ -63,6 +63,7 @@ namespace SkySwordKill.NextMoreCommand.Command
                 }
                 MyLog.FungusLog($"跳转地图事件 场景名字: {_sceneName}  NPCID: {_npcIds}");
             }
+            callback?.Invoke();
         }
     }
 }

@@ -29,6 +29,7 @@ namespace SkySwordKill.NextMoreCommand.Command
             {
                 Main.LogError("NpcJieSuanManager还没有实例化");
             }
+            callback?.Invoke();
         }
     }
 }
