@@ -10,26 +10,28 @@ using SkySwordKill.NextMoreCommand.Utils;
 namespace SkySwordKill.NextMoreCommand.Command
 {
     [RegisterCommand]
-    [DialogEvent("RunFungusItemId")]
-    public class RunFungusItemId : IDialogEvent
+    [DialogEvent("RunFungusFlowchartItemId")]
+    public class RunFungusFlowchartItemId : IDialogEvent
     {
         private Flowchart _flowchart;
         private Block _block;
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
-            var tagBlock = command.GetStr(0);
-            var itemId = command.GetInt(1, -1);
-
+            var flowchartName = command.GetStr(0);
+            var tagBlock = command.GetStr(1);
+            var itemId = command.GetInt(2, -1);
+            
             DialogAnalysis.CancelEvent();
+            
 
-            if (env.flowchart == null)
+            if (!FungusUtils.TryGetFlowchart(flowchartName,out Flowchart flowchart))
             {
-                Main.LogError("FungusEvent : 对应flowchart不存在");
+                Main.LogError($"FungusEvent : 对应{flowchartName} flowchart不存在");
                 return;
             }
 
-            _flowchart = env.flowchart;
+            _flowchart = flowchart;
             var index = FindIndex(tagBlock, itemId);
             if (_block == null)
             {

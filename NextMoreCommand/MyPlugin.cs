@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using BepInEx;
+using Fungus;
 using HarmonyLib;
 using MarkerMetro.Unity.WinLegacy.Reflection;
 using SkySwordKill.Next;
@@ -9,6 +10,7 @@ using SkySwordKill.Next.DialogEvent;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.Next.Mod;
 using SkySwordKill.NextMoreCommand.Attribute;
+using SkySwordKill.NextMoreCommand.Utils;
 
 namespace SkySwordKill.NextMoreCommand
 {
@@ -23,6 +25,7 @@ namespace SkySwordKill.NextMoreCommand
             RegisterCommand();
             //RegisterEnv();
             RegisterCustomModSetting();
+          
         }
 
         private void RegisterCustomModSetting()
