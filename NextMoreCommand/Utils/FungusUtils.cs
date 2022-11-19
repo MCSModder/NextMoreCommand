@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Fungus;
 using HarmonyLib;
@@ -13,45 +14,48 @@ namespace SkySwordKill.NextMoreCommand.Utils
 {
     public static class FungusUtils
     {
-        private static readonly Dictionary<string, GameObject> _flowcharts = new Dictionary<string, GameObject>();
-
-        public static Dictionary<string, GameObject> Flowcharts
+        public struct NextFlowchart
         {
-            get
+            public GameObject GameObject =>Flowchart.transform.parent.gameObject;
+            public Flowchart Flowchart;
+            public string Name => Flowchart.GetParentName() ?? Flowchart.gameObject.name;
+            
+            public NextFlowchart(Flowchart flowchart)
             {
-                if (_flowcharts.Count == 0)
-                {
-                    InitFlowchart();
-                }
-
-                return _flowcharts;
+                Flowchart = flowchart;
             }
         }
+        public static bool isActive = false;
+        private static readonly Dictionary<string, NextFlowchart> _flowcharts = new Dictionary<string, NextFlowchart>();
+
+        public static Dictionary<string, NextFlowchart> Flowcharts => _flowcharts;
 
         public static void InitFlowchart()
         {
             if (_flowcharts.Count != 0) return;
-
-            var go = Resources.LoadAll<GameObject>("");
-            List<string> list = new List<string>();
+            var go = Resources.LoadAll<GameObject>("").Where(gameObject => gameObject.GetComponentsInChildren<Flowchart>().Length >= 1 );
+            var list = new List<NextFlowchart>();
             foreach (var gameObject in go)
             {
-                var flowchart = gameObject.GetComponentInChildren<Flowchart>();
-                if (flowchart == null)
-                    continue;
-
                 try
                 {
-                    var name = flowchart.ConvertToFFlowchart().Name;
-                    if (_flowcharts.ContainsKey(name))
+                    var flowcharts = gameObject.gameObject.GetComponentsInChildren<Flowchart>();
+                    foreach (var flowchart in flowcharts)
                     {
-                        list.Add(name);
+                        var nextFlowchart = new NextFlowchart(flowchart);
+                        if (!Flowcharts.ContainsKey(nextFlowchart.Name))
+                        {
+                            Main.LogInfo($"添加 {nextFlowchart.Name} 到 FungusUtils.Flowcharts");
+                            Flowcharts.Add(nextFlowchart.Name,nextFlowchart);
+                        }
+                        else
+                        {
+                            list.Add(nextFlowchart);
+                        }
+                       
                     }
-                    else
-                    {
-                        _flowcharts.Add(name, gameObject);
-                        Main.LogInfo($"添加{name} 到 FungusUtils.Flowcharts");
-                    }
+                    
+                
                 }
                 catch (Exception e)
                 {
@@ -59,10 +63,13 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 }
             }
 
-            foreach (var name in list)
+            foreach (var nextFlowchart in list)
             {
-                Main.LogInfo($"已重复存在{name} 到 FungusUtils.Flowcharts");
+                Main.LogInfo($"已重复存在 {nextFlowchart.Name} 到 FungusUtils.Flowcharts");
             }
+            Main.LogInfo($"重复:List {list.Count.ToString()} FungusUtils.Flowcharts:{Flowcharts.Count.ToString()}");
+            Resources.UnloadUnusedAssets();
+
         }
 
         public static int FindIndex(this Flowchart flowchart, string tagBlock, int itemId, out Block block)
@@ -96,14 +103,14 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
         public static bool TryGetFlowchart(string key, out Flowchart flowchart, out GameObject gameObject)
         {
-            if (!Flowcharts.TryGetValue(key, out GameObject go))
+            if (!Flowcharts.TryGetValue(key, out NextFlowchart nextFlowchart))
             {
                 flowchart = null;
                 gameObject = null;
                 return false;
             }
 
-            gameObject = GameObject.Find($"{key}(Clone)") ?? Object.Instantiate(go);
+            gameObject = GameObject.Find($"{key}(Clone)") ?? Object.Instantiate(nextFlowchart.GameObject);
             flowchart = gameObject.GetComponentInChildren<Flowchart>();
             flowchart.StopAllBlocks();
             return true;

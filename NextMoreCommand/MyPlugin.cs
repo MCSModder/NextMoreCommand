@@ -11,6 +11,8 @@ using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.Next.Mod;
 using SkySwordKill.NextMoreCommand.Attribute;
 using SkySwordKill.NextMoreCommand.Utils;
+using UnityEngine;
+using Input = UnityEngine.Input;
 
 namespace SkySwordKill.NextMoreCommand
 {
@@ -25,8 +27,11 @@ namespace SkySwordKill.NextMoreCommand
             RegisterCommand();
             //RegisterEnv();
             RegisterCustomModSetting();
-          
+            ModManager.ModLoadComplete += () => ModManager.TryGetModSetting("NextMoreCommand_Flowchart",out FungusUtils.isActive);
+            ModManager.ModSettingChanged += () => ModManager.TryGetModSetting("NextMoreCommand_Flowchart",out FungusUtils.isActive);
+            
         }
+
 
         private void RegisterCustomModSetting()
         {
@@ -74,5 +79,6 @@ namespace SkySwordKill.NextMoreCommand
             Main.LogInfo($"注册指令完毕.");
             Main.LogInfo(init);
         }
+
     }
 }

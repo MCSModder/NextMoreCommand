@@ -10,7 +10,10 @@ namespace SkySwordKill.NextMoreCommand.HarmonyPatchs
         {
             Next.Main.LogInfo("释放TempFlowchart里面内容");
             TempFlowchart.Flowcharts.Clear();
-            FungusUtils.InitFlowchart();
+            if (FungusUtils.isActive)
+            {
+                FungusUtils.InitFlowchart();
+            }
         }
     }
 }

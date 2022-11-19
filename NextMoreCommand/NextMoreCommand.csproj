@@ -60,8 +60,20 @@
           <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.dll</HintPath>
           <Private>False</Private>
         </Reference>
+        <Reference Include="UnityEngine.AssetBundleModule">
+          <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.AssetBundleModule.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
         <Reference Include="UnityEngine.CoreModule">
           <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="UnityEngine.UI">
+          <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.UI.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="UnityEngine.UIElementsModule">
+          <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
           <Private>False</Private>
         </Reference>
     </ItemGroup>
