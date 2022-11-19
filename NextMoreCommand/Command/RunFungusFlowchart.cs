@@ -6,6 +6,7 @@ using SkySwordKill.Next.DialogEvent;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.NextMoreCommand.Attribute;
 using SkySwordKill.NextMoreCommand.Utils;
+using UnityEngine;
 
 namespace SkySwordKill.NextMoreCommand.Command
 {
@@ -19,12 +20,12 @@ namespace SkySwordKill.NextMoreCommand.Command
             var tagBlock = command.GetStr(1);
             
             Main.LogInfo($"FungusEvent : RunFungusFlowchart");
-            FungusUtils.TryGetFlowchart(flowchartName, out Flowchart flowchart);
-            if (flowchart == null)
+            if (!FungusUtils.TryGetFlowchart(flowchartName, out Flowchart flowchart))
             {
                 Main.LogError($"FungusEvent : 对应{flowchartName} flowchart不存在");
                 return;
             }
+           
 
             
             if ( flowchart.ExecuteIfHasBlock(tagBlock))

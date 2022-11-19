@@ -19,7 +19,7 @@ namespace SkySwordKill.NextMoreCommand.Command
         {
           
             var sceneName = command.GetStr(0, string.Empty);
-            List<int> npcIds = NpcUtils.GetNpcList(command);
+            List<int> npcIds = NpcUtils.GetNpcList(command,2);
 
             var sceneNameIsEmpty = sceneName == string.Empty;
             if (sceneNameIsEmpty)

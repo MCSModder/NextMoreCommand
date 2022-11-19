@@ -18,7 +18,7 @@ namespace SkySwordKill.NextMoreCommand.Command
         {
             var mapId = command.GetInt(0, -1);
             var sceneName = command.GetStr(1, string.Empty);
-            List<int> npcIds = NpcUtils.GetNpcList(command);
+            List<int> npcIds = NpcUtils.GetNpcList(command,2,3);
           
            
 

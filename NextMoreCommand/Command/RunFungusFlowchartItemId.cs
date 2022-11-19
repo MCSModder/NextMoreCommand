@@ -6,6 +6,7 @@ using SkySwordKill.Next.DialogEvent;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.NextMoreCommand.Attribute;
 using SkySwordKill.NextMoreCommand.Utils;
+using UnityEngine;
 
 namespace SkySwordKill.NextMoreCommand.Command
 {
@@ -21,13 +22,11 @@ namespace SkySwordKill.NextMoreCommand.Command
 
             DialogAnalysis.CancelEvent();
 
-
-            if (!FungusUtils.TryGetFlowchart(flowchartName, out Flowchart flowchart))
+            if (!FungusUtils.TryGetFlowchart(flowchartName, out  Flowchart flowchart ))
             {
                 Main.LogError($"FungusEvent : 对应{flowchartName} flowchart不存在");
                 return;
             }
-
             var index = flowchart.FindIndex(tagBlock, itemId, out Block block);
             if (block == null)
             {
