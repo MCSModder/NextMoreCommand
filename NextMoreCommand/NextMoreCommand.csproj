@@ -84,6 +84,8 @@
         <Compile Include="Command\RunFungusFlowchart.cs" />
         <Compile Include="Command\RunFungusFlowchartItemId.cs" />
         <Compile Include="Command\RunFungusItemId.cs" />
+        <Compile Include="Command\RunFungusTalk.cs" />
+        <Compile Include="Command\RunFungusTalkItemId.cs" />
         <Compile Include="Command\RunTempFlowchart.cs" />
         <Compile Include="Command\SetNewTask.cs" />
         <Compile Include="Command\SetNpcDeath.cs" />

@@ -27,8 +27,7 @@ namespace SkySwordKill.NextMoreCommand
             RegisterCommand();
             //RegisterEnv();
             RegisterCustomModSetting();
-            ModManager.ModLoadComplete += () => ModManager.TryGetModSetting("NextMoreCommand_Flowchart",out FungusUtils.isActive);
-            ModManager.ModSettingChanged += () => ModManager.TryGetModSetting("NextMoreCommand_Flowchart",out FungusUtils.isActive);
+          
             
         }
 

@@ -14,63 +14,29 @@ namespace SkySwordKill.NextMoreCommand.Utils
 {
     public static class FungusUtils
     {
-        public struct NextFlowchart
+        public class NextFlowchart
         {
-            public GameObject GameObject =>Flowchart.transform.parent.gameObject;
+            public GameObject GameObject => Flowchart.transform.parent.gameObject;
             public Flowchart Flowchart;
             public string Name => Flowchart.GetParentName() ?? Flowchart.gameObject.name;
-            
+
             public NextFlowchart(Flowchart flowchart)
             {
                 Flowchart = flowchart;
             }
+
+            public Flowchart GetFlowchart()
+            {
+                var gameObject = Object.Instantiate(GameObject);
+                var flowchart = gameObject.GetComponentInChildren<Flowchart>();
+                flowchart.StopAllBlocks();
+                return Flowchart;
+            }
         }
-        public static bool isActive = false;
+
         private static readonly Dictionary<string, NextFlowchart> _flowcharts = new Dictionary<string, NextFlowchart>();
 
         public static Dictionary<string, NextFlowchart> Flowcharts => _flowcharts;
-
-        public static void InitFlowchart()
-        {
-            if (_flowcharts.Count != 0) return;
-            var go = Resources.LoadAll<GameObject>("").Where(gameObject => gameObject.GetComponentsInChildren<Flowchart>().Length >= 1 );
-            var list = new List<NextFlowchart>();
-            foreach (var gameObject in go)
-            {
-                try
-                {
-                    var flowcharts = gameObject.gameObject.GetComponentsInChildren<Flowchart>();
-                    foreach (var flowchart in flowcharts)
-                    {
-                        var nextFlowchart = new NextFlowchart(flowchart);
-                        if (!Flowcharts.ContainsKey(nextFlowchart.Name))
-                        {
-                            Main.LogInfo($"添加 {nextFlowchart.Name} 到 FungusUtils.Flowcharts");
-                            Flowcharts.Add(nextFlowchart.Name,nextFlowchart);
-                        }
-                        else
-                        {
-                            list.Add(nextFlowchart);
-                        }
-                       
-                    }
-                    
-                
-                }
-                catch (Exception e)
-                {
-                    Main.LogError(e);
-                }
-            }
-
-            foreach (var nextFlowchart in list)
-            {
-                Main.LogInfo($"已重复存在 {nextFlowchart.Name} 到 FungusUtils.Flowcharts");
-            }
-            Main.LogInfo($"重复:List {list.Count.ToString()} FungusUtils.Flowcharts:{Flowcharts.Count.ToString()}");
-            Resources.UnloadUnusedAssets();
-
-        }
 
         public static int FindIndex(this Flowchart flowchart, string tagBlock, int itemId, out Block block)
         {
@@ -86,33 +52,43 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
         public static Flowchart GetFlowchart(string key)
         {
-            TryGetFlowchart(key, out Flowchart flowchart);
-            return flowchart;
+            GameObject gameObject = GameObject.Find($"{key}(Clone)");
+
+            if (gameObject != null)
+            {
+                return gameObject.GetComponentInChildren<Flowchart>();
+            }
+
+
+            if (Flowcharts.ContainsKey(key))
+            {
+                return Flowcharts[key].GetFlowchart();
+            }
+
+            gameObject = Resources.Load<GameObject>($"talkPrefab/TalkPrefab/{key}");
+            if (gameObject != null)
+            {
+                var nextFlowchart = new NextFlowchart(gameObject.GetComponentInChildren<Flowchart>());
+                Flowcharts.Add(nextFlowchart.Name, nextFlowchart);
+                return nextFlowchart.GetFlowchart();
+            }
+
+            return null;
         }
+
+        public static Flowchart GetTalk(int taskID) => GetFlowchart($"Talk{taskID.ToString()}");
+
+        public static bool TryGetTalk(int taskID, out Flowchart flowchart) =>
+            TryGetFlowchart($"Talk{taskID.ToString()}", out flowchart);
 
         public static bool TryGetFlowchart(string key, out Flowchart flowchart)
         {
-            if (!TryGetFlowchart(key, out flowchart, out _))
+            if (!Flowcharts.TryGetValue(key,out  NextFlowchart nextFlowchart))
             {
-                flowchart = null;
-                return false;
+                flowchart = GetFlowchart(key);
+                return flowchart != null;
             }
-
-            return true;
-        }
-
-        public static bool TryGetFlowchart(string key, out Flowchart flowchart, out GameObject gameObject)
-        {
-            if (!Flowcharts.TryGetValue(key, out NextFlowchart nextFlowchart))
-            {
-                flowchart = null;
-                gameObject = null;
-                return false;
-            }
-
-            gameObject = GameObject.Find($"{key}(Clone)") ?? Object.Instantiate(nextFlowchart.GameObject);
-            flowchart = gameObject.GetComponentInChildren<Flowchart>();
-            flowchart.StopAllBlocks();
+            flowchart = nextFlowchart.GetFlowchart();
             return true;
         }
     }
