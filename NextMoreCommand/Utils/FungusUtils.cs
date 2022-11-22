@@ -1,42 +1,33 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using Fungus;
-using HarmonyLib;
-using Newtonsoft.Json;
-using SkySwordKill.Next;
-using SkySwordKill.Next.FCanvas;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace SkySwordKill.NextMoreCommand.Utils
 {
-    public static class FungusUtils
+    public class NextFlowchart
     {
-        public class NextFlowchart
+        public GameObject GameObject => Flowchart.transform.parent.gameObject;
+        public Flowchart Flowchart;
+        public string Name => Flowchart.GetParentName() ?? Flowchart.gameObject.name;
+
+        public NextFlowchart(Flowchart flowchart)
         {
-            public GameObject GameObject => Flowchart.transform.parent.gameObject;
-            public Flowchart Flowchart;
-            public string Name => Flowchart.GetParentName() ?? Flowchart.gameObject.name;
-
-            public NextFlowchart(Flowchart flowchart)
-            {
-                Flowchart = flowchart;
-            }
-
-            public Flowchart GetFlowchart()
-            {
-                var gameObject = Object.Instantiate(GameObject);
-                var flowchart = gameObject.GetComponentInChildren<Flowchart>();
-                flowchart.StopAllBlocks();
-                return Flowchart;
-            }
+            Flowchart = flowchart;
         }
 
-        private static readonly Dictionary<string, NextFlowchart> _flowcharts = new Dictionary<string, NextFlowchart>();
-
-        public static Dictionary<string, NextFlowchart> Flowcharts => _flowcharts;
+        public Flowchart GetFlowchart()
+        {
+            var gameObject = Object.Instantiate(GameObject);
+            var flowchart = gameObject.GetComponentInChildren<Flowchart>();
+            flowchart.StopAllBlocks();
+            return Flowchart;
+        }
+    }
+    public static class FungusUtils
+    {
+        public static Dictionary<string, NextFlowchart> Flowcharts { get; } = new Dictionary<string, NextFlowchart>();
 
         public static int FindIndex(this Flowchart flowchart, string tagBlock, int itemId, out Block block)
         {

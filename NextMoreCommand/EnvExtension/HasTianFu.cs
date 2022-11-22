@@ -9,7 +9,6 @@ namespace SkySwordKill.NextMoreCommand.EnvExtension
     {
         public object Execute(DialogEnvQueryContext context)
         {
-
             var tianfuId = context.GetArg(0,-1);
             return Tools.instance.CheckHasTianFu(tianfuId) as object;
         }

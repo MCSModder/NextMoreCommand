@@ -36,10 +36,10 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
         public static bool EndRound(bool isBefore = true) => isBefore ? EndRoundBefore() : EndRoundAfter();
         public static bool UseSkill(DialogEnvironment env  = null ,bool isBefore = true) => isBefore ? PlayerUseSkillBefore(env) : PlayerUseSkillAfter(env);
         private static bool PlayerUseSkillBefore(DialogEnvironment env  = null) => TryTrigger(env ??NewEnv,true,"PlayerUseSkillBefore", "玩家技能使用前");
-        public static bool BreakPlayerUseSkillBefore(DialogEnvironment env  = null) => TryTrigger(env ??NewEnv,true,"BreakPlayerUseSkillBefore", "打断玩家技能使用前");
+        public static bool BreakPlayerUseSkillBefore(DialogEnvironment env  = null) => TryTrigger(env ??NewEnv,true,"BreakPlayerUseSkillBefore", "打断玩家技能使用");
         private static bool PlayerUseSkillAfter(DialogEnvironment env  = null) => TryTrigger(env ??NewEnv,true,"PlayerUseSkillAfter", "玩家技能使用后");
-        public static bool FinishFight()=> TryTrigger("FinishFight","结束战斗");
-        public static bool StartFight()=> TryTrigger("StartFight","开始战斗");
+        public static bool FightFinish()=> TryTrigger("FightFinish","结束战斗");
+        public static bool FightStart()=> TryTrigger("FightStart","开始战斗");
         private static bool StartRoundBefore() => TryTrigger("StartRoundBefore", "回合开始前");
         private static bool StartRoundAfter() => TryTrigger("StartRoundAfter", "回合开始后");
         private static bool EndRoundBefore() => TryTrigger("EndRoundBefore", "回合结束前");
@@ -56,7 +56,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
             if (__instance.StaticRoundNum == 0)
             {
                 
-                if (RoundUtils.StartFight())
+                if (RoundUtils.FightStart())
                 {
                     MyLog.FungusLog("进入开始战斗");
                 }
@@ -103,7 +103,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
     {
         public static void Postfix()
         {
-            if (RoundUtils.FinishFight())
+            if (RoundUtils.FightFinish())
             {
                 MyLog.FungusLog("进入结束战斗触发器");
             }

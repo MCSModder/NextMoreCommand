@@ -20,7 +20,7 @@ namespace SkySwordKill.NextMoreCommand.EnvExtension
             MyLog.FungusLog($"curSkill:{cSkill.ToString()}");
             if (curSkill == null)
             {
-                return -1; 
+                return false; 
             }
             var skill = curSkill.SkillID;
             MyLog.FungusLog($"skillID:{skillID.ToString()} curSkill:{skill.ToString()}");
