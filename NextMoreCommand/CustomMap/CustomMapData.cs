@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 using SkySwordKill.Next;
-
+using System.Linq;
 namespace SkySwordKill.NextMoreCommand.CustomMap
 {
     public class CustomMapData : BaseMapData
@@ -68,27 +68,11 @@ namespace SkySwordKill.NextMoreCommand.CustomMap
                 for (int x = 0; x < high.Count; x++)
                 {
                     var wide = high[x];
-                    ModCustomMapType value;
-                    string cname;
-                    if (CustomMapManager.ChineseMapType.TryGetValue(wide, out cname))
-                    {
-                        if (CustomMapManager.MapType.TryGetValue(cname, out value))
-                        {
-                            map[x, y] = value.GetMapNodeType();
-                        }
-                    }
-                    else if (CustomMapManager.MapType.TryGetValue(wide, out value))
+                    if (CustomMapManager.TryGetCustomMapType(wide, out var value))
                     {
                         map[x, y] = value.GetMapNodeType();
                     }
-                    else if (CustomMapManager.ChineseCustomMapType.TryGetValue(wide, out cname))
-                    {
-                        if (CustomMapManager.CustomMapType.TryGetValue(cname, out value))
-                        {
-                            map[x, y] = value.GetMapNodeType();
-                        }
-                    }else if(CustomMapManager.CustomMapType.TryGetValue(wide, out value))
-
+                    else if (CustomMapManager.TryGetMapType(wide, out value))
                     {
                         map[x, y] = value.GetMapNodeType();
                     }
@@ -109,12 +93,11 @@ namespace SkySwordKill.NextMoreCommand.CustomMap
                 Wide = Wide,
                 High = High,
                 ShouldReset = ShouldReset,
-                Award = new CustomMapAward[]{},
-                Event = new CustomMapEvent[]{},
+                Award = new CustomMapAward[] { },
+                Event = new CustomMapEvent[] { },
                 NanDu = NanDu,
                 Type = 1,
                 ShuXing = 1,
-               
             };
         }
     }

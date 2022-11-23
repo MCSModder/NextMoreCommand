@@ -1,8 +1,8 @@
 ﻿using SkySwordKill.NextMoreCommand.Attribute;
 
-namespace SkySwordKill.NextMoreCommand.CustomMap.CustomMapType
+namespace SkySwordKill.NextMoreCommand.CustomMap.MapType
 {
-    [MapType(nameof(Block),"空地")]
+    [MapType(nameof(Block),"空")]
     public class Block:ModCustomMapType
     {
         public override string Type => "Block";

@@ -1,6 +1,6 @@
 ﻿using SkySwordKill.NextMoreCommand.Attribute;
 
-namespace SkySwordKill.NextMoreCommand.CustomMap.CustomMapType
+namespace SkySwordKill.NextMoreCommand.CustomMap.MapType
 {
     [MapType(nameof(Exit),"出口")]
     public class Exit:ModCustomMapType

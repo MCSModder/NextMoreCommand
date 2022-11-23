@@ -48,6 +48,37 @@ namespace SkySwordKill.NextMoreCommand.CustomMap
 
         public static readonly Dictionary<string, string> ChineseMapType = new Dictionary<string, string>();
 
+        public static bool TryGetCustomMapType(string key, out ModCustomMapType mapType)
+        {
+            string cname;
+            if (ChineseCustomMapType.TryGetValue(key, out cname) && CustomMapType.TryGetValue(cname, out mapType))
+            {
+                return true;
+            }
+
+            if (CustomMapType.TryGetValue(key, out mapType))
+            {
+                return true;
+            }
+
+            return false;
+        }
+        public static bool TryGetMapType(string key, out ModCustomMapType mapType)
+        {
+            string cname;
+            if (ChineseMapType.TryGetValue(key, out cname) && MapType.TryGetValue(cname, out mapType))
+            {
+                return true;
+            }
+
+            if (MapType.TryGetValue(key, out mapType))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public void TestMap(int index)
         {
             var customMap = new CustomMap()
@@ -102,14 +133,14 @@ namespace SkySwordKill.NextMoreCommand.CustomMap
 
         public void LoadMap(int mapId)
         {
-            if (_avatar.NowFuBen  != "FRandomBase")
+            if (_avatar.NowFuBen != "FRandomBase")
             {
                 _avatar.zulinContorl.kezhanLastScence = Tools.getScreenName();
                 _avatar.lastFuBenScence = Tools.getScreenName();
                 _avatar.NowFuBen = "FRandomBase";
             }
 
-           
+
             _avatar.NowRandomFuBenID = mapId;
             YSNewSaveSystem.SaveGame(PlayerPrefs.GetInt("NowPlayerFileAvatar"), 0, null, false);
             Tools.instance.loadMapScenes("FRandomBase", true);
