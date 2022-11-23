@@ -10,6 +10,7 @@ using SkySwordKill.Next.DialogEvent;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.Next.Mod;
 using SkySwordKill.NextMoreCommand.Attribute;
+using SkySwordKill.NextMoreCommand.CustomMap;
 using SkySwordKill.NextMoreCommand.Utils;
 using UnityEngine;
 using Input = UnityEngine.Input;
@@ -22,15 +23,20 @@ namespace SkySwordKill.NextMoreCommand
     {
         private void Awake()
         {
-            new Harmony("skyswordkill.plugin.NextMoreCommand").PatchAll();
+          
             // 注册事件
             RegisterCommand();
             //RegisterEnv();
             RegisterCustomModSetting();
-          
-            
+            RegisterCustomMapType();
+            new Harmony("skyswordkill.plugin.NextMoreCommand").PatchAll();
+            ModManager.ModLoadStart += () => CustomMapManager.Clear();
         }
 
+        private void Start()
+        {
+            ModCustomMapTypeConverter.Init();
+        }
 
         private void RegisterCustomModSetting()
         {
@@ -38,21 +44,46 @@ namespace SkySwordKill.NextMoreCommand
             var types = Assembly.GetAssembly(registerCommandType).GetTypes();
             var init = "".PadLeft(25, '=');
             Main.LogInfo(init);
-            Main.LogInfo($"注册指令开始.");
+            Main.LogInfo($"注册自定义Mod设置开始.");
             Main.LogInfo(init);
             foreach (var type in types)
             {
                 if (type.GetCustomAttributes(registerCommandType, true).Length > 0)
                 {
                     var cEvent = Activator.CreateInstance(type) as ICustomSetting;
-                    Main.LogInfo($"注册指令名: {type.Name}");
-                    Main.LogInfo($"注册指令类: {cEvent}");
+                    Main.LogInfo($"注册自定义Mod设置: {type.Name}");
+                    Main.LogInfo($"注册自定义Mod设置: {cEvent}");
                     Main.LogInfo(init);
                     ModManager.RegisterCustomSetting(type.Name, cEvent);
                 }
             }
 
-            Main.LogInfo($"注册指令完毕.");
+            Main.LogInfo($"注册自定义Mod设置完毕.");
+            Main.LogInfo(init);
+        }
+        private void RegisterCustomMapType()
+        {
+            var registerCommandType = typeof(MapTypeAttribute);
+            var types = Assembly.GetAssembly(registerCommandType).GetTypes();
+            var init = "".PadLeft(25, '=');
+            Main.LogInfo(init);
+            Main.LogInfo($"注册自定义Mod设置开始.");
+            Main.LogInfo(init);
+            foreach (var type in types)
+            {
+                if (type.GetCustomAttributes(registerCommandType, true).Length > 0)
+                {
+                    var cEvent = Activator.CreateInstance(type) as ModCustomMapType;
+                    Main.LogInfo($"注册自定义Mod设置: {type.Name}");
+                    Main.LogInfo($"注册自定义Mod设置: {cEvent}");
+                    Main.LogInfo(init);
+                    var custom = type.GetCustomAttribute<MapTypeAttribute>();
+                    CustomMapManager.MapType[custom.Type] = cEvent;
+                    CustomMapManager.ChineseMapType[custom.ChineseType] = custom.Type;
+                }
+            }
+
+            Main.LogInfo($"注册自定义Mod设置完毕.");
             Main.LogInfo(init);
         }
         private  void RegisterCommand()
