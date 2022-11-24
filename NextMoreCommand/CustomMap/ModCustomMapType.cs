@@ -11,15 +11,21 @@ namespace SkySwordKill.NextMoreCommand.CustomMap
         public string Cid;
         public virtual string Type { get; set; }
         public JObject RawJson { get; set; }
-        public virtual FuBenMap.NodeType NodeType { get; set; }
+        public virtual MapNodeType NodeType { get; set; } = MapNodeType.Road;
+        public Block Block;
         public string GetMapType()
         {
             return Type;
         }
 
-        public FuBenMap.NodeType GetMapNodeType()
+        public MapNodeType GetMapNodeType()
         {
             return NodeType;
+        }
+
+        public virtual void Execute()
+        {
+            
         }
     }
 }

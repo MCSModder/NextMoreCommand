@@ -6,6 +6,6 @@ namespace SkySwordKill.NextMoreCommand.CustomMap.MapType
     public class Exit:ModCustomMapType
     {
         public override string Type => "Exit";
-        public override FuBenMap.NodeType NodeType => FuBenMap.NodeType.Exit;
+        public override MapNodeType NodeType =>MapNodeType.Exit;
     }
 }

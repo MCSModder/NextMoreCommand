@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using SkySwordKill.Next;
 using System.Linq;
+using SkySwordKill.NextMoreCommand.CustomMap.CustomMapType;
+
 namespace SkySwordKill.NextMoreCommand.CustomMap
 {
     public class CustomMapData : BaseMapData
@@ -50,6 +53,8 @@ namespace SkySwordKill.NextMoreCommand.CustomMap
                     }
                 }
             }
+
+            MapTypes.Reverse();
         }
 
         public void Debug()
@@ -59,9 +64,12 @@ namespace SkySwordKill.NextMoreCommand.CustomMap
             Main.LogInfo(JsonConvert.SerializeObject(MapTypes, Formatting.Indented));
         }
 
-        public FuBenMap.NodeType[,] ToMap()
+        public MapData MapData;
+
+        public void ToMap()
         {
-            FuBenMap.NodeType[,] map = new FuBenMap.NodeType[Wide, High];
+            MapData = new MapData(High, Wide);
+            var index = 1;
             for (int y = 0; y < MapTypes.Count; y++)
             {
                 var high = MapTypes[y];
@@ -70,34 +78,98 @@ namespace SkySwordKill.NextMoreCommand.CustomMap
                     var wide = high[x];
                     if (CustomMapManager.TryGetCustomMapType(wide, out var value))
                     {
-                        map[x, y] = value.GetMapNodeType();
+                        var type = value.GetMapNodeType();
+                        switch (type)
+                        {
+                            case MapNodeType.Null:
+                                MapData.CreateNode(index, type);
+                                break;
+                            case MapNodeType.Road:
+                                MapData.CreateNode(index, type);
+                                switch (value.GetMapType())
+                                {
+                                    case "NextDialog":
+                                        MapData.NextDialog.Add(new NextEvent(index, value.ID, value.Cid));
+                                        break;
+                                    case "NextTrigger":
+                                        MapData.NextTrigger.Add(new NextEvent(index, value.ID, value.Cid));
+                                        break;
+                                }
+                                break;
+                            case MapNodeType.Exit:
+                                MapData.CreateExit(index);
+                                break;
+                            case MapNodeType.Entrance:
+                                MapData.CreateEntrance(index);
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
                     }
                     else if (CustomMapManager.TryGetMapType(wide, out value))
                     {
-                        map[x, y] = value.GetMapNodeType();
+                        var type = value.GetMapNodeType();
+                        switch (type)
+                        {
+                            case MapNodeType.Null:
+                                MapData.CreateNode(index, type);
+                                break;
+                            case MapNodeType.Road:
+                                MapData.CreateNode(index, type);
+                                switch (value.GetMapType())
+                                {
+                                    case "NextDialog":
+                                        MapData.NextDialog.Add(new NextEvent(index, value.ID, value.Cid));
+                                        break;
+                                    case "NextTrigger":
+                                        MapData.NextTrigger.Add(new NextEvent(index, value.ID, value.Cid));
+                                        break;
+                                }
+
+
+                                break;
+                            case MapNodeType.Exit:
+                                MapData.CreateExit(index);
+                                break;
+                            case MapNodeType.Entrance:
+                                MapData.CreateEntrance(index);
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
                     }
+
+                    if (value != null && value.Block.Name != string.Empty) 
+                    {
+                        MapData.Blocks.Add(new MyBlock(index,value.Block.Name));
+                    }
+                    index++;
                 }
             }
-
-            return map;
         }
 
 
         public override CustomMap ToCustomMap()
         {
+            ToMap();
             return new CustomMap()
             {
                 Name = Name,
                 Uuid = Tools.getUUID(),
-                Map = ToMap(),
+                Map = MapData.Map,
                 Wide = Wide,
                 High = High,
                 ShouldReset = ShouldReset,
-                Award = new CustomMapAward[] { },
-                Event = new CustomMapEvent[] { },
+                Award = MapData.Award.ToArray(),
+                Event = MapData.Event.ToArray(),
                 NanDu = NanDu,
                 Type = 1,
                 ShuXing = 1,
+                Entrance = MapData.Entrance,
+                Exit = MapData.Exit,
+                NextDialog = MapData.NextDialog,
+                NextTrigger = MapData.NextTrigger,
+                Blocks = MapData.Blocks
             };
         }
     }

@@ -94,20 +94,20 @@ namespace SkySwordKill.NextMoreCommand.CustomMap
                 ShouldReset = false,
                 Award = new CustomMapAward[] { },
                 Event = new CustomMapEvent[] { },
-                Map = new FuBenMap.NodeType[,]
+                Map = new MapNodeType[,]
                 {
-                    { 0, 0, FuBenMap.NodeType.Road, 0, 0 },
+                    { 0, 0, MapNodeType.Road, 0, 0 },
                     //         { 1, 6,11,16,21 },
-                    { 0, 0, FuBenMap.NodeType.Road, 0, 0 },
+                    { 0, 0, MapNodeType.Road, 0, 0 },
                     //         { 2, 7,12,17,22 },
-                    { 0, 0, FuBenMap.NodeType.Road, 0, 0 },
+                    { 0, 0, MapNodeType.Road, 0, 0 },
                     //         { 3, 8,13,18,23 },
                     {
-                        FuBenMap.NodeType.Exit, FuBenMap.NodeType.Entrance, FuBenMap.NodeType.Road,
-                        FuBenMap.NodeType.Road, FuBenMap.NodeType.Road
+                        MapNodeType.Exit, MapNodeType.Entrance, MapNodeType.Road,
+                        MapNodeType.Road, MapNodeType.Road
                     },
                     //         { 4, 9,14,19,24 },
-                    { 0, 0, FuBenMap.NodeType.Road, 0, 0 },
+                    { 0, 0, MapNodeType.Road, 0, 0 },
                     //         { 5,10,15,20,25 },
                 }
             };

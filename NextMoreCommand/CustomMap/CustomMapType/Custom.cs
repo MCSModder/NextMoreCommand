@@ -7,7 +7,7 @@ namespace SkySwordKill.NextMoreCommand.CustomMap.CustomMapType
     public class Custom:ModCustomMapType
     {
         public override string Type => "Road";
-        public override FuBenMap.NodeType NodeType => FuBenMap.NodeType.Road;
+        public override MapNodeType NodeType => MapNodeType.Road;
         public string CustomType { get; set; }
      
     }
