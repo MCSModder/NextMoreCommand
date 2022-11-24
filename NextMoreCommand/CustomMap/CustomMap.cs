@@ -73,9 +73,8 @@ namespace SkySwordKill.NextMoreCommand.CustomMap
         [JsonProperty] public List<NextEvent> NextTrigger;
         [JsonProperty] public List<NextEvent> NextDialog;
         [JsonProperty] public List<MyBlock> Blocks;
-        public Position? GetExit(int index = 0)
+        public Position GetExit(int index = 0)
         {
-            if (Exit.Count == 0) return null;
             if (index < 0) return Exit[0];
             return index >= Exit.Count ? Exit[Exit.Count - 1] : Exit[index];
         }
@@ -94,9 +93,9 @@ namespace SkySwordKill.NextMoreCommand.CustomMap
             return index >= NextDialog.Count ? NextDialog[NextDialog.Count - 1] : NextDialog[index];
         }
 
-        public Position? GetEntrance(int index = 0)
+        public Position GetEntrance(int index = 0)
         {
-            if (Entrance.Count == 0) return null;
+          
             if (index < 0) return Entrance[0];
             return index >= Entrance.Count ? Entrance[Entrance.Count - 1] : Entrance[index];
         }

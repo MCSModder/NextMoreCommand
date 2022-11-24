@@ -63,6 +63,7 @@ namespace SkySwordKill.NextMoreCommand.CustomMap
 
             return false;
         }
+
         public static bool TryGetMapType(string key, out ModCustomMapType mapType)
         {
             string cname;
@@ -117,6 +118,31 @@ namespace SkySwordKill.NextMoreCommand.CustomMap
             _avatar.RandomFuBenList["111"] = customMap.ToJObject();
             _avatar.fubenContorl[customMap.Uuid].setFirstIndex(index);
             LoadMap(111);
+        }
+
+        public void LoadMapEntranceIndex(int index, int entranceIndex)
+        {
+            if (CustomMapDatas.TryGetValue(index, out CustomMapData customMapData))
+            {
+                var customMap = customMapData.ToCustomMap();
+                customMap.StartTime = _avatar.worldTimeMag.nowTime;
+                _avatar.RandomFuBenList[index.ToString()] = customMap.ToJObject();
+                var entrance = customMap.GetEntrance(entranceIndex);
+
+                _avatar.fubenContorl[customMap.Uuid].setFirstIndex(entrance.Index);
+                LoadMap(index);
+            }
+        }
+        public void LoadMap(int index, int position)
+        {
+            if (CustomMapDatas.TryGetValue(index, out CustomMapData customMapData))
+            {
+                var customMap = customMapData.ToCustomMap();
+                customMap.StartTime = _avatar.worldTimeMag.nowTime;
+                _avatar.RandomFuBenList[index.ToString()] = customMap.ToJObject();
+                _avatar.fubenContorl[customMap.Uuid].setFirstIndex(position);
+                LoadMap(index);
+            }
         }
 
         public void CustomTestMap(int index, int position)
