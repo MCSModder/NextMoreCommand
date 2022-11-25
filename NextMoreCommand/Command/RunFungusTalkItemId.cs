@@ -16,32 +16,44 @@ namespace SkySwordKill.NextMoreCommand.Command
     {
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
-            var talkID = command.GetInt(0,-1);
+            var talkID = command.GetInt(0, -1);
             var tagBlock = command.GetStr(1);
             var itemId = command.GetInt(2, -1);
 
             DialogAnalysis.CancelEvent();
 
-            if (!FungusUtils.TryGetTalk(talkID, out  Flowchart flowchart ))
+
+            if (FungusUtils.GetTalk(talkID) == null)
             {
                 Main.LogError($"FungusEvent : 对应Talk{talkID.ToString()} flowchart不存在");
-                return;
-            }
-            var index = flowchart.FindIndex(tagBlock, itemId, out Block block);
-            if (block == null)
-            {
-                MyLog.FungusLogError($"Block名称不存在 {tagBlock}");
-            }
-            else if (index < 0)
-            {
-                var msg = itemId == -1 ? "ItemId不能为空和字符串" : $"ItemId不存在 {itemId}";
-                MyLog.FungusLogError(msg);
             }
             else
             {
-                Main.LogInfo($"FungusEvent : 跳转FungusBlock {tagBlock} ItemId:{itemId} index:{index} ");
-                flowchart.ExecuteBlock(block, index);
+                FungusUtils.TalkBlockName = tagBlock;
+                FungusUtils.TalkItemId = itemId;
+                FungusUtils.TalkFunc = flowchart =>
+                {
+                    var index = flowchart.FindIndex(FungusUtils.TalkBlockName, FungusUtils.TalkItemId, out Block block);
+                    if (block == null)
+                    {
+                        MyLog.FungusLogError($"Block名称不存在 {FungusUtils.TalkBlockName}");
+                        return false;
+                    }
+
+                    if (index < 0)
+                    {
+                        var msg = itemId == -1 ? "ItemId不能为空和字符串" : $"ItemId不存在 {FungusUtils.TalkItemId.ToString()}";
+                        MyLog.FungusLogError(msg);
+                        return false;
+                    }
+
+                    flowchart.ExecuteBlock(block, index);
+                    Main.LogInfo(
+                        $"FungusEvent : 跳转FungusBlock {FungusUtils.TalkBlockName} ItemId:{FungusUtils.TalkItemId.ToString()} index:{index.ToString()} ");
+                    return true;
+                };
             }
+
 
             callback?.Invoke();
         }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Cysharp.Threading.Tasks;
 using Fungus;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.NextMoreCommand.Utils;
@@ -11,18 +12,46 @@ using Object = UnityEngine.Object;
 
 namespace SkySwordKill.NextMoreCommand.Utils
 {
-    public class StopPlayDialog : MonoBehaviour
+    public class PlayFlowchart : MonoBehaviour
     {
-        public Flowchart flowchart;
-        private GameObject _sayDialog;
-     
-        private void Start()
+        private GameObject go;
+        private Flowchart _flowchart;
+
+        private void Awake()
         {
-            _sayDialog = GameObject.Find("SayDialog");
-            //_sayDialog.GetComponent<SayDialog>().Stop();
-            SayDialog.GetSayDialog().Stop();
+            go = transform.Find("Flowchart").gameObject;
+            _flowchart = go.GetComponent<Flowchart>();
+            _flowchart.enabled = false;
         }
 
+        // ReSharper disable once Unity.IncorrectMethodSignature
+        async UniTaskVoid Update()
+        {
+            if (FungusUtils.isTalkActive)
+            {
+                if (!go.activeSelf)
+                {
+                    go.SetActive(true);
+                    await UniTask.DelayFrame(1000);
+                    _flowchart.enabled = true;
+                }
+                var result = FungusUtils.TalkFunc?.Invoke(_flowchart);
+                if (result != null && (bool)result)
+                {
+                    FungusUtils.TalkOnComplete?.Invoke();
+                }
+                else
+                {
+                    FungusUtils.TalkOnFailed?.Invoke();
+                }
+                FungusUtils.isTalkActive = false;
+                FungusUtils.TalkFunc = null;
+                FungusUtils.TalkOnComplete = null;
+                FungusUtils.TalkOnFailed = null;
+                FungusUtils.TalkItemId = -1;
+                FungusUtils.TalkBlockName = string.Empty;
+            }
+        }
     }
 
     public class NextFlowchart
@@ -38,18 +67,24 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
         public Flowchart GetFlowchart()
         {
-            Tools.instance.IsCanLoadSetTalk = false;
-            Tools.instance.isNeedSetTalk = true;
+            var go = GameObject.transform.Find("Flowchart").gameObject;
+            go.SetActive(false);
             var gameObject = Object.Instantiate(GameObject);
             var flowchart = gameObject.GetComponentInChildren<Flowchart>();
-            gameObject.AddComponent<StopPlayDialog>().flowchart = flowchart;
-            SayDialog.GetSayDialog().Stop();
+            gameObject.AddComponent<PlayFlowchart>();
+            go.SetActive(true);
             return flowchart;
         }
     }
 
     public static class FungusUtils
     {
+        public static bool isTalkActive = false;
+        public static Func<Flowchart, bool> TalkFunc;
+        public static Action TalkOnComplete;
+        public static Action TalkOnFailed;
+        public static string TalkBlockName;
+        public static int TalkItemId;
         public static Dictionary<string, NextFlowchart> Flowcharts { get; } = new Dictionary<string, NextFlowchart>();
 
         public static int FindIndex(this Flowchart flowchart, string tagBlock, int itemId, out Block block)
@@ -70,6 +105,10 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
             if (gameObject != null)
             {
+                if (gameObject.GetComponent<PlayFlowchart>() == null)
+                {
+                    gameObject.AddComponent<PlayFlowchart>();
+                }
                 return gameObject.GetComponentInChildren<Flowchart>();
             }
 
@@ -88,7 +127,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
             return null;
         }
-
+      
         public static Flowchart GetTalk(int taskID) => GetFlowchart($"Talk{taskID.ToString()}");
 
         public static bool TryGetTalk(int taskID, out Flowchart flowchart) =>
@@ -97,8 +136,6 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public static bool TryGetFlowchart(string key, out Flowchart flowchart)
         {
             flowchart = GetFlowchart(key);
-            Tools.instance.IsCanLoadSetTalk = true;
-            Tools.instance.isNeedSetTalk = false;
             return flowchart != null;
         }
     }

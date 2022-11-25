@@ -45,6 +45,14 @@
           <HintPath>..\..\..\..\..\workshop\content\1189490\2824349934\BepInEx\core\BepInEx.dll</HintPath>
           <Private>False</Private>
         </Reference>
+        <Reference Include="DOTween">
+          <HintPath>..\..\..\觅长生_Data\Managed\DOTween.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="DOTweenPro">
+          <HintPath>..\..\..\觅长生_Data\Managed\DOTweenPro.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
         <Reference Include="Newtonsoft.Json">
           <HintPath>..\..\..\觅长生_Data\Managed\Newtonsoft.Json.dll</HintPath>
           <Private>False</Private>
@@ -57,6 +65,30 @@
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />
         <Reference Include="System.Xml" />
+        <Reference Include="UniRx">
+          <HintPath>..\..\..\觅长生_Data\Managed\UniRx.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="UniTask">
+          <HintPath>..\..\..\觅长生_Data\Managed\UniTask.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="UniTask.Addressables">
+          <HintPath>..\..\..\觅长生_Data\Managed\UniTask.Addressables.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="UniTask.DOTween">
+          <HintPath>..\..\..\觅长生_Data\Managed\UniTask.DOTween.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="UniTask.Linq">
+          <HintPath>..\..\..\觅长生_Data\Managed\UniTask.Linq.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="UniTask.TextMeshPro">
+          <HintPath>..\..\..\觅长生_Data\Managed\UniTask.TextMeshPro.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
         <Reference Include="UnityEngine">
           <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.dll</HintPath>
           <Private>False</Private>
@@ -75,6 +107,14 @@
         </Reference>
         <Reference Include="UnityEngine.UIElementsModule">
           <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="VContainer">
+          <HintPath>..\..\..\觅长生_Data\Managed\VContainer.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="VContainer.EnableCodeGen">
+          <HintPath>..\..\..\觅长生_Data\Managed\VContainer.EnableCodeGen.dll</HintPath>
           <Private>False</Private>
         </Reference>
     </ItemGroup>
