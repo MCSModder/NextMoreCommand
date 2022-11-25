@@ -19,8 +19,8 @@ namespace SkySwordKill.NextMoreCommand.Command
             var talkID = command.GetInt(0, -1);
             var tagBlock = command.GetStr(1);
 
-            Main.LogInfo($"FungusEvent : RunFungusFlowchart");
-
+            Main.LogInfo($"FungusEvent : RunFungusTalk");
+          
             if (FungusUtils.GetTalk(talkID) == null)
             {
                 Main.LogError($"FungusEvent : 对应Talk{talkID.ToString()} flowchart不存在");

@@ -25,16 +25,17 @@ namespace SkySwordKill.NextMoreCommand.Utils
         }
 
         // ReSharper disable once Unity.IncorrectMethodSignature
-        async UniTaskVoid Update()
+        async void Update()
         {
             if (FungusUtils.isTalkActive)
             {
                 if (!go.activeSelf)
                 {
                     go.SetActive(true);
-                    await UniTask.DelayFrame(1000);
+                    await System.Threading.Tasks.Task.Delay(1000);
                     _flowchart.enabled = true;
                 }
+
                 var result = FungusUtils.TalkFunc?.Invoke(_flowchart);
                 if (result != null && (bool)result)
                 {
@@ -44,6 +45,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 {
                     FungusUtils.TalkOnFailed?.Invoke();
                 }
+
                 FungusUtils.isTalkActive = false;
                 FungusUtils.TalkFunc = null;
                 FungusUtils.TalkOnComplete = null;
@@ -109,12 +111,14 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 {
                     gameObject.AddComponent<PlayFlowchart>();
                 }
+
                 return gameObject.GetComponentInChildren<Flowchart>();
             }
 
             if (Flowcharts.ContainsKey(key))
             {
-                return Flowcharts[key].GetFlowchart();
+                Flowcharts[key].GetFlowchart();
+                return Flowcharts[key].Flowchart;
             }
 
             gameObject = Resources.Load<GameObject>($"talkPrefab/TalkPrefab/{key}");
@@ -122,12 +126,13 @@ namespace SkySwordKill.NextMoreCommand.Utils
             {
                 var nextFlowchart = new NextFlowchart(gameObject.GetComponentInChildren<Flowchart>());
                 Flowcharts.Add(nextFlowchart.Name, nextFlowchart);
-                return nextFlowchart.GetFlowchart();
+                nextFlowchart.GetFlowchart();
+                return nextFlowchart.Flowchart;
             }
 
             return null;
         }
-      
+
         public static Flowchart GetTalk(int taskID) => GetFlowchart($"Talk{taskID.ToString()}");
 
         public static bool TryGetTalk(int taskID, out Flowchart flowchart) =>
