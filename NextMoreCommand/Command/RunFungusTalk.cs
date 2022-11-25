@@ -25,9 +25,8 @@ namespace SkySwordKill.NextMoreCommand.Command
                 Main.LogError($"FungusEvent : 对应Talk{talkID.ToString()} flowchart不存在");
                 return;
             }
-           
 
-            
+       
             if ( flowchart.ExecuteIfHasBlock(tagBlock))
             {
                 Main.LogInfo($"FungusEvent : 跳转FungusBlock {tagBlock}");

@@ -80,70 +80,44 @@ namespace SkySwordKill.NextMoreCommand.CustomMap
             return false;
         }
 
-        public void TestMap(int index)
-        {
-            var customMap = new CustomMap()
-            {
-                StartTime = _avatar.worldTimeMag.nowTime,
-                Name = "测试",
-                Uuid = Tools.getUUID(),
-                High = 5,
-                Wide = 5,
-                NanDu = 1,
-                ShuXing = 1,
-                Type = 1,
-                ShouldReset = false,
-                Award = new CustomMapAward[] { },
-                Event = new CustomMapEvent[] { },
-                Map = new MapNodeType[,]
-                {
-                    { 0, 0, MapNodeType.Road, 0, 0 },
-                    //         { 1, 6,11,16,21 },
-                    { 0, 0, MapNodeType.Road, 0, 0 },
-                    //         { 2, 7,12,17,22 },
-                    { 0, 0, MapNodeType.Road, 0, 0 },
-                    //         { 3, 8,13,18,23 },
-                    {
-                        MapNodeType.Exit, MapNodeType.Entrance, MapNodeType.Road,
-                        MapNodeType.Road, MapNodeType.Road
-                    },
-                    //         { 4, 9,14,19,24 },
-                    { 0, 0, MapNodeType.Road, 0, 0 },
-                    //         { 5,10,15,20,25 },
-                }
-            };
 
-            var msg = JsonConvert.SerializeObject(customMap, Formatting.Indented);
-            Main.LogInfo(msg);
-            _avatar.RandomFuBenList["111"] = customMap.ToJObject();
-            _avatar.fubenContorl[customMap.Uuid].setFirstIndex(index);
-            LoadMap(111);
-        }
-
-        public void LoadMapEntranceIndex(int index, int entranceIndex)
+        public void LoadMapEntranceIndex(int index, int entranceIndex, bool isFolce = false)
         {
             if (CustomMapDatas.TryGetValue(index, out CustomMapData customMapData))
             {
                 var customMap = customMapData.ToCustomMap();
-                customMap.StartTime = _avatar.worldTimeMag.nowTime;
-                _avatar.RandomFuBenList[index.ToString()] = customMap.ToJObject();
+                if (isFolce || !HasExits(index))
+                {
+                    customMap.StartTime = _avatar.worldTimeMag.nowTime;
+                    _avatar.RandomFuBenList[index.ToString()] = customMap.ToJObject();
+                }
+
                 var entrance = customMap.GetEntrance(entranceIndex);
 
                 _avatar.fubenContorl[customMap.Uuid].setFirstIndex(entrance.Index);
                 LoadMap(index);
             }
         }
-        public void LoadMap(int index, int position)
+
+        public void LoadMap(int index, int position, bool isFolce = false)
         {
             if (CustomMapDatas.TryGetValue(index, out CustomMapData customMapData))
             {
                 var customMap = customMapData.ToCustomMap();
-                customMap.StartTime = _avatar.worldTimeMag.nowTime;
-                _avatar.RandomFuBenList[index.ToString()] = customMap.ToJObject();
+                if (isFolce || !HasExits(index))
+                {
+                   
+                    customMap.StartTime = _avatar.worldTimeMag.nowTime;
+                    _avatar.RandomFuBenList[index.ToString()] = customMap.ToJObject();
+                    
+                }
                 _avatar.fubenContorl[customMap.Uuid].setFirstIndex(position);
+
                 LoadMap(index);
             }
         }
+
+        public bool HasExits(int index) => _avatar.RandomFuBenList.ContainsKey(index.ToString());
 
         public void CustomTestMap(int index, int position)
         {

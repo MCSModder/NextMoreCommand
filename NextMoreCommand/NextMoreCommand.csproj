@@ -83,6 +83,7 @@
         <Compile Include="Attribute\MapTypeAttribute.cs" />
         <Compile Include="Attribute\RegisterCommandAttribute.cs" />
         <Compile Include="Attribute\RegisterCustomModSettingAttribute.cs" />
+        <Compile Include="Command\LoadCustomMap.cs" />
         <Compile Include="Command\NpcForceJiaoYi.cs" />
         <Compile Include="Command\RunFungusFlowchart.cs" />
         <Compile Include="Command\RunFungusFlowchartItemId.cs" />
@@ -99,7 +100,6 @@
         <Compile Include="Command\SetTeleport.cs" />
         <Compile Include="Command\SetTempFlowchart.cs" />
         <Compile Include="CustomMap\BaseMapData.cs" />
-        <Compile Include="CustomMap\Block.cs" />
         <Compile Include="CustomMap\CustomMap.cs" />
         <Compile Include="CustomMap\CustomMapData.cs" />
         <Compile Include="CustomMap\CustomMapManager.cs" />
@@ -123,6 +123,7 @@
         <Compile Include="EnvExtension\GetNpcName.cs" />
         <Compile Include="EnvExtension\HasTianFu.cs" />
         <Compile Include="EnvExtension\GetUseSkillID.cs" />
+        <Compile Include="HarmonyPatchs\CheckTaskIsOutOnEnter.cs" />
         <Compile Include="HarmonyPatchs\ModManagerLoadModData.cs" />
         <Compile Include="HarmonyPatchs\NpcJieSuanManagerPatch.cs" />
         <Compile Include="HarmonyPatchs\RandomFuBenAwake.cs" />

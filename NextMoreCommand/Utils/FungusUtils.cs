@@ -1,11 +1,30 @@
-﻿
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using Fungus;
+using SkySwordKill.Next.DialogSystem;
+using SkySwordKill.NextMoreCommand.Utils;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Object = UnityEngine.Object;
 
 namespace SkySwordKill.NextMoreCommand.Utils
 {
+    public class StopPlayDialog : MonoBehaviour
+    {
+        public Flowchart flowchart;
+        private GameObject _sayDialog;
+     
+        private void Start()
+        {
+            _sayDialog = GameObject.Find("SayDialog");
+            //_sayDialog.GetComponent<SayDialog>().Stop();
+            SayDialog.GetSayDialog().Stop();
+        }
+
+    }
+
     public class NextFlowchart
     {
         public GameObject GameObject => Flowchart.transform.parent.gameObject;
@@ -19,12 +38,16 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
         public Flowchart GetFlowchart()
         {
+            Tools.instance.IsCanLoadSetTalk = false;
+            Tools.instance.isNeedSetTalk = true;
             var gameObject = Object.Instantiate(GameObject);
             var flowchart = gameObject.GetComponentInChildren<Flowchart>();
-            flowchart.StopAllBlocks();
-            return Flowchart;
+            gameObject.AddComponent<StopPlayDialog>().flowchart = flowchart;
+            SayDialog.GetSayDialog().Stop();
+            return flowchart;
         }
     }
+
     public static class FungusUtils
     {
         public static Dictionary<string, NextFlowchart> Flowcharts { get; } = new Dictionary<string, NextFlowchart>();
@@ -50,7 +73,6 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 return gameObject.GetComponentInChildren<Flowchart>();
             }
 
-
             if (Flowcharts.ContainsKey(key))
             {
                 return Flowcharts[key].GetFlowchart();
@@ -74,13 +96,10 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
         public static bool TryGetFlowchart(string key, out Flowchart flowchart)
         {
-            if (!Flowcharts.TryGetValue(key,out  NextFlowchart nextFlowchart))
-            {
-                flowchart = GetFlowchart(key);
-                return flowchart != null;
-            }
-            flowchart = nextFlowchart.GetFlowchart();
-            return true;
+            flowchart = GetFlowchart(key);
+            Tools.instance.IsCanLoadSetTalk = true;
+            Tools.instance.isNeedSetTalk = false;
+            return flowchart != null;
         }
     }
 }

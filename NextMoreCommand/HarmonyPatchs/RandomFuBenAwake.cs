@@ -18,9 +18,15 @@ public class MapControl : MonoBehaviour
 
     private void Awake()
     {
+        
         _randomFuBen = GetComponent<RandomFuBen>();
         var fuben = Tools.instance.getPlayer().RandomFuBenList[_randomFuBen.FuBenID.ToString()];
         _customMap = fuben?.ToObject<CustomMap.CustomMap>();
+
+    }
+
+    private void Start()
+    {
         _customMap?.NextDialog.ForEach(events =>
         {
             if (CustomMapManager.TryGetCustomMapType(events.ID, out ModCustomMapType mapType))
@@ -59,19 +65,20 @@ public class MapControl : MonoBehaviour
     {
         if (WASDMove.Inst != null && WASDMove.Inst.IsMoved)
         {
-            var index = WASDMove.Inst.GetNowIndex();
-            if (_triggers.TryGetValue(index, out NextTrigger nextTrigger))
+            if (!DialogAnalysis.IsRunningEvent)
             {
-                if (!DialogAnalysis.IsRunningEvent)
+                var index = WASDMove.Inst.GetNowIndex();
+                if (_triggers.TryGetValue(index, out NextTrigger nextTrigger))
                 {
                     nextTrigger.Execute();
                 }
-            }
-            else if (_dialogs.TryGetValue(index, out NextDialog nextDialog))
-            {
-                if (!DialogAnalysis.IsRunningEvent)
+
+                else if (_dialogs.TryGetValue(index, out NextDialog nextDialog))
                 {
-                    nextDialog.Execute();
+                    if (!DialogAnalysis.IsRunningEvent)
+                    {
+                        nextDialog.Execute();
+                    }
                 }
             }
         }
@@ -84,8 +91,7 @@ public static class RandomFuBenAwake
     public static void Postfix(RandomFuBen __instance)
     {
         Main.LogInfo("RandomFuBen");
-        if (__instance.GetComponent<MapControl>() == null &&
-            CustomMapManager.CustomMapDatas.ContainsKey(__instance.FuBenID))
+        if (__instance.GetComponent<MapControl>() == null && RandomFuBen.IsInRandomFuBen)
         {
             __instance.gameObject.AddComponent<MapControl>();
         }

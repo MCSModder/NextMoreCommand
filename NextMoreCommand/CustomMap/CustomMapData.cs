@@ -95,6 +95,7 @@ namespace SkySwordKill.NextMoreCommand.CustomMap
                                         MapData.NextTrigger.Add(new NextEvent(index, value.ID, value.Cid));
                                         break;
                                 }
+
                                 break;
                             case MapNodeType.Exit:
                                 MapData.CreateExit(index);
@@ -102,9 +103,9 @@ namespace SkySwordKill.NextMoreCommand.CustomMap
                             case MapNodeType.Entrance:
                                 MapData.CreateEntrance(index);
                                 break;
-                            default:
-                                throw new ArgumentOutOfRangeException();
                         }
+
+                      
                     }
                     else if (CustomMapManager.TryGetMapType(wide, out value))
                     {
@@ -134,15 +135,11 @@ namespace SkySwordKill.NextMoreCommand.CustomMap
                             case MapNodeType.Entrance:
                                 MapData.CreateEntrance(index);
                                 break;
-                            default:
-                                throw new ArgumentOutOfRangeException();
                         }
+
                     }
 
-                    if (value != null && value.Block.Name != string.Empty) 
-                    {
-                        MapData.Blocks.Add(new MyBlock(index,value.Block.Name));
-                    }
+
                     index++;
                 }
             }
