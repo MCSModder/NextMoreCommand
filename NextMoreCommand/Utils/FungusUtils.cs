@@ -52,6 +52,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 FungusUtils.TalkOnFailed = null;
                 FungusUtils.TalkItemId = -1;
                 FungusUtils.TalkBlockName = string.Empty;
+                Destroy(this);
             }
         }
     }
