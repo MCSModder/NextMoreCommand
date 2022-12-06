@@ -1,5 +1,6 @@
 ﻿using SkySwordKill.Next;
 using SkySwordKill.Next.DialogSystem;
+using SkySwordKill.NextMoreCommand.Utils;
 
 namespace SkySwordKill.NextMoreCommand.EnvExtension
 {
@@ -9,7 +10,7 @@ namespace SkySwordKill.NextMoreCommand.EnvExtension
     {
         public object Execute(DialogEnvQueryContext context)
         {
-            var tianfuId = context.GetArg(0,-1);
+            var tianfuId = context.GetMyArgs(0,-1);
             return Tools.instance.CheckHasTianFu(tianfuId) as object;
         }
     }

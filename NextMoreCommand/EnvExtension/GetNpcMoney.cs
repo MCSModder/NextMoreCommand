@@ -1,5 +1,6 @@
 ﻿using SkySwordKill.Next;
 using SkySwordKill.Next.DialogSystem;
+using SkySwordKill.NextMoreCommand.Utils;
 
 namespace SkySwordKill.NextMoreCommand.EnvExtension
 {
@@ -10,7 +11,7 @@ namespace SkySwordKill.NextMoreCommand.EnvExtension
         public object Execute(DialogEnvQueryContext context)
         {
 
-            var npcId = context.GetArg(0,-1);
+            var npcId = context.GetMyArgs(0,-1);
             if (npcId < 0)
             {
                 return 0 as object;

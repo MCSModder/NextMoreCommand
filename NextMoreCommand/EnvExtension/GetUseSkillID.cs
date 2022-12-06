@@ -11,7 +11,7 @@ namespace SkySwordKill.NextMoreCommand.EnvExtension
     {
         public object Execute(DialogEnvQueryContext context)
         {
-            var skillID = context.GetArg(0, -1);
+            var skillID = context.GetMyArgs(0, -1);
             MyLog.FungusLog($"触发GetUseSkillID skillID:{skillID.ToString()}");
             var customData = context.Env.customData;
             customData.TryGetValue("CurSkill", out object cSkill);

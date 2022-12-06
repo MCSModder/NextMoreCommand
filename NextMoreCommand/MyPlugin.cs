@@ -11,6 +11,7 @@ using SkySwordKill.NextMoreCommand.Attribute;
 using SkySwordKill.NextMoreCommand.CustomMap;
 using SkySwordKill.NextMoreCommand.CustomModDebug;
 using SkySwordKill.NextMoreCommand.CustomModDebug.NextMoreCore;
+using SkySwordKill.NextMoreCommand.Utils;
 using UnityEngine;
 using Input = UnityEngine.Input;
 
@@ -20,6 +21,7 @@ namespace SkySwordKill.NextMoreCommand
     [BepInPlugin("skyswordkill.plugin.NextMoreCommand", "NextMoreCommand", "1.0.2")]
     public class MyPlugin : BaseUnityPlugin
     {
+        private KeyCode DramaDebugKey;
         private void Awake()
         {
             // 注册事件
@@ -29,6 +31,14 @@ namespace SkySwordKill.NextMoreCommand
             new Harmony("skyswordkill.plugin.NextMoreCommand").PatchAll();
             ModManager.ModLoadStart += () => CustomMapManager.Clear();
             NextMoreCoreBinder.BindAll();
+            ModManager.ModSettingChanged +=() =>
+            {
+                ModManagerUtils.TryGetModSetting("Quick_DramaDebugKey", out DramaDebugKey);
+            };
+            ModManager.ModLoadComplete += () =>
+            {
+                ModManagerUtils.TryGetModSetting("Quick_DramaDebugKey", out DramaDebugKey);
+            };
         }
 
         private void Start()
@@ -36,20 +46,20 @@ namespace SkySwordKill.NextMoreCommand
             ModCustomMapTypeConverter.Init();
         }
 
-        // private void Update()
-        // {
-        //     if (Input.GetKeyDown(KeyCode.K))
-        //     {
-        //         if (ModDialogDebugWindow.Instance == null)
-        //         {
-        //             new ModDialogDebugWindow().Show();
-        //         }
-        //         else
-        //         {
-        //             ModDialogDebugWindow.Instance.Hide();
-        //         }
-        //     }
-        // }
+       private void Update()
+       {
+           if (Input.GetKeyDown(DramaDebugKey))
+           {
+               if (ModDialogDebugWindow.Instance == null)
+               {
+                   new ModDialogDebugWindow().Show();
+               }
+               else
+               {
+                   ModDialogDebugWindow.Instance.Hide();
+               }
+           }
+       }
 
         private void RegisterCustomModSetting()
         {

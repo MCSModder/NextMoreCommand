@@ -114,7 +114,7 @@ public class ModDialogDebugWindow : FGUIWindowBase
         _currentState = DramaState.Drama;
         SetState(DebugMode.Value && _isGame ? CurrentState : DramaState.None);
         BindDrama();
-        BindCommand();
+        //BindCommand();
         Instance = this;
     }
 
@@ -130,6 +130,7 @@ public class ModDialogDebugWindow : FGUIWindowBase
 
             SetState(DebugMode.Value && _isGame ? _currentState : DramaState.None);
         }));
+        MainView.m_debugBar.m_commandButton.visible = false;
         MainView.m_debugBar.m_commandButton.onClick.Add((() =>
         {
             CurrentState = DramaState.Command;
@@ -194,7 +195,7 @@ public class ModDialogDebugWindow : FGUIWindowBase
                 MainView.m_debugText.visible = !_isGame;
                 if (_isGame)
                 {
-                    RefreshDramaId();
+            
                     RefreshIntList();
                     RefreshStringList();
                     RefreshDrama();
@@ -246,7 +247,7 @@ public class ModDialogDebugWindow : FGUIWindowBase
     private void RefreshDramaId()
     {
         var dramaIdList = MainView.m_drama.m_listDramaId;
-        if (_refreshSeachBox != 0f || _recentDramaId.Count == dramaIdList.numItems)
+        if ( _recentDramaId.Count == dramaIdList.numItems)
         {
             return;
         }
@@ -315,6 +316,7 @@ public class ModDialogDebugWindow : FGUIWindowBase
                     _recentDramaId.RemoveAt(0);
                 }
                 _recentDramaId.Add(key);
+                RefreshDramaId();
             });
             item.cursor = FGUIManager.MOUSE_HAND;
         }
