@@ -154,6 +154,17 @@
         <Compile Include="CustomMap\CustomMapType\NextTrigger.cs" />
         <Compile Include="CustomMap\ModCustomMapTypeConverter.cs" />
         <Compile Include="CustomMap\RandomCustomMapData.cs" />
+        <Compile Include="CustomModDebug\ModDialogDebugWindow.cs" />
+        <Compile Include="CustomModDebug\NextMoreCore\NextMoreCoreBinder.cs" />
+        <Compile Include="CustomModDebug\NextMoreCore\UI_ComboCommand.cs" />
+        <Compile Include="CustomModDebug\NextMoreCore\UI_ComboCommandCharacterItem.cs" />
+        <Compile Include="CustomModDebug\NextMoreCore\UI_ComboCommandItem.cs" />
+        <Compile Include="CustomModDebug\NextMoreCore\UI_ComDebugBar.cs" />
+        <Compile Include="CustomModDebug\NextMoreCore\UI_ComDrama.cs" />
+        <Compile Include="CustomModDebug\NextMoreCore\UI_ComDramaCommandDebug.cs" />
+        <Compile Include="CustomModDebug\NextMoreCore\UI_ComInput.cs" />
+        <Compile Include="CustomModDebug\NextMoreCore\UI_ComState.cs" />
+        <Compile Include="CustomModDebug\NextMoreCore\UI_ModDialogDebug.cs" />
         <Compile Include="CustomModSetting\KeyCodeDropdown.cs" />
         <Compile Include="DialogTrigger\OnRound.cs" />
         <Compile Include="EnvExtension\GetCurrentSkill.cs" />
@@ -165,6 +176,7 @@
         <Compile Include="EnvExtension\GetUseSkillID.cs" />
         <Compile Include="HarmonyPatchs\CheckTaskIsOutOnEnter.cs" />
         <Compile Include="HarmonyPatchs\ModManagerLoadModData.cs" />
+        <Compile Include="HarmonyPatchs\NextMenu.cs" />
         <Compile Include="HarmonyPatchs\NpcJieSuanManagerPatch.cs" />
         <Compile Include="HarmonyPatchs\RandomFuBenAwake.cs" />
         <Compile Include="MyPlugin.cs" />

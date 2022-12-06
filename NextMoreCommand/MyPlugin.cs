@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using BepInEx;
+using FairyGUI;
 using HarmonyLib;
 using SkySwordKill.Next;
 using SkySwordKill.Next.DialogEvent;
@@ -8,29 +9,47 @@ using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.Next.Mod;
 using SkySwordKill.NextMoreCommand.Attribute;
 using SkySwordKill.NextMoreCommand.CustomMap;
+using SkySwordKill.NextMoreCommand.CustomModDebug;
+using SkySwordKill.NextMoreCommand.CustomModDebug.NextMoreCore;
+using UnityEngine;
+using Input = UnityEngine.Input;
 
 namespace SkySwordKill.NextMoreCommand
 {
-    [BepInDependency("skyswordkill.plugin.Next",BepInDependency.DependencyFlags.HardDependency)]
+    [BepInDependency("skyswordkill.plugin.Next", BepInDependency.DependencyFlags.HardDependency)]
     [BepInPlugin("skyswordkill.plugin.NextMoreCommand", "NextMoreCommand", "1.0.2")]
     public class MyPlugin : BaseUnityPlugin
     {
         private void Awake()
         {
-          
             // 注册事件
             RegisterCommand();
-            //RegisterEnv();
             RegisterCustomModSetting();
             RegisterCustomMapType();
             new Harmony("skyswordkill.plugin.NextMoreCommand").PatchAll();
             ModManager.ModLoadStart += () => CustomMapManager.Clear();
+            NextMoreCoreBinder.BindAll();
         }
 
         private void Start()
         {
             ModCustomMapTypeConverter.Init();
         }
+
+        // private void Update()
+        // {
+        //     if (Input.GetKeyDown(KeyCode.K))
+        //     {
+        //         if (ModDialogDebugWindow.Instance == null)
+        //         {
+        //             new ModDialogDebugWindow().Show();
+        //         }
+        //         else
+        //         {
+        //             ModDialogDebugWindow.Instance.Hide();
+        //         }
+        //     }
+        // }
 
         private void RegisterCustomModSetting()
         {
@@ -55,6 +74,7 @@ namespace SkySwordKill.NextMoreCommand
             Main.LogInfo($"注册自定义Mod设置完毕.");
             Main.LogInfo(init);
         }
+
         private void RegisterCustomMapType()
         {
             var registerCommandType = typeof(MapTypeAttribute);
@@ -80,7 +100,8 @@ namespace SkySwordKill.NextMoreCommand
             Main.LogInfo($"注册自定义Mod设置完毕.");
             Main.LogInfo(init);
         }
-        private  void RegisterCommand()
+
+        private void RegisterCommand()
         {
             var registerCommandType = typeof(RegisterCommandAttribute);
             var types = Assembly.GetAssembly(registerCommandType).GetTypes();
@@ -103,6 +124,5 @@ namespace SkySwordKill.NextMoreCommand
             Main.LogInfo($"注册指令完毕.");
             Main.LogInfo(init);
         }
-
     }
 }

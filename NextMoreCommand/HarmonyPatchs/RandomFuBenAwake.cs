@@ -85,15 +85,15 @@ public class MapControl : MonoBehaviour
     }
 }
 
-[HarmonyPatch(typeof(RandomFuBen), "Awake")]
-public static class RandomFuBenAwake
-{
-    public static void Postfix(RandomFuBen __instance)
-    {
-        Main.LogInfo("RandomFuBen");
-        if (__instance.GetComponent<MapControl>() == null && RandomFuBen.IsInRandomFuBen)
-        {
-            __instance.gameObject.AddComponent<MapControl>();
-        }
-    }
-}
+// [HarmonyPatch(typeof(RandomFuBen), "Awake")]
+// public static class RandomFuBenAwake
+// {
+//     public static void Postfix(RandomFuBen __instance)
+//     {
+//         Main.LogInfo("RandomFuBen");
+//         if (__instance.GetComponent<MapControl>() == null && RandomFuBen.IsInRandomFuBen)
+//         {
+//             __instance.gameObject.AddComponent<MapControl>();
+//         }
+//     }
+// }

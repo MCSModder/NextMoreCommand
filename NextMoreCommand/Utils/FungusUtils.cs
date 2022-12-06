@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Fungus;
+using SkySwordKill.Next;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.NextMoreCommand.Utils;
 using UnityEngine;
@@ -112,13 +113,14 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 {
                     gameObject.AddComponent<PlayFlowchart>();
                 }
-
+                Main.LogInfo("GameObject.Find");
                 return gameObject.GetComponentInChildren<Flowchart>();
             }
 
             if (Flowcharts.ContainsKey(key))
             {
                 Flowcharts[key].GetFlowchart();
+                Main.LogInfo("Flowcharts[key].GetFlowchart();");
                 return Flowcharts[key].Flowchart;
             }
 
@@ -128,6 +130,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 var nextFlowchart = new NextFlowchart(gameObject.GetComponentInChildren<Flowchart>());
                 Flowcharts.Add(nextFlowchart.Name, nextFlowchart);
                 nextFlowchart.GetFlowchart();
+                Main.LogInfo("Resources.Load<GameObject>(talkPrefab/TalkPrefab/{key});");
                 return nextFlowchart.Flowchart;
             }
 

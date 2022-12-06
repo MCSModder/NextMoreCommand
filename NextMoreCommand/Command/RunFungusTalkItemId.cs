@@ -52,6 +52,7 @@ namespace SkySwordKill.NextMoreCommand.Command
                         $"FungusEvent : 跳转FungusBlock {FungusUtils.TalkBlockName} ItemId:{FungusUtils.TalkItemId.ToString()} index:{index.ToString()} ");
                     return true;
                 };
+                FungusUtils.isTalkActive = true;
             }
 
 
