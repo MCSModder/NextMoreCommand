@@ -3,13 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using FairyGUI;
 using HarmonyLib;
+using KBEngine;
+using script.NewLianDan;
+using script.Submit;
 using SkySwordKill.Next;
 using SkySwordKill.Next.DialogEvent;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.Next.FGUI;
 using SkySwordKill.Next.FGUI.Component;
+using SkySwordKill.Next.Mod;
 using SkySwordKill.NextMoreCommand.CustomModDebug.NextMoreCore;
+using Tab;
 using UnityEngine;
+using YSGame;
 
 namespace SkySwordKill.NextMoreCommand.CustomModDebug;
 
@@ -100,6 +106,8 @@ public class ModDialogDebugWindow : FGUIWindowBase
         MainView.m_command.m_resetState.m_resetState.templateVars = _tempVar;
 
         MainView.m_debugText.templateVars = _tempVar;
+        MainView.m_debugBar.m_commandButton.visible = _isGame;
+        MainView.m_debugBar.m_dramaIdButton.visible = _isGame;
 
         SetState(DebugMode.Value && _isGame ? CurrentState : DramaState.None);
     }
@@ -130,19 +138,72 @@ public class ModDialogDebugWindow : FGUIWindowBase
 
             SetState(DebugMode.Value && _isGame ? _currentState : DramaState.None);
         }));
-        MainView.m_debugBar.m_commandButton.visible = false;
-        MainView.m_debugBar.m_commandButton.onClick.Add((() =>
-        {
-            CurrentState = DramaState.Command;
-            SetState(DebugMode.Value && _isGame ? _currentState : DramaState.None);
-            _tempVar["debugname"] = "指令";
-            _tempVar["gametext"] = _isGame ? string.Empty : "未开始游戏";
-        }));
+        MainView.m_debugBar.m_dramaIdButton.title = "返回标题";
         MainView.m_debugBar.m_dramaIdButton.onClick.Add((() =>
         {
-            CurrentState = DramaState.Drama;
-            _tempVar["debugname"] = "剧情";
-            _tempVar["gametext"] = _isGame ? string.Empty : "未开始游戏";
+            TySelect.inst.Show("是否要返回主界面？", delegate
+            {
+                if (FpUIMag.inst != null)
+                {
+                    UnityEngine.Object.Destroy(FpUIMag.inst.gameObject);
+                }
+                if (TpUIMag.inst != null)
+                {
+                    UnityEngine.Object.Destroy(TpUIMag.inst.gameObject);
+                }
+                if (SubmitUIMag.Inst != null)
+                {
+                    SubmitUIMag.Inst.Close();
+                }
+                if (LianDanUIMag.Instance != null)
+                {
+                    UnityEngine.Object.Destroy(LianDanUIMag.Instance.gameObject);
+                }
+                if (LianQiTotalManager.inst != null)
+                {
+                    UnityEngine.Object.Destroy(LianQiTotalManager.inst.gameObject);
+                }
+                SingletonMono<TabUIMag>.Instance.TryEscClose();
+                YSSaveGame.Reset();
+                KBEngineApp.app.entities[10] = null;
+                KBEngineApp.app.entities.Remove(10);
+                Tools.instance.loadOtherScenes("MainMenu");
+            }, null, true);
+        }));
+        
+        MainView.m_debugBar.m_commandButton.title = "返回标题并重载next";
+        MainView.m_debugBar.m_commandButton.width = 150f;
+        MainView.m_debugBar.m_commandButton.onClick.Add((() =>
+        {
+            TySelect.inst.Show("是否要返回主界面并重载NextMod？", delegate
+            {
+                if (FpUIMag.inst != null)
+                {
+                    UnityEngine.Object.Destroy(FpUIMag.inst.gameObject);
+                }
+                if (TpUIMag.inst != null)
+                {
+                    UnityEngine.Object.Destroy(TpUIMag.inst.gameObject);
+                }
+                if (SubmitUIMag.Inst != null)
+                {
+                    SubmitUIMag.Inst.Close();
+                }
+                if (LianDanUIMag.Instance != null)
+                {
+                    UnityEngine.Object.Destroy(LianDanUIMag.Instance.gameObject);
+                }
+                if (LianQiTotalManager.inst != null)
+                {
+                    UnityEngine.Object.Destroy(LianQiTotalManager.inst.gameObject);
+                }
+                SingletonMono<TabUIMag>.Instance.TryEscClose();
+                YSSaveGame.Reset();
+                KBEngineApp.app.entities[10] = null;
+                KBEngineApp.app.entities.Remove(10);
+                Tools.instance.loadOtherScenes("MainMenu");
+                ModManager.ReloadAllMod();
+            }, null, true);
         }));
     }
 

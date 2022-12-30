@@ -1,18 +1,22 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using BepInEx;
 using FairyGUI;
 using HarmonyLib;
+using JSONClass;
 using SkySwordKill.Next;
 using SkySwordKill.Next.DialogEvent;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.Next.Mod;
 using SkySwordKill.NextMoreCommand.Attribute;
-using SkySwordKill.NextMoreCommand.CustomMap;
+using SkySwordKill.NextMoreCommand.Custom;
 using SkySwordKill.NextMoreCommand.CustomModDebug;
 using SkySwordKill.NextMoreCommand.CustomModDebug.NextMoreCore;
 using SkySwordKill.NextMoreCommand.Utils;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using YSGame.TuJian;
 using Input = UnityEngine.Input;
 
 namespace SkySwordKill.NextMoreCommand
@@ -22,44 +26,58 @@ namespace SkySwordKill.NextMoreCommand
     public class MyPlugin : BaseUnityPlugin
     {
         private KeyCode DramaDebugKey;
+        private KeyCode AchivementDebugKey;
+
         private void Awake()
         {
             // 注册事件
             RegisterCommand();
             RegisterCustomModSetting();
-            RegisterCustomMapType();
             new Harmony("skyswordkill.plugin.NextMoreCommand").PatchAll();
-            ModManager.ModLoadStart += () => CustomMapManager.Clear();
             NextMoreCoreBinder.BindAll();
-            ModManager.ModSettingChanged +=() =>
+            ModManager.ModSettingChanged += () =>
             {
                 ModManagerUtils.TryGetModSetting("Quick_DramaDebugKey", out DramaDebugKey);
+                ModManagerUtils.TryGetModSetting("Quick_AchivementDebugKey", out AchivementDebugKey);
             };
             ModManager.ModLoadComplete += () =>
             {
                 ModManagerUtils.TryGetModSetting("Quick_DramaDebugKey", out DramaDebugKey);
+                ModManagerUtils.TryGetModSetting("Quick_AchivementDebugKey", out AchivementDebugKey);
             };
         }
 
         private void Start()
         {
-            ModCustomMapTypeConverter.Init();
         }
 
-       private void Update()
-       {
-           if (Input.GetKeyDown(DramaDebugKey))
-           {
-               if (ModDialogDebugWindow.Instance == null)
-               {
-                   new ModDialogDebugWindow().Show();
-               }
-               else
-               {
-                   ModDialogDebugWindow.Instance.Hide();
-               }
-           }
-       }
+        private void Update()
+        {
+            if (Input.GetKeyDown(DramaDebugKey))
+            {
+                if (ModDialogDebugWindow.Instance == null)
+                {
+                    new ModDialogDebugWindow().Show();
+                }
+                else
+                {
+                    ModDialogDebugWindow.Instance.Hide();
+                }
+            }
+
+            if (Input.GetKeyDown(AchivementDebugKey))
+            {
+                var list = CreateAvatarJsonData.DataList.Where(json => !string.IsNullOrWhiteSpace(json.UnlockKey));
+                foreach (var json in list)
+                {
+                    if (!TuJianManager.Inst.IsUnlockedSpecialEvent(json.UnlockKey))
+                    {
+                        Logger.LogInfo(json.UnlockKey);
+                        TuJianManager.Inst.UnlockSpecialEvent(json.UnlockKey);
+                    }
+                }
+            }
+        }
 
         private void RegisterCustomModSetting()
         {
@@ -85,31 +103,7 @@ namespace SkySwordKill.NextMoreCommand
             Main.LogInfo(init);
         }
 
-        private void RegisterCustomMapType()
-        {
-            var registerCommandType = typeof(MapTypeAttribute);
-            var types = Assembly.GetAssembly(registerCommandType).GetTypes();
-            var init = "".PadLeft(25, '=');
-            Main.LogInfo(init);
-            Main.LogInfo($"注册自定义Mod设置开始.");
-            Main.LogInfo(init);
-            foreach (var type in types)
-            {
-                if (type.GetCustomAttributes(registerCommandType, true).Length > 0)
-                {
-                    var cEvent = Activator.CreateInstance(type) as ModCustomMapType;
-                    Main.LogInfo($"注册自定义Mod设置: {type.Name}");
-                    Main.LogInfo($"注册自定义Mod设置: {cEvent}");
-                    Main.LogInfo(init);
-                    var custom = type.GetCustomAttribute<MapTypeAttribute>();
-                    CustomMapManager.MapType[custom.Type] = cEvent;
-                    CustomMapManager.ChineseMapType[custom.ChineseType] = custom.Type;
-                }
-            }
-
-            Main.LogInfo($"注册自定义Mod设置完毕.");
-            Main.LogInfo(init);
-        }
+      
 
         private void RegisterCommand()
         {
