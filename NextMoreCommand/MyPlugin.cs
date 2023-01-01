@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using BepInEx;
-using FairyGUI;
 using HarmonyLib;
 using JSONClass;
 using SkySwordKill.Next;
@@ -10,12 +10,12 @@ using SkySwordKill.Next.DialogEvent;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.Next.Mod;
 using SkySwordKill.NextMoreCommand.Attribute;
-using SkySwordKill.NextMoreCommand.Custom;
 using SkySwordKill.NextMoreCommand.CustomModDebug;
 using SkySwordKill.NextMoreCommand.CustomModDebug.NextMoreCore;
 using SkySwordKill.NextMoreCommand.Utils;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using YSGame.TuJian;
 using Input = UnityEngine.Input;
 
@@ -26,10 +26,12 @@ namespace SkySwordKill.NextMoreCommand
     public class MyPlugin : BaseUnityPlugin
     {
         private KeyCode DramaDebugKey;
-        private KeyCode AchivementDebugKey;
+
 
         private void Awake()
         {
+         
+       
             // 注册事件
             RegisterCommand();
             RegisterCustomModSetting();
@@ -38,18 +40,13 @@ namespace SkySwordKill.NextMoreCommand
             ModManager.ModSettingChanged += () =>
             {
                 ModManagerUtils.TryGetModSetting("Quick_DramaDebugKey", out DramaDebugKey);
-                ModManagerUtils.TryGetModSetting("Quick_AchivementDebugKey", out AchivementDebugKey);
             };
             ModManager.ModLoadComplete += () =>
             {
                 ModManagerUtils.TryGetModSetting("Quick_DramaDebugKey", out DramaDebugKey);
-                ModManagerUtils.TryGetModSetting("Quick_AchivementDebugKey", out AchivementDebugKey);
             };
         }
-
-        private void Start()
-        {
-        }
+        
 
         private void Update()
         {
@@ -62,19 +59,6 @@ namespace SkySwordKill.NextMoreCommand
                 else
                 {
                     ModDialogDebugWindow.Instance.Hide();
-                }
-            }
-
-            if (Input.GetKeyDown(AchivementDebugKey))
-            {
-                var list = CreateAvatarJsonData.DataList.Where(json => !string.IsNullOrWhiteSpace(json.UnlockKey));
-                foreach (var json in list)
-                {
-                    if (!TuJianManager.Inst.IsUnlockedSpecialEvent(json.UnlockKey))
-                    {
-                        Logger.LogInfo(json.UnlockKey);
-                        TuJianManager.Inst.UnlockSpecialEvent(json.UnlockKey);
-                    }
                 }
             }
         }
@@ -103,7 +87,6 @@ namespace SkySwordKill.NextMoreCommand
             Main.LogInfo(init);
         }
 
-      
 
         private void RegisterCommand()
         {
