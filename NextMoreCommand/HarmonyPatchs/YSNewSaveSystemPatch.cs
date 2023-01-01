@@ -2,6 +2,7 @@
 using System.IO;
 using HarmonyLib;
 using Newtonsoft.Json.Linq;
+using SkySwordKill.Next;
 using SkySwordKill.NextMoreCommand.Utils;
 
 namespace SkySwordKill.NextMoreCommand.HarmonyPatchs;
@@ -19,7 +20,9 @@ public static class YsNewSaveSystemLoadPatch
             return null;
         }
 
-        return JObject.Parse(File.ReadAllText(path));
+        var text = File.ReadAllText(path);
+        Main.LogInfo(text);
+        return string.IsNullOrWhiteSpace(text)?null:JObject.Parse(text);
     }
 
     public static void Postfix(int avatarIndex, int slot, int DFIndex)

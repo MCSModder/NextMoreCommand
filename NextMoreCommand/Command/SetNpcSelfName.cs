@@ -5,14 +5,12 @@ using SkySwordKill.NextMoreCommand.Utils;
 
 namespace SkySwordKill.NextMoreCommand.Command;
 
-[DialogEvent("SetNpcName")]
-public class SetNpcName : IDialogEvent
+[DialogEvent("SetNpcSelfName")]
+public class SetNpcSelfName : IDialogEvent
 {
-
-
     public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
     {
-      var   npcId = command.GetInt(0, -1);
+        var npcId = command.GetInt(0, -1);
         if (npcId <= 0)
         {
             if (env.roleID <= 0)
@@ -31,7 +29,7 @@ public class SetNpcName : IDialogEvent
 
     private void OpenInput(int npcId)
     {
-        UInputBox.Show($"给{DialogAnalysis.GetNpcName(npcId)}设置名字", (name) =>
+        UInputBox.Show($"设定{DialogAnalysis.GetNpcName(npcId)}的自称", (name) =>
         {
             var lenght = name.Length;
 
@@ -42,9 +40,7 @@ public class SetNpcName : IDialogEvent
                 return;
             }
 
-            NpcUtils.SetNpcName(npcId, name);
-
+            NpcUtils.SelfNameDict[npcId] = name;
         });
     }
-
 }

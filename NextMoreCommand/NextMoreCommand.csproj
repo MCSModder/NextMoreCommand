@@ -132,7 +132,7 @@
         <Compile Include="Command\RunFungusTalkItemId.cs" />
         <Compile Include="Command\RunTempFlowchart.cs" />
         <Compile Include="Command\SetNewTask.cs" />
-        <Compile Include="Command\SetSelfName.cs" />
+        <Compile Include="Command\SetNpcSelfName.cs" />
         <Compile Include="Command\SetNpcDeath.cs" />
         <Compile Include="Command\SetNpcName.cs" />
         <Compile Include="Command\SetNpcTeleport.cs" />
@@ -173,6 +173,7 @@
         <Compile Include="EnvExtension\HasTianFu.cs" />
         <Compile Include="EnvExtension\GetUseSkillID.cs" />
         <Compile Include="HarmonyPatchs\CheckTaskIsOutOnEnter.cs" />
+        <Compile Include="HarmonyPatchs\FungusSayPatch.cs" />
         <Compile Include="HarmonyPatchs\ModManagerLoadModData.cs" />
         <Compile Include="HarmonyPatchs\NpcJieSuanManagerPatch.cs" />
         <Compile Include="HarmonyPatchs\PathsPatch.cs" />

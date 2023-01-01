@@ -8,6 +8,57 @@ namespace SkySwordKill.NextMoreCommand.Utils
     public static class NpcUtils
     {
         public static Dictionary<int, string> SelfNameDict = new Dictionary<int, string>();
+        public static JSONObject AvatarRandomJsonData => jsonData.instance.AvatarRandomJsonData;
+        public static JSONObject AvatarJsonData => jsonData.instance.AvatarJsonData;
+        public static bool IsNpc(int id) => NPCEx.NPCIDToNew(id) <= 1;
+        public static bool IsNpc(string id) => IsNpc(Convert.ToInt32(id));
+
+        public static JSONObject GetNpcData(string npcId)
+        {
+            var num = Convert.ToInt32(npcId);
+            if (IsNpc(npcId))
+            {
+                return null;
+            }
+
+            return GetNpcData(num);
+        }
+        
+        public static JSONObject GetNpcData(int npcId)
+        {
+            var num = NPCEx.NPCIDToNew(npcId);
+            if (num <= 1)
+            {
+                return null;
+            }
+
+            var id = num.ToString();
+            JSONObject jsonObject = null;
+            if (jsonData.instance != null)
+            {
+                if (AvatarRandomJsonData.HasField(id))
+                {
+                    jsonObject = AvatarRandomJsonData[id];
+                }
+                else if (AvatarJsonData.HasField(id))
+                {
+                    jsonObject = AvatarJsonData[id];
+                }
+            }
+            return jsonObject;
+        }
+
+        public static bool SetNpcName(string id, string name) => IsNpc(id) && SetNpcName(id, name);
+        public static bool SetNpcName(int id, string name)
+        {
+            var npc = GetNpcData(id);
+            if (npc == null)
+            {
+                return false;
+            }
+            npc.SetField("Name",name);
+            return true;
+        }
 
         public static string GetSelfName(string id)
         {
@@ -38,10 +89,10 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 return false;
             }
 
-            return SetNickname(npcId, name);
+            return SetSelfName(npcId, name);
         }
 
-        public static bool SetNickname(int id, string name)
+        public static bool SetSelfName(int id, string name)
         {
             SelfNameDict[id] = name;
             return true;
