@@ -12,8 +12,7 @@ public static class FungusSayPatch
     {
         return text.Replace("我们", "{{WE}}").Replace("我",name).Replace("{{WE}}","我们");
     }
-    private static string originText;
-    private static Regex _regex = new Regex("我[^们]?");
+    private static string _originText;
     private static Traverse _say;
     public static void Prefix(Say __instance)
     {
@@ -22,21 +21,24 @@ public static class FungusSayPatch
         if (NpcUtils.SelfNameDict.TryGetValue(npcId,out var value))
         {
             var storyText = _say.Field<string>("storyText");
-            originText = storyText.Value;
-            storyText.Value = originText.ReplaceSelfName( value);
+            _originText = storyText.Value;
+            storyText.Value = _originText.ReplaceSelfName( value);
         }
     }
 
     public static void Postfix()
     {
-        if (string.IsNullOrWhiteSpace(originText) || _say == null)
+        if ( _say != null)
         {
-            _say = null;
-            return;
+            var storyText = _say.Field<string>("storyText");
+            if (!string.IsNullOrWhiteSpace(_originText))
+            {
+                storyText.Value = _originText;
+            }
+            
+          
         }
-        var storyText = _say.Field<string>("storyText");
-        storyText.Value = originText;
-        originText = string.Empty;
+        _originText = string.Empty;
         _say = null;
     }
 }
