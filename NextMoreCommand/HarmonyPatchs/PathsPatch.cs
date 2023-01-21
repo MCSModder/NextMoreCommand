@@ -7,7 +7,7 @@ public static class PathsPatch
 {
     public static void Prefix()
     {
-        if (clientApp.IsTestVersion && NextMoreCommandBeta.instance == null)
+        if (NextMoreCommandBeta.instance == null)
         {
             var go  = new GameObject(nameof(NextMoreCommandBeta));
             go.AddComponent<NextMoreCommandBeta>();

@@ -1,6 +1,7 @@
 ﻿using GUIPackage;
 using SkySwordKill.Next;
 using SkySwordKill.Next.DialogSystem;
+using SkySwordKill.NextMoreCommand.Custom.SkillCombo;
 using SkySwordKill.NextMoreCommand.Utils;
 
 namespace SkySwordKill.NextMoreCommand.EnvExtension
@@ -15,14 +16,13 @@ namespace SkySwordKill.NextMoreCommand.EnvExtension
             MyLog.FungusLog($"触发GetUseSkillID skillID:{skillID.ToString()}");
             var customData = context.Env.customData;
             customData.TryGetValue("CurSkill", out object cSkill);
-            MyLog.FungusLog($"cSkill:{cSkill.ToString()}");
             var curSkill = cSkill as Skill;
-            MyLog.FungusLog($"curSkill:{cSkill.ToString()}");
-            if (curSkill == null)
+            if (cSkill == null ||curSkill == null )
             {
                 return false; 
             }
-            var skill = curSkill.SkillID;
+          
+            var skill = SkillComboManager.GetSkillId(curSkill.skill_ID);
             MyLog.FungusLog($"skillID:{skillID.ToString()} curSkill:{skill.ToString()}");
             return (skillID == skill) as object;
         }

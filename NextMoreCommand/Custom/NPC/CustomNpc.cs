@@ -180,4 +180,9 @@ public class CustomNpc
         CustomBackPack.BackpackName = CustomBackPack.BackpackName.IsNull(Name);
         return CustomBackPack.ToJObject();
     }
+
+    public override string ToString()
+    {
+        return JObject.FromObject(this).ToString(Formatting.Indented);
+    }
 }

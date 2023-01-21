@@ -160,6 +160,10 @@
         <Compile Include="Custom\NPC\CustomBase.cs" />
         <Compile Include="Custom\NPC\CustomWujiang.cs" />
         <Compile Include="Custom\NPC\SexType.cs" />
+        <Compile Include="Custom\SkillCombo\CacheSkillCombo.cs" />
+        <Compile Include="Custom\SkillCombo\SkillCombo.cs" />
+        <Compile Include="Custom\SkillCombo\SkillComboData.cs" />
+        <Compile Include="Custom\SkillCombo\SkillComboManager.cs" />
         <Compile Include="DialogTrigger\OnRound.cs" />
         <Compile Include="EnvExtension\GetAvatarJsonData.AvatarJsonData.cs" />
         <Compile Include="EnvExtension\GetAvatarJsonData.cs" />
@@ -169,14 +173,14 @@
         <Compile Include="EnvExtension\GetNpcMoney.cs" />
         <Compile Include="EnvExtension\GetNpcName.cs" />
         <Compile Include="EnvExtension\GetNpcSelfName.cs" />
-        <Compile Include="EnvExtension\GetStaticSkill.cs" />
+        <Compile Include="EnvExtension\GetStaticSkillLevel.cs" />
         <Compile Include="EnvExtension\HasTianFu.cs" />
         <Compile Include="EnvExtension\GetUseSkillID.cs" />
         <Compile Include="HarmonyPatchs\CheckTaskIsOutOnEnter.cs" />
-        <Compile Include="HarmonyPatchs\FungusSayPatch.cs" />
         <Compile Include="HarmonyPatchs\ModManagerLoadModData.cs" />
         <Compile Include="HarmonyPatchs\NpcJieSuanManagerPatch.cs" />
         <Compile Include="HarmonyPatchs\PathsPatch.cs" />
+        <Compile Include="HarmonyPatchs\TuJianManagerIsUnlockedSpecialEventPatch.cs" />
         <Compile Include="HarmonyPatchs\YSNewSaveSystemPatch.cs" />
         <Compile Include="MyPlugin.cs" />
         <Compile Include="NextMoreCommandBeta.cs" />

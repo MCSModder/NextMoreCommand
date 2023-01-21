@@ -11,42 +11,18 @@ namespace SkySwordKill.NextMoreCommand;
 public class NextMoreCommandBeta : MonoBehaviour
 {
     public static NextMoreCommandBeta instance;
-    private KeyCode AchivementDebugKey;
-    private Traverse _tuJianManager;
+    public bool AchivementDebug;
     private void Awake()
     {
         instance = this;
-        ModManagerUtils.TryGetModSetting("Quick_AchivementDebugKey", out AchivementDebugKey);
+        ModManager.TryGetModSetting("Quick_AchivementDebug", out AchivementDebug);
         ModManager.ModSettingChanged += () =>
         {
-            ModManagerUtils.TryGetModSetting("Quick_AchivementDebugKey", out AchivementDebugKey);
+            ModManager.TryGetModSetting("Quick_AchivementDebug", out AchivementDebug);
         };
         ModManager.ModLoadComplete += () =>
         {
-            ModManagerUtils.TryGetModSetting("Quick_AchivementDebugKey", out AchivementDebugKey);
+            ModManager.TryGetModSetting("Quick_AchivementDebug", out AchivementDebug);
         };
-        _tuJianManager = Traverse.Create(TuJianManager.Inst);
-    }
-    private void Update()
-    {
-
-
-        if (Input.GetKeyDown(AchivementDebugKey))
-        {
-        
-            foreach (var jsonObject in jsonData.instance.CreateAvatarJsonData.list)
-            {
-                    
-                if (!jsonObject.HasField("UnlockKey")|| string.IsNullOrWhiteSpace(jsonObject["UnlockKey"].str)) continue;
-                var key = jsonObject["UnlockKey"].str;
-                Main.LogInfo(key);
-                var method = _tuJianManager.Method("UnlockSpecialEvent",  key );
-                if (method.MethodExists())
-                {
-                    method.GetValue();
-                }
-                TuJianManager.Inst.Save();
-            }
-        }
     }
 }

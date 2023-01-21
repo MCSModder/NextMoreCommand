@@ -1,6 +1,7 @@
 ﻿using GUIPackage;
 using SkySwordKill.Next;
 using SkySwordKill.Next.DialogSystem;
+using SkySwordKill.NextMoreCommand.Custom.SkillCombo;
 
 namespace SkySwordKill.NextMoreCommand.EnvExtension
 {
@@ -16,15 +17,15 @@ namespace SkySwordKill.NextMoreCommand.EnvExtension
                 return string.Empty as object;
             }
 
-            context.Env.customData.TryGetValue("CurSkill", out object cSkill);
+            context.Env.customData.TryGetValue("CurSkill", out var cSkill);
             var curSkill=cSkill as Skill;
             if (curSkill == null)
             {
                 return string.Empty as object;
             }
 
-            var result = curSkill.skill_Name;
-            return result as object;
+    
+            return SkillComboManager.GetSkillName(curSkill.skill_ID) as object;
         }
     }
 }

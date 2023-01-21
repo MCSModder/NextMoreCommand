@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using SkySwordKill.Next.DialogSystem;
+using SkySwordKill.NextMoreCommand.Custom.SkillCombo;
 using SkySwordKill.NextMoreCommand.Utils;
 
 namespace SkySwordKill.NextMoreCommand.DialogTrigger
@@ -21,11 +22,17 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
         
         #region 触发器
 
-        
-        private static bool TryTrigger(params string[] param)=> DialogAnalysis.TryTrigger(param,NewEnv,true);
+
+        private static bool TryTrigger(params string[] param)=>TryTrigger(NewEnv,true,param);
         private static bool TryTrigger(DialogEnvironment env,params string[] param)=> DialogAnalysis.TryTrigger(param,env);
         private static bool TryTrigger(bool triggerAll,params string[] param)=> DialogAnalysis.TryTrigger(param,NewEnv,triggerAll);
-        private static bool TryTrigger(DialogEnvironment env,bool triggerAll,params string[] param)=> DialogAnalysis.TryTrigger(param,env,triggerAll);
+
+        private static bool TryTrigger(DialogEnvironment env, bool triggerAll, params string[] param)
+        { 
+         SkillComboManager.TryTriggerSkill(env, triggerAll,param);
+         SkillComboManager.TryTrigger(env, triggerAll,param);
+         return DialogAnalysis.TryTrigger(param,env,triggerAll);
+        }
 
         #endregion
 
@@ -103,6 +110,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
     {
         public static void Postfix()
         {
+            SkillComboManager.CacheSkillCombos.Clear();
             if (RoundUtils.FightFinish())
             {
                 MyLog.FungusLog("进入结束战斗触发器");

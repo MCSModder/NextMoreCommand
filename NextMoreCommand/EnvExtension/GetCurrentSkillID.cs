@@ -13,7 +13,7 @@ namespace SkySwordKill.NextMoreCommand.EnvExtension
         {
             MyLog.FungusLog($"触发GetCurrentSkillID");
             var customData = context.Env.customData;
-            customData.TryGetValue("CurSkill", out object cSkill);
+            customData.TryGetValue("CurSkill", out var cSkill);
             var curSkill=cSkill as Skill;
             if (curSkill == null)
             {

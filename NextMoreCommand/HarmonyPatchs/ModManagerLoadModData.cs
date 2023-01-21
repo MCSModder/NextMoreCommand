@@ -15,6 +15,7 @@ using SkySwordKill.Next.Extension;
 using SkySwordKill.Next.Mod;
 using SkySwordKill.NextMoreCommand.Custom;
 using SkySwordKill.NextMoreCommand.Custom.NPC;
+using SkySwordKill.NextMoreCommand.Custom.SkillCombo;
 using SkySwordKill.NextMoreCommand.Utils;
 
 namespace SkySwordKill.NextMoreCommand.HarmonyPatchs;
@@ -41,6 +42,7 @@ public static class ModManagerLoadModData
 
     private static void CreateTemplateTest(string dir)
     {
+      
         Main.LogInfo("创建警花测试");
         var npc = new CustomNpc()
         {
@@ -57,24 +59,44 @@ public static class ModManagerLoadModData
         npc.Init();
         //npc.Init();
         File.WriteAllText(dir.CombinePath("天宫警花.json"),
-            JObject.FromObject(npc).ToString(Formatting.Indented));
-        // MiniExcel.SaveAsAsync(dir.CombinePath("CustomNpc.xlsx"), new List<CustomNpc> { npc }, excelType: ExcelType.XLSX,
-        //  overwriteFile: true);
+            npc.ToString());
     }
 
 
     public static void Prefix(ModConfig modConfig)
     {
+        var isWorkshop = modConfig.Path.Contains("workshop\\content\\1189490");
         var modNDataDirDir = modConfig.GetNDataDir();
 
-        if (HasPath(modNDataDirDir.CombinePath("CustomNpc")))
+        if (HasPath(modNDataDirDir.CombinePath("CustomNpc")) && !isWorkshop)
         {
-            // if (modConfig.Name.Contains("天宫镜花")) CreateTemplateTest(modNDataDirDir.CombinePath("CustomNpc"));
-            Main.LogInfo($"=================== NextMore开始加载 =====================");
+             //if (modConfig.Name.Contains("天宫镜花")) CreateTemplateTest(modNDataDirDir.CombinePath("CustomNpc"));
+            Main.LogInfo($"=================== NextMore开始生成 =====================");
             Main.LogIndent = 2;
             try
             {
                 LoadCustomNpcData(modNDataDirDir, modConfig);
+            }
+            catch (Exception)
+            {
+                modConfig.State = ModState.LoadFail;
+                throw;
+            }
+
+            modConfig.State = ModState.LoadSuccess;
+            Main.LogIndent = 0;
+           
+
+            Main.LogInfo($"=================== NextMore结束生成 =====================");
+        }
+
+        if (HasPath(modNDataDirDir.CombinePath("CustomSkillCombo")))
+        {
+            Main.LogInfo($"=================== NextMore开始加载 =====================");
+            Main.LogIndent = 2;
+            try
+            {
+                LoadCustomSkillComboData(modNDataDirDir, modConfig);
             }
             catch (Exception)
             {
@@ -101,6 +123,33 @@ public static class ModManagerLoadModData
     // ReSharper disable once HeapView.DelegateAllocation
     public static void LoadCustomNpcData(string modDir, ModConfig modConfig) =>
         LoadData(modDir, "CustomNpc", modConfig, LoadCustomNpc);
+    public static void LoadCustomSkillComboData(string modDir, ModConfig modConfig) =>
+        LoadData(modDir, "CustomSkillCombo", modConfig, LoadCustomSkillCombo);
+
+    private static void LoadCustomSkillCombo(string path, ModConfig modConfig)
+    {
+        foreach (var filePath in Directory.GetFiles(path, "*.json", SearchOption.AllDirectories))
+        {
+            try
+            {
+                var json = File.ReadAllText(filePath);
+
+                var skill = JObject.Parse(json)?.ToObject<SkillCombo>();
+                if (skill == null)
+                {
+                    continue;
+                }
+
+                SkillComboManager.SkillCombos[skill.SkillName] = skill;
+                Main.LogInfo(string.Format("ModManager.LoadData".I18N(),
+                    filePath));
+            }
+            catch (Exception e)
+            {
+                throw new ModLoadException(string.Format("CustomSkillCombo {0} 加载失败。".I18NTodo(), filePath), e);
+            }
+        }
+    }
 
     public static void LoadCustomNpc(string path, ModConfig modConfig)
     {
@@ -219,13 +268,13 @@ public static class ModManagerLoadModData
             var file= jObject.ToObject<Dictionary<string,JObject>>();
             if (file != null)
             {
-                Main.LogInfo(jObject);
+              //  Main.LogInfo(jObject);
             
                 foreach (var item in file)
                 {
                     if (!dictionary.ContainsKey(item.Key))
                     {
-                        Main.LogInfo(item.Value);
+                     //   Main.LogInfo(item.Value);
                         dictionary.Add(item.Key,item.Value);
                     }
           

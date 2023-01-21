@@ -118,6 +118,10 @@ public class CustomNpcAvatar : CustomBase
         }
     }
 
+    public void SetLingGen(int gold = 10,int wood= 10,int water= 10,int fire= 10,int earth= 10)
+    {
+        LingGen = new List<int>() { gold, wood, water, fire, earth };
+    }
     public override JObject ToJObject()
     {
         var avatar = new AvatarJsonData()
