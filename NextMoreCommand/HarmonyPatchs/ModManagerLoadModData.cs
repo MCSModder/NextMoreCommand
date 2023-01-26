@@ -13,9 +13,9 @@ using SkySwordKill.Next.DialogEvent;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.Next.Extension;
 using SkySwordKill.Next.Mod;
-using SkySwordKill.NextMoreCommand.Custom;
 using SkySwordKill.NextMoreCommand.Custom.NPC;
 using SkySwordKill.NextMoreCommand.Custom.SkillCombo;
+using SkySwordKill.NextMoreCommand.Custom;
 using SkySwordKill.NextMoreCommand.Utils;
 
 namespace SkySwordKill.NextMoreCommand.HarmonyPatchs;
@@ -139,7 +139,7 @@ public static class ModManagerLoadModData
                 {
                     continue;
                 }
-
+                skill.Init();
                 SkillComboManager.SkillCombos[skill.SkillName] = skill;
                 Main.LogInfo(string.Format("ModManager.LoadData".I18N(),
                     filePath));

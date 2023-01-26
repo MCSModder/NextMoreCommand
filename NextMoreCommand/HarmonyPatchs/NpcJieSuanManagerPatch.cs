@@ -10,8 +10,8 @@ using Newtonsoft.Json.Linq;
 using SkySwordKill.Next;
 using SkySwordKill.Next.Extension;
 using SkySwordKill.Next.Mod;
-using SkySwordKill.NextMoreCommand.Custom;
 using SkySwordKill.NextMoreCommand.Utils;
+using SkySwordKill.NextMoreCommand.Custom;
 
 namespace SkySwordKill.NextMoreCommand.HarmonyPatchs
 {

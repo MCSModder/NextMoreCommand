@@ -16,14 +16,14 @@ namespace SkySwordKill.NextMoreCommand.Command
     }
     [RegisterCommand]
     [DialogEvent("SetShengWang")]
-    public class SetShengWang : IDialogEvent
+    public class SetShengWang: IDialogEvent
     {
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
             var add = command.GetInt(0);
             var type = command.GetInt(1);
-
-            var show = command.GetBool(2);
+            var id = command.GetInt(2);
+            var show = command.GetBool(3);
           
             switch ((EShengWang)type)
             {
@@ -39,7 +39,7 @@ namespace SkySwordKill.NextMoreCommand.Command
                     return;
             }
 
-            PlayerEx.AddShengWang(0, add, show);
+            PlayerEx.AddShengWang(id, add, show);
             callback?.Invoke();
         }
     }

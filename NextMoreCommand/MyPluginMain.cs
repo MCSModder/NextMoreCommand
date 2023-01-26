@@ -9,34 +9,44 @@ using SkySwordKill.Next;
 using SkySwordKill.Next.DialogEvent;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.Next.Mod;
-using SkySwordKill.NextMoreCommand.Attribute;
-using SkySwordKill.NextMoreCommand.CustomModDebug;
-using SkySwordKill.NextMoreCommand.CustomModDebug.NextMoreCore;
-using SkySwordKill.NextMoreCommand.Utils;
 using UnityEngine;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using SkySwordKill.NextMoreCommand.Attribute;
+using SkySwordKill.NextMoreCommand.Custom.NPC;
+using SkySwordKill.NextMoreCommand.Custom.SkillCombo;
+using SkySwordKill.NextMoreCommand.CustomModDebug;
+using SkySwordKill.NextMoreCommand.CustomModDebug.NextMoreCore;
+using SkySwordKill.NextMoreCommand.Utils;
+using Steamworks;
 using YSGame.TuJian;
 using Input = UnityEngine.Input;
 
 namespace SkySwordKill.NextMoreCommand
 {
     [BepInDependency("skyswordkill.plugin.Next", BepInDependency.DependencyFlags.HardDependency)]
-    [BepInPlugin("skyswordkill.plugin.NextMoreCommand", "NextMoreCommand", "1.0.2")]
-    public class MyPlugin : BaseUnityPlugin
+    [BepInPlugin("skyswordkill.plugin.NextMoreCommands", "NextMoreCommands", "1.0.3")]
+    public class MyPluginMain : BaseUnityPlugin
     {
         private KeyCode DramaDebugKey;
 
 
+
+
         private void Awake()
         {
-         
-       
+            
             // 注册事件
             RegisterCommand();
             RegisterCustomModSetting();
-            new Harmony("skyswordkill.plugin.NextMoreCommand").PatchAll();
+            new Harmony("skyswordkill.plugin.NextMoreCommands").PatchAll();
             NextMoreCoreBinder.BindAll();
+            ModManager.ModReload += () =>
+            {
+                CustomNpc.CustomNpcs.Clear();
+                SkillComboManager.SkillCombos.Clear();
+                SkillComboManager.CacheSkillCombos.Clear();
+            };
             ModManager.ModSettingChanged += () =>
             {
                 ModManagerUtils.TryGetModSetting("Quick_DramaDebugKey", out DramaDebugKey);
@@ -46,7 +56,7 @@ namespace SkySwordKill.NextMoreCommand
                 ModManagerUtils.TryGetModSetting("Quick_DramaDebugKey", out DramaDebugKey);
             };
         }
-        
+
 
         private void Update()
         {

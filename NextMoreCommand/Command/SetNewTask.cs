@@ -1,10 +1,9 @@
 ﻿
 using SkySwordKill.Next.DialogEvent;
 using SkySwordKill.Next.DialogSystem;
+using System;
 using SkySwordKill.NextMoreCommand.Attribute;
 using SkySwordKill.NextMoreCommand.Utils;
-
-using System;
 
 
 namespace SkySwordKill.NextMoreCommand.Command

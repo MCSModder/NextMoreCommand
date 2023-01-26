@@ -8,10 +8,10 @@ using YSGame.TuJian;
 
 namespace SkySwordKill.NextMoreCommand;
 
-public class NextMoreCommandBeta : MonoBehaviour
+public class NextMoreCommand : MonoBehaviour
 {
-    public static NextMoreCommandBeta instance;
-    public bool AchivementDebug;
+    public static NextMoreCommand instance;
+    public bool? AchivementDebug;
     private void Awake()
     {
         instance = this;
@@ -24,5 +24,7 @@ public class NextMoreCommandBeta : MonoBehaviour
         {
             ModManager.TryGetModSetting("Quick_AchivementDebug", out AchivementDebug);
         };
+    
     }
+
 }
