@@ -21,7 +21,6 @@ using SkySwordKill.NextMoreCommand.Utils;
 using Steamworks;
 using YSGame.TuJian;
 using Input = UnityEngine.Input;
-
 namespace SkySwordKill.NextMoreCommand
 {
     [BepInDependency("skyswordkill.plugin.Next", BepInDependency.DependencyFlags.HardDependency)]
@@ -31,15 +30,17 @@ namespace SkySwordKill.NextMoreCommand
         private KeyCode DramaDebugKey;
 
 
-
+        private Harmony _harmony;
 
         private void Awake()
         {
             
+   
             // 注册事件
             RegisterCommand();
             RegisterCustomModSetting();
-            new Harmony("skyswordkill.plugin.NextMoreCommands").PatchAll();
+            _harmony = new Harmony("skyswordkill.plugin.NextMoreCommands");
+            _harmony.PatchAll();
             NextMoreCoreBinder.BindAll();
             ModManager.ModReload += () =>
             {
@@ -120,6 +121,11 @@ namespace SkySwordKill.NextMoreCommand
 
             Main.LogInfo($"注册指令完毕.");
             Main.LogInfo(init);
+        }
+
+        private void OnDestroy()
+        {
+            _harmony.UnpatchSelf();
         }
     }
 }

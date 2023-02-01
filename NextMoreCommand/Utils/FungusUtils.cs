@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -17,6 +18,9 @@ namespace SkySwordKill.NextMoreCommand.Utils
     {
         private GameObject go;
         private Flowchart _flowchart;
+        private bool _isFlowchartNull;
+
+     
 
         private void Awake()
         {
@@ -25,36 +29,48 @@ namespace SkySwordKill.NextMoreCommand.Utils
             _flowchart.enabled = false;
         }
 
-        // ReSharper disable once Unity.IncorrectMethodSignature
-        async void Update()
+        private void Start()
         {
+            _isFlowchartNull = _flowchart == null;
+            if (_isFlowchartNull)
+            {
+                DestroyImmediate(this);
+                return;
+            }
             if (FungusUtils.isTalkActive)
             {
-                if (!go.activeSelf)
-                {
-                    go.SetActive(true);
-                    await System.Threading.Tasks.Task.Delay(1000);
-                    _flowchart.enabled = true;
-                }
-
-                var result = FungusUtils.TalkFunc?.Invoke(_flowchart);
-                if (result != null && (bool)result)
-                {
-                    FungusUtils.TalkOnComplete?.Invoke();
-                }
-                else
-                {
-                    FungusUtils.TalkOnFailed?.Invoke();
-                }
-
-                FungusUtils.isTalkActive = false;
-                FungusUtils.TalkFunc = null;
-                FungusUtils.TalkOnComplete = null;
-                FungusUtils.TalkOnFailed = null;
-                FungusUtils.TalkItemId = -1;
-                FungusUtils.TalkBlockName = string.Empty;
-                Destroy(this);
+                StartCoroutine(RunFungus());
             }
+        }
+
+        public IEnumerator RunFungus()
+        {
+            if (!go.activeSelf) go.SetActive(true);
+
+            yield return new WaitForSeconds(5);
+            _flowchart.enabled = true;
+            var result = FungusUtils.TalkFunc?.Invoke(_flowchart);
+            if (result != null && (bool)result)
+            {
+                FungusUtils.TalkOnComplete?.Invoke();
+            }
+            else
+            {
+                FungusUtils.TalkOnFailed?.Invoke();
+            }
+            
+            DestroyImmediate(this);
+        }
+
+        private void OnDestroy()
+        {
+          
+            FungusUtils.isTalkActive = false;
+            FungusUtils.TalkFunc = null;
+            FungusUtils.TalkOnComplete = null;
+            FungusUtils.TalkOnFailed = null;
+            FungusUtils.TalkItemId = -1;
+            FungusUtils.TalkBlockName = string.Empty;
         }
     }
 

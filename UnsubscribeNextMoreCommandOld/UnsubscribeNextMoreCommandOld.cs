@@ -20,10 +20,6 @@ namespace UnsubscribeNextMoreCommandOld
         {
             new Harmony("UnsubscribeNextMoreCommandOld").PatchAll();
         }
-
-    
-
-       
     }
 
     [HarmonyPatch(typeof(PathsPatch), nameof(PathsPatch.Prefix))]
@@ -50,9 +46,12 @@ namespace UnsubscribeNextMoreCommandOld
     {
         public static void Postfix(MainUIMag __instance)
         {
-            Unsubscribe();
-            UIPopTip.Inst.Pop("建议游戏重启", PopTipIconType.叹号);
-            UCheckBox.Show("修改创意工坊设置后，需要重启生效,点击确定关闭游戏", Application.Quit);
+            if (SteamAPI.IsSteamRunning())
+            {
+                Unsubscribe();
+                UIPopTip.Inst.Pop("建议游戏重启", PopTipIconType.叹号);
+                UCheckBox.Show("修改创意工坊设置后，需要重启生效,点击确定关闭游戏", Application.Quit);
+            }
         }
         public static void Subscribe(params ulong[] items)
         {

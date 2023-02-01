@@ -20,12 +20,7 @@ namespace SkySwordKill.NextMoreCommand.Command
             var npc = NPCEx.NPCIDToNew(command.GetInt(0, -1));
             if (npc >= 0)
             {
-                var npcData = new UINPCData(npc);
-                npcData.RefreshData();
-            
-                UINPCJiaoHu.Inst.HideJiaoHuPop();
-                UINPCJiaoHu.Inst.NowJiaoHuNPC = npcData;
-                UINPCJiaoHu.Inst.ShowJiaoHuPop();
+                DialogAnalysis.NpcForceInteract(npc);
             }
          
             callback?.Invoke();

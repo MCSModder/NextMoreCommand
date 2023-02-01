@@ -1,22 +1,32 @@
-﻿using SkySwordKill.Next.DialogSystem;
+﻿using System.Collections.Generic;
+using JSONClass;
+using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.NextMoreCommand.Utils;
 
 namespace SkySwordKill.NextMoreCommand.EnvExtension;
 [DialogEnvQuery("GetShengWangByName")]
 public class GetShengWangByName:IDialogEnvQuery
 {
+    public Dictionary<string, int> Shili = new();
     public object Execute(DialogEnvQueryContext context)
     {
         var type = context.GetMyArgs(0, "宁州");
-        var id = type switch
+        if (Shili.Count == 0)
         {
-            "海域"=>19,
-            "龙族"=>23,
-            "宗门" => PlayerEx.Player.menPai,
-            "白帝楼" => 24,
-            "风雨楼" => 10,
-            _ => 0
-        }; 
+            foreach (var shiLi in ShiLiHaoGanDuName.DataList)
+            {
+                Shili.Add(shiLi.ChinaText,shiLi.id);
+            }
+        }
+        var id = 0;
+        if (type =="宗门")
+        {
+            id = PlayerEx.Player.menPai;
+        }
+        else if(Shili.ContainsKey(type))
+        {
+            id = Shili[type];
+        }
         return PlayerEx.GetShengWang(id);
     }
 }

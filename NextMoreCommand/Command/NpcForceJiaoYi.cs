@@ -17,7 +17,7 @@ namespace SkySwordKill.NextMoreCommand.Command
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
-            var npc = command.GetInt(0, -1);
+            var npc = NPCEx.NPCIDToNew(command.GetInt(0, -1)) ;
             if (npc >= 0)
             {
                 var npcData = new UINPCData(npc);

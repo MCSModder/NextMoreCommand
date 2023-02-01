@@ -20,8 +20,6 @@ namespace SkySwordKill.NextMoreCommand.Command
             var tagBlock = command.GetStr(1);
             var itemId = command.GetInt(2, -1);
 
-            DialogAnalysis.CancelEvent();
-  
        
             if (FungusUtils.GetFlowchart(flowchartName) == null)
             {

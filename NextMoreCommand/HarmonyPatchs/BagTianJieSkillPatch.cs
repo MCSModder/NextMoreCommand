@@ -14,7 +14,7 @@ public static class BagTianJieSkillPatch
     public static JSONObject TianJieYiLingWuSkills => Player.TianJieYiLingWuSkills;
     public static bool Prefix(ref BagTianJieSkill __instance, TianJieMiShuData miShu)
     {
-        if (miShu.Type != 3) return true;
+        if (miShu.Type <= 2) return true;
         __instance.MiShu = miShu;
         __instance.BindSkill = new ActiveSkill();
         __instance.BindSkill.SetSkill(miShu.Skill_ID, Player.getLevelType());
@@ -23,7 +23,17 @@ public static class BagTianJieSkillPatch
             __instance.IsLingWu = true;
         }
 
-        if (!__instance.IsLingWu && DialogAnalysis.GetInt(__instance.MiShu.PanDing) == 1)
+        var result = false;
+        switch (miShu.Type)
+        {
+            case 3:
+                result = DialogAnalysis.GetInt(__instance.MiShu.PanDing) == 1;
+                break;
+            case 4:
+                result = DialogAnalysis.CheckCondition(__instance.MiShu.PanDing);
+                break;
+        }
+        if (!__instance.IsLingWu && result)
         {
             __instance.IsCanLingWu = true;
         }
