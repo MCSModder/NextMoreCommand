@@ -41,13 +41,14 @@ namespace SkySwordKill.NextMoreCommand.Utils
             {
                 StartCoroutine(RunFungus());
             }
+           
         }
 
         public IEnumerator RunFungus()
         {
             if (!go.activeSelf) go.SetActive(true);
 
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(1);
             _flowchart.enabled = true;
             var result = FungusUtils.TalkFunc?.Invoke(_flowchart);
             if (result != null && (bool)result)
@@ -64,7 +65,6 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
         private void OnDestroy()
         {
-          
             FungusUtils.isTalkActive = false;
             FungusUtils.TalkFunc = null;
             FungusUtils.TalkOnComplete = null;

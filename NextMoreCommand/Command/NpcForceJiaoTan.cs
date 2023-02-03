@@ -5,13 +5,14 @@ using Fungus;
 using SkySwordKill.Next.DialogEvent;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.NextMoreCommand.Attribute;
+using SkySwordKill.NextMoreCommand.DialogTrigger;
 using SkySwordKill.NextMoreCommand.Utils;
 
 namespace SkySwordKill.NextMoreCommand.Command
 {
     [RegisterCommand]
-    [DialogEvent("NpcForceJiaoYi")]
-    public class NpcForceJiaoYi : IDialogEvent
+    [DialogEvent("NpcForceJiaoTan")]
+    public class NpcForceJiaoTan : IDialogEvent
     {
       
 
@@ -25,8 +26,8 @@ namespace SkySwordKill.NextMoreCommand.Command
             
                 UINPCJiaoHu.Inst.HideJiaoHuPop();
                 UINPCJiaoHu.Inst.NowJiaoHuNPC = npcData;
-                UINPCJiaoHu.Inst.IsJiaoYiClicked = true;
-                
+             
+                UINPCJiaoHu.Inst.IsLiaoTianClicked = true;
             }
          
             callback?.Invoke();
