@@ -13,17 +13,14 @@ using UnityEngine.Events;
 
 namespace SkySwordKill.NextMoreCommand.Command
 {
-  
-
-  
-
     [RegisterCommand]
-    [DialogEvent("NpcForceTeleport")]
-    [DialogEvent("NpcForceMultiTeleport")]
-    public class NpcForceTeleport : IDialogEvent
+    [DialogEvent("SetNpcFollow.cs")]
+    [DialogEvent("SetNpcMultiFollow.cs")]
+    public class SetNpcFollow : IDialogEvent
     {
         public bool m_isAdd;
         public List<NpcInfo> NpcInfos = new List<NpcInfo>();
+
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
@@ -31,12 +28,12 @@ namespace SkySwordKill.NextMoreCommand.Command
             int npc;
             switch (command.Command)
             {
-                case "NpcForceTeleport":
+                case "SetNpcFollow":
                     npc = NPCEx.NPCIDToNew(command.GetInt(0, -1));
                     dialog = command.GetStr(1);
                     NpcInfos.Add(new NpcInfo(npc, dialog));
                     break;
-                case "NpcForceMultiTeleport":
+                case "SetNpcMultiFollow":
                     if (command.ParamList.Length == 0) break;
                     foreach (var param in command.ParamList)
                     {
@@ -55,12 +52,15 @@ namespace SkySwordKill.NextMoreCommand.Command
                             NpcInfos.Add(new NpcInfo(npc, dialog));
                         }
                     }
+
                     break;
             }
 
+
             foreach (var npcInfo in NpcInfos)
             {
-                AddNpc(npcInfo);
+                NpcUtils.AddNpc(npcInfo, out m_isAdd);
+                NpcUtils.SetNpcFollow(npcInfo);
             }
 
             if (m_isAdd && !UiNpcJiaoHuRefreshNowMapNpcPatch.m_isRefresh)
@@ -71,22 +71,6 @@ namespace SkySwordKill.NextMoreCommand.Command
             m_isAdd = false;
             NpcInfos.Clear();
             callback?.Invoke();
-        }
-
-        public void AddNpc(NpcInfo npcInfo)
-        {
-            if (npcInfo.Id <= 0)
-            {
-                return;
-            }
-
-            if (!UINPCJiaoHu.Inst.TNPCIDList.Contains(npcInfo.Id))
-            {
-                UINPCJiaoHu.Inst.TNPCIDList.Add(npcInfo.Id);
-                m_isAdd = true;
-            }
-
-            NpcUtils.BindDialogEvent(npcInfo.Id, npcInfo.Dialog);
         }
     }
 }

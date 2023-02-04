@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using SkySwordKill.Next;
 using SkySwordKill.Next.DialogSystem;
+using SkySwordKill.NextMoreCommand.Utils;
 
 namespace SkySwordKill.NextMoreCommand.DialogTrigger
 {
@@ -18,6 +19,8 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
             {
                 Main.LogInfo("触发进入场景后触发器");
             }
+
+            NpcUtils.AddNpcFollow();
         }
     }
     [HarmonyPatch(typeof(UINPCJiaoHu),nameof(UINPCJiaoHu.RefreshNowMapNPC))]

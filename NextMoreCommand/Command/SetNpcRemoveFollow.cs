@@ -14,25 +14,14 @@ using UnityEngine.Events;
 namespace SkySwordKill.NextMoreCommand.Command
 {
     [RegisterCommand]
-    [DialogEvent("NpcForceRemoveTeleport")]
-    public class NpcForceRemoveTeleport : IDialogEvent
+    [DialogEvent("SetNpcRemoveFollow")]
+    public class SetNpcRemoveFollow : IDialogEvent
     {
-        public bool m_isRemove = false;
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
-            var npcList = command.ParamList.Where(item => item.ToNpcId() > 0).Select(item => item.ToNpcId());
-            foreach (var npc in npcList)
-            {
-                NpcUtils.RemoveNpc(npc, out m_isRemove);
-            }
-
-            if (m_isRemove && !UiNpcJiaoHuRefreshNowMapNpcPatch.m_isRefresh)
-            {
-                NpcJieSuanManager.inst.isUpDateNpcList = true;
-            }
-
-            m_isRemove = false;
+            var npcList = command.ParamList.Where(item => item.ToNpcId() > 0).Select(item => item.ToNpcId()).ToArray();
+            NpcUtils.RemoveNpcFollow(npcList);
             callback?.Invoke();
         }
     }
