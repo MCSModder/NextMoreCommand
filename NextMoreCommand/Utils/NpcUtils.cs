@@ -2,9 +2,30 @@
 using System.Collections.Generic;
 using SkySwordKill.Next;
 using SkySwordKill.Next.DialogSystem;
+using UnityEngine.Events;
 
 namespace SkySwordKill.NextMoreCommand.Utils
 {
+    public struct NpcInfo
+    {
+        public string Dialog;
+        public int Id;
+
+        public NpcInfo(int id, string dialog)
+        {
+            Dialog = dialog;
+            Id = id;
+        }
+    }
+
+    public static class ExtendsNpc
+    {
+        public static int ToNpcId(this string instance)
+        {
+            return NPCEx.NPCIDToNew(Convert.ToInt32(instance));
+        }
+    }
+
     public static class NpcUtils
     {
         public static Dictionary<int, string> SelfNameDict = new Dictionary<int, string>();
@@ -23,7 +44,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
             return GetNpcData(num);
         }
-        
+
         public static JSONObject GetNpcData(int npcId)
         {
             var num = NPCEx.NPCIDToNew(npcId);
@@ -45,10 +66,12 @@ namespace SkySwordKill.NextMoreCommand.Utils
                     jsonObject = AvatarJsonData[id];
                 }
             }
+
             return jsonObject;
         }
 
         public static bool SetNpcName(string id, string name) => IsNpc(id) && SetNpcName(id, name);
+
         public static bool SetNpcName(int id, string name)
         {
             var npc = GetNpcData(id);
@@ -56,7 +79,8 @@ namespace SkySwordKill.NextMoreCommand.Utils
             {
                 return false;
             }
-            npc.SetField("Name",name);
+
+            npc.SetField("Name", name);
             return true;
         }
 
@@ -133,6 +157,54 @@ namespace SkySwordKill.NextMoreCommand.Utils
             }
 
             return list;
+        }
+
+        public static void BindDialogEvent(int npc, string dialog)
+        {
+            var emptyDialog = string.IsNullOrWhiteSpace(dialog) || !DialogAnalysis.DialogDataDic.ContainsKey(dialog);
+            if (emptyDialog || !UINPCJiaoHu.Inst.TNPCIDList.Contains(npc))
+            {
+                return;
+            }
+
+            if (NPCEx.IsDeath(npc)) return;
+            UnityAction next = () =>
+            {
+                if (DialogAnalysis.IsRunningEvent)
+                {
+                    DialogAnalysis.SwitchDialogEvent(dialog);
+                }
+                else
+                {
+                    DialogAnalysis.StartDialogEvent(dialog);
+                }
+            };
+            if (NPCEx.IsZhongYaoNPC(npc, out var key))
+            {
+                UINPCData.ThreeSceneZhongYaoNPCTalkCache[key] = next;
+                return;
+            }
+
+            UINPCData.ThreeSceneNPCTalkCache[npc] = next;
+        }
+
+        public static void RemoveBindDialogEvent(int npc)
+        {
+            if (!UINPCData.ThreeSceneZhongYaoNPCTalkCache.ContainsKey(npc) ||
+                !UINPCData.ThreeSceneNPCTalkCache.ContainsKey(npc))
+            {
+                return;
+            }
+
+            if (NPCEx.IsDeath(npc)) return;
+
+            if (NPCEx.IsZhongYaoNPC(npc, out int key))
+            {
+                UINPCData.ThreeSceneZhongYaoNPCTalkCache.Remove(key);
+                return;
+            }
+
+            UINPCData.ThreeSceneNPCTalkCache.Remove(npc);
         }
     }
 }

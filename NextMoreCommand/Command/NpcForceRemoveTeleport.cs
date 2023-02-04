@@ -1,6 +1,7 @@
 using SkySwordKill;
 using SkySwordKill.Next;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Fungus;
 using SkySwordKill.Next.DialogEvent;
@@ -16,39 +17,34 @@ namespace SkySwordKill.NextMoreCommand.Command
     [DialogEvent("NpcForceRemoveTeleport")]
     public class NpcForceRemoveTeleport : IDialogEvent
     {
+        public bool m_isRemove = false;
+
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
-            var npc = NPCEx.NPCIDToNew(command.GetInt(0, -1));
-            if (npc >= 0)
+            var npcList = command.ParamList.Where(item => item.ToNpcId() > 0).Select(item => item.ToNpcId());
+            foreach (var npc in npcList)
             {
-                if (UINPCJiaoHu.Inst.TNPCIDList.Contains(npc))
-                {
-                    UINPCJiaoHu.Inst.TNPCIDList.Remove(npc);
-                    RemoveBindDialogEvent( npc);
-                    if (!UiNpcJiaoHuRefreshNowMapNpcPatch.m_isRefresh)
-                    {
-                        NpcJieSuanManager.inst.isUpDateNpcList = true;
-                    }   
-                 
-                }
+                RemoveNpc(npc);
             }
 
+            if (m_isRemove && !UiNpcJiaoHuRefreshNowMapNpcPatch.m_isRefresh)
+            {
+                NpcJieSuanManager.inst.isUpDateNpcList = true;
+            }
+
+            m_isRemove = false;
             callback?.Invoke();
         }
 
-        public void RemoveBindDialogEvent(int npc)
+        public void RemoveNpc(int npc)
         {
-         
-
-            if (NPCEx.IsDeath(npc)) return;
-       
-            if (NPCEx.IsZhongYaoNPC(npc, out int key))
+            if (UINPCJiaoHu.Inst.TNPCIDList.Contains(npc))
             {
-                UINPCData.ThreeSceneZhongYaoNPCTalkCache.Remove(key);
-                return;
+                UINPCJiaoHu.Inst.TNPCIDList.Remove(npc);
+                m_isRemove = true;
             }
 
-            UINPCData.ThreeSceneNPCTalkCache.Remove(npc);
+            NpcUtils.RemoveBindDialogEvent(npc);
         }
     }
 }

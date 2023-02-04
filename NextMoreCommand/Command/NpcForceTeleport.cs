@@ -1,6 +1,7 @@
 using SkySwordKill;
 using SkySwordKill.Next;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Fungus;
 using SkySwordKill.Next.DialogEvent;
@@ -12,57 +13,80 @@ using UnityEngine.Events;
 
 namespace SkySwordKill.NextMoreCommand.Command
 {
+  
+
+  
+
     [RegisterCommand]
     [DialogEvent("NpcForceTeleport")]
+    [DialogEvent("NpcForceMultiTeleport")]
     public class NpcForceTeleport : IDialogEvent
     {
+        public bool m_isAdd;
+        public List<NpcInfo> NpcInfos = new List<NpcInfo>();
+
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
-            var npc = NPCEx.NPCIDToNew(command.GetInt(0, -1));
-            var dialog = command.GetStr(1);
-            if (npc >= 0)
+            string dialog;
+            int npc;
+            switch (command.Command)
             {
-                if (!UINPCJiaoHu.Inst.TNPCIDList.Contains(npc))
-                {
-                    UINPCJiaoHu.Inst.TNPCIDList.Add(npc);
-                    BindDialogEvent(npc, dialog);
-                    if (!UiNpcJiaoHuRefreshNowMapNpcPatch.m_isRefresh)
+                case "NpcForceTeleport":
+                    npc = NPCEx.NPCIDToNew(command.GetInt(0, -1));
+                    dialog = command.GetStr(1);
+                    NpcInfos.Add(new NpcInfo(npc, dialog));
+                    break;
+                case "NpcForceMultiTeleport":
+                    if (command.ParamList.Length == 0) break;
+                    foreach (var param in command.ParamList)
                     {
-                 
-                    }   NpcJieSuanManager.inst.isUpDateNpcList = true;
-                 
-                }
+                        var optionSep = param.Contains(":");
+                        npc = param.ToNpcId();
+                        dialog = "";
+                        if (optionSep)
+                        {
+                            var option = param.Split(':');
+                            npc = option[0].ToNpcId();
+                            dialog = option[1];
+                            NpcInfos.Add(new NpcInfo(npc, dialog));
+                        }
+                        else if (npc > 0)
+                        {
+                            NpcInfos.Add(new NpcInfo(npc, dialog));
+                        }
+                    }
+                    break;
             }
 
+            foreach (var npcInfo in NpcInfos)
+            {
+                AddNpc(npcInfo);
+            }
+
+            if (m_isAdd && !UiNpcJiaoHuRefreshNowMapNpcPatch.m_isRefresh)
+            {
+                NpcJieSuanManager.inst.isUpDateNpcList = true;
+            }
+
+            m_isAdd = false;
+            NpcInfos.Clear();
             callback?.Invoke();
         }
 
-        public void BindDialogEvent(int npc, string dialog)
+        public void AddNpc(NpcInfo npcInfo)
         {
-            if (string.IsNullOrWhiteSpace(dialog) || !DialogAnalysis.DialogDataDic.ContainsKey(dialog))
+            if (npcInfo.Id <= 0)
             {
                 return;
             }
 
-            if (NPCEx.IsDeath(npc)) return;
-            UnityAction next = () =>
+            if (!UINPCJiaoHu.Inst.TNPCIDList.Contains(npcInfo.Id))
             {
-                if (DialogAnalysis.IsRunningEvent)
-                {
-                    DialogAnalysis.SwitchDialogEvent(dialog);
-                }
-                else
-                {
-                    DialogAnalysis.StartDialogEvent(dialog);
-                }
-            };
-            if (NPCEx.IsZhongYaoNPC(npc, out int key))
-            {
-                UINPCData.ThreeSceneZhongYaoNPCTalkCache.Add(key, next);
-                return;
+                UINPCJiaoHu.Inst.TNPCIDList.Add(npcInfo.Id);
+                m_isAdd = true;
             }
 
-            UINPCData.ThreeSceneNPCTalkCache.Add(npc, next);
+            NpcUtils.BindDialogEvent(npcInfo.Id, npcInfo.Dialog);
         }
     }
 }
