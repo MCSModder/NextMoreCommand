@@ -151,6 +151,8 @@
         <Compile Include="Command\RunFungusTalkItemId.cs" />
         <Compile Include="Command\RunTempFlowchart.cs" />
         <Compile Include="Command\SetAllDaolvDeath.cs" />
+        <Compile Include="Command\SetAllDaolvFollow.cs" />
+        <Compile Include="Command\SetAllDaolvRemoveFollow.cs" />
         <Compile Include="Command\SetFightCustomFace.cs" />
         <Compile Include="Command\SetNewTask.cs" />
         <Compile Include="Command\SetNpcFollow.cs" />

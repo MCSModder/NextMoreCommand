@@ -41,13 +41,16 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
             {
                 return result;
             }
+
             if (SkillComboManager.TryTrigger(env, false, param))
             {
                 return true;
-            }else if (SkillComboManager.TryTriggerSkill(env, false, param))
+            }
+            else if (SkillComboManager.TryTriggerSkill(env, false, param))
             {
                 return true;
             }
+
             return result;
         }
 
@@ -57,6 +60,9 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
 
         public static bool StartRound(bool isBefore = true) => isBefore ? StartRoundBefore() : StartRoundAfter();
         public static bool EndRound(bool isBefore = true) => isBefore ? EndRoundBefore() : EndRoundAfter();
+
+        public static bool PlayerEndRound(bool isBefore = true) =>
+            isBefore ? PlayerEndRoundBefore() : PlayerEndRoundAfter();
 
         public static bool UseSkill(DialogEnvironment env = null, bool isBefore = true) =>
             isBefore ? PlayerUseSkillBefore(env) : PlayerUseSkillAfter(env);
@@ -76,6 +82,8 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
         private static bool StartRoundAfter() => TryTrigger("StartRoundAfter", "回合开始后");
         private static bool EndRoundBefore() => TryTrigger("EndRoundBefore", "回合结束前");
         private static bool EndRoundAfter() => TryTrigger("EndtRoundAfter", "回合结束后");
+        private static bool PlayerEndRoundBefore() => TryTrigger("PlayerEndRoundBefore", "玩家回合结束前");
+        private static bool PlayerEndRoundAfter() => TryTrigger("PlayerEndRoundAfter", "玩家回合结束后");
 
         #endregion
     }
@@ -112,20 +120,54 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
             }
         }
     }
-
-    [HarmonyPatch(typeof(RoundManager), nameof(RoundManager.endRound))]
-    public static class OnEndRound
+    [HarmonyPatch(typeof(RoundManager), nameof(RoundManager.PlayerEndRound))]
+    public static class OnPlayerEndRound
     {
         public static void Prefix()
         {
+            MyLog.FungusLog("进入玩家结束回合之前");
+            if (RoundUtils.PlayerEndRound())
+            {
+                MyLog.FungusLog("进入玩家结束回合之前");
+            }
+
+        }
+
+        public static void Postfix()
+        {
+            MyLog.FungusLog("进入玩家结束回合之后");
+            if (RoundUtils.PlayerEndRound(false))
+            {
+                MyLog.FungusLog("进入玩家结束回合之后");
+            }
+        }
+    }
+    [HarmonyPatch(typeof(RoundManager), nameof(RoundManager.endRound))]
+    public static class OnEndRound
+    {
+        public static void Prefix(ref Entity _avater)
+        {
+            // var avatar = (Avatar)_avater;
+            // var isPlayer = avatar != null && avatar.isPlayer();
+            // if (isPlayer && RoundUtils.PlayerEndRound())
+            // {
+            //     MyLog.FungusLog("进入玩家结束回合之前");
+            // }
+
             if (RoundUtils.EndRound())
             {
                 MyLog.FungusLog("进入结束回合之前");
             }
         }
 
-        public static void Postfix()
+        public static void Postfix(ref Entity _avater)
         {
+            // var avatar = (Avatar)_avater;
+            // var isPlayer = avatar != null && avatar.isPlayer();
+            // if (isPlayer && RoundUtils.PlayerEndRound(false))
+            // {
+            //     MyLog.FungusLog("进入玩家结束回合之前");
+            // }
             if (RoundUtils.EndRound(false))
             {
                 MyLog.FungusLog("进入结束回合之后");

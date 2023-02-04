@@ -14,8 +14,8 @@ using UnityEngine.Events;
 namespace SkySwordKill.NextMoreCommand.Command
 {
     [RegisterCommand]
-    [DialogEvent("SetNpcFollow.cs")]
-    [DialogEvent("SetNpcMultiFollow.cs")]
+    [DialogEvent("SetNpcFollow")]
+    [DialogEvent("SetNpcMultiFollow")]
     public class SetNpcFollow : IDialogEvent
     {
         public bool m_isAdd;

@@ -23,6 +23,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
             NpcUtils.AddNpcFollow();
         }
     }
+    
     [HarmonyPatch(typeof(UINPCJiaoHu),nameof(UINPCJiaoHu.RefreshNowMapNPC))]
     public static class UiNpcJiaoHuRefreshNowMapNpcPatch
     {
