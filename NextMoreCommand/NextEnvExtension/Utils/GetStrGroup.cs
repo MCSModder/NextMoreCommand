@@ -4,13 +4,14 @@ using SkySwordKill.NextMoreCommand.Utils;
 namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Utils
 {
 
-    [DialogEnvQuery("HasTianFu")]
-    public class HasTianFu : IDialogEnvQuery
+    [DialogEnvQuery("GetStrGroup")]
+    public class GetStrGroup : IDialogEnvQuery
     {
         public object Execute(DialogEnvQueryContext context)
         {
-            var tianfuId = context.GetMyArgs(0,-1);
-            return Tools.instance.CheckHasTianFu(tianfuId) as object;
+            var group = context.GetMyArgs(0,"");
+            var key = context.GetMyArgs(1,"");
+            return DialogAnalysis.GetStr(group,key);
         }
     }
 }

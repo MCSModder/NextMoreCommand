@@ -17,7 +17,7 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Npc
                 return "";
             }
             var name = DialogAnalysis.GetNpcName(NPCEx.NPCIDToNew(npcId));
-            Main.LogInfo($"npcId:{npcId.ToString()} name:{name}");
+           MyPluginMain.LogInfo($"npcId:{npcId.ToString()} name:{name}");
             return name;
         }
     }

@@ -6,8 +6,10 @@ using SkySwordKill.NextMoreCommand.Utils;
 
 namespace SkySwordKill.NextMoreCommand.NextCommandExtension
 {
+    
     [RegisterCommand]
     [DialogEvent("SetNewTask")]
+    [DialogEvent("设置新任务")]
     public class SetNewTask : IDialogEvent
     {
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)

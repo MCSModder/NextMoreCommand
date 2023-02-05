@@ -8,6 +8,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fungus
 {
     [RegisterCommand]
     [DialogEvent("SetFlowchart")]
+    [DialogEvent("设置临时对话")]
     public class SetTempFlowchart : IDialogEvent
     {
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)

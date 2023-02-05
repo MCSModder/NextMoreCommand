@@ -43,7 +43,7 @@ public static class ModManagerLoadModData
     private static void CreateTemplateTest(string dir)
     {
       
-        Main.LogInfo("创建警花测试");
+       MyPluginMain.LogInfo("创建警花测试");
         var npc = new CustomNpc()
         {
             Id = 8000,
@@ -71,7 +71,7 @@ public static class ModManagerLoadModData
         if (HasPath(modNDataDirDir.CombinePath("CustomNpc")) && !isWorkshop)
         {
              //if (modConfig.Name.Contains("天宫镜花")) CreateTemplateTest(modNDataDirDir.CombinePath("CustomNpc"));
-            Main.LogInfo($"=================== NextMore开始生成 =====================");
+           MyPluginMain.LogInfo($"=================== NextMore开始生成 =====================");
             Main.LogIndent = 2;
             try
             {
@@ -87,12 +87,12 @@ public static class ModManagerLoadModData
             Main.LogIndent = 0;
            
 
-            Main.LogInfo($"=================== NextMore结束生成 =====================");
+           MyPluginMain.LogInfo($"=================== NextMore结束生成 =====================");
         }
 
         if (HasPath(modNDataDirDir.CombinePath("CustomSkillCombo")))
         {
-            Main.LogInfo($"=================== NextMore开始加载 =====================");
+           MyPluginMain.LogInfo($"=================== NextMore开始加载 =====================");
             Main.LogIndent = 2;
             try
             {
@@ -108,7 +108,7 @@ public static class ModManagerLoadModData
             Main.LogIndent = 0;
            
 
-            Main.LogInfo($"=================== NextMore结束加载 =====================");
+           MyPluginMain.LogInfo($"=================== NextMore结束加载 =====================");
         }
     }
 
@@ -141,7 +141,7 @@ public static class ModManagerLoadModData
                 }
                 skill.Init();
                 SkillComboManager.SkillCombos[skill.SkillName] = skill;
-                Main.LogInfo(string.Format("ModManager.LoadData".I18N(),
+               MyPluginMain.LogInfo(string.Format("ModManager.LoadData".I18N(),
                     filePath));
             }
             catch (Exception e)
@@ -171,7 +171,7 @@ public static class ModManagerLoadModData
                 var id = npc.Id.ToString();
                 customNpcs[id] = npc;
                 CustomNpc.CustomNpcs[id] = npc;
-                Main.LogInfo(string.Format("ModManager.LoadData".I18N(),
+               MyPluginMain.LogInfo(string.Format("ModManager.LoadData".I18N(),
                     filePath));
             }
             catch (Exception e)
@@ -268,13 +268,13 @@ public static class ModManagerLoadModData
             var file= jObject.ToObject<Dictionary<string,JObject>>();
             if (file != null)
             {
-              //  Main.LogInfo(jObject);
+              // MyPluginMain.LogInfo(jObject);
             
                 foreach (var item in file)
                 {
                     if (!dictionary.ContainsKey(item.Key))
                     {
-                     //   Main.LogInfo(item.Value);
+                     //  MyPluginMain.LogInfo(item.Value);
                         dictionary.Add(item.Key,item.Value);
                     }
           

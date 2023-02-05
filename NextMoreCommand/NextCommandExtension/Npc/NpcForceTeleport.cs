@@ -8,13 +8,11 @@ using SkySwordKill.NextMoreCommand.Utils;
 
 namespace SkySwordKill.NextMoreCommand.NextCommandExtension
 {
-  
-
-  
-
     [RegisterCommand]
     [DialogEvent("NpcForceTeleport")]
+    [DialogEvent("NPC强制传送")]
     [DialogEvent("NpcForceMultiTeleport")]
+    [DialogEvent("NPC多人强制传送")]
     public class NpcForceTeleport : IDialogEvent
     {
         public bool m_isAdd;
@@ -27,11 +25,13 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
             switch (command.Command)
             {
                 case "NpcForceTeleport":
+                case "NPC强制传送":
                     npc = NPCEx.NPCIDToNew(command.GetInt(0, -1));
                     dialog = command.GetStr(1);
                     NpcInfos.Add(new NpcInfo(npc, dialog));
                     break;
                 case "NpcForceMultiTeleport":
+                case "NPC多人强制传送":
                     if (command.ParamList.Length == 0) break;
                     foreach (var param in command.ParamList)
                     {
@@ -50,6 +50,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
                             NpcInfos.Add(new NpcInfo(npc, dialog));
                         }
                     }
+
                     break;
             }
 

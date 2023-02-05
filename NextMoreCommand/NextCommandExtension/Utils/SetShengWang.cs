@@ -13,6 +13,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
     }
     [RegisterCommand]
     [DialogEvent("SetShengWang")]
+    [DialogEvent("设置声望")]
     public class SetShengWang: IDialogEvent
     {
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)

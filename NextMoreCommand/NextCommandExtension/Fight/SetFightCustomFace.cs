@@ -11,6 +11,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fight;
 
 [RegisterCommand]
 [DialogEvent("SetFightCustomFace")]
+[DialogEvent("自定义战斗立绘")]
 public class SetFightCustomFace : IDialogEvent
 {
     public Avatar Player => (Avatar)KBEngineApp.app.entities[10];
@@ -20,15 +21,15 @@ public class SetFightCustomFace : IDialogEvent
     public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
     {
         var faceId = command.GetInt(0, -1);
-        Main.LogInfo($"触发指令{faceId}");
+       MyPluginMain.LogInfo($"触发指令{faceId}");
         var go = Player.renderObj as GameObject;
         if (faceId == 0)
         {
             if (go != null)
             {
-                Main.LogInfo("触发换装");
+               MyPluginMain.LogInfo("触发换装");
                 var setFace = go.GetComponentInChildren<PlayerSetRandomFace>();
-                Main.LogInfo(setFace);
+               MyPluginMain.LogInfo(setFace);
                 setFace.setFaceByJson(PlayerFace);
         
             }
@@ -49,18 +50,18 @@ public class SetFightCustomFace : IDialogEvent
                         continue;
                     }
 
-                    Main.LogInfo($"KEY: {info.Key} VALUE: {info.Value}");
+                   MyPluginMain.LogInfo($"KEY: {info.Key} VALUE: {info.Value}");
                     clone.SetField(info.Key, info.Value);
                 }
             }
 
-            Main.LogInfo(clone.ToString());
+           MyPluginMain.LogInfo(clone.ToString());
           
             if (go != null)
             {
-                Main.LogInfo("触发换装");
+               MyPluginMain.LogInfo("触发换装");
                 var setFace = go.GetComponentInChildren<PlayerSetRandomFace>();
-                Main.LogInfo(setFace);
+               MyPluginMain.LogInfo(setFace);
                 setFace.setFaceByJson(clone);
             }
         }

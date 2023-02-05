@@ -10,6 +10,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
 {
     [RegisterCommand]
     [DialogEvent("SetShengWangDecrease")]
+    [DialogEvent("设置声望减少")]
     public class SetShengWangDecrease : IDialogEvent
     {
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)

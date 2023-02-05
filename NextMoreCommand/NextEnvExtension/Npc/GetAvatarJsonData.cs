@@ -439,11 +439,11 @@ public class GetAvatarJsonData : IDialogEnvQuery
 {
     public object Execute(DialogEnvQueryContext context)
     {
-        Main.LogInfo($"Args:{JArray.FromObject(context.Args)}");
+       MyPluginMain.LogInfo($"Args:{JArray.FromObject(context.Args)}");
         var npcId = NPCEx.NPCIDToNew(context.GetMyArgs(0, 0));
-        Main.LogInfo($"npcID:{npcId.ToString()}");
+       MyPluginMain.LogInfo($"npcID:{npcId.ToString()}");
         var data = jsonData.instance.AvatarRandomJsonData.TryGetField(npcId.ToString()).ToString();
-        Main.LogInfo($"npc:{data}");
+       MyPluginMain.LogInfo($"npc:{data}");
         var avatar = string.IsNullOrWhiteSpace(data) || data == "null"? null : JObject.Parse(data).ToObject<AvatarJsonData>();
         if (avatar != null)
         {

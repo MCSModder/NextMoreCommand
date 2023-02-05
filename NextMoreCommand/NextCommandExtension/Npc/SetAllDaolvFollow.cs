@@ -11,6 +11,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
 {
     [RegisterCommand]
     [DialogEvent("SetAllDaolvFollow")]
+    [DialogEvent("设置所有道侣跟随")]
     public class SetAllDaolvFollow : IDialogEvent
     {
         public bool m_isAdd;

@@ -52,7 +52,7 @@ public class SeidTrigger
     public static void TestSaveExcel()
     {
         var trigger = new SeidTrigger("TestReailzed", "") { Id = "TEST" };
-        Main.LogInfo(BepInEx.Paths.GameRootPath);
+       MyPluginMain.LogInfo(BepInEx.Paths.GameRootPath);
         MiniExcel.SaveAs(BepInEx.Paths.GameRootPath + "/test.xlsx", new[] { trigger, trigger, trigger });
         MiniExcel.SaveAs(BepInEx.Paths.GameRootPath + "/test.csv", new[] { trigger, trigger, trigger },
             excelType: ExcelType.CSV);
@@ -62,7 +62,7 @@ public class SeidTrigger
 
     public static void TestLoadExcel()
     {
-        Main.LogInfo(BepInEx.Paths.GameRootPath);
+       MyPluginMain.LogInfo(BepInEx.Paths.GameRootPath);
         var list = MiniExcel.Query<SeidTrigger>(BepInEx.Paths.GameRootPath + "/test.xlsx").ToList();
         foreach (var iTrigger in list)
         {
@@ -80,6 +80,6 @@ public class SeidTrigger
     public static void TestJson()
     {
         var trigger = new SeidTrigger("TestReailzed", "") { Id = "TEST" };
-        Main.LogInfo(JObject.FromObject(trigger));
+       MyPluginMain.LogInfo(JObject.FromObject(trigger));
     }
 }

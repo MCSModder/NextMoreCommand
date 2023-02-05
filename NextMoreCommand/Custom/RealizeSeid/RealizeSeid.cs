@@ -40,13 +40,13 @@
 //         }
 //
 //         seidSkillData.SetAvatar(_attaker, _receiver);
-//         Main.LogInfo(
+//        MyPluginMain.LogInfo(
 //             $"[开始触发神通Seid]seid:{seid} damage:{JArray.FromObject(damage).ToString(Formatting.None)} type:{type}");
-//         Main.LogInfo($"技能名字:{__instance.skill_Name}");
+//        MyPluginMain.LogInfo($"技能名字:{__instance.skill_Name}");
 //         
-//         Main.LogInfo(
+//        MyPluginMain.LogInfo(
 //             $"[开始触发神通Seid]seid:{seid} damage:{JArray.FromObject(damage).ToString(Formatting.None)} type:{type}");
-//         Main.LogInfo($"技能名字:{__instance.skill_Name}");
+//        MyPluginMain.LogInfo($"技能名字:{__instance.skill_Name}");
 //     }
 //
 //     public static void Postfix(ref Skill __instance, ref int seid,
@@ -55,12 +55,12 @@
 //         ref Entity _receiver,
 //         ref int type, ref int __result)
 //     {
-//         Main.LogInfo(
+//        MyPluginMain.LogInfo(
 //             $"[结束触发神通Seid]seid:{seid} damage:{JArray.FromObject(damage).ToString(Formatting.None)} type:{type} result:{__result}");
-//         Main.LogInfo($"技能名字:{__instance.skill_Name}");
-//         Main.LogInfo(
+//        MyPluginMain.LogInfo($"技能名字:{__instance.skill_Name}");
+//        MyPluginMain.LogInfo(
 //             $"[结束触发神通Seid]seid:{seid} damage:{JArray.FromObject(damage).ToString(Formatting.None)} type:{type} result:{__result}");
-//         Main.LogInfo($"技能名字:{__instance.skill_Name}");
+//        MyPluginMain.LogInfo($"技能名字:{__instance.skill_Name}");
 //         if (seidSkillData != null)
 //         {
 //             __result = seidSkillData.Damage;
@@ -90,8 +90,8 @@
 // //         ref Entity _receiver,
 // //         ref int type)
 // //     {
-// //         Main.LogInfo($"[结束触发功法Seid]seid:{seid} flag:{JArray.FromObject(flag).ToString(Formatting.None)} type:{type}");
-// //         Main.LogInfo($"技能名字:{__instance.skill_Name}");
+// //        MyPluginMain.LogInfo($"[结束触发功法Seid]seid:{seid} flag:{JArray.FromObject(flag).ToString(Formatting.None)} type:{type}");
+// //        MyPluginMain.LogInfo($"技能名字:{__instance.skill_Name}");
 // //     }
 // //
 // //     public static void Postfix(ref StaticSkill __instance, ref int seid,
@@ -100,8 +100,8 @@
 // //         ref Entity _receiver,
 // //         ref int type)
 // //     {
-// //         Main.LogInfo($"[结束触发功法Seid]seid:{seid} flag:{JArray.FromObject(flag).ToString(Formatting.None)} type:{type}");
-// //         Main.LogInfo($"技能名字:{__instance.skill_Name}");
+// //        MyPluginMain.LogInfo($"[结束触发功法Seid]seid:{seid} flag:{JArray.FromObject(flag).ToString(Formatting.None)} type:{type}");
+// //        MyPluginMain.LogInfo($"技能名字:{__instance.skill_Name}");
 // //     }
 // // }
 // // [HarmonyPatch(typeof(Buff), nameof(Buff.CanRealizeSeid))]

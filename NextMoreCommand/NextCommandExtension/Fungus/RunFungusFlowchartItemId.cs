@@ -10,6 +10,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fungus
 {
     [RegisterCommand]
     [DialogEvent("RunFungusFlowchartItemId")]
+    [DialogEvent("运行官方Flowchart对话Id")]
     public class RunFungusFlowchartItemId : IDialogEvent
     {
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
@@ -21,7 +22,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fungus
        
             if (FungusUtils.GetFlowchart(flowchartName) == null)
             {
-                Main.LogError($"FungusEvent : 对应{flowchartName} flowchart不存在");
+               MyPluginMain.LogError($"FungusEvent : 对应{flowchartName} flowchart不存在");
               
             }
             else
@@ -44,7 +45,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fungus
                         return false;
                     }
                     flowchart.ExecuteBlock(block, index);
-                    Main.LogInfo($"FungusEvent : 跳转FungusBlock {FungusUtils.TalkBlockName} ItemId:{FungusUtils.TalkItemId.ToString()} index:{index.ToString()} ");
+                   MyPluginMain.LogInfo($"FungusEvent : 跳转FungusBlock {FungusUtils.TalkBlockName} ItemId:{FungusUtils.TalkItemId.ToString()} index:{index.ToString()} ");
                     return true;
                 };
                 FungusUtils.isTalkActive = true;

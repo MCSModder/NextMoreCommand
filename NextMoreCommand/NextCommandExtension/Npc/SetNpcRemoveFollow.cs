@@ -9,6 +9,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
 {
     [RegisterCommand]
     [DialogEvent("SetNpcRemoveFollow")]
+    [DialogEvent("设置NPC取消跟随")]
     public class SetNpcRemoveFollow : IDialogEvent
     {
 

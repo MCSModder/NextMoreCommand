@@ -27,7 +27,7 @@ public class SeidSkill
            foreach (var key in luaTable.GetKeys<string>())
            {
                var str = key.ToLower();
-               Main.LogInfo(str);
+              MyPluginMain.LogInfo(str);
                switch (str)
                {
                    case "prefix":
@@ -40,6 +40,6 @@ public class SeidSkill
            }
            return;
        }
-       Main.LogError((object) ("读取Lua " + luaFilename + " 失败"));
+      MyPluginMain.LogError((object) ("读取Lua " + luaFilename + " 失败"));
     }
 }

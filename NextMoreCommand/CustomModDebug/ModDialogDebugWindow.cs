@@ -228,7 +228,7 @@ public class ModDialogDebugWindow : FGUIWindowBase
         command.m_addCommand.SearchBox.OnChanged = () =>
         {
             var index = command.m_addCommand.SearchBox.SelectedIndex;
-            Main.LogInfo($"index:{index.ToString()} Name:{_commandKeys.ToList()[index]}");
+           MyPluginMain.LogInfo($"index:{index.ToString()} Name:{_commandKeys.ToList()[index]}");
         };
         command.m_addCommand.m_addButton.onClick.Add((() =>
         {

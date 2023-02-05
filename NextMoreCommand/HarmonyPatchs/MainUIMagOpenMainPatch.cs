@@ -48,12 +48,12 @@
 //
 //     IEnumerator PlayTime()
 //     {
-//         Main.LogInfo(Time.time);
-//         Main.LogInfo(PlayTimeUtils.GetSeconds());
+//        MyPluginMain.LogInfo(Time.time);
+//        MyPluginMain.LogInfo(PlayTimeUtils.GetSeconds());
 //         PlayTimeUtils.HasPlayHour();
 //         yield return new WaitForSecondsRealtime(Minute*60);
 //         isPlay = false;
-//         Main.LogInfo(Time.time);
+//        MyPluginMain.LogInfo(Time.time);
 //     }
 //
 //     private void OnDestroy()

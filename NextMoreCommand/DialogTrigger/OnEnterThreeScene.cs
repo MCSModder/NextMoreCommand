@@ -17,10 +17,10 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
             {
                 mapScene = Tools.getScreenName()
             };
-            Main.LogInfo("触发ThreeSceneMag");
+           MyPluginMain.LogInfo("触发ThreeSceneMag");
             if (DialogAnalysis.TryTrigger(new[] { "进入场景后", "AfterEnterScene" }, env, true))
             {
-                Main.LogInfo("触发进入场景后触发器");
+               MyPluginMain.LogInfo("触发进入场景后触发器");
             }
 
             NpcUtils.AddNpcFollow();
@@ -41,7 +41,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
             };
             if (DialogAnalysis.TryTrigger(new[] { "NPC列表刷新前", "BeforeNpcRefreshNow" }, env, true))
             {
-                Main.LogInfo("触发NPC列表刷新前触发器");
+               MyPluginMain.LogInfo("触发NPC列表刷新前触发器");
             }
         }
 
@@ -53,7 +53,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
             };
             if (DialogAnalysis.TryTrigger(new[] { "NPC列表刷新后", "AfterNpcRefreshNow" }, env, true))
             {
-                Main.LogInfo("触发NPC列表刷新前触发器");
+               MyPluginMain.LogInfo("触发NPC列表刷新前触发器");
             }
 
             m_isRefresh = false;
@@ -95,7 +95,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
     {
         public static void Postfix(ref string name)
         {
-            Main.LogInfo($"[加载场景]场景名称:{name}");
+           MyPluginMain.LogInfo($"[加载场景]场景名称:{name}");
             if (name.ToUpper().Contains("YSNEW"))
             {
                 UINPCData.ThreeSceneNPCTalkCache.Clear();
@@ -107,7 +107,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
                 };
                 if (DialogAnalysis.TryTrigger(new[] { "进入战斗场景", "EnterFightScene" }, env, true))
                 {
-                    Main.LogInfo("触发进入场景后触发器");
+                   MyPluginMain.LogInfo("触发进入场景后触发器");
                 }
 
                 NpcUtils.AddNpcFollow();
@@ -124,7 +124,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
             {
                 var npc = Traverse.Create(__instance).Field<UINPCData>("npc").Value;
                 npc.RefreshData();
-                Main.LogInfo($"[当前点击的npc]ID:{npc.ID} 名字:{npc.Name}");
+               MyPluginMain.LogInfo($"[当前点击的npc]ID:{npc.ID} 名字:{npc.Name}");
                 UINPCJiaoHu.Inst.HideJiaoHuPop();
                 UINPCJiaoHu.Inst.NowJiaoHuNPC = npc;
                 UINPCSVItem.NowSelectedUINPCSVItem = __instance;

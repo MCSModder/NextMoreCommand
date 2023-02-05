@@ -5,6 +5,7 @@ using SkySwordKill.Next.DialogSystem;
 namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils;
 
 [DialogEvent("SetUIBlackMask")]
+[DialogEvent("设置黑屏")]
 public class SetUIBlackMask : IDialogEvent
 {
     public void Execute(DialogCommand command, DialogEnvironment env, Action callback)

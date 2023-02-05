@@ -29,7 +29,7 @@ public static class DaolvUtils
                 DaolvId.Add(id);
                 continue;
             }
-            Main.LogInfo($"道侣死亡 ID:{id} 名字:{GetName(id)}");
+           MyPluginMain.LogInfo($"道侣死亡 ID:{id} 名字:{GetName(id)}");
             UIPopTip.Inst.Pop($"道侣死亡 ID:{id} 名字:{GetName(id)}");
             NpcJieSuanManager.npcDeath.SetNpcDeath(2, id);
             list.Add(id);

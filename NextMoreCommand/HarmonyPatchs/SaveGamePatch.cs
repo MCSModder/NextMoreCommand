@@ -15,8 +15,8 @@ public static class SaveGamePatch
 
     public static void Postfix()
     {
-        Main.LogInfo("开始触发保存角色:保存Next存档数据");
-        Main.LogInfo($"保存Next存档路径:{SaveNextPath}");
+       MyPluginMain.LogInfo("开始触发保存角色:保存Next存档数据");
+       MyPluginMain.LogInfo($"保存Next存档路径:{SaveNextPath}");
         DialogAnalysis.SaveAvatarNextData(SaveNextPath);
     }
 }

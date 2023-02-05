@@ -11,7 +11,7 @@ public static class TuJianManagerIsUnlockedSpecialEventPatchs
     {
         if (NextMoreCommand.instance.AchivementDebug ?? false)
         {
-            Main.LogInfo($"触发解锁成就{name}");
+           MyPluginMain.LogInfo($"触发解锁成就{name}");
             __result = true;
         }
     }

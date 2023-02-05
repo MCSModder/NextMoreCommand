@@ -66,7 +66,7 @@ public static class PathJsonUtils
                 }
             }
 
-            Main.LogInfo(string.Format("ModManager.LoadData".I18N(), $"{fieldInfo.Name}"));
+           MyPluginMain.LogInfo(string.Format("ModManager.LoadData".I18N(), $"{fieldInfo.Name}"));
         }
         catch (Exception e)
         {
@@ -124,7 +124,7 @@ public static class PathJsonUtils
                 }
             }
 
-            Main.LogInfo(string.Format("ModManager.LoadData".I18N(),
+           MyPluginMain.LogInfo(string.Format("ModManager.LoadData".I18N(),
                 $"{Path.GetFileNameWithoutExtension(filePath)}.json"));
         }
         catch (Exception e)
@@ -172,7 +172,7 @@ public static class PathJsonUtils
     //                 toJsonObject.AddField(key, curData);
     //             }
     //
-    //             Main.LogInfo(string.Format("ModManager.LoadData".I18N(),
+    //            MyPluginMain.LogInfo(string.Format("ModManager.LoadData".I18N(),
     //                 $"{Path.GetFileNameWithoutExtension(dirPathForData)}/{Path.GetFileNameWithoutExtension(filePath)}.json [{key}]"));
     //         }
     //         catch (Exception e)

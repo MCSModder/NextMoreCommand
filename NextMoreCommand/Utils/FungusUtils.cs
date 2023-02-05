@@ -129,14 +129,14 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 {
                     gameObject.AddComponent<PlayFlowchart>();
                 }
-                Main.LogInfo("GameObject.Find");
+               MyPluginMain.LogInfo("GameObject.Find");
                 return gameObject.GetComponentInChildren<Flowchart>();
             }
 
             if (Flowcharts.ContainsKey(key))
             {
                 Flowcharts[key].GetFlowchart();
-                Main.LogInfo("Flowcharts[key].GetFlowchart();");
+               MyPluginMain.LogInfo("Flowcharts[key].GetFlowchart();");
                 return Flowcharts[key].Flowchart;
             }
 
@@ -146,7 +146,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 var nextFlowchart = new NextFlowchart(gameObject.GetComponentInChildren<Flowchart>());
                 Flowcharts.Add(nextFlowchart.Name, nextFlowchart);
                 nextFlowchart.GetFlowchart();
-                Main.LogInfo("Resources.Load<GameObject>(talkPrefab/TalkPrefab/{key});");
+               MyPluginMain.LogInfo("Resources.Load<GameObject>(talkPrefab/TalkPrefab/{key});");
                 return nextFlowchart.Flowchart;
             }
 

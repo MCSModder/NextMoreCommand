@@ -9,6 +9,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
 {
     [RegisterCommand]
     [DialogEvent("SetNpcTeleport")]
+    [DialogEvent("设置NPC传送")]
     public class SetNpcTeleport : IDialogEvent
     {
 

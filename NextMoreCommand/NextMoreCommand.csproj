@@ -166,9 +166,11 @@
         <Compile Include="NextCommandExtension\SetSummonMonstar.cs" />
         <Compile Include="NextCommandExtension\SetTaskIndexFinish.cs" />
         <Compile Include="NextCommandExtension\SetTaskNext.cs" />
+        <Compile Include="NextCommandExtension\Utils\SetIntGroup.cs" />
         <Compile Include="NextCommandExtension\Utils\SetShengWang.cs" />
         <Compile Include="NextCommandExtension\Utils\SetShengWangDecrease.cs" />
         <Compile Include="NextCommandExtension\Utils\SetShengWangIncrease.cs" />
+        <Compile Include="NextCommandExtension\Utils\SetStrGroup.cs" />
         <Compile Include="NextCommandExtension\Utils\SetTeleport.cs" />
         <Compile Include="NextCommandExtension\Utils\SetUIBlackMask.cs" />
         <Compile Include="CustomModDebug\ModDialogDebugWindow.cs" />
@@ -226,12 +228,14 @@
         <Compile Include="NextEnvExtension\Npc\GetNpcSceneName.cs" />
         <Compile Include="NextEnvExtension\Npc\GetNpcSelfName.cs" />
         <Compile Include="NextEnvExtension\Npc\HasNpcFollow.cs" />
+        <Compile Include="NextEnvExtension\Utils\GetIntGroup.cs" />
         <Compile Include="NextEnvExtension\Utils\GetPlayTime.cs" />
         <Compile Include="NextEnvExtension\Utils\GetPlayTimeHours.cs" />
         <Compile Include="NextEnvExtension\Utils\GetPlayTimeMinutes.cs" />
         <Compile Include="NextEnvExtension\Utils\GetPlayTimeSeconds.cs" />
         <Compile Include="NextEnvExtension\Utils\GetShengWang.cs" />
         <Compile Include="NextEnvExtension\Utils\GetShengWangByName.cs" />
+        <Compile Include="NextEnvExtension\Utils\GetStrGroup.cs" />
         <Compile Include="NextEnvExtension\Utils\HasTianFu.cs" />
         <Compile Include="HarmonyPatchs\BagTianJieSkillPatch.cs" />
         <Compile Include="HarmonyPatchs\CheckTaskIsOutOnEnter.cs" />

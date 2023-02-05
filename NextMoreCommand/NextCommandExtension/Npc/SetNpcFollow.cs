@@ -10,7 +10,9 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
 {
     [RegisterCommand]
     [DialogEvent("SetNpcFollow")]
+    [DialogEvent("设置NPC跟随")]
     [DialogEvent("SetNpcMultiFollow")]
+    [DialogEvent("设置NPC多人跟随")]
     public class SetNpcFollow : IDialogEvent
     {
         public bool m_isAdd;
@@ -24,11 +26,13 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
             switch (command.Command)
             {
                 case "SetNpcFollow":
+                case "设置NPC跟随":
                     npc = NPCEx.NPCIDToNew(command.GetInt(0, -1));
                     dialog = command.GetStr(1);
                     NpcInfos.Add(new NpcInfo(npc, dialog));
                     break;
                 case "SetNpcMultiFollow":
+                case "设置NPC多人跟随":
                     if (command.ParamList.Length == 0) break;
                     foreach (var param in command.ParamList)
                     {

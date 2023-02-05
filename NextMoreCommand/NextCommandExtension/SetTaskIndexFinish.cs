@@ -8,6 +8,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
 {
     [RegisterCommand]
     [DialogEvent("SetTaskIndexFinish")]
+    [DialogEvent("设置任务完成")]
     public class SetTaskIndexFinish : IDialogEvent
     {
     

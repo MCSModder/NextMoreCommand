@@ -21,7 +21,7 @@
 //         }
 //
 //         var text = File.ReadAllText(path);
-//         Main.LogInfo(text);
+//        MyPluginMain.LogInfo(text);
 //         return string.IsNullOrWhiteSpace(text)?null:JObject.Parse(text);
 //     }
 //

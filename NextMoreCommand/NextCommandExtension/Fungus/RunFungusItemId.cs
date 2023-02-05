@@ -10,6 +10,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fungus
 {
     [RegisterCommand]
     [DialogEvent("RunFungusItemId")]
+    [DialogEvent("运行官方对话ID")]
     public class RunFungusItemId : IDialogEvent
     {
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
@@ -21,7 +22,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fungus
 
             if (env.flowchart == null)
             {
-                Main.LogError("FungusEvent : 对应flowchart不存在");
+               MyPluginMain.LogError("FungusEvent : 对应flowchart不存在");
                 return;
             }
 
@@ -39,7 +40,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fungus
             }
             else
             {
-                Main.LogInfo($"FungusEvent : 跳转FungusBlock {tagBlock} ItemId:{itemId} index:{index} ");
+               MyPluginMain.LogInfo($"FungusEvent : 跳转FungusBlock {tagBlock} ItemId:{itemId} index:{index} ");
                 flowchart.ExecuteBlock(block, index);
             }
 

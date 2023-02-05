@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using KBEngine;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SkySwordKill.Next;
 using SkySwordKill.Next.DialogSystem;
@@ -35,7 +36,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
 
         private static bool TryTrigger(DialogEnvironment env, bool triggerAll, params string[] param)
         {
-            Main.LogInfo($"进入触发器 {JArray.FromObject(param).ToString()}");
+           MyPluginMain.LogInfo($"进入触发器 {JArray.FromObject(param).ToString(Formatting.None)}");
             var result = DialogAnalysis.TryTrigger(param, env, triggerAll);
             if (SkillComboManager.SkillCombos.Count == 0)
             {

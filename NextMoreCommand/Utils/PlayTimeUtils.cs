@@ -16,10 +16,10 @@ public static class PlayTimeUtils
     public static bool HasPlayHour()
     {
         var hour = Convert.ToInt32(GetHours());
-        Main.LogInfo(hour);
+       MyPluginMain.LogInfo(hour);
         if (hour > _playHourTime && !ignoreScene.Contains(SceneManager.GetActiveScene().name))
         {
-            Main.LogInfo($"触发每小时游玩触发器");
+           MyPluginMain.LogInfo($"触发每小时游玩触发器");
 
             DialogAnalysis.TryTrigger(new[] { "游玩每小时", "HasPlayHour" }, null, true);
 

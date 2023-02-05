@@ -72,7 +72,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 return;
             }
 
-            Main.LogInfo("开始添加npc跟随");
+            MyPluginMain.LogInfo("开始添加npc跟随");
             var isAdd = false;
             foreach (var key in NpcFollowGroup)
             {
@@ -84,10 +84,12 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 NpcJieSuanManager.inst.isUpDateNpcList = true;
             }
         }
+
         public static bool HasNpcFollow(int id)
         {
             return HasNpcFollow(id.ToNpcId());
         }
+
         public static bool HasNpcFollow(string key)
         {
             return StrGroup.Has(NpcFollow, key);
@@ -147,9 +149,10 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 NpcJieSuanManager.inst.isUpDateNpcList = true;
             }
         }
+
         public static string GetNpcFollow(int key)
         {
-            return GetNpcFollow( key.ToNpcId());
+            return GetNpcFollow(key.ToNpcId());
         }
 
         public static string GetNpcFollow(string key)
@@ -262,7 +265,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 var npcArr = npcId.Split(',');
                 foreach (var npc in npcArr)
                 {
-                    Main.LogInfo($"添加NPCID: [{npc}]");
+                    MyPluginMain.LogInfo($"添加NPCID: [{npc}]");
                     list.Add(NPCEx.NPCIDToNew(Convert.ToInt32(npc)));
                 }
             }
@@ -273,7 +276,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
                     var npc = NPCEx.NPCIDToNew(command.GetInt(i, -1));
                     if (npc >= 0)
                     {
-                        Main.LogInfo($"添加NPCID: [{npc}]");
+                        MyPluginMain.LogInfo($"添加NPCID: [{npc}]");
                         list.Add(npc);
                     }
                 }

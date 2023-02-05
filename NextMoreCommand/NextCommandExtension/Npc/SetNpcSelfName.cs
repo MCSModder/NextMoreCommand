@@ -6,6 +6,7 @@ using SkySwordKill.NextMoreCommand.Utils;
 namespace SkySwordKill.NextMoreCommand.NextCommandExtension;
 
 [DialogEvent("SetNpcSelfName")]
+[DialogEvent("设置NPC自称")]
 public class SetNpcSelfName : IDialogEvent
 {
     public void Execute(DialogCommand command, DialogEnvironment env, Action callback)

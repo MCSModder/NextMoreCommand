@@ -11,7 +11,7 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Npc
         {
 
             var npcId = context.GetMyArgs(0,-1);
-            if (npcId < 0)
+            if (npcId <= 0)
             {
                 return 0 as object;
             }

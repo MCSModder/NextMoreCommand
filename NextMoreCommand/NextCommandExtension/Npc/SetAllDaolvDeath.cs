@@ -6,6 +6,7 @@ using SkySwordKill.NextMoreCommand.Utils;
 
 namespace SkySwordKill.NextMoreCommand.NextCommandExtension;
 [DialogEvent("SetAllDaolvDeath")]
+[DialogEvent("设置所有道侣死亡")]
 public class SetAllDaolvDeath:IDialogEvent
 {
     public int GetNpcID(string npc) => NPCEx.NPCIDToNew(Convert.ToInt32(npc));

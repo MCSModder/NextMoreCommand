@@ -10,6 +10,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
 {
     [RegisterCommand]
     [DialogEvent("SetTeleport")]
+    [DialogEvent("设置传送")]
     public class SetTeleport : IDialogEvent
     {
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)

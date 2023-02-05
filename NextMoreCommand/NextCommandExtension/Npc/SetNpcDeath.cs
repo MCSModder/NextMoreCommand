@@ -9,6 +9,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
 {
     [RegisterCommand]
     [DialogEvent("SetNpcDeath")]
+    [DialogEvent("设置NPC死亡")]
     public class SetNpcDeath : IDialogEvent
     {
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
@@ -25,7 +26,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
             }
             else
             {
-                Main.LogError("NpcJieSuanManager还没有实例化");
+               MyPluginMain.LogError("NpcJieSuanManager还没有实例化");
             }
             callback?.Invoke();
         }

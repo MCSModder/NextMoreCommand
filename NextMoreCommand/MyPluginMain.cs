@@ -29,12 +29,15 @@ namespace SkySwordKill.NextMoreCommand
     {
         private KeyCode DramaDebugKey;
 
-
+        public static MyPluginMain Instance;
+        public static MyPluginMain I => Instance;
+        public static void LogInfo(object obj) => I.Logger.LogInfo(obj);
+        public static void LogError(object obj) => I.Logger.LogError(obj);
         private Harmony _harmony;
 
         private void Awake()
         {
-            
+            Instance = this;
    
             // 注册事件
             RegisterCommand();
@@ -79,23 +82,23 @@ namespace SkySwordKill.NextMoreCommand
             var registerCommandType = typeof(RegisterCustomModSettingAttribute);
             var types = Assembly.GetAssembly(registerCommandType).GetTypes();
             var init = "".PadLeft(25, '=');
-            Main.LogInfo(init);
-            Main.LogInfo($"注册自定义Mod设置开始.");
-            Main.LogInfo(init);
+            MyPluginMain.LogInfo(init);
+            MyPluginMain.LogInfo($"注册自定义Mod设置开始.");
+            MyPluginMain.LogInfo(init);
             foreach (var type in types)
             {
                 if (type.GetCustomAttributes(registerCommandType, true).Length > 0)
                 {
                     var cEvent = Activator.CreateInstance(type) as ICustomSetting;
-                    Main.LogInfo($"注册自定义Mod设置: {type.Name}");
-                    Main.LogInfo($"注册自定义Mod设置: {cEvent}");
-                    Main.LogInfo(init);
+                    MyPluginMain.LogInfo($"注册自定义Mod设置: {type.Name}");
+                    MyPluginMain.LogInfo($"注册自定义Mod设置: {cEvent}");
+                    MyPluginMain.LogInfo(init);
                     ModManager.RegisterCustomSetting(type.Name, cEvent);
                 }
             }
 
-            Main.LogInfo($"注册自定义Mod设置完毕.");
-            Main.LogInfo(init);
+            MyPluginMain.LogInfo($"注册自定义Mod设置完毕.");
+            MyPluginMain.LogInfo(init);
         }
 
 
@@ -104,23 +107,23 @@ namespace SkySwordKill.NextMoreCommand
             var registerCommandType = typeof(RegisterCommandAttribute);
             var types = Assembly.GetAssembly(registerCommandType).GetTypes();
             var init = "".PadLeft(25, '=');
-            Main.LogInfo(init);
-            Main.LogInfo($"注册指令开始.");
-            Main.LogInfo(init);
+            MyPluginMain.LogInfo(init);
+            MyPluginMain.LogInfo($"注册指令开始.");
+            MyPluginMain.LogInfo(init);
             foreach (var type in types)
             {
                 if (type.GetCustomAttributes(registerCommandType, true).Length > 0)
                 {
                     var cEvent = Activator.CreateInstance(type) as IDialogEvent;
-                    Main.LogInfo($"注册指令名: {type.Name}");
-                    Main.LogInfo($"注册指令类: {cEvent}");
-                    Main.LogInfo(init);
+                    MyPluginMain.LogInfo($"注册指令名: {type.Name}");
+                    MyPluginMain.LogInfo($"注册指令类: {cEvent}");
+                    MyPluginMain.LogInfo(init);
                     DialogAnalysis.RegisterCommand(type.Name, cEvent);
                 }
             }
 
-            Main.LogInfo($"注册指令完毕.");
-            Main.LogInfo(init);
+            MyPluginMain.LogInfo($"注册指令完毕.");
+            MyPluginMain.LogInfo(init);
         }
 
         private void OnDestroy()
