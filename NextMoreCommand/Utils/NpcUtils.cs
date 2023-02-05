@@ -146,6 +146,10 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 NpcJieSuanManager.inst.isUpDateNpcList = true;
             }
         }
+        public static string GetNpcFollow(int key)
+        {
+            return GetNpcFollow( key.ToNpcId());
+        }
 
         public static string GetNpcFollow(string key)
         {

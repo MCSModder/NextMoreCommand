@@ -12,6 +12,55 @@ using Skill = GUIPackage.Skill;
 
 namespace SkySwordKill.NextMoreCommand.Custom.SkillCombo;
 
+public class SkillInfoReplace
+{
+    public int OldSkillId;
+    public int NewSkillId;
+    public int Index;
+    public string OldSkillName;
+    public string NewSkillName;
+    public SkillInfoReplace(int oldSkill, int newSkill)
+    {
+        OldSkillId = oldSkill;
+        NewSkillId = newSkill;
+        OldSkillName = SkillComboManager.GetSkillName(oldSkill);
+        NewSkillName = SkillComboManager.GetSkillName(newSkill);
+        Index = SkillComboManager.GetSkillIndex(oldSkill);
+    }
+    public SkillInfoReplace(string oldSkill, string newSkill)
+    {
+        OldSkillId = SkillComboManager.GetSkillId(oldSkill);
+        NewSkillId = SkillComboManager.GetSkillId(newSkill);
+        OldSkillName = oldSkill;
+        NewSkillName = newSkill;
+        Index = SkillComboManager.GetSkillIndex(OldSkillId);
+    }
+    public bool IsValid()
+    {
+        return OldSkillId > 0 && NewSkillId > 0 && Index <= 10 && Index >= 0;
+    }
+    public void SetReplace()
+    {
+        if (SkillComboManager.ReplaceSkill(this))
+        {
+            GetInfo();
+        }
+        else
+        {
+            GetError();
+        }
+    }
+    public void GetError()
+    {
+        Main.LogError($"[技能替换失败]老技能:{OldSkillName} 新技能:{NewSkillName} 位置:{Index}");
+        Main.LogError($"[技能替换失败]老技能:{OldSkillId} 新技能:{NewSkillId} 位置:{Index}");
+    }
+    public void GetInfo()
+    {
+        Main.LogInfo($"[技能替换]老技能:{OldSkillName} 新技能:{NewSkillName} 位置:{Index}");
+        Main.LogInfo($"[技能替换]老技能:{OldSkillId} 新技能:{NewSkillId} 位置:{Index}");
+    }
+}
 public static class SkillComboManager
 {
     public static readonly Dictionary<string, SkillCombo> SkillCombos = new Dictionary<string, SkillCombo>();
@@ -70,6 +119,11 @@ public static class SkillComboManager
     {
         Main.LogInfo($"替换技能 老:{oldSkill} 新:{newSkill}");
         return ReplaceSkill(GetSkillId(oldSkill), GetSkillId(newSkill));
+    }
+    public static bool ReplaceSkill(SkillInfoReplace skillInfoReplace)
+    {
+   
+        return ReplaceSkill(skillInfoReplace.OldSkillId,skillInfoReplace.NewSkillId, skillInfoReplace.Index);
     }
 
     public static bool ReplaceSkill(string oldSkill, string newSkill, int index)

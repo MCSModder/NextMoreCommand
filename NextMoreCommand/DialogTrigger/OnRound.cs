@@ -35,7 +35,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
 
         private static bool TryTrigger(DialogEnvironment env, bool triggerAll, params string[] param)
         {
-            Main.LogInfo($"进入触发器 {param[1]}");
+            Main.LogInfo($"进入触发器 {JArray.FromObject(param).ToString()}");
             var result = DialogAnalysis.TryTrigger(param, env, triggerAll);
             if (SkillComboManager.SkillCombos.Count == 0)
             {
@@ -125,7 +125,6 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
     {
         public static void Prefix()
         {
-            MyLog.FungusLog("进入玩家结束回合之前");
             if (RoundUtils.PlayerEndRound())
             {
                 MyLog.FungusLog("进入玩家结束回合之前");
@@ -135,7 +134,6 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
 
         public static void Postfix()
         {
-            MyLog.FungusLog("进入玩家结束回合之后");
             if (RoundUtils.PlayerEndRound(false))
             {
                 MyLog.FungusLog("进入玩家结束回合之后");
