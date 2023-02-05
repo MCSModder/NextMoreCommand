@@ -229,6 +229,7 @@
         <Compile Include="NextEnvExtension\Npc\GetNpcSelfName.cs" />
         <Compile Include="NextEnvExtension\Npc\HasNpcFollow.cs" />
         <Compile Include="NextEnvExtension\Utils\GetIntGroup.cs" />
+        <Compile Include="NextEnvExtension\Utils\GetIntToString.cs" />
         <Compile Include="NextEnvExtension\Utils\GetPlayTime.cs" />
         <Compile Include="NextEnvExtension\Utils\GetPlayTimeHours.cs" />
         <Compile Include="NextEnvExtension\Utils\GetPlayTimeMinutes.cs" />
@@ -236,6 +237,7 @@
         <Compile Include="NextEnvExtension\Utils\GetShengWang.cs" />
         <Compile Include="NextEnvExtension\Utils\GetShengWangByName.cs" />
         <Compile Include="NextEnvExtension\Utils\GetStrGroup.cs" />
+        <Compile Include="NextEnvExtension\Utils\GetStrToInt.cs" />
         <Compile Include="NextEnvExtension\Utils\HasTianFu.cs" />
         <Compile Include="HarmonyPatchs\BagTianJieSkillPatch.cs" />
         <Compile Include="HarmonyPatchs\CheckTaskIsOutOnEnter.cs" />

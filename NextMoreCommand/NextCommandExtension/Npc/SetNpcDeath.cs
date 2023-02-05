@@ -9,7 +9,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
 {
     [RegisterCommand]
     [DialogEvent("SetNpcDeath")]
-    [DialogEvent("设置NPC死亡")]
+    [DialogEvent("设置角色死亡")]
     public class SetNpcDeath : IDialogEvent
     {
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)

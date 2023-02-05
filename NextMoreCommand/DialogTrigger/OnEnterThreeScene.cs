@@ -17,7 +17,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
             {
                 mapScene = Tools.getScreenName()
             };
-           MyPluginMain.LogInfo("触发ThreeSceneMag");
+            //MyPluginMain.LogInfo("触发ThreeSceneMag");
             if (DialogAnalysis.TryTrigger(new[] { "进入场景后", "AfterEnterScene" }, env, true))
             {
                MyPluginMain.LogInfo("触发进入场景后触发器");
@@ -95,7 +95,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
     {
         public static void Postfix(ref string name)
         {
-           MyPluginMain.LogInfo($"[加载场景]场景名称:{name}");
+          // MyPluginMain.LogInfo($"[加载场景]场景名称:{name}");
             if (name.ToUpper().Contains("YSNEW"))
             {
                 UINPCData.ThreeSceneNPCTalkCache.Clear();

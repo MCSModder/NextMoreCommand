@@ -10,7 +10,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
 {
     [RegisterCommand]
     [DialogEvent("NpcForceRemoveTeleport")]
-    [DialogEvent("NPC强制删除传送")]
+    [DialogEvent("角色强制删除传送")]
     public class NpcForceRemoveTeleport : IDialogEvent
     {
         public bool m_isRemove = false;

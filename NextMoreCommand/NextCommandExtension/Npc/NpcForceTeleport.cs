@@ -10,9 +10,9 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
 {
     [RegisterCommand]
     [DialogEvent("NpcForceTeleport")]
-    [DialogEvent("NPC强制传送")]
+    [DialogEvent("角色强制传送")]
     [DialogEvent("NpcForceMultiTeleport")]
-    [DialogEvent("NPC多人强制传送")]
+    [DialogEvent("角色多人强制传送")]
     public class NpcForceTeleport : IDialogEvent
     {
         public bool m_isAdd;
@@ -25,13 +25,13 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
             switch (command.Command)
             {
                 case "NpcForceTeleport":
-                case "NPC强制传送":
+                case "角色强制传送":
                     npc = NPCEx.NPCIDToNew(command.GetInt(0, -1));
                     dialog = command.GetStr(1);
                     NpcInfos.Add(new NpcInfo(npc, dialog));
                     break;
                 case "NpcForceMultiTeleport":
-                case "NPC多人强制传送":
+                case "角色多人强制传送":
                     if (command.ParamList.Length == 0) break;
                     foreach (var param in command.ParamList)
                     {
@@ -56,7 +56,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
 
             foreach (var npcInfo in NpcInfos)
             {
-                AddNpc(npcInfo);
+                NpcUtils.AddNpc(npcInfo, out m_isAdd);
             }
 
             if (m_isAdd && !UiNpcJiaoHuRefreshNowMapNpcPatch.m_isRefresh)
@@ -67,22 +67,6 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
             m_isAdd = false;
             NpcInfos.Clear();
             callback?.Invoke();
-        }
-
-        public void AddNpc(NpcInfo npcInfo)
-        {
-            if (npcInfo.Id <= 0)
-            {
-                return;
-            }
-
-            if (!UINPCJiaoHu.Inst.TNPCIDList.Contains(npcInfo.Id))
-            {
-                UINPCJiaoHu.Inst.TNPCIDList.Add(npcInfo.Id);
-                m_isAdd = true;
-            }
-
-            NpcUtils.BindDialogEvent(npcInfo.Id, npcInfo.Dialog);
         }
     }
 }

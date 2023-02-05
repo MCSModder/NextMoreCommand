@@ -9,7 +9,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fungus
 {
     [RegisterCommand]
     [DialogEvent("RunFungusFlowchart")]
-    [DialogEvent("运行官方Flowchart")]
+    [DialogEvent("运行官方对话流程")]
     public class RunFungusFlowchart : IDialogEvent
     {
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)

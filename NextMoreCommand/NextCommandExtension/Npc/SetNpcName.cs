@@ -6,7 +6,7 @@ using SkySwordKill.NextMoreCommand.Utils;
 namespace SkySwordKill.NextMoreCommand.NextCommandExtension;
 
 [DialogEvent("SetNpcName")]
-[DialogEvent("设置NPC名字")]
+[DialogEvent("设置角色名字")]
 public class SetNpcName : IDialogEvent
 {
 

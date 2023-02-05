@@ -4,14 +4,13 @@ using SkySwordKill.NextMoreCommand.Utils;
 namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Utils
 {
 
-    [DialogEnvQuery("GetIntGroup")]
-    public class GetIntGroup : IDialogEnvQuery
+    [DialogEnvQuery("GetIntToString")]
+    public class GetIntToString : IDialogEnvQuery
     {
         public object Execute(DialogEnvQueryContext context)
         {
-            var group = context.GetMyArgs(0,"");
-            var key = context.GetMyArgs(1,"");
-            return DialogAnalysis.GetInt(group,key);
+            var key = context.GetMyArgs(0,"");
+            return DialogAnalysis.GetInt(key).ToString();
         }
     }
 }

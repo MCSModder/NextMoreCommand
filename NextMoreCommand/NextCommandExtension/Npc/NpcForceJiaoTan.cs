@@ -7,7 +7,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
 {
     [RegisterCommand]
     [DialogEvent("NpcForceJiaoTan")]
-    [DialogEvent("NPC强制交谈")]
+    [DialogEvent("角色强制交谈")]
     public class NpcForceJiaoTan : IDialogEvent
     {
       
