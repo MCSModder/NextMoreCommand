@@ -243,6 +243,11 @@
         <Compile Include="NextEnvExtension\Utils\GetShengWangByName.cs" />
         <Compile Include="NextEnvExtension\Utils\GetStrGroup.cs" />
         <Compile Include="NextEnvExtension\Utils\GetStrToInt.cs" />
+        <Compile Include="NextEnvExtension\Utils\GetTextColor.cs" />
+        <Compile Include="NextEnvExtension\Utils\GetTextRandomColor.cs" />
+        <Compile Include="NextEnvExtension\Utils\GetTextRandomSize.cs" />
+        <Compile Include="NextEnvExtension\Utils\GetTextRandomSizeColor.cs" />
+        <Compile Include="NextEnvExtension\Utils\GetTextSize.cs" />
         <Compile Include="NextEnvExtension\Utils\HasTianFu.cs" />
         <Compile Include="HarmonyPatchs\BagTianJieSkillPatch.cs" />
         <Compile Include="HarmonyPatchs\CheckTaskIsOutOnEnter.cs" />
@@ -258,6 +263,7 @@
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="Utils\DaolvUtils.cs" />
         <Compile Include="Utils\DialogEnvQueryContextExtension.cs" />
+        <Compile Include="Utils\FungusTextUtils.cs" />
         <Compile Include="Utils\FungusUtils.cs" />
         <Compile Include="Utils\ModManagerUtils.cs" />
         <Compile Include="Utils\MonvUtils.cs" />
