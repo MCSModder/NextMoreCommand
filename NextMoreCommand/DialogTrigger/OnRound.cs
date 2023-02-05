@@ -98,6 +98,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
             Avatar = (Avatar)_avater;
             if (__instance.StaticRoundNum == 0)
             {
+                
                 if (RoundUtils.FightStart())
                 {
                     MyLog.FungusLog("进入开始战斗");

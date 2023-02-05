@@ -63,6 +63,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public const string NpcFollow = "NPC_FOLLOW_NEXT";
         public static DataGroup<string> StrGroup => DialogAnalysis.AvatarNextData.StrGroup;
         public static Dictionary<string, string> NpcFollowGroup => StrGroup.GetNpcFollowGroup();
+        public static bool IsFightScene => Tools.getScreenName().ToUpper().Contains("YSNEW");
 
         public static void AddNpcFollow()
         {
@@ -301,7 +302,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
                     DialogAnalysis.StartDialogEvent(dialog);
                 }
             };
-            if (NPCEx.IsZhongYaoNPC(npc, out var key))
+            if (NPCEx.IsZhongYaoNPC(npc, out var key) && !IsFightScene)
             {
                 UINPCData.ThreeSceneZhongYaoNPCTalkCache[key] = next;
                 return;
