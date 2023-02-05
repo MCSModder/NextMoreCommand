@@ -158,10 +158,15 @@
         <Compile Include="NextCommandExtension\Npc\SetAllDaolvRemoveFollow.cs" />
         <Compile Include="NextCommandExtension\Npc\SetNpcDeath.cs" />
         <Compile Include="NextCommandExtension\Npc\SetNpcFollow.cs" />
+        <Compile Include="NextCommandExtension\Npc\SetNpcHuaShenTime.cs" />
+        <Compile Include="NextCommandExtension\Npc\SetNpcJinDanTime.cs" />
         <Compile Include="NextCommandExtension\Npc\SetNpcName.cs" />
+        <Compile Include="NextCommandExtension\Npc\SetNpcNpcFlyToSky.cs" />
         <Compile Include="NextCommandExtension\Npc\SetNpcRemoveFollow.cs" />
         <Compile Include="NextCommandExtension\Npc\SetNpcSelfName.cs" />
         <Compile Include="NextCommandExtension\Npc\SetNpcTeleport.cs" />
+        <Compile Include="NextCommandExtension\Npc\SetNpcYuanYingTime.cs" />
+        <Compile Include="NextCommandExtension\Npc\SetNpcZhuJiTime.cs" />
         <Compile Include="NextCommandExtension\SetNewTask.cs" />
         <Compile Include="NextCommandExtension\SetSummonMonstar.cs" />
         <Compile Include="NextCommandExtension\SetTaskIndexFinish.cs" />

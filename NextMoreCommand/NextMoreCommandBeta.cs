@@ -1,6 +1,7 @@
 ﻿using System;
 using HarmonyLib;
 using SkySwordKill.Next;
+using SkySwordKill.Next.FCanvas;
 using SkySwordKill.Next.Mod;
 using SkySwordKill.NextMoreCommand.Utils;
 using UnityEngine;
@@ -14,6 +15,8 @@ public class NextMoreCommand : MonoBehaviour
     public bool? AchivementDebug;
     private void Awake()
     {
+
+       
         instance = this;
         ModManager.TryGetModSetting("Quick_AchivementDebug", out AchivementDebug);
         ModManager.ModSettingChanged += () =>

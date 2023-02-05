@@ -19,7 +19,7 @@ public class SubscribeDependencies : BaseUnityPlugin
         _harmony = new Harmony("SubscribeDependencies");
         _harmony.PatchAll();
         m_manualLogSource = Logger;
-
+        
     }
 }
 [HarmonyPatch(typeof(MainUIMag),(nameof(MainUIMag.OpenMain)))]

@@ -19,6 +19,7 @@ public class SkillInfoReplace
     public int Index;
     public string OldSkillName;
     public string NewSkillName;
+
     public SkillInfoReplace(int oldSkill, int newSkill)
     {
         OldSkillId = oldSkill;
@@ -27,6 +28,7 @@ public class SkillInfoReplace
         NewSkillName = SkillComboManager.GetSkillName(newSkill);
         Index = SkillComboManager.GetSkillIndex(oldSkill);
     }
+
     public SkillInfoReplace(string oldSkill, string newSkill)
     {
         OldSkillId = SkillComboManager.GetSkillId(oldSkill);
@@ -35,10 +37,12 @@ public class SkillInfoReplace
         NewSkillName = newSkill;
         Index = SkillComboManager.GetSkillIndex(OldSkillId);
     }
+
     public bool IsValid()
     {
         return OldSkillId > 0 && NewSkillId > 0 && Index <= 10 && Index >= 0;
     }
+
     public void SetReplace()
     {
         if (SkillComboManager.ReplaceSkill(this))
@@ -50,23 +54,26 @@ public class SkillInfoReplace
             GetError();
         }
     }
+
     public void GetError()
     {
-       MyPluginMain.LogError($"[技能替换失败]老技能:{OldSkillName} 新技能:{NewSkillName} 位置:{Index}");
-       MyPluginMain.LogError($"[技能替换失败]老技能:{OldSkillId} 新技能:{NewSkillId} 位置:{Index}");
+        MyPluginMain.LogError($"[技能替换失败]老技能:{OldSkillName} 新技能:{NewSkillName} 位置:{Index}");
+        MyPluginMain.LogError($"[技能替换失败]老技能:{OldSkillId} 新技能:{NewSkillId} 位置:{Index}");
     }
+
     public void GetInfo()
     {
-       MyPluginMain.LogInfo($"[技能替换]老技能:{OldSkillName} 新技能:{NewSkillName} 位置:{Index}");
-       MyPluginMain.LogInfo($"[技能替换]老技能:{OldSkillId} 新技能:{NewSkillId} 位置:{Index}");
+        MyPluginMain.LogInfo($"[技能替换]老技能:{OldSkillName} 新技能:{NewSkillName} 位置:{Index}");
+        MyPluginMain.LogInfo($"[技能替换]老技能:{OldSkillId} 新技能:{NewSkillId} 位置:{Index}");
     }
 }
+
 public static class SkillComboManager
 {
     public static readonly Dictionary<string, SkillCombo> SkillCombos = new Dictionary<string, SkillCombo>();
     public static readonly Dictionary<string, int> SkillName = new Dictionary<string, int>();
     public static readonly List<CacheSkillCombo> CacheSkillCombos = new List<CacheSkillCombo>();
-    public static Skill ChoiceSkill => RoundManager.instance.ChoiceSkill ??RoundManager.instance.CurSkill;
+    public static Skill ChoiceSkill => RoundManager.instance.ChoiceSkill ?? RoundManager.instance.CurSkill;
     private static Tools Tools => Tools.instance;
     private static Avatar Player => Tools.getPlayer();
     private static List<UIFightSkillItem> SkillFight => UIFightPanel.Inst.FightSkills;
@@ -91,9 +98,9 @@ public static class SkillComboManager
 
         foreach (var item in _skillJsonData.DataList)
         {
-            if (item.name.Contains(skillName))
+            if (item.name.RemoveNumber() == skillName)
             {
-               MyPluginMain.LogInfo($"技能名字:{item.name} 技能ID:{item.id} 技能ID:{item.Skill_ID}");
+                MyPluginMain.LogInfo($"技能名字:{item.name} 技能ID:{item.id} 技能ID:{item.Skill_ID}");
                 SkillName[skillName] = item.Skill_ID;
                 return GetSkillId(SkillName[skillName]);
             }
@@ -110,25 +117,25 @@ public static class SkillComboManager
 
     public static string GetSkillName(int skill, bool includeColor = false)
     {
-       MyPluginMain.LogInfo($"skill:{skill}");
+        MyPluginMain.LogInfo($"skill:{skill}");
 
         return skill < 0 ? "" : Tools.getSkillName(skill, includeColor);
     }
 
     public static bool ReplaceSkill(string oldSkill, string newSkill)
     {
-       MyPluginMain.LogInfo($"替换技能 老:{oldSkill} 新:{newSkill}");
+        MyPluginMain.LogInfo($"替换技能 老:{oldSkill} 新:{newSkill}");
         return ReplaceSkill(GetSkillId(oldSkill), GetSkillId(newSkill));
     }
+
     public static bool ReplaceSkill(SkillInfoReplace skillInfoReplace)
     {
-   
-        return ReplaceSkill(skillInfoReplace.OldSkillId,skillInfoReplace.NewSkillId, skillInfoReplace.Index);
+        return ReplaceSkill(skillInfoReplace.OldSkillId, skillInfoReplace.NewSkillId, skillInfoReplace.Index);
     }
 
     public static bool ReplaceSkill(string oldSkill, string newSkill, int index)
     {
-       MyPluginMain.LogInfo($"替换技能 老:{oldSkill} 新:{newSkill} index:{index}");
+        MyPluginMain.LogInfo($"替换技能 老:{oldSkill} 新:{newSkill} index:{index}");
         return ReplaceSkill(GetSkillId(oldSkill), GetSkillId(newSkill), index);
     }
 
@@ -141,7 +148,7 @@ public static class SkillComboManager
     public static bool ReplaceSkill(int oldSkill, int newSkill, int index)
     {
         if (index < 0) return false;
-       MyPluginMain.LogInfo($"成功替换技能 老:{oldSkill} 新:{newSkill} index:{index}");
+        MyPluginMain.LogInfo($"成功替换技能 老:{oldSkill} 新:{newSkill} index:{index}");
         Player.FightClearSkill(index, index + 1);
         Player.FightAddSkill(newSkill, index, 10);
         return true;
@@ -179,19 +186,20 @@ public static class SkillComboManager
         ReplaceSkill(skillCombo.SkillName, skillCombo.First().SkillName, index);
         return true;
     }
-    private static bool IsMonsterTurn =>  UIFightPanel.Inst.UIFightState == UIFightState.敌人回合;
+
+    private static bool IsMonsterTurn => UIFightPanel.Inst.UIFightState == UIFightState.敌人回合;
+
     public static bool TryTriggerSkill(DialogEnvironment env, bool triggerAll, string[] param)
     {
-
-        if (!RoundManager.instance||ChoiceSkill == null||IsMonsterTurn) return false;
-       MyPluginMain.LogInfo($"[进入触发技能组合]");
+        if (!RoundManager.instance || ChoiceSkill == null || IsMonsterTurn) return false;
+        MyPluginMain.LogInfo($"[进入触发技能组合]");
         var name = GetSkillName(ChoiceSkill.skill_ID);
         if (!SkillCombos.ContainsKey(name)) return false;
 
         var skillCombo = SkillCombos[name];
         if (param.Contains(skillCombo.TriggerType) && skillCombo.GetCondition(env))
         {
-           MyPluginMain.LogInfo($"进行替换");
+            MyPluginMain.LogInfo($"进行替换");
             var index = GetSkillIndex(name);
             if (SetSkill(name, index))
             {
@@ -207,26 +215,27 @@ public static class SkillComboManager
 
     public static bool TryTrigger(DialogEnvironment env, bool triggerAll, string[] param)
     {
-        if (!RoundManager.instance||ChoiceSkill == null ||IsMonsterTurn) return false;
-       MyPluginMain.LogInfo($"[进入触发缓存技能组合]");
+        if (!RoundManager.instance || ChoiceSkill == null || IsMonsterTurn) return false;
+        MyPluginMain.LogInfo($"[进入触发缓存技能组合]");
         foreach (var skillCombo in CacheSkillCombos)
         {
             var name = GetSkillName(ChoiceSkill.skill_ID);
-         
+
             if (skillCombo.Name != name)
             {
                 continue;
             }
+
             var oldSkill = skillCombo.SkillComboData;
             var triggerType = oldSkill.TriggerType;
             var isLastSkill = oldSkill.LastSkill;
             var isTrigger = param.Contains(triggerType) && oldSkill.GetCondition(env);
-           MyPluginMain.LogInfo($"选中技能名字:{name} 遍历技能名字:{skillCombo.Name}");
-           MyPluginMain.LogInfo($"触发器:{triggerType}");
+            MyPluginMain.LogInfo($"选中技能名字:{name} 遍历技能名字:{skillCombo.Name}");
+            MyPluginMain.LogInfo($"触发器:{triggerType}");
             if (isTrigger)
             {
-               MyPluginMain.LogInfo($"[进入触发缓存技能组合]");
-              
+                MyPluginMain.LogInfo($"[进入触发缓存技能组合]");
+
                 if (isLastSkill)
                 {
                     CacheSkillCombos.Remove(skillCombo);
@@ -239,6 +248,7 @@ public static class SkillComboManager
                     ReplaceSkill(oldSkill.SkillName, newSkill.SkillName, skillCombo.Index);
                     CacheSkillCombos.Add(CacheSkillCombo.Create(skillCombo.Index, skillCombo.SkillCombo, newSkill));
                 }
+
                 oldSkill.GetDialogEvent(env);
                 oldSkill.GetRunLua(env);
                 oldSkill.GetCustomFace(env);
