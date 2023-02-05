@@ -248,6 +248,7 @@
         <Compile Include="NextEnvExtension\Utils\GetTextRandomSize.cs" />
         <Compile Include="NextEnvExtension\Utils\GetTextRandomSizeColor.cs" />
         <Compile Include="NextEnvExtension\Utils\GetTextSize.cs" />
+        <Compile Include="NextEnvExtension\Utils\GetTextSizeColor.cs" />
         <Compile Include="NextEnvExtension\Utils\HasTianFu.cs" />
         <Compile Include="HarmonyPatchs\BagTianJieSkillPatch.cs" />
         <Compile Include="HarmonyPatchs\CheckTaskIsOutOnEnter.cs" />

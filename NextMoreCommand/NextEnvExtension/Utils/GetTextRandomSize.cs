@@ -13,8 +13,8 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Utils
         {
             var text = context.GetMyArgs(0, "");
             var min = context.GetMyArgs(1, 24);
-            var max = context.GetMyArgs(1, 32);
-            var split = context.GetMyArgs(2, 0);
+            var max = context.GetMyArgs(2, 32);
+            var split = context.GetMyArgs(3, 0);
             if (string.IsNullOrWhiteSpace(text) || min <= 0 || max <= 0 || min > max)
             {
                 return text;

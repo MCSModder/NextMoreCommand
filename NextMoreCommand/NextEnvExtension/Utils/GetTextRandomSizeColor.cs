@@ -12,9 +12,9 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Utils
         public object Execute(DialogEnvQueryContext context)
         {
             var text = context.GetMyArgs(0, "");
-            var size = context.GetMyArgs(1, 0);
-            var min = context.GetMyArgs(2, 24);
-            var max = context.GetMyArgs(3, 36);
+            var min = context.GetMyArgs(1, 24);
+            var max = context.GetMyArgs(2, 36);
+            var size = context.GetMyArgs(3, 0);
             if (string.IsNullOrWhiteSpace(text) ||  min <= 0 || max <= 0 || min > max)
             {
                 return text;
