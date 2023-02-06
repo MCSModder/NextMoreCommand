@@ -7,19 +7,16 @@ using SkySwordKill.NextMoreCommand.Utils;
 namespace SkySwordKill.NextMoreCommand.NextCommandExtension
 {
     [RegisterCommand]
-    [DialogEvent("SetNpcZhuJiTime")]
-    [DialogEvent("保送角色筑基时间")]
-    public class SetNpcZhuJiTime : IDialogEvent
+    [DialogEvent("AddNpcQingFen")]
+    [DialogEvent("增加角色情分")]
+    public class AddNpcQingFen : IDialogEvent
     {
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
             var npc = command.ToNpcId();
-            var year = command.GetInt(1, 5000);
-            var mouth = command.GetInt(2, 1);
-            var day = command.GetInt(3, 1);
-         
-            var data = NpcJieSuanManager.inst.GetNpcData(npc);
-            data.SetField("ZhuJiTime",$"{year:0000}-{mouth:00}-{day:00}");
+            var qingFeng = command.GetInt(1, 0);
+            NPCEx.AddQingFen(npc, qingFeng);
+       
             callback?.Invoke();
         }
     }

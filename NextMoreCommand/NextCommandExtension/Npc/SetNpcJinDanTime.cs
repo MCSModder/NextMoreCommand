@@ -15,7 +15,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
             var npc = NPCEx.NPCIDToNew(command.GetInt(0, -1));
             var year = command.GetInt(1, 5000);
             var mouth = command.GetInt(2, 1);
-            var day = command.GetInt(2, 1);
+            var day = command.GetInt(3, 1);
 
             var data = NpcJieSuanManager.inst.GetNpcData(npc);
            

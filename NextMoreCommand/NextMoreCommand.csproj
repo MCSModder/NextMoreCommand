@@ -148,6 +148,8 @@
         <Compile Include="NextCommandExtension\Fungus\RunFungusTalkItemId.cs" />
         <Compile Include="NextCommandExtension\Fungus\RunTempFlowchart.cs" />
         <Compile Include="NextCommandExtension\Fungus\SetTempFlowchart.cs" />
+        <Compile Include="NextCommandExtension\Npc\AddNpcMoney.cs" />
+        <Compile Include="NextCommandExtension\Npc\AddNpcQingFen.cs" />
         <Compile Include="NextCommandExtension\Npc\NpcForceJiaoHu.cs" />
         <Compile Include="NextCommandExtension\Npc\NpcForceJiaoTan.cs" />
         <Compile Include="NextCommandExtension\Npc\NpcForceJiaoYi.cs" />
@@ -160,11 +162,13 @@
         <Compile Include="NextCommandExtension\Npc\SetNpcFollow.cs" />
         <Compile Include="NextCommandExtension\Npc\SetNpcHuaShenTime.cs" />
         <Compile Include="NextCommandExtension\Npc\SetNpcJinDanTime.cs" />
+        <Compile Include="NextCommandExtension\Npc\SetNpcMoney.cs" />
         <Compile Include="NextCommandExtension\Npc\SetNpcName.cs" />
-        <Compile Include="NextCommandExtension\Npc\SetNpcNpcFlyToSky.cs" />
+        <Compile Include="NextCommandExtension\Npc\SetNpcFlyToSky.cs" />
         <Compile Include="NextCommandExtension\Npc\SetNpcRemoveFollow.cs" />
         <Compile Include="NextCommandExtension\Npc\SetNpcSelfName.cs" />
         <Compile Include="NextCommandExtension\Npc\SetNpcTeleport.cs" />
+        <Compile Include="NextCommandExtension\Npc\SetNpcXinQuType.cs" />
         <Compile Include="NextCommandExtension\Npc\SetNpcYuanYingTime.cs" />
         <Compile Include="NextCommandExtension\Npc\SetNpcZhuJiTime.cs" />
         <Compile Include="NextCommandExtension\SetNewTask.cs" />

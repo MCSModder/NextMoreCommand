@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 using Random = UnityEngine.Random;
 
 namespace SkySwordKill.NextMoreCommand.Utils;
@@ -692,18 +693,25 @@ public static class ColorExtends
             InitColor();
         }
 
-        if (instance.StartsWith("#"))
+        if (TestIsHex(instance))
         {
-            return instance;
+            return "#" + instance;
         }
 
         return ColorChineseName.ContainsKey(instance) ? ColorChineseName[instance] : instance;
+    }
+
+    public static bool TestIsHex(string hc)
+    {
+        return Regex.IsMatch(hc, @"^[0-9A-Fa-f]{1,6}$");
     }
 }
 
 public static class FungusTextUtils
 {
-    public static string GetRandomColor()=>$"#{UnityEngine.Random.Range(0, 255):X}{UnityEngine.Random.Range(0, 255):X}{Random.Range(0, 255):X}";
+    public static string GetRandomColor() =>
+        $"#{UnityEngine.Random.Range(0, 255):X}{UnityEngine.Random.Range(0, 255):X}{Random.Range(0, 255):X}";
+
     public static string Bold(this string str) => $"{{b}}{str}{{/b}}";
     public static string RandomColor(this string str) => str.Color(GetRandomColor());
     public static string Color(this string str, string clr) => $"{{color={clr}}}{str}{{/color}}";

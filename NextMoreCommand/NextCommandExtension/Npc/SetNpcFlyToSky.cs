@@ -7,7 +7,7 @@ using SkySwordKill.NextMoreCommand.Attribute;
 namespace SkySwordKill.NextMoreCommand.NextCommandExtension
 {
     [RegisterCommand]
-    [DialogEvent("SetNpcNpcFlyToSky")]
+    [DialogEvent("SetNpcFlyToSky")]
     [DialogEvent("设置角色飞升")]
     public class SetNpcNpcFlyToSky : IDialogEvent
     {

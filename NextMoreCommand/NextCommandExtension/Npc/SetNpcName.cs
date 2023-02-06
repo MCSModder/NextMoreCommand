@@ -13,7 +13,7 @@ public class SetNpcName : IDialogEvent
 
     public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
     {
-      var   npcId = command.GetInt(0, -1);
+        var npcId = command.ToNpcId(0,-1);
         if (npcId <= 0)
         {
             if (env.roleID <= 0)

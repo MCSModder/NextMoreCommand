@@ -20,8 +20,7 @@ namespace SkySwordKill.NextMoreCommand.HarmonyPatchs
     {
         public static void Prefix(NpcJieSuanManager __instance)
         {
-
-            Next.Main.LogInfo("释放TempFlowchart里面内容");
+            MyPluginMain.LogInfo("释放TempFlowchart里面内容");
             TempFlowchart.Flowcharts.Clear();
             FungusUtils.Flowcharts.Clear();
         }

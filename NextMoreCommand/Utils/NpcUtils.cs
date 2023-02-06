@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SkySwordKill.Next;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.NextMoreCommand.DialogTrigger;
@@ -29,7 +31,68 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
         public static string ToNpcId(this int instance)
         {
-            return NPCEx.NPCIDToNew(instance).ToString();
+            return instance.ToNpcNewId().ToString();
+        }
+
+        public static int ToNpcNewId(this int instance)
+        {
+            return NPCEx.NPCIDToNew(instance);
+        }
+
+        public static List<int> ToNpcListId(this DialogCommand instance, int index = 0)
+        {
+            if (instance.ParamList.Length >= index)
+            {
+                return new List<int>();
+            }
+
+            var list = new List<string>();
+
+            for (var i = index; i < instance.ParamList.Length; i++)
+            {
+                list.Add(instance.ParamList[i]);
+            }
+
+            return list.Select(item => item.ToNpcId()).Where(item => item > 0).ToList();
+        }
+
+        public static List<int> ToListInt(this DialogCommand instance, int index = 0)
+        {
+            if (instance.ParamList.Length >= index)
+            {
+                return new List<int>();
+            }
+
+            var list = new List<string>();
+
+            for (var i = index; i < instance.ParamList.Length; i++)
+            {
+                list.Add(instance.ParamList[i]);
+            }
+
+            return list.Select(item => Convert.ToInt32(item)).ToList();
+        }
+
+        public static List<string> ToListString(this DialogCommand instance, int index = 0)
+        {
+            var list = new List<string>();
+            if (instance.ParamList.Length >= index)
+            {
+                return list;
+            }
+
+
+            for (var i = index; i < instance.ParamList.Length; i++)
+            {
+                list.Add(instance.ParamList[i]);
+            }
+
+            return list;
+        }
+
+        public static int ToNpcId(this DialogCommand instance, int index = 0, int value = 0)
+        {
+            return instance.GetInt(index, value).ToNpcNewId();
         }
 
         public static bool HasNpcFollowGroup(this DataGroup<string> instance)
@@ -360,6 +423,110 @@ namespace SkySwordKill.NextMoreCommand.Utils
             }
 
             UINPCData.ThreeSceneNPCTalkCache.Remove(npc);
+        }
+    }
+
+    public class XinQuTypeInfo
+    {
+        [JsonProperty("id")] public int Id;
+        [JsonProperty("name")] public string Name;
+    }
+
+    public class XinQuInfo
+    {
+        public string Raw;
+        public string Name => GetTypeName();
+        public int Type => GetTypeId();
+        public int Percent => GetPercent();
+        public JSONObject XinQu => GetXinQu();
+        public string TypeRaw;
+        public string PercentRaw;
+        private bool isNumber;
+        public bool m_isSep;
+        private JObject AllItemLeiXin => jsonData.instance.AllItemLeiXin;
+
+        public Dictionary<int, XinQuTypeInfo> XinQuTypeInfos =>
+            AllItemLeiXin.ToObject<Dictionary<int, XinQuTypeInfo>>();
+
+        public XinQuInfo(string raw)
+        {
+            Raw = raw;
+            m_isSep = raw.Contains(":");
+            Init();
+        }
+
+        public void Init()
+        {
+            if (m_isSep)
+            {
+                var split = Raw.Split(':');
+                TypeRaw = split[0];
+                PercentRaw = split[1];
+            }
+            else
+            {
+                TypeRaw = Raw;
+                PercentRaw = "";
+            }
+
+            isNumber = Convert.ToInt32(TypeRaw) > 0;
+        }
+
+        public int GetPercent()
+        {
+            return string.IsNullOrWhiteSpace(PercentRaw) ? 100 : Convert.ToInt32(PercentRaw);
+        }
+
+        public int GetTypeId()
+        {
+            var dict = XinQuTypeInfos;
+            var id = Convert.ToInt32(TypeRaw);
+            if (isNumber && dict.ContainsKey(id))
+            {
+                return id;
+            }
+
+
+            foreach (var xinQuType in dict)
+            {
+                if (xinQuType.Value.Name == TypeRaw)
+                {
+                    return xinQuType.Value.Id;
+                }
+            }
+
+            return -1;
+        }
+
+        public bool isValid => Type > 0 && !string.IsNullOrWhiteSpace(Name);
+
+        public string GetTypeName()
+        {
+            var id = Convert.ToInt32(TypeRaw);
+            var dict = XinQuTypeInfos;
+            if (isNumber && dict.ContainsKey(id))
+            {
+                return dict[id].Name;
+            }
+
+            foreach (var xinQuType in dict)
+            {
+                if (xinQuType.Value.Name == TypeRaw)
+                {
+                    return xinQuType.Value.Name;
+                }
+            }
+
+
+            return "";
+        }
+
+        public JSONObject GetXinQu()
+        {
+            var xinQuType = new JSONObject(JSONObject.Type.OBJECT);
+            xinQuType.SetField("type", Type);
+            xinQuType.SetField("percent", Percent);
+            return xinQuType;
         }
     }
 }
