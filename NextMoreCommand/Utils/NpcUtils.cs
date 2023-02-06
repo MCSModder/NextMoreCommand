@@ -58,7 +58,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
         public static List<int> ToListInt(this DialogCommand instance, int index = 0)
         {
-            if (instance.ParamList.Length >= index)
+            if (instance.ParamList.Length <= index)
             {
                 return new List<int>();
             }
@@ -76,7 +76,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public static List<string> ToListString(this DialogCommand instance, int index = 0)
         {
             var list = new List<string>();
-            if (instance.ParamList.Length >= index)
+            if (instance.ParamList.Length <= index)
             {
                 return list;
             }
@@ -438,11 +438,12 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public string Name => GetTypeName();
         public int Type => GetTypeId();
         public int Percent => GetPercent();
+        private int _id = -1;
         public JSONObject XinQu => GetXinQu();
         public string TypeRaw;
         public string PercentRaw;
-        private bool isNumber;
-        public bool m_isSep;
+        private bool _isNumber;
+        private readonly bool m_isSep;
         private JObject AllItemLeiXin => jsonData.instance.AllItemLeiXin;
 
         public Dictionary<int, XinQuTypeInfo> XinQuTypeInfos =>
@@ -469,7 +470,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 PercentRaw = "";
             }
 
-            isNumber = Convert.ToInt32(TypeRaw) > 0;
+            _isNumber = int.TryParse(TypeRaw, out _id);
         }
 
         public int GetPercent()
@@ -480,8 +481,8 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public int GetTypeId()
         {
             var dict = XinQuTypeInfos;
-            var id = Convert.ToInt32(TypeRaw);
-            if (isNumber && dict.ContainsKey(id))
+            var id = _id > 0 ? _id : -1;
+            if (_isNumber && dict.ContainsKey(id))
             {
                 return id;
             }
@@ -498,13 +499,13 @@ namespace SkySwordKill.NextMoreCommand.Utils
             return -1;
         }
 
-        public bool isValid => Type > 0 && !string.IsNullOrWhiteSpace(Name);
+        public bool IsValid => Type > 0 && !string.IsNullOrWhiteSpace(Name);
 
         public string GetTypeName()
         {
-            var id = Convert.ToInt32(TypeRaw);
+            var id = _id > 0 ? _id : -1;
             var dict = XinQuTypeInfos;
-            if (isNumber && dict.ContainsKey(id))
+            if (_isNumber && dict.ContainsKey(id))
             {
                 return dict[id].Name;
             }

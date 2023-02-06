@@ -11,8 +11,6 @@ using SkySwordKill.NextMoreCommand.Utils;
 
 namespace SkySwordKill.NextMoreCommand.NextCommandExtension
 {
-   
-
     [RegisterCommand]
     [DialogEvent("SetNpcXinQuType")]
     [DialogEvent("设置角色兴趣类型")]
@@ -23,9 +21,15 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
             var npc = command.ToNpcId();
-            var xinQuList = command.ToListString(1)
-                .Select(item => new XinQuInfo(item)).Where(item => item.isValid).ToList();
-
+            var list = command.ToListString(1);
+            MyPluginMain.LogInfo(
+                $"[指令列表]{JArray.FromObject(list).ToString(Formatting.None)}");
+            var tempList = list
+                .Select(item => new XinQuInfo(item));
+            var xinQuInfos = tempList.ToList();
+            var xinQuList = xinQuInfos.Where(item => item.IsValid).ToList();
+            MyPluginMain.LogInfo(
+                $"[兴趣列表]{JArray.FromObject(xinQuList.Select(item => item.Name)).ToString(Formatting.None)}");
             var backpack = jsonData.instance.AvatarBackpackJsonData[npc.ToNpcId()];
             if (!backpack.HasField("XinQuType")
                 || command.Command == "设置角色兴趣类型"
@@ -36,11 +40,10 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
 
 
             var xinQuType = backpack["XinQuType"];
-            var count = xinQuList.Count > 4 ? 4 : xinQuList.Count;
-            for (var i = 0; i < count; i++)
+            for (var i = 0; i < xinQuList.Count; i++)
             {
                 var xinQu = xinQuList[i];
-                backpack.Add(xinQu.XinQu);
+                xinQuType.Add(xinQu.XinQu);
                 MyPluginMain.LogInfo(
                     $"[添加角色兴趣类]ID:{npc} 名字:{DialogAnalysis.GetNpcName(npc)} 兴趣名:{xinQu.Name} 兴趣ID:{xinQu.Type} 兴趣加成:{xinQu.Percent}%");
             }
