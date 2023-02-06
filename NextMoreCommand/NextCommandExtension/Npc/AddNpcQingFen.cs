@@ -15,7 +15,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
         {
             var npc = command.ToNpcId();
             var qingFeng = command.GetInt(1, 0);
-            NPCEx.AddQingFen(npc, qingFeng);
+            NPCEx.AddQingFen(npc, qingFeng,true);
        
             callback?.Invoke();
         }

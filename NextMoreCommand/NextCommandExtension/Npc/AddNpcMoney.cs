@@ -15,8 +15,10 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
         {
             var npc = command.ToNpcId();
             var money = command.GetInt(1, 0);
-            NPCEx.AddJsonInt(npc,"money",money);
-         
+
+            var data = jsonData.instance.AvatarBackpackJsonData[npc.ToNpcId()];
+            NPCEx.SetMoney(npc, data.GetInt("money") + money);
+
             callback?.Invoke();
         }
     }

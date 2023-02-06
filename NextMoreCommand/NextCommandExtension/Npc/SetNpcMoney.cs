@@ -15,7 +15,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
         {
             var npc = command.ToNpcId();
             var money = command.GetInt(1, 0);
-         
+     
             NPCEx.SetMoney(npc,money);
             callback?.Invoke();
         }
