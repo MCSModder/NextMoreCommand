@@ -14,12 +14,15 @@ namespace SkySwordKill.NextMoreCommand.Utils
     {
         public string Dialog;
         public int Id;
+        public string Name => Id.GetNpcName();
 
         public NpcInfo(int id, string dialog = "")
         {
             Dialog = dialog;
             Id = id;
         }
+
+        public string GetDialogName() => string.IsNullOrWhiteSpace(Dialog) ? "无" : Dialog;
     }
 
     public static class ExtendsNpc
@@ -27,6 +30,11 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public static int ToNpcId(this string instance)
         {
             return NPCEx.NPCIDToNew(Convert.ToInt32(instance));
+        }
+
+        public static string GetNpcName(this int instance)
+        {
+            return DialogAnalysis.GetNpcName(instance.ToNpcNewId());
         }
 
         public static string ToNpcId(this int instance)

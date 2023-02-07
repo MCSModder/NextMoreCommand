@@ -9,6 +9,7 @@ namespace SkySwordKill.NextMoreCommand.CustomModDebug.NextMoreCore
     {
         public GButton m_dramaIdButton;
         public GButton m_commandButton;
+        public GButton m_mainMenuButton;
         public GButton m_debugButton;
         public const string URL = "ui://kxq1c75y1101q5l";
 
@@ -24,6 +25,7 @@ namespace SkySwordKill.NextMoreCommand.CustomModDebug.NextMoreCore
             m_dramaIdButton = (GButton)GetChild("dramaIdButton");
             m_commandButton = (GButton)GetChild("commandButton");
             m_debugButton = (GButton)GetChild("debugButton");
+            m_mainMenuButton = (GButton)GetChild("mainMenuButton");
         }
     }
 }

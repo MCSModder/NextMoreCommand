@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SkySwordKill.Next.DialogEvent;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.NextMoreCommand.Attribute;
@@ -20,6 +22,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
+            MyLog.LogCommand(command);
             string dialog;
             int npc;
             switch (command.Command)
@@ -54,16 +57,19 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
                     break;
             }
 
+            MyLog.Log(command, $"开始执行角色强制传送");
+
             foreach (var npcInfo in NpcInfos)
             {
                 NpcUtils.AddNpc(npcInfo, out m_isAdd);
+                MyLog.Log(command, $"角色强制传送 角色ID: {npcInfo.Id} 角色名: {npcInfo.Name} 剧情Id: {npcInfo.GetDialogName()}");
             }
 
             if (m_isAdd && !UiNpcJiaoHuRefreshNowMapNpcPatch.m_isRefresh)
             {
                 NpcJieSuanManager.inst.isUpDateNpcList = true;
             }
-
+            MyLog.LogCommand(command, false);
             m_isAdd = false;
             NpcInfos.Clear();
             callback?.Invoke();

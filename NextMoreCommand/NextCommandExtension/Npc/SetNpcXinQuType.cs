@@ -42,6 +42,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
             var xinQuType = backpack["XinQuType"];
             for (var i = 0; i < xinQuList.Count; i++)
             {
+                
                 var xinQu = xinQuList[i];
                 xinQuType.Add(xinQu.XinQu);
                 MyPluginMain.LogInfo(

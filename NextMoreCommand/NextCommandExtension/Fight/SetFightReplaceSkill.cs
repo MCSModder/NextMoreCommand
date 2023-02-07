@@ -6,6 +6,7 @@ using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.Next.StaticFace;
 using SkySwordKill.NextMoreCommand.Attribute;
 using SkySwordKill.NextMoreCommand.Custom.SkillCombo;
+using SkySwordKill.NextMoreCommand.Utils;
 using GameObject = UnityEngine.GameObject;
 
 namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fight;
@@ -21,7 +22,8 @@ public class SetFightReplaceSkill : IDialogEvent
 
     public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
     {
-        SkillInfoReplace skillInfoReplace = null;
+        MyLog.LogCommand(command);
+        SkillInfoReplace skillInfoReplace = new SkillInfoReplace(-1,-1);
         switch (command.Command)
         {
             case "SetFightReplaceSkill":
@@ -38,10 +40,20 @@ public class SetFightReplaceSkill : IDialogEvent
                 break;
         }
 
-        if (skillInfoReplace?.IsValid() ?? false)
+        if (skillInfoReplace.IsValid())
         {
+            MyLog.Log(command,$"开始替换技能 老技能名:{skillInfoReplace.OldSkillName} 新技能名:{skillInfoReplace.NewSkillName}");
+            MyLog.Log(command,$"开始替换技能 老技能Id:{skillInfoReplace.OldSkillId} 新技能Id:{skillInfoReplace.NewSkillId}");
             skillInfoReplace.SetReplace();
+            MyLog.Log(command,$"成功替换技能 老技能名:{skillInfoReplace.OldSkillName} 新技能名:{skillInfoReplace.NewSkillName}");
+            MyLog.Log(command,$"成功替换技能 老技能Id:{skillInfoReplace.OldSkillId} 新技能Id:{skillInfoReplace.NewSkillId}");
         }
+        else
+        {
+            MyLog.Log(command,$"失败替换技能 老技能名:{skillInfoReplace.OldSkillName} 新技能Id:{skillInfoReplace.NewSkillName} 不存在或者输入错误",true);
+            MyLog.Log(command,$"失败替换技能 老技能Id:{skillInfoReplace.OldSkillId} 新技能Id:{skillInfoReplace.NewSkillId} 不存在或者输入错误",true,false);
+        }
+        MyLog.LogCommand(command,false);
         callback?.Invoke();
     }
 }

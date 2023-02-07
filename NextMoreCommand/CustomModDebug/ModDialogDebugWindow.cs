@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using FairyGUI;
@@ -13,6 +14,7 @@ using SkySwordKill.Next.FGUI;
 using SkySwordKill.Next.FGUI.Component;
 using SkySwordKill.Next.Mod;
 using SkySwordKill.NextMoreCommand.CustomModDebug.NextMoreCore;
+using SkySwordKill.NextMoreCommand.Utils;
 using Tab;
 using UnityEngine;
 using YSGame;
@@ -62,7 +64,7 @@ public struct NextEventCommand
 {
     public string Name;
     public string Text;
-    
+
 
     public NextEventCommand(string name, string text = "")
     {
@@ -108,6 +110,7 @@ public class ModDialogDebugWindow : FGUIWindowBase
         MainView.m_debugText.templateVars = _tempVar;
         MainView.m_debugBar.m_commandButton.visible = _isGame;
         MainView.m_debugBar.m_dramaIdButton.visible = _isGame;
+        MainView.m_debugBar.m_mainMenuButton.visible = _isGame;
 
         SetState(DebugMode.Value && _isGame ? CurrentState : DramaState.None);
     }
@@ -138,73 +141,95 @@ public class ModDialogDebugWindow : FGUIWindowBase
 
             SetState(DebugMode.Value && _isGame ? _currentState : DramaState.None);
         }));
-        MainView.m_debugBar.m_dramaIdButton.title = "返回标题";
-        MainView.m_debugBar.m_dramaIdButton.onClick.Add((() =>
+        MainView.m_debugBar.m_mainMenuButton.onClick.Add((() =>
         {
+            TabUIMag.OpenTab(6);
+
             TySelect.inst.Show("是否要返回主界面？", delegate
             {
                 if (FpUIMag.inst != null)
                 {
                     UnityEngine.Object.Destroy(FpUIMag.inst.gameObject);
                 }
+
                 if (TpUIMag.inst != null)
                 {
                     UnityEngine.Object.Destroy(TpUIMag.inst.gameObject);
                 }
+
                 if (SubmitUIMag.Inst != null)
                 {
                     SubmitUIMag.Inst.Close();
                 }
+
                 if (LianDanUIMag.Instance != null)
                 {
                     UnityEngine.Object.Destroy(LianDanUIMag.Instance.gameObject);
                 }
+
                 if (LianQiTotalManager.inst != null)
                 {
                     UnityEngine.Object.Destroy(LianQiTotalManager.inst.gameObject);
                 }
-                SingletonMono<TabUIMag>.Instance.TryEscClose();
+
+
+                TabUIMag.Instance.TryEscClose();
                 YSSaveGame.Reset();
                 KBEngineApp.app.entities[10] = null;
                 KBEngineApp.app.entities.Remove(10);
                 Tools.instance.loadOtherScenes("MainMenu");
             }, null, true);
         }));
-        
-        MainView.m_debugBar.m_commandButton.title = "返回标题并重载next";
-        MainView.m_debugBar.m_commandButton.width = 150f;
-        MainView.m_debugBar.m_commandButton.onClick.Add((() =>
+        MainView.m_debugBar.m_dramaIdButton.onClick.Add(() =>
         {
-            TySelect.inst.Show("是否要返回主界面并重载NextMod？", delegate
+            TabUIMag.OpenTab(6);
+
+            UCheckBox.Show("开始重载NextMod", ReloadMod);
+        });
+
+        MainView.m_debugBar.m_commandButton.onClick.Add(
+            (() =>
             {
-                if (FpUIMag.inst != null)
-                {
-                    UnityEngine.Object.Destroy(FpUIMag.inst.gameObject);
-                }
-                if (TpUIMag.inst != null)
-                {
-                    UnityEngine.Object.Destroy(TpUIMag.inst.gameObject);
-                }
-                if (SubmitUIMag.Inst != null)
-                {
-                    SubmitUIMag.Inst.Close();
-                }
-                if (LianDanUIMag.Instance != null)
-                {
-                    UnityEngine.Object.Destroy(LianDanUIMag.Instance.gameObject);
-                }
-                if (LianQiTotalManager.inst != null)
-                {
-                    UnityEngine.Object.Destroy(LianQiTotalManager.inst.gameObject);
-                }
-                SingletonMono<TabUIMag>.Instance.TryEscClose();
-                YSSaveGame.Reset();
-                KBEngineApp.app.entities[10] = null;
-                KBEngineApp.app.entities.Remove(10);
-                Tools.instance.loadOtherScenes("MainMenu");
-                ModManager.ReloadAllMod();
-            }, null, true);
-        }));
+                TabUIMag.OpenTab(6);
+                TySelect.inst.Show("是否要返回主界面并重载NextMod？", ReloadMod);
+            }));
+    }
+
+    private void ReloadMod()
+    {
+        if (FpUIMag.inst != null)
+        {
+            UnityEngine.Object.Destroy(FpUIMag.inst.gameObject);
+        }
+
+        if (TpUIMag.inst != null)
+        {
+            UnityEngine.Object.Destroy(TpUIMag.inst.gameObject);
+        }
+
+        if (SubmitUIMag.Inst != null)
+        {
+            SubmitUIMag.Inst.Close();
+        }
+
+        if (LianDanUIMag.Instance != null)
+        {
+            UnityEngine.Object.Destroy(LianDanUIMag.Instance.gameObject);
+        }
+
+        if (LianQiTotalManager.inst != null)
+        {
+            UnityEngine.Object.Destroy(LianQiTotalManager.inst.gameObject);
+        }
+
+
+        TabUIMag.Instance.TryEscClose();
+
+        YSSaveGame.Reset();
+        KBEngineApp.app.entities[10] = null;
+        KBEngineApp.app.entities.Remove(10);
+        Tools.instance.loadOtherScenes("MainMenu");
+        ModManager.ReloadAllMod();
     }
 
     private void BindDrama()
@@ -228,7 +253,7 @@ public class ModDialogDebugWindow : FGUIWindowBase
         command.m_addCommand.SearchBox.OnChanged = () =>
         {
             var index = command.m_addCommand.SearchBox.SelectedIndex;
-           MyPluginMain.LogInfo($"index:{index.ToString()} Name:{_commandKeys.ToList()[index]}");
+            MyPluginMain.LogInfo($"index:{index.ToString()} Name:{_commandKeys.ToList()[index]}");
         };
         command.m_addCommand.m_addButton.onClick.Add((() =>
         {
@@ -236,8 +261,8 @@ public class ModDialogDebugWindow : FGUIWindowBase
             var s = command.m_addCommand.m_commandInput.m_inContent.text;
             var _com = new NextEventCommand(_commandKeys.ToList()[index], s);
             _nextEventCommands.Add(_com);
-            var item =(UI_ComboCommandItem)command.m_commandList.AddItemFromPool().asCom;
-            
+            var item = (UI_ComboCommandItem)command.m_commandList.AddItemFromPool().asCom;
+
             item.SearchBox.SetItems(_commandKeys);
             item.SearchBox.SelectedIndex = index;
             item.m_commandInput.m_inContent.text = s;
@@ -256,7 +281,6 @@ public class ModDialogDebugWindow : FGUIWindowBase
                 MainView.m_debugText.visible = !_isGame;
                 if (_isGame)
                 {
-            
                     RefreshIntList();
                     RefreshStringList();
                     RefreshDrama();
@@ -308,10 +332,11 @@ public class ModDialogDebugWindow : FGUIWindowBase
     private void RefreshDramaId()
     {
         var dramaIdList = MainView.m_drama.m_listDramaId;
-        if ( _recentDramaId.Count == dramaIdList.numItems)
+        if (_recentDramaId.Count == dramaIdList.numItems)
         {
             return;
         }
+
         dramaIdList.RemoveChildrenToPool();
 
         for (int i = _recentDramaId.Count - 1; i >= 0; i--)
@@ -347,21 +372,22 @@ public class ModDialogDebugWindow : FGUIWindowBase
     private void RefreshDrama()
     {
         var list = MainView.m_drama.m_list;
-   
+
 
         if (_refreshSeachBox == 0f)
         {
-       
             _seachText = MainView.m_drama.SearchBox.SearchContent;
         }
+
         IEnumerable<string> keys = DialogAnalysis.DialogDataDic.Keys;
         keys = string.IsNullOrWhiteSpace(_seachText) ? keys : keys.Where(key => key.Contains(_seachText));
         var enumerable = keys.ToList();
-        if ( enumerable.Count == list.numItems)
+        if (enumerable.Count == list.numItems)
         {
             _refreshSeachBox = 5f;
             return;
         }
+
         list.RemoveChildrenToPool();
 
 
@@ -376,6 +402,7 @@ public class ModDialogDebugWindow : FGUIWindowBase
                 {
                     _recentDramaId.RemoveAt(0);
                 }
+
                 _recentDramaId.Add(key);
                 RefreshDramaId();
             });
@@ -395,11 +422,12 @@ public class ModDialogDebugWindow : FGUIWindowBase
     {
         var commandList = MainView.m_command.m_commandList;
         foreach (var command in _nextEventCommands)
-        { var item = (UI_ComboCommandItem)commandList.AddItemFromPool().asCom;
-          item.SearchBox.SetItems(_commandKeys);
-          item.SearchBox.SelectedIndex = Array.IndexOf(_commandKeys.ToArray(), command.Name);
-          item.m_commandInput.m_inContent.text = command.Text;
-          item.m_deleteButton.onClick.Add((() => _nextEventCommands.Remove(command)));
+        {
+            var item = (UI_ComboCommandItem)commandList.AddItemFromPool().asCom;
+            item.SearchBox.SetItems(_commandKeys);
+            item.SearchBox.SelectedIndex = Array.IndexOf(_commandKeys.ToArray(), command.Name);
+            item.m_commandInput.m_inContent.text = command.Text;
+            item.m_deleteButton.onClick.Add((() => _nextEventCommands.Remove(command)));
         }
     }
 

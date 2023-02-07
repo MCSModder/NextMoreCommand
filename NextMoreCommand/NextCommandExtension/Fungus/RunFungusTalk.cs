@@ -14,26 +14,38 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fungus
     {
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
+            MyLog.LogCommand(command);
             var talkID = command.GetInt(0, -1);
             var tagBlock = command.GetStr(1);
 
-            MyPluginMain.LogInfo($"FungusEvent : RunFungusTalk");
-          
+            MyLog.Log(command, $"开始创建官方对话 流程名:Talk{talkID} 模块名:{tagBlock}");
+
             if (FungusUtils.GetTalk(talkID) == null)
             {
-               MyPluginMain.LogError($"FungusEvent : 对应Talk{talkID.ToString()} flowchart不存在");
+                MyLog.Log(command, $"创建失败官方对话 流程名:Talk{talkID} 模块名:{tagBlock} 不存在该流程名", true);
             }
             else
             {
                 FungusUtils.TalkBlockName = tagBlock;
-                FungusUtils.TalkFunc = flowchart => { return flowchart.ExecuteIfHasBlock(FungusUtils.TalkBlockName); };
-                FungusUtils.TalkOnComplete =
-                    () =>MyPluginMain.LogInfo($"FungusEvent : 跳转FungusBlock {FungusUtils.TalkBlockName}");
-                FungusUtils.TalkOnFailed = () => MyLog.FungusLogError($"Block名称不存在 {FungusUtils.TalkBlockName}");
+                FungusUtils.TalkFunc = flowchart =>
+                {
+                    MyLog.Log(command,$"开始执行官方对话 流程名:Talk{talkID} 模块名:{tagBlock}");
+                    return flowchart.ExecuteIfHasBlock(FungusUtils.TalkBlockName);
+                };
+                FungusUtils.TalkOnComplete = () =>
+                {
+                    MyLog.Log(command,$"执行完毕官方对话开始跳转 流程名:Talk{talkID}  模块名:{tagBlock}");
+                    MyLog.LogCommand(command,false);
+                };
+                FungusUtils.TalkOnFailed = () =>
+                {
+                    MyLog.Log(command,$"执行失败官方对话 流程名:Talk{talkID}  模块名:{tagBlock} 找不到对应模块名",true);
+                    MyLog.LogCommand(command,false);
+                };
                 FungusUtils.isTalkActive = true;
             }
 
-
+            MyLog.LogCommand(command, false);
             callback?.Invoke();
         }
     }

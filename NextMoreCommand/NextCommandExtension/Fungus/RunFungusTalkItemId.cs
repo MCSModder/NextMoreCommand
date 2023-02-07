@@ -15,16 +15,18 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fungus
     {
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
+            MyLog.LogCommand(command);
             var talkID = command.GetInt(0, -1);
+            var flowchartName = $"Talk{talkID}";
             var tagBlock = command.GetStr(1);
             var itemId = command.GetInt(2, -1);
 
             DialogAnalysis.CancelEvent();
-
+            MyLog.Log(command, $"开始创建官方对话ID 流程名:对应Talk{talkID} 模块名:{tagBlock} 对话Id:{itemId}");
 
             if (FungusUtils.GetTalk(talkID) == null)
             {
-               MyPluginMain.LogError($"FungusEvent : 对应Talk{talkID.ToString()} flowchart不存在");
+                MyLog.Log(command, $"失败创建官方对话ID 流程名:Talk:{talkID} 不存在该流程名", true);
             }
             else
             {
@@ -32,29 +34,40 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fungus
                 FungusUtils.TalkItemId = itemId;
                 FungusUtils.TalkFunc = flowchart =>
                 {
-                    var index = flowchart.FindIndex(FungusUtils.TalkBlockName, FungusUtils.TalkItemId, out Block block);
+                    MyLog.LogCommand(command);
+                    MyLog.Log(command,$"开始执行官方对话 流程名:{flowchartName} 模块名:{tagBlock} 对话Id:{itemId}");
+                    var index = flowchart.FindIndex(FungusUtils.TalkBlockName, FungusUtils.TalkItemId, out var block);
                     if (block == null)
                     {
-                        MyLog.FungusLogError($"Block名称不存在 {FungusUtils.TalkBlockName}");
+                        MyLog.Log(command,$"失败执行官方对话 模块名:{tagBlock} 不存在",true);
                         return false;
                     }
 
                     if (index < 0)
                     {
-                        var msg = itemId == -1 ? "ItemId不能为空和字符串" : $"ItemId不存在 {FungusUtils.TalkItemId.ToString()}";
-                        MyLog.FungusLogError(msg);
+                        var msg = itemId == -1 ? "对话Id不能为空和字符串" : $" {FungusUtils.TalkItemId.ToString()} 对话Id不存在";
+                        MyLog.Log(command,$"失败执行官方对话 {msg}",true);
                         return false;
                     }
 
+                    MyLog.Log(command,$"官方对话开始跳转 流程名:{flowchartName} 模块名:{tagBlock} 对话Id:{itemId}");
                     flowchart.ExecuteBlock(block, index);
-                   MyPluginMain.LogInfo(
-                        $"FungusEvent : 跳转FungusBlock {FungusUtils.TalkBlockName} ItemId:{FungusUtils.TalkItemId.ToString()} index:{index.ToString()} ");
                     return true;
+                };
+                FungusUtils.TalkOnComplete = () =>
+                {
+                    MyLog.Log(command,$"官方对话跳转完毕 流程名:{flowchartName} 模块名:{tagBlock}  对话Id:{itemId}");
+                    MyLog.LogCommand(command,false);
+                };
+                FungusUtils.TalkOnFailed = () =>
+                {
+                    MyLog.Log(command,$"执行失败官方对话 流程名:{flowchartName} 模块名:{tagBlock}  对话Id:{itemId} 找不到对应模块名或者对话Id",true);
+                    MyLog.LogCommand(command,false);
                 };
                 FungusUtils.isTalkActive = true;
             }
 
-
+            MyLog.LogCommand(command);
             callback?.Invoke();
         }
     }

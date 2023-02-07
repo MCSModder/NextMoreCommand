@@ -16,10 +16,14 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
             var year = command.GetInt(1, 5000);
             var mouth = command.GetInt(2, 1);
             var day = command.GetInt(3, 1);
+            var time = $"{year:0000}-{mouth:00}-{day:00}";
+            if (npc > 0 && DateTime.TryParse(time, out _))
+            {
+                var data = NpcJieSuanManager.inst.GetNpcData(npc);
+                data.SetField("JinDanTime", time);
+            }
 
-            var data = NpcJieSuanManager.inst.GetNpcData(npc);
-           
-            data.SetField("JinDanTime",$"{year:0000}-{mouth:00}-{day:00}");
+
             callback?.Invoke();
         }
     }

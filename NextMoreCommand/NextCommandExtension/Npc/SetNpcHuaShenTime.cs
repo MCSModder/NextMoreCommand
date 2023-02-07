@@ -16,9 +16,14 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
             var year = command.GetInt(1, 5000);
             var mouth = command.GetInt(2, 1);
             var day = command.GetInt(3, 1);
-
-            var data = NpcJieSuanManager.inst.GetNpcData(npc);
-            data.SetField("HuaShengTime",$"{year:0000}-{mouth:00}-{day:00}");
+            var time = $"{year:0000}-{mouth:00}-{day:00}";
+            if (npc > 0 && DateTime.TryParse(time,out _))
+            {
+                var data = NpcJieSuanManager.inst.GetNpcData(npc);
+                data.SetField("HuaShengTime",time);
+            }
+            
+           
             callback?.Invoke();
         }
     }

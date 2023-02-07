@@ -44,7 +44,6 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
         public static bool SetTaskIndex(int taskId, int taskIndex, bool isFinish = false)
         {
-            if (NotHasTask(taskId) || IsOverFinalIndex(taskId, taskIndex)) return false;
             var taskIdData = GetTaskIdData(taskId);
 
             if (!taskIdData["AllIndex"].ToList().Contains(taskIndex))
@@ -56,6 +55,12 @@ namespace SkySwordKill.NextMoreCommand.Utils
             taskIdData.SetField("isComplete", isFinish);
             taskIdData.SetField("disableTask", isFinish);
             return true;
+        }
+
+        public static void SetTaskComplete(int taskId)
+        {
+            SetTaskIndexFinish.Do(taskId, GetFinalIndex(taskId));
+            SetTaskCompelet.Do(taskId);
         }
 
         public static bool SetTaskNextIndex(int taskId)
@@ -96,7 +101,9 @@ namespace SkySwordKill.NextMoreCommand.Utils
             return true;
         }
 
-   
+        public static string GetTaskNameById(int taskId) => TaskJsonData.DataDict[taskId].Name;
+        public static string GetTaskName(this int taskId) => GetTaskNameById(taskId);
+
         public static void SetTaskPop(int taskId, bool isFinish = false)
         {
             var name = TaskJsonData.DataDict[taskId].Name;

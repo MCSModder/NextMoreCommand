@@ -5,6 +5,7 @@ using SkySwordKill.Next.DialogEvent;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.Next.StaticFace;
 using SkySwordKill.NextMoreCommand.Attribute;
+using SkySwordKill.NextMoreCommand.Utils;
 using GameObject = UnityEngine.GameObject;
 
 namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fight;
@@ -20,52 +21,57 @@ public class SetFightCustomFace : IDialogEvent
 
     public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
     {
+        MyLog.LogCommand(command);
         var faceId = command.GetInt(0, -1);
-       MyPluginMain.LogInfo($"触发指令{faceId}");
         var go = Player.renderObj as GameObject;
         if (faceId == 0)
         {
+            MyLog.Log(command,$"开始重置换装 立绘ID:{faceId}");
             if (go != null)
             {
-               MyPluginMain.LogInfo("触发换装");
                 var setFace = go.GetComponentInChildren<PlayerSetRandomFace>();
-               MyPluginMain.LogInfo(setFace);
                 setFace.setFaceByJson(PlayerFace);
-        
+                MyLog.Log(command,$"成功重置换装 CustomFaceId:{faceId}");
             }
-            callback?.Invoke();
-            return;
         }
-        
-        if (StaticFaceUtils.HasFace(faceId))
+        else
         {
-            var face = StaticFaceUtils.GetFace(faceId);
-            var clone = new JSONObject(PlayerFace.ToString());
-            foreach (var info in face.RandomInfos)
+            MyLog.Log(command,$"开始替换换装 CustomFaceId:{faceId}");
+            if (StaticFaceUtils.HasFace(faceId))
             {
-                if (clone.HasField(info.Key))
+                var face = StaticFaceUtils.GetFace(faceId);
+                var clone = new JSONObject(PlayerFace.ToString());
+                foreach (var info in face.RandomInfos)
                 {
-                    if (info.Key == "Sex")
+                    if (clone.HasField(info.Key))
                     {
-                        continue;
+                        if (info.Key == "Sex")
+                        {
+                            continue;
+                        }
+                        clone.SetField(info.Key, info.Value);
                     }
+                }
 
-                   MyPluginMain.LogInfo($"KEY: {info.Key} VALUE: {info.Value}");
-                    clone.SetField(info.Key, info.Value);
+
+                if (go != null)
+                {
+                    var setFace = go.GetComponentInChildren<PlayerSetRandomFace>();
+                    setFace.setFaceByJson(clone);
+                    MyLog.Log(command,$"成功替换换装 CustomFaceId:{faceId}");
+                }
+                else
+                {
+                    MyLog.Log(command,$"失败替换换装 CustomFaceId:{faceId} 未找到PlayerSetRandomFace组件",true);
                 }
             }
-
-           MyPluginMain.LogInfo(clone.ToString());
-          
-            if (go != null)
+            else
             {
-               MyPluginMain.LogInfo("触发换装");
-                var setFace = go.GetComponentInChildren<PlayerSetRandomFace>();
-               MyPluginMain.LogInfo(setFace);
-                setFace.setFaceByJson(clone);
+                MyLog.Log(command,$"失败替换换装 不存在该 CustomFaceId:{faceId}",true);
             }
         }
 
+        MyLog.LogCommand(command,false);
         callback?.Invoke();
     }
 }
