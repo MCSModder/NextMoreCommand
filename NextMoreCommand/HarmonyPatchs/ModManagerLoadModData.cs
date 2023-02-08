@@ -42,8 +42,7 @@ public static class ModManagerLoadModData
 
     private static void CreateTemplateTest(string dir)
     {
-      
-       MyPluginMain.LogInfo("创建警花测试");
+        MyPluginMain.LogInfo("创建警花测试");
         var npc = new CustomNpc()
         {
             Id = 8000,
@@ -70,8 +69,8 @@ public static class ModManagerLoadModData
 
         if (HasPath(modNDataDirDir.CombinePath("CustomNpc")) && !isWorkshop)
         {
-             //if (modConfig.Name.Contains("天宫镜花")) CreateTemplateTest(modNDataDirDir.CombinePath("CustomNpc"));
-           MyPluginMain.LogInfo($"=================== NextMore开始生成 =====================");
+            //if (modConfig.Name.Contains("天宫镜花")) CreateTemplateTest(modNDataDirDir.CombinePath("CustomNpc"));
+            MyPluginMain.LogInfo($"=================== NextMore开始生成 =====================");
             Main.LogIndent = 2;
             try
             {
@@ -85,14 +84,14 @@ public static class ModManagerLoadModData
 
             modConfig.State = ModState.LoadSuccess;
             Main.LogIndent = 0;
-           
 
-           MyPluginMain.LogInfo($"=================== NextMore结束生成 =====================");
+
+            MyPluginMain.LogInfo($"=================== NextMore结束生成 =====================");
         }
 
         if (HasPath(modNDataDirDir.CombinePath("CustomSkillCombo")))
         {
-           MyPluginMain.LogInfo($"=================== NextMore开始加载 =====================");
+            MyPluginMain.LogInfo($"=================== NextMore开始加载 =====================");
             Main.LogIndent = 2;
             try
             {
@@ -106,9 +105,9 @@ public static class ModManagerLoadModData
 
             modConfig.State = ModState.LoadSuccess;
             Main.LogIndent = 0;
-           
 
-           MyPluginMain.LogInfo($"=================== NextMore结束加载 =====================");
+
+            MyPluginMain.LogInfo($"=================== NextMore结束加载 =====================");
         }
     }
 
@@ -123,6 +122,7 @@ public static class ModManagerLoadModData
     // ReSharper disable once HeapView.DelegateAllocation
     public static void LoadCustomNpcData(string modDir, ModConfig modConfig) =>
         LoadData(modDir, "CustomNpc", modConfig, LoadCustomNpc);
+
     public static void LoadCustomSkillComboData(string modDir, ModConfig modConfig) =>
         LoadData(modDir, "CustomSkillCombo", modConfig, LoadCustomSkillCombo);
 
@@ -139,9 +139,10 @@ public static class ModManagerLoadModData
                 {
                     continue;
                 }
+
                 skill.Init();
                 SkillComboManager.SkillCombos[skill.SkillName] = skill;
-               MyPluginMain.LogInfo(string.Format("ModManager.LoadData".I18N(),
+                MyPluginMain.LogInfo(string.Format("ModManager.LoadData".I18N(),
                     filePath));
             }
             catch (Exception e)
@@ -168,10 +169,11 @@ public static class ModManagerLoadModData
                     Main.LogWarning($"NpcId:{npc.Id.ToString()} 已经超过2万值 建议改小2万以内值");
                     continue;
                 }
+
                 var id = npc.Id.ToString();
                 customNpcs[id] = npc;
                 CustomNpc.CustomNpcs[id] = npc;
-               MyPluginMain.LogInfo(string.Format("ModManager.LoadData".I18N(),
+                MyPluginMain.LogInfo(string.Format("ModManager.LoadData".I18N(),
                     filePath));
             }
             catch (Exception e)
@@ -215,7 +217,6 @@ public static class ModManagerLoadModData
 
     private static void SaveNpcImportant(KeyValuePair<string, CustomNpc> npc, Dictionary<string, JObject> dict)
     {
-     
         var value = npc.Value.ToNpcImportantDate();
         if (value != null)
         {
@@ -231,7 +232,7 @@ public static class ModManagerLoadModData
         {
             return;
         }
-        
+
         foreach (var value in npc.Value.ToWuJiangBindingList())
         {
             dict[value.Id.ToString()] = value.ToJObject();
@@ -249,7 +250,6 @@ public static class ModManagerLoadModData
 
     private static void SaveJson(string filename, Dictionary<string, CustomNpc> customNpcs, SaveJsonAction func)
     {
-        
         var dictionary = new Dictionary<string, JObject>();
         foreach (var npc in customNpcs)
         {
@@ -260,28 +260,28 @@ public static class ModManagerLoadModData
         {
             return;
         }
+
         ;
-       
+
         if (File.Exists(filename))
         {
             var jObject = JObject.Parse(File.ReadAllText(filename));
-            var file= jObject.ToObject<Dictionary<string,JObject>>();
+            var file = jObject.ToObject<Dictionary<string, JObject>>();
             if (file != null)
             {
-              // MyPluginMain.LogInfo(jObject);
-            
+                // MyPluginMain.LogInfo(jObject);
+
                 foreach (var item in file)
                 {
                     if (!dictionary.ContainsKey(item.Key))
                     {
-                     //  MyPluginMain.LogInfo(item.Value);
-                        dictionary.Add(item.Key,item.Value);
+                        //  MyPluginMain.LogInfo(item.Value);
+                        dictionary.Add(item.Key, item.Value);
                     }
-          
                 }
             }
-          
         }
+
         var json = JObject.FromObject(dictionary).ToString(Formatting.Indented);
         File.WriteAllText(filename, json);
     }
