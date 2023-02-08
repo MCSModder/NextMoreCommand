@@ -12,10 +12,12 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
     [DialogEvent("设置新任务")]
     public class SetNewTask : IDialogEvent
     {
+        private int newTask;
+
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
             MyLog.LogCommand(command);
-            var newTask = command.GetInt(0, -1);
+            newTask = command.GetInt(0, -1);
             if (newTask > 0 && TaskJsonData.DataDict.ContainsKey(newTask))
             {
                 if (!TaskUtils.HasTask(newTask))

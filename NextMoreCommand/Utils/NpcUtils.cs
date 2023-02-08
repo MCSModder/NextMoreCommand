@@ -55,7 +55,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
         public static List<int> ToNpcListId(this DialogCommand instance, int index = 0)
         {
-            if (instance.ParamList.Length >= index)
+            if (instance.ParamList.Length <= index)
             {
                 return new List<int>();
             }

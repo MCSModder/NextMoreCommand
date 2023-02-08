@@ -11,18 +11,25 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
         Increase,
         Decrease
     }
+
     [RegisterCommand]
     [DialogEvent("SetShengWang")]
     [DialogEvent("设置声望")]
-    public class SetShengWang: IDialogEvent
+    public class SetShengWang : IDialogEvent
     {
+        private int add;
+        private int type;
+        private int id;
+        private bool show;
+
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
-            var add = command.GetInt(0);
-            var type = command.GetInt(1);
-            var id = command.GetInt(2);
-            var show = command.GetBool(3);
-          
+            MyLog.LogCommand(command);
+            add = command.GetInt(0);
+            type = command.GetInt(1);
+            id = command.GetInt(2);
+            show = command.GetBool(3);
+
             switch ((EShengWang)type)
             {
                 case EShengWang.Increase:
@@ -38,6 +45,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
             }
 
             PlayerEx.AddShengWang(id, add, show);
+            MyLog.LogCommand(command, false);
             callback?.Invoke();
         }
     }

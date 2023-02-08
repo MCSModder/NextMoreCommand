@@ -21,7 +21,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
         {
             MyLog.LogCommand(command);
             sceneName = command.GetStr(0, string.Empty);
-            npcIds = command.ToNpcListId(2);
+            npcIds = command.ToNpcListId(1);
             var str = JArray.FromObject(npcIds).ToString(Formatting.None);
             MyLog.Log(command, $"场景名:{sceneName} 角色列表:{str}");
 

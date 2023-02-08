@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Fungus;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SkySwordKill.Next.DialogEvent;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.NextMoreCommand.Attribute;
@@ -13,42 +15,41 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
     [DialogEvent("设置传送")]
     public class SetTeleport : IDialogEvent
     {
+        private List<int> npcIds;
+        private int mapIndex;
+        private string sceneName;
+
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
-            var mapId = command.GetInt(0, -1);
-            var sceneName = command.GetStr(1, string.Empty);
-            List<int> npcIds = NpcUtils.GetNpcList(command,2,3);
-          
-           
+            MyLog.LogCommand(command);
+            mapIndex = command.GetInt(0, -1);
+            sceneName = command.GetStr(1, string.Empty);
+            npcIds = command.ToNpcListId(2);
 
-
-            var sceneNameIsEmpty = sceneName == string.Empty;
-            if (mapId < 1)
+            MyLog.Log(command, $"当前场景:{Tools.getScreenName()} 地图索引:{mapIndex}");
+            MyLog.Log(command, $"传送场景:{sceneName} 角色列表:{JArray.FromObject(npcIds).ToString(Formatting.None)}");
+            if (mapIndex < 0)
             {
-                MyLog.FungusLogError($"地图ID不能为空 {mapId}");
+                MyLog.Log(command, $"地图索引:{mapIndex} 不能小于0", true);
             }
-            else if (sceneNameIsEmpty)
+            else if (string.IsNullOrWhiteSpace(sceneName))
             {
-                MyLog.FungusLogError($"场景名字不能为空");
+                MyLog.Log(command, $"传送场景:{mapIndex} 不能为空", true);
             }
             else
             {
-                var msg = string.Empty;
-                if (npcIds.Count != 0)
+                foreach (var npc in npcIds)
                 {
-                  
-         
-                    msg += $"NPCID: [{npcIds}]";
-                    foreach (var npc in npcIds)
-                    {
-                        NPCEx.WarpToScene(npc, sceneName);
-                    }
+                    NPCEx.WarpToScene(npc, sceneName);
+                    MyLog.Log(command, $"场景名:{sceneName} 角色ID:{npc} 角色名:{npc.GetNpcName()}");
                 }
 
-                MyLog.FungusLog($"跳转地图事件 场景名字: {sceneName} 地图ID: {mapId} {msg}");
-                AvatarTransfer.Do(mapId);
+                MyLog.Log(command, $"开始传送场景 传送场景:{sceneName} ");
+                AvatarTransfer.Do(mapIndex);
                 Tools.instance.loadMapScenes(sceneName);
             }
+
+            MyLog.LogCommand(command, false);
             callback?.Invoke();
         }
     }
