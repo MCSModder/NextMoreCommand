@@ -18,28 +18,28 @@ public class SetFightCustomFace : IDialogEvent
     public Avatar Player => (Avatar)KBEngineApp.app.entities[10];
     public JSONObject AvatarRandomJsonData => jsonData.instance.AvatarRandomJsonData;
     public JSONObject PlayerFace => AvatarRandomJsonData[NPCEx.NPCIDToNew(0)];
-
+    private int _faceId;
     public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
     {
         MyLog.LogCommand(command);
-        var faceId = command.GetInt(0, -1);
+         _faceId = command.GetInt(0, -1);
         var go = Player.renderObj as GameObject;
-        if (faceId == 0)
+        if (_faceId == 0)
         {
-            MyLog.Log(command,$"开始重置换装 立绘ID:{faceId}");
+            MyLog.Log(command,$"开始重置换装 立绘ID:{_faceId}");
             if (go != null)
             {
                 var setFace = go.GetComponentInChildren<PlayerSetRandomFace>();
                 setFace.setFaceByJson(PlayerFace);
-                MyLog.Log(command,$"成功重置换装 CustomFaceId:{faceId}");
+                MyLog.Log(command,$"成功重置换装 CustomFaceId:{_faceId}");
             }
         }
         else
         {
-            MyLog.Log(command,$"开始替换换装 CustomFaceId:{faceId}");
-            if (StaticFaceUtils.HasFace(faceId))
+            MyLog.Log(command,$"开始替换换装 CustomFaceId:{_faceId}");
+            if (StaticFaceUtils.HasFace(_faceId))
             {
-                var face = StaticFaceUtils.GetFace(faceId);
+                var face = StaticFaceUtils.GetFace(_faceId);
                 var clone = new JSONObject(PlayerFace.ToString());
                 foreach (var info in face.RandomInfos)
                 {
@@ -58,16 +58,16 @@ public class SetFightCustomFace : IDialogEvent
                 {
                     var setFace = go.GetComponentInChildren<PlayerSetRandomFace>();
                     setFace.setFaceByJson(clone);
-                    MyLog.Log(command,$"成功替换换装 CustomFaceId:{faceId}");
+                    MyLog.Log(command,$"成功替换换装 CustomFaceId:{_faceId}");
                 }
                 else
                 {
-                    MyLog.Log(command,$"失败替换换装 CustomFaceId:{faceId} 未找到PlayerSetRandomFace组件",true);
+                    MyLog.Log(command,$"失败替换换装 CustomFaceId:{_faceId} 未找到PlayerSetRandomFace组件",true);
                 }
             }
             else
             {
-                MyLog.Log(command,$"失败替换换装 不存在该 CustomFaceId:{faceId}",true);
+                MyLog.Log(command,$"失败替换换装 不存在该 CustomFaceId:{_faceId}",true);
             }
         }
 

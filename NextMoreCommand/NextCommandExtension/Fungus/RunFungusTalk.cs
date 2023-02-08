@@ -12,11 +12,14 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fungus
     [DialogEvent("运行官方对话")]
     public class RunFungusTalk : IDialogEvent
     {
+        private int talkID;
+        private string tagBlock;
+
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
             MyLog.LogCommand(command);
-            var talkID = command.GetInt(0, -1);
-            var tagBlock = command.GetStr(1);
+            talkID = command.GetInt(0, -1);
+            tagBlock = command.GetStr(1);
 
             MyLog.Log(command, $"开始创建官方对话 流程名:Talk{talkID} 模块名:{tagBlock}");
 
@@ -29,18 +32,18 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fungus
                 FungusUtils.TalkBlockName = tagBlock;
                 FungusUtils.TalkFunc = flowchart =>
                 {
-                    MyLog.Log(command,$"开始执行官方对话 流程名:Talk{talkID} 模块名:{tagBlock}");
+                    MyLog.Log(command, $"开始执行官方对话 流程名:Talk{talkID} 模块名:{tagBlock}");
                     return flowchart.ExecuteIfHasBlock(FungusUtils.TalkBlockName);
                 };
                 FungusUtils.TalkOnComplete = () =>
                 {
-                    MyLog.Log(command,$"执行完毕官方对话开始跳转 流程名:Talk{talkID}  模块名:{tagBlock}");
-                    MyLog.LogCommand(command,false);
+                    MyLog.Log(command, $"执行完毕官方对话开始跳转 流程名:Talk{talkID}  模块名:{tagBlock}");
+                    MyLog.LogCommand(command, false);
                 };
                 FungusUtils.TalkOnFailed = () =>
                 {
-                    MyLog.Log(command,$"执行失败官方对话 流程名:Talk{talkID}  模块名:{tagBlock} 找不到对应模块名",true);
-                    MyLog.LogCommand(command,false);
+                    MyLog.Log(command, $"执行失败官方对话 流程名:Talk{talkID}  模块名:{tagBlock} 找不到对应模块名", true);
+                    MyLog.LogCommand(command, false);
                 };
                 FungusUtils.isTalkActive = true;
             }

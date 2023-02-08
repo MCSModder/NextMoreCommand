@@ -12,11 +12,15 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fungus
     [DialogEvent("运行临时对话")]
     public class RunTempFlowchart : IDialogEvent
     {
+        private string key;
+        private string tagBlock;
+        private int itemId;
+
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
-            string key = command.GetStr(0);
-            string tagBlock = command.GetStr(1);
-            int itemId = command.GetInt(2, -1);
+            key = command.GetStr(0);
+            tagBlock = command.GetStr(1);
+            itemId = command.GetInt(2, -1);
 
             DialogAnalysis.CancelEvent();
             var flowchart = TempFlowchart.GetFlowchart(key);

@@ -25,11 +25,17 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public string GetDialogName() => string.IsNullOrWhiteSpace(Dialog) ? "无" : Dialog;
     }
 
-    public static class ExtendsNpc
+    public static class NpcUtilsExtends
     {
         public static int ToNpcId(this string instance)
         {
-            return NPCEx.NPCIDToNew(Convert.ToInt32(instance));
+            var result = Convert.ToInt32(instance).ToNpcNewId();
+            if (result > 0)
+            {
+                return result;
+            }
+
+            return -1;
         }
 
         public static string GetNpcName(this int instance)
@@ -132,6 +138,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public static bool IsNpc(int id) => NPCEx.NPCIDToNew(id) <= 1;
         public static bool IsNpc(string id) => IsNpc(Convert.ToInt32(id));
         public const string NpcFollow = "NPC_FOLLOW_NEXT";
+        public const string SelfName = "SELF_NAME";
         public static DataGroup<string> StrGroup => DialogAnalysis.AvatarNextData.StrGroup;
         public static Dictionary<string, string> NpcFollowGroup => StrGroup.GetNpcFollowGroup();
         public static bool IsFightScene => Tools.getScreenName().ToUpper().Contains("YSNEW");

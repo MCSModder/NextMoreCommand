@@ -11,9 +11,11 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fungus
     [DialogEvent("设置临时对话")]
     public class SetTempFlowchart : IDialogEvent
     {
+        string key;
+
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
-            var key = command.GetStr(0);
+            key = command.GetStr(0);
             var flowchart = env.flowchart;
             if (flowchart != null && key != string.Empty)
             {

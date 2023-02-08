@@ -50,7 +50,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
             {
                 NpcUtils.AddNpc(npcInfo, out m_isAdd);
                 NpcUtils.SetNpcFollow(npcInfo);
-                MyLog.Log(command,$"添加道侣跟随");
+                MyLog.Log(command,$"添加道侣跟随 角色ID:{npcInfo.Id} 角色名:{npcInfo.Name} 剧情ID:{npcInfo.GetDialogName()}");
             }
 
             if (m_isAdd && !UiNpcJiaoHuRefreshNowMapNpcPatch.m_isRefresh)
@@ -60,7 +60,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
 
             m_isAdd = false;
             NpcInfos.Clear();
-            MyLog.LogCommand(command);
+            MyLog.LogCommand(command,false);
             callback?.Invoke();
         }
     }

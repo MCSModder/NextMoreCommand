@@ -18,16 +18,19 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
         public bool m_isAdd;
         public List<NpcInfo> NpcInfos = new List<NpcInfo>();
 
+        private string dialog;
+        private int npc;
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
-            string dialog;
-            int npc;
+            MyLog.LogCommand(command);
+            dialog = "";
+            npc = -1;
             switch (command.Command)
             {
                 case "SetNpcFollow":
                 case "设置角色跟随":
-                    npc = NPCEx.NPCIDToNew(command.GetInt(0, -1));
+                    npc = command.ToNpcId();
                     dialog = command.GetStr(1);
                     NpcInfos.Add(new NpcInfo(npc, dialog));
                     break;
@@ -60,6 +63,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
             {
                 NpcUtils.AddNpc(npcInfo, out m_isAdd);
                 NpcUtils.SetNpcFollow(npcInfo);
+                MyLog.Log(command,$"添加角色跟随 角色ID:{npcInfo.Id} 角色名:{npcInfo.Name} 剧情ID:{npcInfo.GetDialogName()}");
             }
 
             if (m_isAdd && !UiNpcJiaoHuRefreshNowMapNpcPatch.m_isRefresh)
@@ -67,6 +71,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
                 NpcJieSuanManager.inst.isUpDateNpcList = true;
             }
 
+            MyLog.LogCommand(command,false);
             m_isAdd = false;
             NpcInfos.Clear();
             callback?.Invoke();

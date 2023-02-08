@@ -12,8 +12,6 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension;
 [DialogEvent("设置所有道侣死亡")]
 public class SetAllDaolvDeath : IDialogEvent
 {
-    public int GetNpcID(string npc) => NPCEx.NPCIDToNew(Convert.ToInt32(npc));
-
     public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
     {
         MyLog.LogCommand(command);
