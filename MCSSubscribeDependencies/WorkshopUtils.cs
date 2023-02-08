@@ -4,7 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using script.Steam;
+using SkySwordKill.NextMoreCommand.Utils;
 using Steamworks;
+using UnityEngine;
 
 namespace MCSSubscribeDependencies;
 
@@ -12,9 +14,11 @@ public class WorkshopItemInfo
 {
     public ulong Id { get; }
     public PublishedFileId_t PublishedFileId { get; }
+
     public CallResult<RemoteStorageGetPublishedFileDetailsResult_t> CallResult;
-    public CallResult<GetAppDependenciesResult_t> GetAppDependenciesResult;
-    public List<AppId_t> Dependencies = new List<AppId_t>();
+
+    // public CallResult<GetAppDependenciesResult_t> GetAppDependenciesResult;
+    // public List<AppId_t> Dependencies = new List<AppId_t>();
     public WorkshopItemInfo(ulong id)
     {
         Id = id;
@@ -22,37 +26,39 @@ public class WorkshopItemInfo
         CallResult =
             CallResult<RemoteStorageGetPublishedFileDetailsResult_t>.Create(
                 OnRemoteStorageGetPublishedFileDetailsResult);
-        GetAppDependenciesResult =       CallResult<GetAppDependenciesResult_t>.Create(
-            OnGetAppDependenciesResult);
-        GetDependencies();
+        // GetAppDependenciesResult =       CallResult<GetAppDependenciesResult_t>.Create(
+        //     OnGetAppDependenciesResult);
+        // GetDependencies();
     }
 
-    private void OnGetAppDependenciesResult(GetAppDependenciesResult_t pCallback, bool biofailure)
-    {
-        if (pCallback.m_eResult  == EResult.k_EResultOK)
-        {
-            foreach (var appId in pCallback.m_rgAppIDs)
-            {
-                Dependencies.Add(appId);
-            }
-        }
-    }
-    public void GetDependencies()
-    {
-        var handle = SteamUGC.SendQueryUGCRequest(SteamUGC.CreateQueryUGCDetailsRequest(new[]{PublishedFileId},1));
-        GetAppDependenciesResult.Set(handle);
-    }
+    // private void OnGetAppDependenciesResult(GetAppDependenciesResult_t pCallback, bool biofailure)
+    // {
+    //     if (pCallback.m_eResult  == EResult.k_EResultOK)
+    //     {
+    //         foreach (var appId in pCallback.m_rgAppIDs)
+    //         {
+    //             Dependencies.Add(appId);
+    //         }
+    //     }
+    // }
+    // public void GetDependencies()
+    // {
+    //     var handle = SteamUGC.SendQueryUGCRequest(SteamUGC.CreateQueryUGCDetailsRequest(new[]{PublishedFileId},1));
+    //     GetAppDependenciesResult.Set(handle);
+    // }
     public void SetSubscribe()
     {
         var handle = SteamRemoteStorage.GetPublishedFileDetails(PublishedFileId, 200);
         CallResult.Set(handle);
     }
+
     public void OnRemoteStorageGetPublishedFileDetailsResult(
         RemoteStorageGetPublishedFileDetailsResult_t pCallback, bool biofailure)
     {
         if (pCallback.m_eResult == EResult.k_EResultOK)
         {
             UIPopTip.Inst.Pop($"开始订阅{pCallback.m_rgchTitle}Mod");
+            MyLog.Log("创意工坊订阅", $"开始缺少前置订阅{pCallback.m_rgchTitle}Mod");
             SteamUGC.SubscribeItem(pCallback.m_nPublishedFileId);
         }
     }
@@ -62,19 +68,26 @@ public static class WorkshopUtils
 {
     public static void Subscribe(params ulong[] items)
     {
+        var isAdd = false;
         var allMod = GetAllMod();
         foreach (var id in items)
         {
-            if (!allMod.Contains(id))
+            if (id != 2921046709 && !allMod.Contains(id))
             {
                 if (UIPopTip.Inst == null)
                 {
                     return;
                 }
 
+                isAdd = true;
                 var workshopItemInfo = new WorkshopItemInfo(id);
                 workshopItemInfo.SetSubscribe();
             }
+        }
+
+        if (isAdd)
+        {
+            UCheckBox.Show("修改创意工坊设置后，需要重启生效,点击确定关闭游戏", Application.Quit);
         }
     }
 
@@ -88,10 +101,12 @@ public static class WorkshopUtils
             .Where(item => Convert.ToUInt64(item.Name) != 0)
             .Select(item => Convert.ToUInt64(item.Name)).ToList();
     }
+
     public static List<WorkshopItemInfo> GetAllModWorkshopItemInfo()
     {
         return GetAllMod().Select(item => new WorkshopItemInfo(item)).ToList();
     }
+
     public static List<WorkShopItem> GetAllModWorkshopItem()
     {
         return WorkshopTool
