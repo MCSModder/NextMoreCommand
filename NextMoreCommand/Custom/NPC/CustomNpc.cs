@@ -119,15 +119,14 @@ public class CustomNpc
 
     public List<CustomWujiang> ToWuJiangBindingList()
     {
-      
         var customWujiangs = new List<CustomWujiang>();
-        if (CustomWujiang == null ||CustomWujiang .Count == 0) return customWujiangs;
+        if (CustomWujiang == null || CustomWujiang.Count == 0) return customWujiangs;
         var id = CustomWujiang[0].Id.IsZero(Id);
-      
+
         var list = ToAvatarJsonDataList().Select(i => i.Id);
-        for (int i = 0; i < CustomWujiang .Count; i++)
+        for (int i = 0; i < CustomWujiang.Count; i++)
         {
-            var customWujiang= CustomWujiang[i];
+            var customWujiang = CustomWujiang[i];
             customWujiang.Id = id + i;
             customWujiang.Title = customWujiang.Title.IsNull(Title);
             customWujiang.Name = customWujiang.Name.IsNull(Name);
@@ -135,12 +134,13 @@ public class CustomNpc
             customWujiang.PaiMaiHang = customWujiang.PaiMaiHang.IsZero(Id);
             customWujiang.TimeStart = customWujiang.TimeStart.IsNull("0001-01-01");
             customWujiang.TimeEnd = customWujiang.TimeEnd.IsNull("5000-12-30");
-            
+
             if (customWujiang.Avatar.Count == 0)
             {
                 // ReSharper disable once PossibleMultipleEnumeration
                 customWujiang.Avatar = list.ToList();
             }
+
             customWujiangs.Add(customWujiang);
         }
 
@@ -149,8 +149,8 @@ public class CustomNpc
 
     public CustomWujiang ToWuJiangBinding()
     {
-        if (CustomWujiang == null ||CustomWujiang .Count == 0) return null;
-        var customWujiang= CustomWujiang[0];
+        if (CustomWujiang == null || CustomWujiang.Count == 0) return null;
+        var customWujiang = CustomWujiang[0];
         customWujiang.Id = customWujiang.Id.IsZero(Id);
         customWujiang.Title = customWujiang.Title.IsNull(Title);
         customWujiang.Name = customWujiang.Name.IsNull(Name);

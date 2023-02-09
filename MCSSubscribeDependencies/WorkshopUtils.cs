@@ -69,10 +69,11 @@ public static class WorkshopUtils
     public static void Subscribe(params ulong[] items)
     {
         var isAdd = false;
+        var banList = new List<ulong>() { 2921046709, 2862679721 };
         var allMod = GetAllMod();
         foreach (var id in items)
         {
-            if (id != 2921046709 && !allMod.Contains(id))
+            if (!banList.Contains(id) && !allMod.Contains(id))
             {
                 if (UIPopTip.Inst == null)
                 {
@@ -87,7 +88,7 @@ public static class WorkshopUtils
 
         if (isAdd)
         {
-            UCheckBox.Show("修改创意工坊设置后，需要重启生效,点击确定关闭游戏", Application.Quit);
+            USelectBox.Show("修改创意工坊设置后，需要重启生效,点击确定关闭游戏", Application.Quit);
         }
     }
 

@@ -26,24 +26,20 @@ public static class WitchUtils
         return DialogAnalysis.GetInt(key);
     }
 
-    public static void Set(this string key)
+    public static void SetLife(this bool key)
     {
-        switch (key)
-        {
-            case "shouMing":
-                var player = PlayerEx.Player;
-                var value = (player.shouYuan - player.age) <= 10 ? 1 : 0;
-                key.SetInt(value);
-                break;
-            case "chuGui":
-                var result = key.GetInt() + 1;
-                key.SetInt(result);
-                if (result > 3)
-                {
-                    7200.AllDeath();
-                }
+        var player = PlayerEx.Player;
+        var value = (player.shouYuan - player.age) <= 10 ? 1 : 0;
+        "shouMing".SetInt(value);
+    }
 
-                break;
+    public static void SetCheat(this bool key)
+    {
+        var result = "chuGui".GetInt() + 1;
+        "chuGui".SetInt(result);
+        if (result > 3)
+        {
+            7200.AllDeath();
         }
     }
 
@@ -52,23 +48,58 @@ public static class WitchUtils
         DaolvUtils.SetAllDaolvDeath(id.ToNpcNewId());
     }
 
-    public static void AddCheat(this int id)
+    public static void AddWife(this int id)
     {
         DaolvUtils.DaolvId.Add(id.ToNpcNewId());
     }
 
-    public static bool Check(this string key)
+    public static bool CheckCheat(this int key)
     {
-        return true.CheckCheat() && key.GetInt() > 3;
+        return true.CheckCheat() && "chuGui".GetInt() > key;
+    }
+
+    public static void SetCheat(this int key,int id)
+    {
+        if (key.CheckCheat())
+        {
+            id.AllDeath();
+            id.SetWife();
+        }
+    }
+
+    public static bool HasWife => 7200.IsWife();
+
+    public static void SetWife(this int id)
+    {
+        if (!id.IsWife())
+        {
+            id.AddWife();
+        }
     }
 
     public static bool CheckCheat(this bool _)
     {
-        var count = DaolvUtils.DaolvId.Count;
-        var isDaoLv = 7200.IsDaoLv();
-        var isHarem = isDaoLv && count > 1;
-        var isChuGui = !isDaoLv && count >= 1;
-        return isHarem || ("daHun".HasInt() && isChuGui);
+        return 7200.HasHarem() || 7200.HasCheat();
+    }
+
+    public static int Count => DaolvUtils.DaolvId.Count;
+
+    public static bool HasCheat(this int id)
+    {
+        return "daHun".HasInt() && !id.IsWife() && Count > 1;
+    }
+
+    public static void SetHarem(this int id)
+    {
+        if (id.HasHarem())
+        {
+            id.AllDeath();
+        }
+    }
+
+    public static bool HasHarem(this int id)
+    {
+        return id.IsWife() && Count > 1;
     }
 
     public static void SetInt(this string key, int value)
@@ -86,7 +117,7 @@ public static class WitchUtils
         BiaoBaiManager.BiaoBaiScore.TotalScore += value;
     }
 
-    public static bool IsDaoLv(this int id)
+    public static bool IsWife(this int id)
     {
         return PlayerEx.IsDaoLv(id.ToNpcNewId()) && "shengSi".HasInt();
     }

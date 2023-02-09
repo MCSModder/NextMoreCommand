@@ -58,6 +58,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public static void LogStartCommand(DialogCommand command)
         {
             LogInfo(Split);
+            LogStatus($"当前剧情ID: {command.BindEventData.ID}".LogEvent(command.Command));
             LogInfo($"[{command.Command}] 指令".LogEvent("开始执行指令"));
         }
 
@@ -79,7 +80,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
             }
         }
 
-        public static void Log(DialogCommand command, object msg, bool isError = false,bool canShow = true)
+        public static void Log(DialogCommand command, object msg, bool isError = false, bool canShow = true)
         {
             if (isError)
             {

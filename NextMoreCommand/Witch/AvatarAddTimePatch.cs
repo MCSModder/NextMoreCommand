@@ -10,17 +10,14 @@ namespace SkySwordKill.NextMoreCommand.Witch
     {
         public static void Postfix()
         {
-            var isDaoLv = 7200.IsDaoLv();
-            if (isDaoLv)
-            {
-                if (true.CheckCheat()) "chuGui".Set();
-                "shouMing".Set();
-            }
+            7200.SetHarem();
 
-            if ("chuGui".Check())
+            3.SetCheat(7200);
+
+            if (WitchUtils.HasWife)
             {
-                7200.AllDeath();
-                if (!isDaoLv) 7200.AddCheat();
+                if (true.CheckCheat()) true.SetCheat();
+                true.SetLife();
             }
         }
     }
