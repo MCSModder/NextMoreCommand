@@ -139,6 +139,7 @@
         <Compile Include="Attribute\MapTypeAttribute.cs" />
         <Compile Include="Attribute\RegisterCommandAttribute.cs" />
         <Compile Include="Attribute\RegisterCustomModSettingAttribute.cs" />
+        <Compile Include="HarmonyPatchs\ResManagerLoadSpriteAtlasPatch.cs" />
         <Compile Include="NextCommandExtension\Utils\SetLoadDongFu.cs" />
         <Compile Include="NextCommandExtension\Utils\SetNewDongFu.cs" />
         <Compile Include="Utils\DongFuUtils.cs" />
