@@ -139,6 +139,8 @@
         <Compile Include="Attribute\MapTypeAttribute.cs" />
         <Compile Include="Attribute\RegisterCommandAttribute.cs" />
         <Compile Include="Attribute\RegisterCustomModSettingAttribute.cs" />
+        <Compile Include="NextCommandExtension\Npc\AddNpcWudaoExp.cs" />
+        <Compile Include="NextCommandExtension\Npc\SetNpcWudaoExp.cs" />
         <Compile Include="Patchs\ResManagerLoadSpriteAtlasPatch.cs" />
         <Compile Include="Patchs\UISiXuItemPatch.cs" />
         <Compile Include="NextCommandExtension\Utils\SetLoadDongFu.cs" />
