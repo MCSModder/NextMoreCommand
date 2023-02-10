@@ -91,7 +91,7 @@ public static class WitchUtils
 
     public static void SetHarem(this int id)
     {
-        if (id.HasHarem())
+        if (id.HasCheat())
         {
             id.AllDeath();
         }

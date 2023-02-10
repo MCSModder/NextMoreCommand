@@ -5,7 +5,7 @@ using JSONClass;
 using KBEngine;
 using SkySwordKill.Next.DialogSystem;
 
-namespace SkySwordKill.NextMoreCommand.HarmonyPatchs;
+namespace SkySwordKill.NextMoreCommand.Patchs;
 
 [HarmonyPatch(typeof(BagTianJieSkill), MethodType.Constructor, new Type[] { typeof(TianJieMiShuData) })]
 public static class BagTianJieSkillPatch

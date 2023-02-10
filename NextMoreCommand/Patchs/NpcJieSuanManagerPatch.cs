@@ -1,19 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using HarmonyLib;
-using JSONClass;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using SkySwordKill.Next;
-using SkySwordKill.Next.Extension;
-using SkySwordKill.Next.Mod;
+﻿using HarmonyLib;
 using SkySwordKill.NextMoreCommand.Utils;
-using SkySwordKill.NextMoreCommand.Custom;
 
-namespace SkySwordKill.NextMoreCommand.HarmonyPatchs
+namespace SkySwordKill.NextMoreCommand.Patchs
 {
     [HarmonyPatch(typeof(NpcJieSuanManager), "InitCyData")]
     public static class NpcJieSuanManagerPatch

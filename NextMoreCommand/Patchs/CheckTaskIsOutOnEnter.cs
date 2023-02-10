@@ -2,7 +2,7 @@
 using HarmonyLib;
 using SkySwordKill.Next.DialogSystem;
 
-namespace SkySwordKill.NextMoreCommand.HarmonyPatchs;
+namespace SkySwordKill.NextMoreCommand.Patchs;
 [HarmonyPatch(typeof(CheckTaskIsOut),nameof(CheckTaskIsOut.OnEnter))]
 public static class CheckTaskIsOutOnEnter
 {

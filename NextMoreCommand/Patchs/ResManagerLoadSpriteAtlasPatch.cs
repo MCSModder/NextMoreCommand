@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using HarmonyLib;
 using SkySwordKill.Next;
-using SkySwordKill.Next.Res;
 using SkySwordKill.NextMoreCommand.Utils;
 using UnityEngine;
 
-namespace SkySwordKill.NextMoreCommand.HarmonyPatchs;
+namespace SkySwordKill.NextMoreCommand.Patchs;
 
 [HarmonyPatch(typeof(ResManager), nameof(ResManager.LoadSpriteAtlas))]
 public static class ResManagerLoadSpriteAtlasPatch

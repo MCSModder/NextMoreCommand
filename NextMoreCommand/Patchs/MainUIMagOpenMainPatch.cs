@@ -1,25 +1,30 @@
-﻿// using System;
-// using System.Collections;
-// using Cysharp.Threading.Tasks;
-// using HarmonyLib;
-// using SkySwordKill.Next;
-// using SkySwordKill.NextMoreCommand.Utils;
-// using UnityEngine;
-//
-// namespace SkySwordKill.NextMoreCommand.HarmonyPatchs;
-//
-// [HarmonyPatch(typeof(MainUIMag), nameof(MainUIMag.OpenMain))]
-// public static class MainUIMagOpenMainPatch
-// {
-//     public static void Postfix()
-//     {
-//         if (PlayTimeGames.Instance == null)
-//         {
-//             var go = new GameObject(nameof(PlayTimeGames), typeof(PlayTimeGames));
-//         }
-//     }
-// }
-//
+﻿using HarmonyLib;
+using SkySwordKill.Next.Mod;
+using SkySwordKill.NextMoreCommand.Utils;
+
+namespace SkySwordKill.NextMoreCommand.Patchs;
+
+[HarmonyPatch(typeof(MainUIMag), nameof(MainUIMag.RefreshSave))]
+public static class MainUIMagOpenMainPatch
+{
+    public static void Prefix(MainUIMag __instance)
+    {
+        if (ModManager.TryGetModSetting("Quick_SaveSlotDebug", out long saveSlotDebug))
+        {
+            if (saveSlotDebug > 9)
+            {
+                var save = (int)saveSlotDebug;
+                __instance.maxNum =save ;
+                __instance.selectAvatarPanel.maxNum = save;
+            }
+            else
+            {
+                ModManager.SetModSetting("Quick_SaveSlotDebug", 9);
+            }
+        }
+    }
+}
+
 // public class PlayTimeGames : MonoBehaviour
 // {
 //     public static PlayTimeGames Instance;

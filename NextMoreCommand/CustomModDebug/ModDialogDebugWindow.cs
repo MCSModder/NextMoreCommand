@@ -18,6 +18,7 @@ using SkySwordKill.NextMoreCommand.Utils;
 using Tab;
 using UnityEngine;
 using YSGame;
+using GameObject = UnityEngine.GameObject;
 
 namespace SkySwordKill.NextMoreCommand.CustomModDebug;
 
@@ -57,6 +58,180 @@ public struct NextEventOption
     {
         Text = text;
         EventName = eventName;
+    }
+}
+
+public enum ReloadState
+{
+    None,
+    Next,
+    NextMainMenu,
+    MainMenu
+}
+
+public class NextReloadManager : MonoBehaviour
+{
+    private static NextReloadManager instance;
+
+    public static NextReloadManager Instance => instance
+        ? instance
+        : new GameObject(nameof(NextReloadManager), typeof(NextReloadManager)).GetComponent<NextReloadManager>();
+
+    public ReloadState ReloadState = ReloadState.None;
+
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            DestroyImmediate(instance);
+            return;
+        }
+
+        instance = this;
+    }
+
+    private void Update()
+    {
+        switch (ReloadState)
+        {
+            case ReloadState.Next:
+                ReloadState = ReloadState.None;
+                StartCoroutine(ReloadMod());
+                return;
+            case ReloadState.NextMainMenu:
+                ReloadState = ReloadState.None;
+                StartCoroutine(ReloadModCheckBox());
+                return;
+            case ReloadState.MainMenu:
+                ReloadState = ReloadState.None;
+                StartCoroutine(ReloadMainMenu());
+                return;
+        }
+    }
+
+    public IEnumerator ReloadMainMenu()
+    {
+        TabUIMag.OpenTab(6);
+        yield return new WaitForSeconds(2);
+        TySelect.inst.Show("是否要返回主界面？", delegate
+        {
+            if (FpUIMag.inst != null)
+            {
+                UnityEngine.Object.Destroy(FpUIMag.inst.gameObject);
+            }
+
+            if (TpUIMag.inst != null)
+            {
+                UnityEngine.Object.Destroy(TpUIMag.inst.gameObject);
+            }
+
+            if (SubmitUIMag.Inst != null)
+            {
+                SubmitUIMag.Inst.Close();
+            }
+
+            if (LianDanUIMag.Instance != null)
+            {
+                UnityEngine.Object.Destroy(LianDanUIMag.Instance.gameObject);
+            }
+
+            if (LianQiTotalManager.inst != null)
+            {
+                UnityEngine.Object.Destroy(LianQiTotalManager.inst.gameObject);
+            }
+
+
+            TabUIMag.Instance.TryEscClose();
+            YSSaveGame.Reset();
+            KBEngineApp.app.entities[10] = null;
+            KBEngineApp.app.entities.Remove(10);
+            Tools.instance.loadOtherScenes("MainMenu");
+            DestroyImmediate(this);
+        }, null, true);
+    }
+
+    private IEnumerator ReloadMod()
+    {
+        TabUIMag.OpenTab(6);
+        yield return new WaitForSeconds(2);
+        TySelect.inst.Show("是否要返回主界面并重载NextMod？", () =>
+        {
+            if (FpUIMag.inst != null)
+            {
+                UnityEngine.Object.Destroy(FpUIMag.inst.gameObject);
+            }
+
+            if (TpUIMag.inst != null)
+            {
+                UnityEngine.Object.Destroy(TpUIMag.inst.gameObject);
+            }
+
+            if (SubmitUIMag.Inst != null)
+            {
+                SubmitUIMag.Inst.Close();
+            }
+
+            if (LianDanUIMag.Instance != null)
+            {
+                UnityEngine.Object.Destroy(LianDanUIMag.Instance.gameObject);
+            }
+
+            if (LianQiTotalManager.inst != null)
+            {
+                UnityEngine.Object.Destroy(LianQiTotalManager.inst.gameObject);
+            }
+
+
+            TabUIMag.Instance.TryEscClose();
+
+            YSSaveGame.Reset();
+            KBEngineApp.app.entities[10] = null;
+            KBEngineApp.app.entities.Remove(10);
+            Tools.instance.loadOtherScenes("MainMenu");
+            DestroyImmediate(this);
+            ModManager.ReloadAllMod();
+        }, null, true);
+    }
+    
+
+    private IEnumerator ReloadModCheckBox()
+    {
+        TabUIMag.OpenTab(6);
+        yield return new WaitForSeconds(2);
+        if (FpUIMag.inst != null)
+        {
+            UnityEngine.Object.Destroy(FpUIMag.inst.gameObject);
+        }
+
+        if (TpUIMag.inst != null)
+        {
+            UnityEngine.Object.Destroy(TpUIMag.inst.gameObject);
+        }
+
+        if (SubmitUIMag.Inst != null)
+        {
+            SubmitUIMag.Inst.Close();
+        }
+
+        if (LianDanUIMag.Instance != null)
+        {
+            UnityEngine.Object.Destroy(LianDanUIMag.Instance.gameObject);
+        }
+
+        if (LianQiTotalManager.inst != null)
+        {
+            UnityEngine.Object.Destroy(LianQiTotalManager.inst.gameObject);
+        }
+
+
+        TabUIMag.Instance.TryEscClose();
+
+        YSSaveGame.Reset();
+        KBEngineApp.app.entities[10] = null;
+        KBEngineApp.app.entities.Remove(10);
+        Tools.instance.loadOtherScenes("MainMenu");
+        DestroyImmediate(this);
+        ModManager.ReloadAllMod();
     }
 }
 
@@ -142,95 +317,16 @@ public class ModDialogDebugWindow : FGUIWindowBase
             SetState(DebugMode.Value && _isGame ? _currentState : DramaState.None);
         }));
         MainView.m_debugBar.m_mainMenuButton.onClick.Add((() =>
-        {
-            TabUIMag.OpenTab(6);
-
-            TySelect.inst.Show("是否要返回主界面？", delegate
-            {
-                if (FpUIMag.inst != null)
-                {
-                    UnityEngine.Object.Destroy(FpUIMag.inst.gameObject);
-                }
-
-                if (TpUIMag.inst != null)
-                {
-                    UnityEngine.Object.Destroy(TpUIMag.inst.gameObject);
-                }
-
-                if (SubmitUIMag.Inst != null)
-                {
-                    SubmitUIMag.Inst.Close();
-                }
-
-                if (LianDanUIMag.Instance != null)
-                {
-                    UnityEngine.Object.Destroy(LianDanUIMag.Instance.gameObject);
-                }
-
-                if (LianQiTotalManager.inst != null)
-                {
-                    UnityEngine.Object.Destroy(LianQiTotalManager.inst.gameObject);
-                }
-
-
-                TabUIMag.Instance.TryEscClose();
-                YSSaveGame.Reset();
-                KBEngineApp.app.entities[10] = null;
-                KBEngineApp.app.entities.Remove(10);
-                Tools.instance.loadOtherScenes("MainMenu");
-            }, null, true);
-        }));
+            NextReloadManager.Instance.ReloadState = ReloadState.MainMenu));
         MainView.m_debugBar.m_dramaIdButton.onClick.Add(() =>
         {
-            TabUIMag.OpenTab(6);
-
-            UCheckBox.Show("开始重载NextMod", ReloadMod);
+            NextReloadManager.Instance.ReloadState = ReloadState.NextMainMenu;
         });
 
         MainView.m_debugBar.m_commandButton.onClick.Add(
-            (() =>
-            {
-                TabUIMag.OpenTab(6);
-                TySelect.inst.Show("是否要返回主界面并重载NextMod？", ReloadMod);
-            }));
+            () => { NextReloadManager.Instance.ReloadState = ReloadState.Next; });
     }
 
-    private void ReloadMod()
-    {
-        if (FpUIMag.inst != null)
-        {
-            UnityEngine.Object.Destroy(FpUIMag.inst.gameObject);
-        }
-
-        if (TpUIMag.inst != null)
-        {
-            UnityEngine.Object.Destroy(TpUIMag.inst.gameObject);
-        }
-
-        if (SubmitUIMag.Inst != null)
-        {
-            SubmitUIMag.Inst.Close();
-        }
-
-        if (LianDanUIMag.Instance != null)
-        {
-            UnityEngine.Object.Destroy(LianDanUIMag.Instance.gameObject);
-        }
-
-        if (LianQiTotalManager.inst != null)
-        {
-            UnityEngine.Object.Destroy(LianQiTotalManager.inst.gameObject);
-        }
-
-
-        TabUIMag.Instance.TryEscClose();
-
-        YSSaveGame.Reset();
-        KBEngineApp.app.entities[10] = null;
-        KBEngineApp.app.entities.Remove(10);
-        Tools.instance.loadOtherScenes("MainMenu");
-        ModManager.ReloadAllMod();
-    }
 
     private void BindDrama()
     {

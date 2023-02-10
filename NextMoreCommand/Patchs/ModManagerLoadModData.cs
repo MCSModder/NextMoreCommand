@@ -1,24 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Reflection;
 using HarmonyLib;
-using JSONClass;
-using KBEngine;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SkySwordKill.Next;
-using SkySwordKill.Next.DialogEvent;
-using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.Next.Extension;
 using SkySwordKill.Next.Mod;
 using SkySwordKill.NextMoreCommand.Custom.NPC;
 using SkySwordKill.NextMoreCommand.Custom.SkillCombo;
-using SkySwordKill.NextMoreCommand.Custom;
-using SkySwordKill.NextMoreCommand.Utils;
 
-namespace SkySwordKill.NextMoreCommand.HarmonyPatchs;
+namespace SkySwordKill.NextMoreCommand.Patchs;
 
 [HarmonyPatch(typeof(ModManager), "LoadModData")]
 public static class ModManagerLoadModData

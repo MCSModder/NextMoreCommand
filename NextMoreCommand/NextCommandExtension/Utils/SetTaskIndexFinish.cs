@@ -25,8 +25,13 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
                 var finallyIndex = TaskUtils.GetFinalIndex(taskID);
                 MyLog.Log(command, $"任务ID:{taskID} 任务名字:{taskID.GetTaskName()} 当前任务索引:{index} 最终任务索引:{finallyIndex}");
 
-
-                if (finallyIndex == index)
+                if (finallyIndex == 0)
+                {
+                    MyLog.Log(command,
+                        $"[执行失败] 任务ID:{taskID} 任务名字:{taskID.GetTaskName()} 最终任务索引:{finallyIndex} 找不到最终索引的任务 请你检查'IsFinal'字段等于1",
+                        true);
+                }
+                else if (finallyIndex == index)
                 {
                     MyLog.Log(command, $"开始设置完成任务 索引:{index}");
                     TaskUtils.SetTaskComplete(taskID);
@@ -34,8 +39,8 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
                 }
                 else if (finallyIndex > index)
                 {
-                    MyLog.Log(command, $"开始设置下一步任务 索引:{index }");
-                    TaskUtils.SetTaskIndex(taskID, index );
+                    MyLog.Log(command, $"开始设置下一步任务 索引:{index}");
+                    TaskUtils.SetTaskIndex(taskID, index);
                     TaskUtils.SetTaskPop(taskID);
                 }
                 else

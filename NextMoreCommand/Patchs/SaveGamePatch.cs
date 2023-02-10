@@ -1,9 +1,7 @@
 ﻿using HarmonyLib;
-using SkySwordKill.Next;
 using SkySwordKill.Next.DialogSystem;
-using YSGame;
 
-namespace SkySwordKill.NextMoreCommand.HarmonyPatchs;
+namespace SkySwordKill.NextMoreCommand.Patchs;
 
 [HarmonyPatch(typeof(YSNewSaveSystem), nameof(YSNewSaveSystem.SaveAvatar))]
 public static class SaveGamePatch
