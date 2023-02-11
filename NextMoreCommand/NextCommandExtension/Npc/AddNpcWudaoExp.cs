@@ -29,7 +29,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
             {
                 MyLog.Log(command, $"角色ID:{npc} 角色名:{npc.GetNpcName()} ");
                 MyLog.Log(command, $"悟道名字:{GetWudaoName(wudaoId)} 悟道ID:{wudaoId} 增加经验值:{exp}");
-                WuDaoUtils.SetWudaoExp(npc, wudaoId, exp);
+                WuDaoUtils.AddWudaoExp(npc, wudaoId, exp);
             }
             else
             {

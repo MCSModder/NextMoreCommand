@@ -4,7 +4,13 @@ using Newtonsoft.Json.Linq;
 
 namespace SkySwordKill.NextMoreCommand.Utils;
 
-class WudaoJsonInfo
+public class CustomWuDaoInfo
+{
+    public int Id;
+    public int Value;
+}
+
+public class WudaoJsonInfo
 {
     [JsonProperty("id")] public int WudaoId = 0;
     [JsonProperty("level")] public int Level = 0;
@@ -40,6 +46,20 @@ public static class WuDaoExtends
 public static class WuDaoUtils
 {
     private static NpcJieSuanManager NpcJieSuanManager => NpcJieSuanManager.inst;
+
+    public static void UpdateNpcWuDao(int npcId)
+    {
+        NpcJieSuanManager.UpdateNpcWuDao(npcId.ToNpcNewId());
+    }
+    public static void AddNpcWuDao(int npcId, int wudaoId,int level,int skill)
+    {
+        var wudao = wudaoId * 100 + level * 10 + skill;
+        NpcJieSuanManager.AddNpcWuDao(npcId.ToNpcNewId(), wudao);
+    }
+    public static void AddNpcWuDao(int npcId, int wudaoIdSkill)
+    {
+        NpcJieSuanManager.AddNpcWuDao(npcId.ToNpcNewId(), wudaoIdSkill);
+    }
 
     public static void SetWudaoExp(int npcId, int wudaoId, int exp = 0)
     {
