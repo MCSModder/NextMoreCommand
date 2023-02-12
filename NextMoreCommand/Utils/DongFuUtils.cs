@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using SkySwordKill.Next.Utils;
 
 namespace SkySwordKill.NextMoreCommand.Utils;
 
@@ -23,79 +24,148 @@ public class LingTianInfo
 
 public class DongFuInfo
 {
-    [JsonProperty("DongFuName")] public string DongFuName;
-    [JsonProperty("LingYanLevel")] public int LingYanLevel;
-    [JsonProperty("JuLingZhenLevel")] public int JuLingZhenLevel;
-    [JsonProperty("Area0Unlock")] public int Area0Unlock;
-    [JsonProperty("Area1Unlock")] public int Area1Unlock;
-    [JsonProperty("Area2Unlock")] public int Area2Unlock;
-    [JsonProperty("Area3Unlock")] public int Area3Unlock;
-    [JsonProperty("Area4Unlock")] public int Area4Unlock;
-    [JsonProperty("LingTian")] public Dictionary<string, object> LingTian;
-    [JsonIgnore] public string ID;
-
-    [JsonIgnore] public Dictionary<string, LingTianInfo> LingTianDict => GetLingTianDict();
-
-    [JsonIgnore] public int CuiShengLingLi => (int)LingTian["CuiShengLingLi"];
-
-    public Dictionary<string, LingTianInfo> GetLingTianDict()
+    public DongFuInfo(string id)
     {
-        var dict = new Dictionary<string, LingTianInfo>();
-        foreach (var item in LingTian)
-        {
-            if (item.Key == "CuiShengLingLi")
-            {
-                continue;
-            }
+        RawID = id;
+    }
 
-            if (item.Value is JObject value)
-            {
-                dict[item.Key] = value.ToObject<LingTianInfo>();
-            }
-        }
+    public string RawID;
+    public JSONObject JsonRaw => DongFuUtils.DongFuData[ID];
 
-        return dict;
+    public int ID => Convert.ToInt32(RawID.Replace("DongFu", ""));
+
+    public string DongFuName
+    {
+        get => GetStr("DongFuName");
+        set => SetField("DongFuName", value);
+    }
+
+
+    public int LingYanLevel
+    {
+        get => GetInt("LingYanLevel");
+        set => SetField("LingYanLevel", value);
+    }
+
+    public int JuLingZhenLevel
+    {
+        get => GetInt("JuLingZhenLevel");
+        set => SetField("JuLingZhenLevel", value);
+    }
+
+    public int Area0Unlock
+    {
+        get => GetInt("Area0Unlock");
+        set => SetField("Area0Unlock", value);
+    }
+
+    public int Area1Unlock
+    {
+        get => GetInt("Area1Unlock");
+        set => SetField("Area1Unlock", value);
+    }
+
+    public int Area2Unlock
+    {
+        get => GetInt("Area2Unlock");
+        set => SetField("Area2Unlock", value);
+    }
+
+    public int Area3Unlock
+    {
+        get => GetInt("Area3Unlock");
+        set => SetField("Area3Unlock", value);
+    }
+
+    public int Area4Unlock
+    {
+        get => GetInt("Area4Unlock");
+        set => SetField("Area4Unlock", value);
+    }
+
+    public JSONObject LingTian
+    {
+        get => GetField("LingTian");
+    }
+
+    public JSONObject GetField(string name)
+    {
+        return JsonRaw.GetField(name);
+    }
+
+    public int GetInt(string name)
+    {
+        return JsonRaw.GetField(name).I;
+    }
+
+    public string GetStr(string name)
+    {
+        return JsonRaw.GetField(name).str;
+    }
+
+    public void SetField(string name, string value)
+    {
+        JsonRaw.SetField(name, value);
+    }
+
+    public void SetField(string name, int value)
+    {
+        JsonRaw.SetField(name, value);
+    }
+
+    public void SetZhongZhi(int slot, int id)
+    {
+        DongFuManager.ZhongZhi(ID, slot, id);
+    }
+
+    public void SetShouHuo(int slot)
+    {
+        DongFuManager.ShouHuo(ID, slot);
+    }
+
+    public int CuiShengLingLi
+    {
+        get => LingTian["CuiShengLingLi"].I;
+        set => LingTian.SetField("CuiShengLingLi", value);
     }
 }
 
 public static class DongFuUtils
+{
+    public static JSONObject DongFuData => PlayerEx.Player.DongFuData;
+    public static string DongFuDataStr => DongFuData.ToString(true);
+
+    public static Dictionary<int, DongFuInfo> DongFuInfo =>
+        DongFuData.Count != _dongFuInfo.Count ? GetDongFuDataInfos() : _dongFuInfo;
+
+    private static readonly Dictionary<int, DongFuInfo> _dongFuInfo = new Dictionary<int, DongFuInfo>();
+
+    public static DongFuInfo GetDongFuData(int dongFuID)
     {
-        public static JSONObject DongFuData => PlayerEx.Player.DongFuData;
-        public static string DongFuDataStr => DongFuData.ToString(true);
-
-        public static Dictionary<string, DongFuInfo> DongFuDataInfos =>
-            DongFuData.ToJObject().ToObject<Dictionary<string, DongFuInfo>>();
-
-        public static readonly Dictionary<int, string> DongFuName = new Dictionary<int, string>();
-
-        public static DongFuInfo GetDongFuData(int dongFuID)
+        if (DongFuManager.PlayerHasDongFu(dongFuID))
         {
-            if (DongFuManager.PlayerHasDongFu(dongFuID))
-            {
-                return DongFuData[$"DongFu{dongFuID}"].ToJObject().ToObject<DongFuInfo>();
-            }
-
-            return null;
+            return new DongFuInfo($"DongFu{dongFuID}");
         }
 
-        public static void CreateDongFu(int dongFuID, int level, string dongFuName)
-        {
-            DongFuManager.CreateDongFu(dongFuID, level);
-            DongFuManager.SetDongFuName(dongFuID, dongFuName);
-        }
-
-        public static Dictionary<string, DongFuInfo> GetDongFuDataInfos()
-        {
-            DongFuName.Clear();
-            var data = DongFuData.ToJObject().ToObject<Dictionary<string, DongFuInfo>>() ??
-                       new Dictionary<string, DongFuInfo>();
-            foreach (var item in data)
-            {
-                item.Value.ID = item.Key;
-                var dongFuIndex = Convert.ToInt32(item.Key.Replace("DongFu", ""));
-                DongFuName[dongFuIndex] = item.Value.DongFuName;
-            }
-
-            return data;
-        }
+        return null;
     }
+
+    public static void CreateDongFu(int dongFuID, int level, string dongFuName)
+    {
+        DongFuManager.CreateDongFu(dongFuID, level);
+        DongFuManager.SetDongFuName(dongFuID, dongFuName);
+    }
+
+    public static Dictionary<int, DongFuInfo> GetDongFuDataInfos()
+    {
+        _dongFuInfo.Clear();
+        foreach (var key in DongFuData.keys)
+        {
+            var dongFuInfo = new DongFuInfo("key");
+            var id = dongFuInfo.ID;
+            _dongFuInfo[id] = dongFuInfo;
+        }
+
+        return _dongFuInfo;
+    }
+}

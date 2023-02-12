@@ -30,17 +30,20 @@ public static class NpcFactorySetNpcWudaoPatch
 
     public static void Postfix(int level, int wudaoType, JSONObject npcDate)
     {
-        MyLog.Log("设置NPC结算自定义悟道", $"NPCFactory.SetNpcWuDao");
         if (CustomWuDaoTypeList.Count == 0) return;
         _level = level;
         _wudaoType = wudaoType;
         _wudaoJson = npcDate.GetField("wuDaoJson");
         _npcDate = npcDate;
         _npcId = NpcId;
+        MyLog.Log("设置NPC结算自定义悟道", $"NPCFactory.SetNpcWuDao");
         MyLog.Log("设置NPC自定义悟道", $"角色ID:{_npcId} 角色名字:{_npcDate.GetField("Name").str}");
+        foreach (var customWudao in CustomWuDaoTypeList)
+        {
+            WuDaoUtils.SetWudao(npcDate, customWudao);
+        }
 
         var dict = NPCWuDaoJson.DataDict.Where(item => item.Value.Type == _wudaoType && item.Value.lv == _level);
-
         foreach (var wuDao in dict)
         {
             SetWudao(wuDao);
@@ -117,15 +120,21 @@ public static class NpcJieSuanManagerUpdateNpcWuDaoPatch
 
     public static void Postfix(int npcId)
     {
-        MyLog.Log("设置NPC结算自定义悟道", $"触发NpcJieSuanManager.UpdateNpcWuDao");
         if (CustomWuDaoTypeList.Count == 0) return;
         _npcId = npcId;
         _npcDate = jsonData.instance.AvatarJsonData[npcId.ToString()];
         _wudaoJson = _npcDate.GetField("wuDaoJson");
         _level = _npcDate["Level"].I;
         _wudaoType = _npcDate["wudaoType"].I;
+        MyLog.Log("设置NPC结算自定义悟道", $"触发NpcJieSuanManager.UpdateNpcWuDao");
         MyLog.Log("设置NPC结算自定义悟道", $"角色ID:{_npcId} 角色名字:{_npcId.GetNpcName()}");
-        MyLog.Log("设置NPC自定义悟道", $"角色ID:{_level} 角色名字:{_wudaoType}");
+        MyLog.Log("设置NPC结算自定义悟道", $"境界:{_level} 悟道类型:{_wudaoType}");
+        
+        foreach (var customWudao in CustomWuDaoTypeList)
+        {
+            WuDaoUtils.SetWudao(_npcDate, customWudao);
+        }
+
         var dict = NPCWuDaoJson.DataDict.Where(item => item.Value.Type == _wudaoType && item.Value.lv == _level);
         var keyValuePairs = dict.ToList();
         MyLog.Log("设置NPC结算自定义悟道",
@@ -165,7 +174,7 @@ public static class NpcJieSuanManagerUpdateNpcWuDaoPatch
             }
         }
 
-        MyLog.Log("设置NPC结算自定义悟道", $"level:{level} wudaoType:{wudaoType} customWuDaoInfos:{customWuDaoInfos.Count}");
+        //MyLog.Log("设置NPC结算自定义悟道", $"level:{level} wudaoType:{wudaoType} customWuDaoInfos:{customWuDaoInfos.Count}");
         if (customWuDaoInfos.Count == 0)
         {
             return;

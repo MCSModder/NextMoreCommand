@@ -3,7 +3,7 @@ using SkySwordKill.Next.DialogEvent;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.NextMoreCommand.Utils;
 
-namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils;
+namespace SkySwordKill.NextMoreCommand.NextCommandExtension.DongFu;
 
 [DialogEvent("SetNewDongFu")]
 [DialogEvent("设置新洞府")]

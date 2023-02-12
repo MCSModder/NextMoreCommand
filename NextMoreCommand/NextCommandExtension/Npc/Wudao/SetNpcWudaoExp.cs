@@ -6,12 +6,12 @@ using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.NextMoreCommand.Attribute;
 using SkySwordKill.NextMoreCommand.Utils;
 
-namespace SkySwordKill.NextMoreCommand.NextCommandExtension
+namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Wudao
 {
     [RegisterCommand]
-    [DialogEvent("AddNpcWudaoExp")]
-    [DialogEvent("增加角色悟道经验")]
-    public class AddNpcWudaoExp : IDialogEvent
+    [DialogEvent("SetNpcWudaoExp")]
+    [DialogEvent("设置角色悟道经验")]
+    public class SetNpcWudaoExp : IDialogEvent
     {
         private int npc;
         private int wudaoId;
@@ -25,11 +25,11 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
             npc = command.ToNpcId();
             wudaoId = command.GetInt(1, 0);
             exp = command.GetInt(2, 0);
-            if (npc > 0 && WuDaoAllType.ContainsKey(wudaoId))
+            if (npc > 0 && WuDaoAllType.ContainsKey(wudaoId) && exp >= 0)
             {
                 MyLog.Log(command, $"角色ID:{npc} 角色名:{npc.GetNpcName()} ");
-                MyLog.Log(command, $"悟道名字:{GetWudaoName(wudaoId)} 悟道ID:{wudaoId} 增加经验值:{exp}");
-                WuDaoUtils.AddWudaoExp(npc, wudaoId, exp);
+                MyLog.Log(command, $"悟道名字:{GetWudaoName(wudaoId)} 悟道ID:{wudaoId} 设置经验值:{exp}");
+                WuDaoUtils.SetWudaoExp(npc, wudaoId, exp);
             }
             else
             {
@@ -38,7 +38,12 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
                 {
                     MyLog.Log(command, $"悟道ID:{wudaoId} 不存在,建议查看WuDaoAllTypeJson.json文件", true, false);
                 }
-      
+
+                if (exp < 0)
+                {
+                    MyLog.Log(command, $"设置经验值:{exp} 不能为小于 0", true, false);
+                }
+       
             }
 
             MyLog.LogCommand(command, false);

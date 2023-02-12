@@ -51,11 +51,13 @@ public static class WuDaoUtils
     {
         NpcJieSuanManager.UpdateNpcWuDao(npcId.ToNpcNewId());
     }
-    public static void AddNpcWuDao(int npcId, int wudaoId,int level,int skill)
+
+    public static void AddNpcWuDao(int npcId, int wudaoId, int level, int skill)
     {
         var wudao = wudaoId * 100 + level * 10 + skill;
         NpcJieSuanManager.AddNpcWuDao(npcId.ToNpcNewId(), wudao);
     }
+
     public static void AddNpcWuDao(int npcId, int wudaoIdSkill)
     {
         NpcJieSuanManager.AddNpcWuDao(npcId.ToNpcNewId(), wudaoIdSkill);
@@ -73,6 +75,18 @@ public static class WuDaoUtils
         };
         wudaoJson.SetField(wudaoId.ToString(), json.ToJsonObject());
         npcId.AddNpcWuDaoExp(wudaoId, exp);
+    }
+
+    public static void SetWudao(JSONObject npcId, int wudaoId)
+    {
+        var wudaoJson = npcId["wuDaoJson"];
+        var json = new WudaoJsonInfo()
+        {
+            WudaoId = wudaoId,
+            Level = 0,
+            Exp = 0,
+        };
+        wudaoJson.SetField(wudaoId.ToString(), json.ToJsonObject());
     }
 
     public static void AddWudaoExp(int npcId, int wudaoId, int exp = 0)
@@ -95,5 +109,18 @@ public static class WuDaoUtils
             wudaoJson.SetField(wudaoIdStr, json.ToJsonObject());
             npcId.AddNpcWuDaoExp(wudaoId, exp);
         }
+    }
+
+    public static WudaoJsonInfo GetWudao(int npcId, int wudaoId)
+    {
+        var npc = npcId.GetNpcData();
+        var wudaoJson = npc["wuDaoJson"];
+        var wudaoIdStr = wudaoId.ToString();
+        if (wudaoJson.HasField(wudaoIdStr))
+        {
+            return wudaoJson["wudaoIdStr"].ToJObject().ToObject<WudaoJsonInfo>();
+        }
+
+        return null;
     }
 }

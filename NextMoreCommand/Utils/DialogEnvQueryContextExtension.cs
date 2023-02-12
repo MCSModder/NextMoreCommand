@@ -16,12 +16,18 @@ public static class DialogEnvQueryContextExtension
 
         if (typeof(T) == typeof(int) && instance.Args[index] is string value)
         {
-            if (!int.TryParse(value ,out int _))
+            if (!int.TryParse(value, out int _))
             {
                 return defaultValue;
             }
         }
+
         var result = args[index].ToObject<T>();
         return result == null ? defaultValue : result;
+    }
+
+    public static int GetNpcID(this DialogEnvQueryContext instance, int index, int defaultValue = default)
+    {
+        return instance.GetMyArgs(index, defaultValue).ToNpcNewId();
     }
 }
