@@ -30,7 +30,7 @@ public class DongFuInfo
     }
 
     public string RawID;
-    public JSONObject JsonRaw => DongFuUtils.DongFuData[ID];
+    public JSONObject JsonRaw => DongFuUtils.DongFuData[RawID];
 
     public int ID => Convert.ToInt32(RawID.Replace("DongFu", ""));
 
@@ -53,31 +53,31 @@ public class DongFuInfo
         set => SetField("JuLingZhenLevel", value);
     }
 
-    public int Area0Unlock
+    public int LianQiFang
     {
         get => GetInt("Area0Unlock");
         set => SetField("Area0Unlock", value);
     }
 
-    public int Area1Unlock
+    public int LianDanFang
     {
         get => GetInt("Area1Unlock");
         set => SetField("Area1Unlock", value);
     }
 
-    public int Area2Unlock
+    public int LingTianArea
     {
         get => GetInt("Area2Unlock");
         set => SetField("Area2Unlock", value);
     }
 
-    public int Area3Unlock
+    public int CangKu
     {
         get => GetInt("Area3Unlock");
         set => SetField("Area3Unlock", value);
     }
 
-    public int Area4Unlock
+    public int LianGongFang
     {
         get => GetInt("Area4Unlock");
         set => SetField("Area4Unlock", value);
@@ -147,6 +147,7 @@ public static class DongFuUtils
             return new DongFuInfo($"DongFu{dongFuID}");
         }
 
+        
         return null;
     }
 
@@ -161,7 +162,7 @@ public static class DongFuUtils
         _dongFuInfo.Clear();
         foreach (var key in DongFuData.keys)
         {
-            var dongFuInfo = new DongFuInfo("key");
+            var dongFuInfo = new DongFuInfo(key);
             var id = dongFuInfo.ID;
             _dongFuInfo[id] = dongFuInfo;
         }

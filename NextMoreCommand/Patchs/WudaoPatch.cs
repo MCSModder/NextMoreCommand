@@ -36,10 +36,14 @@ public static class NpcFactorySetNpcWudaoPatch
         _wudaoJson = npcDate.GetField("wuDaoJson");
         _npcDate = npcDate;
         _npcId = NpcId;
-        MyLog.Log("设置NPC结算自定义悟道", $"NPCFactory.SetNpcWuDao");
-        MyLog.Log("设置NPC自定义悟道", $"角色ID:{_npcId} 角色名字:{_npcDate.GetField("Name").str}");
+
         foreach (var customWudao in CustomWuDaoTypeList)
         {
+            if (_wudaoJson.HasField(customWudao.ToString()))
+            {
+                continue;
+            }
+
             WuDaoUtils.SetWudao(npcDate, customWudao);
         }
 
@@ -94,6 +98,7 @@ public static class NpcFactorySetNpcWudaoPatch
                     Level = customWuDao.Value
                 };
                 var id = customWuDao.Id;
+                MyLog.Log("设置NPC结算自定义悟道", $"NPCFactory.SetNpcWuDao");
                 MyLog.Log("设置NPC自定义悟道", $"角色ID:{_npcId} 角色名字:{_npcDate.GetField("Name").str}");
                 MyLog.Log("设置NPC自定义悟道", $"悟道ID:{id} 悟道名字:{WuDaoAllType[id].name1} 悟道境界:{customWuDao.Value}");
                 wudaoJson.SetExpByLevel();
@@ -126,12 +131,15 @@ public static class NpcJieSuanManagerUpdateNpcWuDaoPatch
         _wudaoJson = _npcDate.GetField("wuDaoJson");
         _level = _npcDate["Level"].I;
         _wudaoType = _npcDate["wudaoType"].I;
-        MyLog.Log("设置NPC结算自定义悟道", $"触发NpcJieSuanManager.UpdateNpcWuDao");
-        MyLog.Log("设置NPC结算自定义悟道", $"角色ID:{_npcId} 角色名字:{_npcId.GetNpcName()}");
-        MyLog.Log("设置NPC结算自定义悟道", $"境界:{_level} 悟道类型:{_wudaoType}");
-        
+
+
         foreach (var customWudao in CustomWuDaoTypeList)
         {
+            if (_wudaoJson.HasField(customWudao.ToString()))
+            {
+                continue;
+            }
+
             WuDaoUtils.SetWudao(_npcDate, customWudao);
         }
 
@@ -189,6 +197,7 @@ public static class NpcJieSuanManagerUpdateNpcWuDaoPatch
                 Level = customWuDao.Value
             };
             var id = customWuDao.Id;
+            MyLog.Log("设置NPC结算自定义悟道", $"触发NpcJieSuanManager.UpdateNpcWuDao");
             MyLog.Log("设置NPC结算自定义悟道", $"角色ID:{_npcId} 角色名字:{_npcId.GetNpcName()}");
             MyLog.Log("设置NPC结算自定义悟道", $"悟道ID:{id} 悟道名字:{WuDaoAllType[id].name1} 悟道境界:{customWuDao.Value}");
             wudaoJson.SetExpByLevel();

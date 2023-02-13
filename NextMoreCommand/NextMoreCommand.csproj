@@ -140,7 +140,7 @@
         <Compile Include="Attribute\RegisterCommandAttribute.cs" />
         <Compile Include="Attribute\RegisterCustomModSettingAttribute.cs" />
         <Compile Include="NextCommandExtension\Beta\SetLoadScene.cs" />
-        <Compile Include="NextCommandExtension\DongFu\SetDongFuJuLingzheng.cs" />
+        <Compile Include="NextCommandExtension\DongFu\SetDongFuJuLingZhen.cs" />
         <Compile Include="NextCommandExtension\DongFu\SetLoadDongFu.cs" />
         <Compile Include="NextCommandExtension\DongFu\SetNewDongFu.cs" />
         <Compile Include="NextCommandExtension\Npc\Wudao\AddNpcWudaoSkill.cs" />
@@ -148,6 +148,14 @@
         <Compile Include="NextCommandExtension\Npc\Wudao\AddNpcWudaoExp.cs" />
         <Compile Include="NextCommandExtension\Npc\Wudao\SetNpcWudaoExp.cs" />
         <Compile Include="NextEnvExtension\DongFu\GetDongFu.cs" />
+        <Compile Include="NextEnvExtension\DongFu\GetAllDongFu.cs" />
+        <Compile Include="NextEnvExtension\DongFu\GetMenPaiDongFu.cs" />
+        <Compile Include="NextEnvExtension\DongFu\GetNowDongFu.cs" />
+        <Compile Include="NextEnvExtension\DongFu\GetNowDongFuId.cs" />
+        <Compile Include="NextEnvExtension\DongFu\GetYiFengChengDongFu.cs" />
+        <Compile Include="NextEnvExtension\DongFu\HasDongFu.cs" />
+        <Compile Include="NextEnvExtension\DongFu\HasMenPaiDongFu.cs" />
+        <Compile Include="NextEnvExtension\DongFu\HasYiFengChengDongFu.cs" />
         <Compile Include="NextEnvExtension\Npc\Wudao\GetWudao.cs" />
         <Compile Include="Patchs\ResManagerLoadSpriteAtlasPatch.cs" />
         <Compile Include="Patchs\UISiXuItemPatch.cs" />

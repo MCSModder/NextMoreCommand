@@ -16,7 +16,7 @@ public class SetDongFuJuLingZhen : IDialogEvent
     {
         MyLog.LogCommand(command);
         id = command.GetInt(0);
-        level = command.GetInt(0, -1);
+        level = command.GetInt(1, -1);
         MyLog.Log(command, $"洞府ID:{id}");
         if (DongFuManager.PlayerHasDongFu(id) && level >= 1 && level <= 6)
         {
