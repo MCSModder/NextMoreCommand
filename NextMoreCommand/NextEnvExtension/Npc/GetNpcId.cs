@@ -9,7 +9,7 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Npc
     {
         public object Execute(DialogEnvQueryContext context)
         {
-            return NPCEx.NPCIDToNew( context.GetMyArgs(0,-1));
+            return context.GetNpcID(0,-1);
         }
     }
 }

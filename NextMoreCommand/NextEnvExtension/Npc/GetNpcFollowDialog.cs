@@ -9,7 +9,7 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Npc
     {
         public object Execute(DialogEnvQueryContext context)
         {
-            var npc = context.GetMyArgs(0,-1);
+            var npc = context.GetNpcID(0,-1);
             if (npc > 0 && NpcUtils.HasNpcFollow(npc))
             {
                 return NpcUtils.GetNpcFollow(npc);

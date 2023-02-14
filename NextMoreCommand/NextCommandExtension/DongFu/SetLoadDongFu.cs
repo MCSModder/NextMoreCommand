@@ -13,6 +13,7 @@ public class SetLoadDongFu : IDialogEvent
 
     public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
     {
+        
         MyLog.LogCommand(command);
         id = command.GetInt(0);
         MyLog.Log(command, $"洞府ID:{id}");

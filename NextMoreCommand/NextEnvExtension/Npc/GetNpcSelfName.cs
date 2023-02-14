@@ -9,13 +9,13 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Npc
     {
         public object Execute(DialogEnvQueryContext context)
         {
-            var npcId = context.GetMyArgs(0, -1);
+            var npcId = context.GetNpcID(0, -1);
             if (npcId <= 0)
             {
                 return "";
             }
 
-            var name = DialogAnalysis.GetStr(NpcUtils.SelfName, npcId.ToNpcId());
+            var name = DialogAnalysis.GetStr(NpcUtils.SelfName, npcId.ToString());
             MyPluginMain.LogInfo($"npcId:{npcId.ToString()} 自称:{name}");
             return name;
         }

@@ -81,6 +81,7 @@ public partial class AvatarJsonData
             AvatarRandomJsonData.SetField("a_mask", value);
         }
     }
+
     [JsonIgnore]
     public int ShawlHair
     {
@@ -91,6 +92,7 @@ public partial class AvatarJsonData
             AvatarRandomJsonData.SetField("Shawl_hair", value);
         }
     }
+
     [JsonIgnore]
     public int BackGown
     {
@@ -101,6 +103,7 @@ public partial class AvatarJsonData
             AvatarRandomJsonData.SetField("back_gown", value);
         }
     }
+
     [JsonIgnore]
     public int RightArm
     {
@@ -111,6 +114,7 @@ public partial class AvatarJsonData
             AvatarRandomJsonData.SetField("r_arm", value);
         }
     }
+
     [JsonIgnore]
     public int Gown
     {
@@ -121,6 +125,7 @@ public partial class AvatarJsonData
             AvatarRandomJsonData.SetField("gown", value);
         }
     }
+
     [JsonIgnore]
     public int LeftArm
     {
@@ -131,6 +136,7 @@ public partial class AvatarJsonData
             AvatarRandomJsonData.SetField("l_arm", value);
         }
     }
+
     [JsonIgnore]
     public int LeftBigArm
     {
@@ -141,6 +147,7 @@ public partial class AvatarJsonData
             AvatarRandomJsonData.SetField("l_big_arm", value);
         }
     }
+
     [JsonIgnore]
     public int LowerBody
     {
@@ -151,6 +158,7 @@ public partial class AvatarJsonData
             AvatarRandomJsonData.SetField("lower_body", value);
         }
     }
+
     [JsonIgnore]
     public int RightBigArm
     {
@@ -161,6 +169,7 @@ public partial class AvatarJsonData
             AvatarRandomJsonData.SetField("r_big_arm", value);
         }
     }
+
     [JsonIgnore]
     public int Blush
     {
@@ -171,6 +180,7 @@ public partial class AvatarJsonData
             AvatarRandomJsonData.SetField("blush", value);
         }
     }
+
     [JsonIgnore]
     public int Tattoo
     {
@@ -181,6 +191,7 @@ public partial class AvatarJsonData
             AvatarRandomJsonData.SetField("tattoo", value);
         }
     }
+
     [JsonIgnore]
     public int Shoes
     {
@@ -191,6 +202,7 @@ public partial class AvatarJsonData
             AvatarRandomJsonData.SetField("shoes", value);
         }
     }
+
     [JsonIgnore]
     public int UpperBody
     {
@@ -201,6 +213,7 @@ public partial class AvatarJsonData
             AvatarRandomJsonData.SetField("upper_body", value);
         }
     }
+
     [JsonIgnore]
     public int YanQiu
     {
@@ -211,6 +224,7 @@ public partial class AvatarJsonData
             AvatarRandomJsonData.SetField("yanqiu", value);
         }
     }
+
     [JsonIgnore]
     public int MouthColor
     {
@@ -221,6 +235,7 @@ public partial class AvatarJsonData
             AvatarRandomJsonData.SetField("mouthColor", value);
         }
     }
+
     [JsonIgnore]
     public int TattooColor
     {
@@ -231,6 +246,7 @@ public partial class AvatarJsonData
             AvatarRandomJsonData.SetField("tattooColor", value);
         }
     }
+
     [JsonIgnore]
     public int BlushColor
     {
@@ -241,6 +257,7 @@ public partial class AvatarJsonData
             AvatarRandomJsonData.SetField("blushColor", value);
         }
     }
+
     [JsonIgnore]
     public int HaoGanDu
     {
@@ -251,6 +268,7 @@ public partial class AvatarJsonData
             AvatarRandomJsonData.SetField("HaoGanDu", value);
         }
     }
+
     [JsonIgnore]
     public int Head
     {
@@ -261,6 +279,7 @@ public partial class AvatarJsonData
             AvatarRandomJsonData.SetField("head", value);
         }
     }
+
     [JsonIgnore]
     public int Eyes
     {
@@ -271,6 +290,7 @@ public partial class AvatarJsonData
             AvatarRandomJsonData.SetField("eyes", value);
         }
     }
+
     [JsonIgnore]
     public int Mouth
     {
@@ -281,6 +301,7 @@ public partial class AvatarJsonData
             AvatarRandomJsonData.SetField("mouth", value);
         }
     }
+
     [JsonIgnore]
     public int Nose
     {
@@ -291,6 +312,7 @@ public partial class AvatarJsonData
             AvatarRandomJsonData.SetField("nose", value);
         }
     }
+
     [JsonIgnore]
     public int Eyebrow
     {
@@ -301,6 +323,7 @@ public partial class AvatarJsonData
             AvatarRandomJsonData.SetField("eyebrow", value);
         }
     }
+
     [JsonIgnore]
     public int Hair
     {
@@ -311,6 +334,7 @@ public partial class AvatarJsonData
             AvatarRandomJsonData.SetField("hair", value);
         }
     }
+
     [JsonIgnore]
     public int AHair
     {
@@ -321,6 +345,7 @@ public partial class AvatarJsonData
             AvatarRandomJsonData.SetField("a_hair", value);
         }
     }
+
     [JsonIgnore]
     public int BHair
     {
@@ -331,6 +356,7 @@ public partial class AvatarJsonData
             AvatarRandomJsonData.SetField("b_hair", value);
         }
     }
+
     [JsonIgnore]
     public int Characteristic
     {
@@ -341,6 +367,7 @@ public partial class AvatarJsonData
             AvatarRandomJsonData.SetField("characteristic", value);
         }
     }
+
     [JsonIgnore]
     public int Suit
     {
@@ -351,6 +378,7 @@ public partial class AvatarJsonData
             AvatarRandomJsonData.SetField("a_suit", value);
         }
     }
+
     [JsonIgnore]
     public int YanZhuColor
     {
@@ -361,6 +389,7 @@ public partial class AvatarJsonData
             AvatarRandomJsonData.SetField("yanzhuColor", value);
         }
     }
+
     [JsonIgnore]
     public int TeZhengColor
     {
@@ -371,6 +400,7 @@ public partial class AvatarJsonData
             AvatarRandomJsonData.SetField("tezhengColor", value);
         }
     }
+
     [JsonIgnore]
     public int EyebrowColor
     {
@@ -381,6 +411,7 @@ public partial class AvatarJsonData
             AvatarRandomJsonData.SetField("eyebrowColor", value);
         }
     }
+
     #region 头发颜色相关
 
     [JsonIgnore]
@@ -439,12 +470,14 @@ public class GetAvatarJsonData : IDialogEnvQuery
 {
     public object Execute(DialogEnvQueryContext context)
     {
-       MyPluginMain.LogInfo($"Args:{JArray.FromObject(context.Args)}");
-        var npcId = NPCEx.NPCIDToNew(context.GetMyArgs(0, 0));
-       MyPluginMain.LogInfo($"npcID:{npcId.ToString()}");
+        MyPluginMain.LogInfo($"Args:{JArray.FromObject(context.Args)}");
+        var npcId = context.GetNpcID(0, 0);
+        MyPluginMain.LogInfo($"npcID:{npcId.ToString()}");
         var data = jsonData.instance.AvatarRandomJsonData.TryGetField(npcId.ToString()).ToString();
-       MyPluginMain.LogInfo($"npc:{data}");
-        var avatar = string.IsNullOrWhiteSpace(data) || data == "null"? null : JObject.Parse(data).ToObject<AvatarJsonData>();
+        MyPluginMain.LogInfo($"npc:{data}");
+        var avatar = string.IsNullOrWhiteSpace(data) || data == "null"
+            ? null
+            : JObject.Parse(data).ToObject<AvatarJsonData>();
         if (avatar != null)
         {
             avatar.Id = npcId;

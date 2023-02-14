@@ -156,12 +156,16 @@
         <Compile Include="NextEnvExtension\DongFu\HasDongFu.cs" />
         <Compile Include="NextEnvExtension\DongFu\HasMenPaiDongFu.cs" />
         <Compile Include="NextEnvExtension\DongFu\HasYiFengChengDongFu.cs" />
+        <Compile Include="NextEnvExtension\Npc\GetNpcFace.cs" />
+        <Compile Include="NextEnvExtension\Npc\GetNpcLiHui.cs" />
+        <Compile Include="NextEnvExtension\Npc\HasNpcLiHui.cs" />
         <Compile Include="NextEnvExtension\Npc\Wudao\GetWudao.cs" />
         <Compile Include="Patchs\ResManagerLoadSpriteAtlasPatch.cs" />
         <Compile Include="Patchs\UISiXuItemPatch.cs" />
         <Compile Include="Patchs\WudaoPatch.cs" />
         <Compile Include="Patchs\XiangShengXiangKePatch.cs" />
         <Compile Include="Utils\DongFuUtils.cs" />
+        <Compile Include="Utils\FightUtils.cs" />
         <Compile Include="Utils\JsonUtils.cs" />
         <Compile Include="Utils\UiUtils.cs" />
         <Compile Include="Utils\WuDaoUtils.cs" />
