@@ -139,6 +139,8 @@
         <Compile Include="Attribute\MapTypeAttribute.cs" />
         <Compile Include="Attribute\RegisterCommandAttribute.cs" />
         <Compile Include="Attribute\RegisterCustomModSettingAttribute.cs" />
+        <Compile Include="DialogTrigger\OnShuangXiu.cs" />
+        <Compile Include="DialogTrigger\OnBiGuan.cs" />
         <Compile Include="NextCommandExtension\Beta\SetLoadScene.cs" />
         <Compile Include="NextCommandExtension\DongFu\SetDongFuJuLingZhen.cs" />
         <Compile Include="NextCommandExtension\DongFu\SetLoadDongFu.cs" />
@@ -158,6 +160,7 @@
         <Compile Include="NextEnvExtension\DongFu\HasYiFengChengDongFu.cs" />
         <Compile Include="NextEnvExtension\Npc\GetNpcFace.cs" />
         <Compile Include="NextEnvExtension\Npc\GetNpcLiHui.cs" />
+        <Compile Include="NextEnvExtension\Npc\HasNpcFace.cs" />
         <Compile Include="NextEnvExtension\Npc\HasNpcLiHui.cs" />
         <Compile Include="NextEnvExtension\Npc\Wudao\GetWudao.cs" />
         <Compile Include="Patchs\ResManagerLoadSpriteAtlasPatch.cs" />
@@ -166,6 +169,7 @@
         <Compile Include="Patchs\XiangShengXiangKePatch.cs" />
         <Compile Include="Utils\DongFuUtils.cs" />
         <Compile Include="Utils\FightUtils.cs" />
+        <Compile Include="Utils\ItemUtils.cs" />
         <Compile Include="Utils\JsonUtils.cs" />
         <Compile Include="Utils\UiUtils.cs" />
         <Compile Include="Utils\WuDaoUtils.cs" />

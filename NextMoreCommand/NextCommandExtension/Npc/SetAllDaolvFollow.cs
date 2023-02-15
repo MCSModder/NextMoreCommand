@@ -24,16 +24,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
             var daolvId = PlayerEx.Player.DaoLvId.ToList();
             foreach (var param in command.ParamList)
             {
-                var optionSep = param.Contains(":");
-                var npc = param.ToNpcId();
-                var dialog = "";
-                if (optionSep && daolvId.Contains(npc))
-                {
-                    var option = param.Split(':');
-                    npc = option[0].ToNpcId();
-                    dialog = option[1];
-                    NpcInfos.Add(new NpcInfo(npc, dialog));
-                }
+                NpcInfos.Add(new NpcInfo(param));
             }
 
             var isAddNpc = NpcInfos.Select(item => item.Id).ToList();
@@ -50,7 +41,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
             {
                 NpcUtils.AddNpc(npcInfo, out m_isAdd);
                 NpcUtils.SetNpcFollow(npcInfo);
-                MyLog.Log(command,$"添加道侣跟随 角色ID:{npcInfo.Id} 角色名:{npcInfo.Name} 剧情ID:{npcInfo.GetDialogName()}");
+                MyLog.Log(command, $"添加道侣跟随 角色ID:{npcInfo.Id} 角色名:{npcInfo.Name} 剧情ID:{npcInfo.GetDialogName()}");
             }
 
             if (m_isAdd && !UiNpcJiaoHuRefreshNowMapNpcPatch.m_isRefresh)
@@ -60,7 +51,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
 
             m_isAdd = false;
             NpcInfos.Clear();
-            MyLog.LogCommand(command,false);
+            MyLog.LogCommand(command, false);
             callback?.Invoke();
         }
     }

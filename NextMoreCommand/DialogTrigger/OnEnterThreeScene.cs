@@ -1,9 +1,15 @@
-﻿using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Fungus;
 using HarmonyLib;
 using SkySwordKill.Next;
 using SkySwordKill.Next.DialogSystem;
+using SkySwordKill.Next.FCanvas;
+using SkySwordKill.Next.Patch;
 using SkySwordKill.NextMoreCommand.Utils;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace SkySwordKill.NextMoreCommand.DialogTrigger
@@ -11,6 +17,9 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
     [HarmonyPatch(typeof(ThreeSceneMag), nameof(ThreeSceneMag.init))]
     public static class OnEnterThreeScene
     {
+        private static List<Flowchart> _flowchartsInScene;
+        private static List<Flowchart> _flowchartsInPatch;
+
         public static void Postfix()
         {
             var env = new DialogEnvironment()
@@ -20,10 +29,55 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
             //MyPluginMain.LogInfo("触发ThreeSceneMag");
             if (DialogAnalysis.TryTrigger(new[] { "进入场景后", "AfterEnterScene" }, env, true))
             {
-               MyPluginMain.LogInfo("触发进入场景后触发器");
+                MyPluginMain.LogInfo("触发进入场景后触发器");
             }
 
             NpcUtils.AddNpcFollow();
+            FungusPatch();
+        }
+
+        public static void FungusPatch()
+        {
+            _flowchartsInScene = new List<Flowchart>();
+            _flowchartsInPatch = new List<Flowchart>();
+            var patchTag = Resources.FindObjectsOfTypeAll<PatchTag>()
+                .Where(item =>
+                {
+                    var flowchart = item.GetComponentsInChildren<Flowchart>(true);
+                    return flowchart != null && flowchart.Length != 0;
+                })
+                .Select(item => item.GetComponentsInChildren<Flowchart>(true)).ToList();
+            foreach (var tags in patchTag)
+            {
+                foreach (var flowchart in tags)
+                {
+                    _flowchartsInPatch.Add(flowchart);
+                }
+            }
+
+            foreach (var rootGameObject in Resources.FindObjectsOfTypeAll<Flowchart>())
+            {
+                rootGameObject.GetComponentsInChildren(true, _flowchartsInScene);
+                foreach (var flowchart in _flowchartsInScene)
+                {
+                    var fFlowchart = flowchart.ConvertToFFlowchart();
+                    if (_flowchartsInPatch.Contains(flowchart))
+                    {
+                        MyLog.Log("Patch已经存在", $"流程名:{fFlowchart.Name}");
+                        continue;
+                    }
+
+                    try
+                    {
+                        MyLog.Log("开始添加Patch", $"流程名:{fFlowchart.Name}");
+                        Main.FPatch.PatchFlowchart(flowchart);
+                    }
+                    catch (Exception e)
+                    {
+                        Main.LogError(e);
+                    }
+                }
+            }
         }
     }
 
@@ -41,7 +95,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
             };
             if (DialogAnalysis.TryTrigger(new[] { "NPC列表刷新前", "BeforeNpcRefreshNow" }, env, true))
             {
-               MyPluginMain.LogInfo("触发NPC列表刷新前触发器");
+                MyPluginMain.LogInfo("触发NPC列表刷新前触发器");
             }
         }
 
@@ -53,7 +107,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
             };
             if (DialogAnalysis.TryTrigger(new[] { "NPC列表刷新后", "AfterNpcRefreshNow" }, env, true))
             {
-               MyPluginMain.LogInfo("触发NPC列表刷新前触发器");
+                MyPluginMain.LogInfo("触发NPC列表刷新前触发器");
             }
 
             m_isRefresh = false;
@@ -95,7 +149,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
     {
         public static void Postfix(ref string name)
         {
-          // MyPluginMain.LogInfo($"[加载场景]场景名称:{name}");
+            // MyPluginMain.LogInfo($"[加载场景]场景名称:{name}");
             if (name.ToUpper().Contains("YSNEW"))
             {
                 UINPCData.ThreeSceneNPCTalkCache.Clear();
@@ -107,7 +161,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
                 };
                 if (DialogAnalysis.TryTrigger(new[] { "进入战斗场景", "EnterFightScene" }, env, true))
                 {
-                   MyPluginMain.LogInfo("触发进入场景后触发器");
+                    MyPluginMain.LogInfo("触发进入场景后触发器");
                 }
 
                 NpcUtils.AddNpcFollow();
@@ -124,7 +178,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
             {
                 var npc = Traverse.Create(__instance).Field<UINPCData>("npc").Value;
                 npc.RefreshData();
-               MyPluginMain.LogInfo($"[当前点击的npc]ID:{npc.ID} 名字:{npc.Name}");
+                MyPluginMain.LogInfo($"[当前点击的npc]ID:{npc.ID} 名字:{npc.Name}");
                 UINPCJiaoHu.Inst.HideJiaoHuPop();
                 UINPCJiaoHu.Inst.NowJiaoHuNPC = npc;
                 UINPCSVItem.NowSelectedUINPCSVItem = __instance;
@@ -140,15 +194,14 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
                 {
                     var env = new DialogEnvironment()
                     {
-                        
                         bindNpc = npc,
                         roleBindID = npc.ZhongYaoNPCID,
                         roleID = npc.ID,
                         roleName = npc.Name,
                         mapScene = Tools.getScreenName()
                     };
-                    
-                    if (!DialogAnalysis.TryTrigger(new []{"围观战斗群众"}))
+
+                    if (!DialogAnalysis.TryTrigger(new[] { "围观战斗群众" }))
                     {
                         var sb = new StringBuilder($"SetChar*gz#{npc.ID}\n");
                         sb.AppendLine("gz#{xiongdi}加油!!");

@@ -22,6 +22,21 @@ namespace SkySwordKill.NextMoreCommand.Utils
             Id = id;
         }
 
+        public NpcInfo(string raw)
+        {
+            if (raw.Contains(":"))
+            {
+                var split = raw.Split(':');
+                Dialog = split[1];
+                Id = split[0].ToNpcId();
+            }
+            else
+            {
+                Dialog = "";
+                Id = raw.ToNpcId();
+            }
+        }
+
         public string GetDialogName() => string.IsNullOrWhiteSpace(Dialog) ? "无" : Dialog;
     }
 

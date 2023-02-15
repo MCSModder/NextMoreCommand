@@ -11,7 +11,7 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Npc.Wudao
         public object Execute(DialogEnvQueryContext context)
         {
             var npc = context.GetNpcID(0);
-            var wudaoID = context.GetMyArgs(0, -1);
+            var wudaoID = context.GetMyArgs(1, -1);
             if (WuDaoAllTypeJson.DataDict.ContainsKey(wudaoID))
             {
                 return WuDaoUtils.GetWudao(npc, wudaoID);
