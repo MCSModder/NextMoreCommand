@@ -63,13 +63,13 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
                     var fFlowchart = flowchart.ConvertToFFlowchart();
                     if (_flowchartsInPatch.Contains(flowchart))
                     {
-                        MyLog.Log("Patch已经存在", $"流程名:{fFlowchart.Name}");
+                       // MyLog.Log("Patch已经存在", $"流程名:{fFlowchart.Name}");
                         continue;
                     }
 
                     try
                     {
-                        MyLog.Log("开始添加Patch", $"流程名:{fFlowchart.Name}");
+                       // MyLog.Log("开始添加Patch", $"流程名:{fFlowchart.Name}");
                         Main.FPatch.PatchFlowchart(flowchart);
                     }
                     catch (Exception e)
