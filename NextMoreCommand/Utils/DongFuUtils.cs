@@ -106,11 +106,13 @@ public class DongFuInfo
     public void SetField(string name, string value)
     {
         JsonRaw.SetField(name, value);
+        DongFuManager.RefreshDongFuShow();
     }
 
     public void SetField(string name, int value)
     {
         JsonRaw.SetField(name, value);
+        DongFuManager.RefreshDongFuShow();
     }
 
     public void SetZhongZhi(int slot, int id)

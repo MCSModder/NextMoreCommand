@@ -36,7 +36,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
 
         private static bool TryTrigger(DialogEnvironment env, bool triggerAll, params string[] param)
         {
-           MyPluginMain.LogInfo($"进入触发器 {JArray.FromObject(param).ToString(Formatting.None)}");
+            MyPluginMain.LogInfo($"进入触发器 {JArray.FromObject(param).ToString(Formatting.None)}");
             var result = DialogAnalysis.TryTrigger(param, env, triggerAll);
             if (SkillComboManager.SkillCombos.Count == 0)
             {
@@ -99,7 +99,9 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
             Avatar = (Avatar)_avater;
             if (__instance.StaticRoundNum == 0)
             {
-                
+                NpcUtils.AddNpcFollow();
+
+
                 if (RoundUtils.FightStart())
                 {
                     MyLog.FungusLog("进入开始战斗");
@@ -122,6 +124,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
             }
         }
     }
+
     [HarmonyPatch(typeof(RoundManager), nameof(RoundManager.PlayerEndRound))]
     public static class OnPlayerEndRound
     {
@@ -131,7 +134,6 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
             {
                 MyLog.FungusLog("进入玩家结束回合之前");
             }
-
         }
 
         public static void Postfix()
@@ -142,6 +144,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
             }
         }
     }
+
     [HarmonyPatch(typeof(RoundManager), nameof(RoundManager.endRound))]
     public static class OnEndRound
     {

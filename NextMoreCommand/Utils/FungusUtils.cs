@@ -20,7 +20,6 @@ namespace SkySwordKill.NextMoreCommand.Utils
         private Flowchart _flowchart;
         private bool _isFlowchartNull;
 
-     
 
         private void Awake()
         {
@@ -37,11 +36,11 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 DestroyImmediate(this);
                 return;
             }
+
             if (FungusUtils.isTalkActive)
             {
                 StartCoroutine(RunFungus());
             }
-           
         }
 
         public IEnumerator RunFungus()
@@ -59,7 +58,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
             {
                 FungusUtils.TalkOnFailed?.Invoke();
             }
-            
+
             DestroyImmediate(this);
         }
 
@@ -87,6 +86,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
         public Flowchart GetFlowchart()
         {
+            Main.FPatch.PatchFlowchart(Flowchart);
             var go = GameObject.transform.Find("Flowchart").gameObject;
             go.SetActive(false);
             var gameObject = Object.Instantiate(GameObject);
@@ -129,14 +129,15 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 {
                     gameObject.AddComponent<PlayFlowchart>();
                 }
-               MyPluginMain.LogInfo("GameObject.Find");
+
+                MyPluginMain.LogInfo("GameObject.Find");
                 return gameObject.GetComponentInChildren<Flowchart>();
             }
 
             if (Flowcharts.ContainsKey(key))
             {
                 Flowcharts[key].GetFlowchart();
-               MyPluginMain.LogInfo("Flowcharts[key].GetFlowchart();");
+                MyPluginMain.LogInfo("Flowcharts[key].GetFlowchart();");
                 return Flowcharts[key].Flowchart;
             }
 
@@ -146,7 +147,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 var nextFlowchart = new NextFlowchart(gameObject.GetComponentInChildren<Flowchart>());
                 Flowcharts.Add(nextFlowchart.Name, nextFlowchart);
                 nextFlowchart.GetFlowchart();
-               MyPluginMain.LogInfo("Resources.Load<GameObject>(talkPrefab/TalkPrefab/{key});");
+                MyPluginMain.LogInfo("Resources.Load<GameObject>(talkPrefab/TalkPrefab/{key});");
                 return nextFlowchart.Flowchart;
             }
 

@@ -7,7 +7,7 @@ using SkySwordKill.NextMoreCommand.Attribute;
 using SkySwordKill.NextMoreCommand.DialogTrigger;
 using SkySwordKill.NextMoreCommand.Utils;
 
-namespace SkySwordKill.NextMoreCommand.NextCommandExtension
+namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Teleport
 {
     [RegisterCommand]
     [DialogEvent("SetAllDaolvFollow")]

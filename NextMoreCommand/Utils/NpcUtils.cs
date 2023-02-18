@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using HarmonyLib;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SkySwordKill.Next;
@@ -19,7 +20,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public NpcInfo(int id, string dialog = "")
         {
             Dialog = dialog;
-            Id = id;
+            Id = id.ToNpcNewId();
         }
 
         public NpcInfo(string raw)
@@ -27,8 +28,8 @@ namespace SkySwordKill.NextMoreCommand.Utils
             if (raw.Contains(":"))
             {
                 var split = raw.Split(':');
-                Dialog = split[1];
                 Id = split[0].ToNpcId();
+                Dialog = split[1];
             }
             else
             {
@@ -37,7 +38,8 @@ namespace SkySwordKill.NextMoreCommand.Utils
             }
         }
 
-        public string GetDialogName() => string.IsNullOrWhiteSpace(Dialog) ? "无" : Dialog;
+        public bool IsEmpty => string.IsNullOrWhiteSpace(Dialog);
+        public string GetDialogName() => IsEmpty ? "无" : Dialog;
     }
 
     public static class NpcUtilsExtends
@@ -158,18 +160,37 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public static Dictionary<string, string> NpcFollowGroup => StrGroup.GetNpcFollowGroup();
         public static bool IsFightScene => Tools.getScreenName().ToUpper().Contains("YSNEW");
 
-        public static void AddNpcFollow()
+        public static void AddNpcNotDialogFollow()
         {
             if (NpcFollowGroup.Count == 0)
             {
                 return;
             }
 
-            MyPluginMain.LogInfo("开始添加npc跟随");
-            var isAdd = false;
             foreach (var key in NpcFollowGroup)
             {
-                AddNpc(new NpcInfo(key.Key.ToNpcId(), key.Value), out isAdd);
+                var npcInfo = new NpcInfo(key.Key.ToNpcId(), key.Value);
+                if (npcInfo.IsEmpty)
+                {
+                    AddNotDialogNpc(npcInfo);
+                }
+            }
+
+            UINPCJiaoHu.Inst.NPCList.needRefresh = true;
+        }
+
+        public static void AddNpcFollow()
+        {
+            MyPluginMain.LogInfo("开始添加npc跟随");
+            var isAdd = false;
+
+            foreach (var key in NpcFollowGroup)
+            {
+                var npcInfo = new NpcInfo(key.Key.ToNpcId(), key.Value);
+                if (!npcInfo.IsEmpty || IsFightScene)
+                {
+                    AddNpc(npcInfo, out isAdd);
+                }
             }
 
             if (isAdd && !UiNpcJiaoHuRefreshNowMapNpcPatch.m_isRefresh)
@@ -380,12 +401,6 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
         public static void BindDialogEvent(int npc, string dialog)
         {
-            var emptyDialog = string.IsNullOrWhiteSpace(dialog) || !DialogAnalysis.DialogDataDic.ContainsKey(dialog);
-            if (emptyDialog || !UINPCJiaoHu.Inst.TNPCIDList.Contains(npc))
-            {
-                return;
-            }
-
             if (NPCEx.IsDeath(npc)) return;
             UnityAction next = () =>
             {
@@ -398,9 +413,17 @@ namespace SkySwordKill.NextMoreCommand.Utils
                     DialogAnalysis.StartDialogEvent(dialog);
                 }
             };
+            var emptyDialog = string.IsNullOrWhiteSpace(dialog) || !DialogAnalysis.DialogDataDic.ContainsKey(dialog);
+            if (emptyDialog || !UINPCJiaoHu.Inst.TNPCIDList.Contains(npc))
+            {
+                return;
+            }
+
             if (NPCEx.IsZhongYaoNPC(npc, out var key) && !IsFightScene)
             {
                 UINPCData.ThreeSceneZhongYaoNPCTalkCache[key] = next;
+
+
                 return;
             }
 
@@ -414,7 +437,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
             {
                 return;
             }
-
+            
             if (!UINPCJiaoHu.Inst.TNPCIDList.Contains(npcInfo.Id))
             {
                 UINPCJiaoHu.Inst.TNPCIDList.Add(npcInfo.Id);
@@ -422,6 +445,21 @@ namespace SkySwordKill.NextMoreCommand.Utils
             }
 
             BindDialogEvent(npcInfo.Id, npcInfo.Dialog);
+        }
+
+        public static void AddNotDialogNpc(NpcInfo npcInfo)
+        {
+            if (npcInfo.Id <= 0)
+            {
+                return;
+            }
+
+            if (!UINPCJiaoHu.Inst.NPCIDList.Contains(npcInfo.Id))
+            {
+                UINPCJiaoHu.Inst.NPCIDList.Add(npcInfo.Id);
+                var list = Traverse.Create(UINPCJiaoHu.Inst).Field<List<JSONObject>>("npcjsonlist").Value;
+                list.Add(npcInfo.Id.NPCJson());
+            }
         }
 
         public static void RemoveNpc(int npc, out bool isRemove)

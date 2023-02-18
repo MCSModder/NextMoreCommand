@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SkySwordKill.Next.DialogEvent;
@@ -8,7 +7,7 @@ using SkySwordKill.NextMoreCommand.Attribute;
 using SkySwordKill.NextMoreCommand.DialogTrigger;
 using SkySwordKill.NextMoreCommand.Utils;
 
-namespace SkySwordKill.NextMoreCommand.NextCommandExtension
+namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Teleport
 {
     [RegisterCommand]
     [DialogEvent("NpcForceRemoveTeleport")]

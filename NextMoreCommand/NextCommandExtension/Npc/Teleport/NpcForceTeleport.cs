@@ -1,14 +1,12 @@
 using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using SkySwordKill.Next.DialogEvent;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.NextMoreCommand.Attribute;
 using SkySwordKill.NextMoreCommand.DialogTrigger;
 using SkySwordKill.NextMoreCommand.Utils;
 
-namespace SkySwordKill.NextMoreCommand.NextCommandExtension
+namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Teleport
 {
     [RegisterCommand]
     [DialogEvent("NpcForceTeleport")]
@@ -19,7 +17,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
     {
         public bool m_isAdd;
         public List<NpcInfo> NpcInfos = new List<NpcInfo>();
-
+        public static List<NpcInfo> NotDialogNpcInfos = new List<NpcInfo>();
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
             MyLog.LogCommand(command);
@@ -38,20 +36,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
                     if (command.ParamList.Length == 0) break;
                     foreach (var param in command.ParamList)
                     {
-                        var optionSep = param.Contains(":");
-                        npc = param.ToNpcId();
-                        dialog = "";
-                        if (optionSep)
-                        {
-                            var option = param.Split(':');
-                            npc = option[0].ToNpcId();
-                            dialog = option[1];
-                            NpcInfos.Add(new NpcInfo(npc, dialog));
-                        }
-                        else if (npc > 0)
-                        {
-                            NpcInfos.Add(new NpcInfo(npc, dialog));
-                        }
+                        NpcInfos.Add(new NpcInfo(param));
                     }
 
                     break;
@@ -61,7 +46,15 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
 
             foreach (var npcInfo in NpcInfos)
             {
-                NpcUtils.AddNpc(npcInfo, out m_isAdd);
+                if (npcInfo.IsEmpty)
+                {
+                    NotDialogNpcInfos.Add(npcInfo);
+                }
+                else
+                {
+                    NpcUtils.AddNpc(npcInfo, out m_isAdd);
+                }
+
                 MyLog.Log(command, $"角色强制传送 角色ID: {npcInfo.Id} 角色名: {npcInfo.Name} 剧情Id: {npcInfo.GetDialogName()}");
             }
 
@@ -69,6 +62,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension
             {
                 NpcJieSuanManager.inst.isUpDateNpcList = true;
             }
+
             MyLog.LogCommand(command, false);
             m_isAdd = false;
             NpcInfos.Clear();
