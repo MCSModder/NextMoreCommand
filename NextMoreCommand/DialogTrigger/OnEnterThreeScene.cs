@@ -101,6 +101,9 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
             }
         }
 
+        public static string NowSceneName => SceneManager.GetActiveScene().name;
+        public static List<string> BanScene = new List<string>() { "MainMenu", "LoadingScreen", "NextScene" };
+
         public static void Postfix()
         {
             var env = new DialogEnvironment()
@@ -113,7 +116,8 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
             }
 
             m_isRefresh = false;
-            if (!NpcUtils.IsFightScene)
+
+            if (!NpcUtils.IsFightScene && !BanScene.Contains(NowSceneName))
             {
                 foreach (var npcInfo in NpcForceTeleport.NotDialogNpcInfos)
                 {

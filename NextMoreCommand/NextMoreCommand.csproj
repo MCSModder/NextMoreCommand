@@ -175,6 +175,7 @@
         <Compile Include="Patchs\UISiXuItemPatch.cs" />
         <Compile Include="Patchs\WudaoPatch.cs" />
         <Compile Include="Patchs\XiangShengXiangKePatch.cs" />
+        <Compile Include="Slave\SlaveUtils.cs" />
         <Compile Include="Utils\DongFuUtils.cs" />
         <Compile Include="Utils\FightUtils.cs" />
         <Compile Include="Utils\ItemUtils.cs" />
