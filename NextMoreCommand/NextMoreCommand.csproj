@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="..\packages\Obfuscar.2.2.37\build\obfuscar.props" Condition="Exists('..\packages\Obfuscar.2.2.37\build\obfuscar.props')" />
     <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
     <PropertyGroup>
         <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -18,7 +19,7 @@
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
         <Optimize>false</Optimize>
-        <OutputPath>..\..\..\本地Mod测试\NextMoreCommand\plugins</OutputPath>
+        <OutputPath>..\..\..\本地Mod测试\NextMoreCommandBuild\plugins</OutputPath>
         <DefineConstants>DEBUG;TRACE</DefineConstants>
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
@@ -27,10 +28,17 @@
         <PlatformTarget>AnyCPU</PlatformTarget>
         <DebugType>pdbonly</DebugType>
         <Optimize>true</Optimize>
-        <OutputPath>..\..\..\本地Mod测试\NextMoreCommand\plugins</OutputPath>
+        <OutputPath>..\..\..\本地Mod测试\NextMoreCommandBuild\plugins</OutputPath>
         <DefineConstants>TRACE</DefineConstants>
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
+        <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+        <DocumentationFile></DocumentationFile>
+    </PropertyGroup>
+    <PropertyGroup>
+      <PostBuildEvent>"C:\Confuser\Confuser.CLI.exe" "$(SolutionDir)Next.crproj"
+
+</PostBuildEvent>
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="0Harmony">
@@ -169,7 +177,11 @@
         <Compile Include="NextEnvExtension\Npc\GetNpcLiHui.cs" />
         <Compile Include="NextEnvExtension\Npc\HasNpcFace.cs" />
         <Compile Include="NextEnvExtension\Npc\HasNpcLiHui.cs" />
+        <Compile Include="NextEnvExtension\Npc\HasDaolv.cs" />
         <Compile Include="NextEnvExtension\Npc\Wudao\GetWudao.cs" />
+        <Compile Include="NextEnvExtension\Npc\Wudao\HasWudaoSkill.cs" />
+        <Compile Include="Patchs\BiaoBaiManagerCalcBiaoBaiScorePatch.cs" />
+        <Compile Include="Patchs\DialogAnalysisTryTriggerPatch.cs" />
         <Compile Include="Patchs\DongFuCreatePatch.cs" />
         <Compile Include="Patchs\ResManagerLoadSpriteAtlasPatch.cs" />
         <Compile Include="Patchs\UISiXuItemPatch.cs" />
@@ -182,8 +194,6 @@
         <Compile Include="Utils\JsonUtils.cs" />
         <Compile Include="Utils\UiUtils.cs" />
         <Compile Include="Utils\WuDaoUtils.cs" />
-        <Compile Include="Witch\BiaoBaiManagerCalcBiaoBaiScorePatch.cs" />
-        <Compile Include="Witch\AvatarAddTimePatch.cs" />
         <Compile Include="NextCommandExtension\Fight\SetFightCustomFace.cs" />
         <Compile Include="NextCommandExtension\Fight\SetFightReplaceSkill.cs" />
         <Compile Include="NextCommandExtension\Fungus\RunFungusFlowchart.cs" />
@@ -310,7 +320,6 @@
         <Compile Include="Utils\FungusTextUtils.cs" />
         <Compile Include="Utils\FungusUtils.cs" />
         <Compile Include="Utils\ModManagerUtils.cs" />
-        <Compile Include="Utils\WitchUtils.cs" />
         <Compile Include="Utils\MyLog.cs" />
         <Compile Include="Utils\NpcUtils.cs" />
         <Compile Include="Utils\PathJsonUtils.cs" />
@@ -324,7 +333,16 @@
     <ItemGroup>
       <None Include="packages.config" />
     </ItemGroup>
+    <ItemGroup>
+      <Content Include="obfuscar.xml" />
+    </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+    <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+      <PropertyGroup>
+        <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>
+      </PropertyGroup>
+      <Error Condition="!Exists('..\packages\Obfuscar.2.2.37\build\obfuscar.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Obfuscar.2.2.37\build\obfuscar.props'))" />
+    </Target>
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
          Other similar extension points exist, see Microsoft.Common.targets.
     <Target Name="BeforeBuild">

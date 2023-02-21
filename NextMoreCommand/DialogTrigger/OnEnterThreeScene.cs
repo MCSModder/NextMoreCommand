@@ -59,10 +59,10 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
 
             foreach (var rootGameObject in Resources.FindObjectsOfTypeAll<Flowchart>())
             {
-                rootGameObject.GetComponentsInChildren(true, _flowchartsInScene);
+                rootGameObject.GetComponentsInChildren(false, _flowchartsInScene);
                 foreach (var flowchart in _flowchartsInScene)
                 {
-                    var fFlowchart = flowchart.ConvertToFFlowchart();
+                  
                     if (_flowchartsInPatch.Contains(flowchart))
                     {
                         // MyLog.Log("Patch已经存在", $"流程名:{fFlowchart.Name}");
@@ -74,9 +74,9 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
                         // MyLog.Log("开始添加Patch", $"流程名:{fFlowchart.Name}");
                         Main.FPatch.PatchFlowchart(flowchart);
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
-                        Main.LogError(e);
+                        //Main.LogError(e);
                     }
                 }
             }

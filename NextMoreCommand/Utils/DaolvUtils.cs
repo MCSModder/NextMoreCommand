@@ -21,7 +21,7 @@ public static class DaolvUtils
     /// </summary>
     /// <param name="id">角色ID</param>
     /// <returns>角色名字</returns>
-    public static string GetName(int id) => DialogAnalysis.GetNpcName(NPCEx.NPCIDToNew(id));
+    public static string GetName(int id) => DialogAnalysis.GetNpcName(id.ToNpcNewId());
 
     /// <summary>
     /// 设置所有道侣死亡

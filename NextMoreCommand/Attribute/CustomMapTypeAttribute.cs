@@ -2,6 +2,9 @@
 
 namespace SkySwordKill.NextMoreCommand.Attribute
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
     public class CustomMapTypeAttribute:System.Attribute
     {

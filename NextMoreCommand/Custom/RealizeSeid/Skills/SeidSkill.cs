@@ -1,5 +1,6 @@
 ﻿using System;
 using SkySwordKill.Next;
+using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.Next.Lua;
 using XLua;
 
@@ -21,6 +22,7 @@ public class SeidSkill
     // }
     public void Init(string luaFilename )
     {
+       
        var objArray = LuaManager.DoString($"return require '{luaFilename}'");
        if (objArray.Length != 0 && objArray[0] is LuaTable luaTable)
        {

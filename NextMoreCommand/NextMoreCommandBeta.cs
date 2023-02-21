@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections;
+using System.Reflection;
+using System.Text;
 using HarmonyLib;
 using SkySwordKill.Next;
 using SkySwordKill.Next.FCanvas;
 using SkySwordKill.Next.Mod;
+using SkySwordKill.NextMoreCommand.Custom.RealizeSeid.Skills;
+using SkySwordKill.NextMoreCommand.Patchs;
 using SkySwordKill.NextMoreCommand.Utils;
 using UnityEngine;
+using XLua;
 using YSGame.TuJian;
 
 namespace SkySwordKill.NextMoreCommand;
@@ -94,4 +99,5 @@ public class NextMoreCommand : MonoBehaviour
             mag.RefreshSave();
         }
     }
+
 }

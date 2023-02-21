@@ -48,7 +48,15 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Teleport
 
             foreach (var npcInfo in NpcInfos)
             {
-                NpcUtils.AddNpc(npcInfo, out m_isAdd);
+                if (!npcInfo.IsEmpty)
+                {
+                    NpcUtils.AddNpc(npcInfo, out m_isAdd);
+                }
+                else
+                {
+                    m_isAdd = true;
+                }
+                
                 NpcUtils.SetNpcFollow(npcInfo);
                 MyLog.Log(command, $"添加角色跟随 角色ID:{npcInfo.Id} 角色名:{npcInfo.Name} 剧情ID:{npcInfo.GetDialogName()}");
             }

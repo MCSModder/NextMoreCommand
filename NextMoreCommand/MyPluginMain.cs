@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using BepInEx;
 using HarmonyLib;
 using JSONClass;
@@ -21,6 +23,7 @@ using SkySwordKill.NextMoreCommand.Utils;
 using Steamworks;
 using YSGame.TuJian;
 using Input = UnityEngine.Input;
+
 namespace SkySwordKill.NextMoreCommand
 {
     [BepInDependency("skyswordkill.plugin.Next", BepInDependency.DependencyFlags.HardDependency)]
@@ -38,12 +41,13 @@ namespace SkySwordKill.NextMoreCommand
         private void Awake()
         {
             Instance = this;
-   
+
             // 注册事件
             RegisterCommand();
             RegisterCustomModSetting();
             _harmony = new Harmony("skyswordkill.plugin.NextMoreCommands");
             _harmony.PatchAll();
+            InitDir();
             NextMoreCoreBinder.BindAll();
             ModManager.ModReload += () =>
             {
@@ -82,23 +86,23 @@ namespace SkySwordKill.NextMoreCommand
             var registerCommandType = typeof(RegisterCustomModSettingAttribute);
             var types = Assembly.GetAssembly(registerCommandType).GetTypes();
             var init = "".PadLeft(25, '=');
-            MyPluginMain.LogInfo(init);
-            MyPluginMain.LogInfo($"注册自定义Mod设置开始.");
-            MyPluginMain.LogInfo(init);
+            LogInfo(init);
+            LogInfo($"注册自定义Mod设置开始.");
+            LogInfo(init);
             foreach (var type in types)
             {
                 if (type.GetCustomAttributes(registerCommandType, true).Length > 0)
                 {
                     var cEvent = Activator.CreateInstance(type) as ICustomSetting;
-                    MyPluginMain.LogInfo($"注册自定义Mod设置: {type.Name}");
-                    MyPluginMain.LogInfo($"注册自定义Mod设置: {cEvent}");
-                    MyPluginMain.LogInfo(init);
+                    LogInfo($"注册自定义Mod设置: {type.Name}");
+                    LogInfo($"注册自定义Mod设置: {cEvent}");
+                    LogInfo(init);
                     ModManager.RegisterCustomSetting(type.Name, cEvent);
                 }
             }
 
-            MyPluginMain.LogInfo($"注册自定义Mod设置完毕.");
-            MyPluginMain.LogInfo(init);
+            LogInfo($"注册自定义Mod设置完毕.");
+            LogInfo(init);
         }
 
 
@@ -107,24 +111,40 @@ namespace SkySwordKill.NextMoreCommand
             var registerCommandType = typeof(RegisterCommandAttribute);
             var types = Assembly.GetAssembly(registerCommandType).GetTypes();
             var init = "".PadLeft(25, '=');
-            MyPluginMain.LogInfo(init);
-            MyPluginMain.LogInfo($"注册指令开始.");
-            MyPluginMain.LogInfo(init);
+            LogInfo(init);
+            LogInfo($"注册指令开始.");
+            LogInfo(init);
             foreach (var type in types)
             {
                 if (type.GetCustomAttributes(registerCommandType, true).Length > 0)
                 {
                     var cEvent = Activator.CreateInstance(type) as IDialogEvent;
-                    MyPluginMain.LogInfo($"注册指令名: {type.Name}");
-                    MyPluginMain.LogInfo($"注册指令类: {cEvent}");
-                    MyPluginMain.LogInfo(init);
+                    LogInfo($"注册指令名: {type.Name}");
+                    LogInfo($"注册指令类: {cEvent}");
+                    LogInfo(init);
                     DialogAnalysis.RegisterCommand(type.Name, cEvent);
                 }
             }
 
-            MyPluginMain.LogInfo($"注册指令完毕.");
-            MyPluginMain.LogInfo(init);
+            LogInfo($"注册指令完毕.");
+            LogInfo(init);
         }
+
+        private void InitDir()
+        {
+            var dllPath = Directory.GetParent(typeof(MyPluginMain).Assembly.Location)?.FullName;
+
+            PathLocalModsDir =
+                new Lazy<string>(() => BepInEx.Paths.GameRootPath + @"\本地Mod测试");
+            PathPatchersDir =
+                new Lazy<string>(() => Utility.CombinePaths(
+                    dllPath,
+                    @"Lib"));
+        }
+
+        public Lazy<string> PathPatchersDir { get; set; }
+
+        public Lazy<string> PathLocalModsDir { get; set; }
 
         private void OnDestroy()
         {
