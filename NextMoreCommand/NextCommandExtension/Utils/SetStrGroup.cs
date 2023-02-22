@@ -21,6 +21,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
             value = command.GetStr(2, "");
             if (string.IsNullOrWhiteSpace(group) && string.IsNullOrWhiteSpace(key))
             {
+     
             }
             else
             {

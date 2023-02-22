@@ -10,11 +10,10 @@ namespace SkySwordKill.NextMoreCommand.Patchs;
 
 
 
+public delegate void OnTrigger(List<string> triggerTypes, DialogEnvironmentContext env);
 [HarmonyPatch(typeof(DialogAnalysis), nameof(DialogAnalysis.TryTrigger))]
 public static class DialogAnalysisTryTriggerPatch
 {
-    public delegate void OnTrigger(List<string> triggerTypes, DialogEnvironmentContext env);
-
     public static readonly List<OnTrigger> OnTryTrigger =
         new List<OnTrigger>();
 
@@ -28,6 +27,7 @@ public static class DialogAnalysisTryTriggerPatch
         {
             foreach (var trigger in OnTryTrigger)
             {
+               
                 trigger.Invoke(triggers, dialogEnvironment.GetDialogEnvironmentContext());
             }
         }

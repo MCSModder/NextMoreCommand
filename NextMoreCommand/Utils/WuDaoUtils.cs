@@ -113,12 +113,14 @@ public static class WuDaoUtils
 
     public static WudaoJsonInfo GetWudao(int npcId, int wudaoId)
     {
-        var npc = npcId.GetNpcData();
+     
+         var npc = npcId.GetNpcData();
         var wudaoJson = npc["wuDaoJson"];
         var wudaoIdStr = wudaoId.ToString();
         if (wudaoJson.HasField(wudaoIdStr))
         {
-            return wudaoJson["wudaoIdStr"].ToJObject().ToObject<WudaoJsonInfo>();
+ 
+            return wudaoJson[wudaoIdStr].ToJObject().ToObject<WudaoJsonInfo>();
         }
 
         return null;

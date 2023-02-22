@@ -16,8 +16,7 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Npc
             }
 
             var name = NpcJieSuanManager.inst.npcMap.GetNpcSceneName(npcId) ?? "无";
-            MyPluginMain.LogInfo(
-                $"[获取场景]场景名字:{name} NpcID:{npcId.ToString()} NpcID:{DialogAnalysis.GetNpcName(npcId)} ");
+            // MyPluginMain.LogInfo($"[获取场景]场景名字:{name} NpcID:{npcId.ToString()} NpcID:{DialogAnalysis.GetNpcName(npcId)} ");
             return name;
         }
     }

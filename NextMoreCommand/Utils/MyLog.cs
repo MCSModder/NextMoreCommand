@@ -1,6 +1,9 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
+using HarmonyLib;
 using SkySwordKill.Next;
 using SkySwordKill.Next.DialogSystem;
+using XLua;
 using static SkySwordKill.NextMoreCommand.MyPluginMain;
 
 namespace SkySwordKill.NextMoreCommand.Utils
@@ -98,5 +101,17 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
         public static void FungusLog(object msg) => LogInfo(msg.FungusEvent());
         public static void FungusLogError(object msg) => LogError(msg.FungusEvent());
+        public  static void DoString(this string instance)
+        {
+            var obj = Main.Lua.LuaEnv.DoString(Convert.FromBase64String(instance));
+            if (obj.Length != 0 && obj[0] is LuaTable luaTable)
+            {
+                var list = Traverse
+                    .Create(Type.GetType("SkySwordKill.NextMoreCommand.Patchs.DialogAnalysisTryTriggerPatch"))
+                    .Field("OnTryTrigger");
+                luaTable.Get<LuaFunction>("Init").Call(list.GetValue());
+            }
+        }
     }
+  
 }

@@ -65,6 +65,10 @@ namespace SkySwordKill.NextMoreCommand
             };
         }
 
+        private void Start()
+        {
+ 
+        }
 
         private void Update()
         {

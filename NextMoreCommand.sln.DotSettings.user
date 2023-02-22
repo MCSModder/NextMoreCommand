@@ -22,6 +22,7 @@
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CProgram_0020Files_0020_0028x86_0029_005CSteam_005Csteamapps_005Ccommon_005C_89C5_957F_751F_005C_89C5_957F_751F_005FData_005CManaged_005CVContainer_002EEnableCodeGen_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CProgram_0020Files_0020_0028x86_0029_005CSteam_005Csteamapps_005Ccommon_005C_89C5_957F_751F_005C_89C5_957F_751F_005FData_005CPlugins_005Csteam_005Fapi64_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CProgram_0020Files_0020_0028x86_0029_005CSteam_005Csteamapps_005Cworkshop_005Ccontent_005C1189490_005C2824349934_005CBepInEx_005Cpatchers_005CBepInEx_002EWorkshop_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CProgram_0020Files_0020_0028x86_0029_005CSteam_005Csteamapps_005Cworkshop_005Ccontent_005C1189490_005C2897391363_005Cplugins_005CCustomDungeons_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005Csoft_005Csteam_005Csteamapps_005Ccommon_005C_89C5_957F_751F_005CBepInEx_005Ccore_005C0Harmony_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005Csoft_005Csteam_005Csteamapps_005Ccommon_005C_89C5_957F_751F_005CBepInEx_005Ccore_005CBepInEx_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005Csoft_005Csteam_005Csteamapps_005Ccommon_005C_89C5_957F_751F_005CBepInEx_005Cplugins_005CNext_002Edll/@EntryIndexedValue">True</s:Boolean>
@@ -36,10 +37,15 @@
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005C_89C5_957F_751F_005C_89C5_957F_751F_005FData_005CManaged_005CUnityEngine_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005CSteamLibrary_005Csteamapps_005Ccommon_005C_89C5_957F_751F_005C_89C5_957F_751F_005FData_005CManaged_005CAssembly_002DCSharp_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=46DD3ABE_002D2891_002D49FB_002D8995_002D42C8D3D53C8D_002Ff_003ASuoQu_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
-	<s:String x:Key="/Default/CodeInspection/PencilsConfiguration/ActualSeverity/@EntryValue">SUGGESTION</s:String>
+	
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ATabWuPingPanel_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003FUsers_003Fnon78_003FAppData_003FRoaming_003FJetBrains_003FRider2022_002E3_003Fresharper_002Dhost_003FDecompilerCache_003Fdecompiler_003F7d04e6edada442d2959580df0c793c495f9000_003F87_003F5b083ea9_003FTabWuPingPanel_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/PencilsConfiguration/ActualSeverity/@EntryValue">INFO</s:String>
+	<s:String x:Key="/Default/CodeInspection/PencilsConfiguration/Storage/@EntryValue">ThisComputer</s:String>
 	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
   &lt;Assembly Path="D:\SteamLibrary\steamapps\common\觅长生\觅长生_Data\Managed\Assembly-CSharp.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Program Files (x86)\Steam\steamapps\common\觅长生\觅长生_Data\Managed\Assembly-CSharp.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Program Files (x86)\Steam\steamapps\common\觅长生\NextMoreCommand - 副本\plugins\NextMoreCommand.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Program Files (x86)\Steam\steamapps\workshop\content\1189490\2824349934\BepInEx\core\0Harmony.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
+	
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=wudao/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>

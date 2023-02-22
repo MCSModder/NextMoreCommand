@@ -18,7 +18,7 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Npc.Wudao
                 {
                     case 1:
 
-                        return WuDaoUtils.GetWudao(npc, wudaoID);
+                        return context.Env.player.WuDaoJson.GetField(wudaoID.ToString());
                     default:
                         return WuDaoUtils.GetWudao(npc, wudaoID);
                 }

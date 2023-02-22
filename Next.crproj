@@ -1,6 +1,6 @@
-<project outputDir="C:\Program Files (x86)\Steam\steamapps\common\觅长生\本地Mod测试\NextMoreCommand\plugins" baseDir="C:\Program Files (x86)\Steam\steamapps\common\觅长生\本地Mod测试\NextMoreCommandBuild\plugins" debug="true" xmlns="http://confuser.codeplex.com">
+<project outputDir="C:\Program Files (x86)\Steam\steamapps\common\觅长生\本地Mod测试\NextMoreCommand\plugins" baseDir="C:\Program Files (x86)\Steam\steamapps\common\觅长生\本地Mod测试\NextMoreCommandBuild\build" debug="true" xmlns="http://confuser.codeplex.com">
   <rule pattern="true" preset="最强保护" inherit="false">
-    <protection id="反De4Dot保护" />
+    <protection id="反De4Dot保护" action="remove" />
     <protection id="反ILDasm保护" />
     <protection id="反水印保护" />
     <protection id="常量保护" />

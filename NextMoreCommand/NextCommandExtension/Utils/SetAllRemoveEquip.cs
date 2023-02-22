@@ -1,0 +1,38 @@
+﻿using System;
+using SkySwordKill.Next.DialogEvent;
+using SkySwordKill.Next.DialogSystem;
+using SkySwordKill.NextMoreCommand.Attribute;
+using SkySwordKill.NextMoreCommand.Utils;
+using Tab;
+using YSGame.Fight;
+
+namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
+{
+    [DialogEvent("SetAllRemoveEquip")]
+    [DialogEvent("移除所有装备")]
+    public class SetAllRemoveEquip : IDialogEvent
+    {
+
+
+        public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
+        {
+            TabUIMag.OpenTab2(4);
+            if (TabUIMag.Instance != null)
+            {
+                var itemPanel = TabUIMag.Instance.WuPingPanel;
+                foreach (var equipSlot in itemPanel.EquipDict)
+                {
+                    if (equipSlot.Key == 1 || equipSlot.Value.Item == null)
+                    {
+                        continue;
+                    }
+                    UIFightPanel.Inst.CacheLingQiController.DestoryAllLingQi();
+                    itemPanel.RmoveEquip((EquipSlotType)equipSlot.Key);
+                }
+                TabUIMag.Instance.TryEscClose();
+            }
+
+            callback?.Invoke();
+        }
+    }
+}

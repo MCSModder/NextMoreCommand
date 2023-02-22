@@ -43,6 +43,11 @@ public static class DaolvUtils
         var filter = filterNpc.Select(NPCEx.NPCIDToNew).ToList();
         foreach (var id in daolvList)
         {
+            if (NPCEx.IsDeath(id))
+            {
+                continue;
+            }
+            
             if (filter.Contains(id))
             {
                 DaolvId.Add(id);

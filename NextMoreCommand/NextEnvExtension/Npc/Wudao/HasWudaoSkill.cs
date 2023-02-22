@@ -8,18 +8,37 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Npc.Wudao
     [DialogEnvQuery("检测角色悟道技能")]
     public class HasWudaoSkill : IDialogEnvQuery
     {
+        private DialogEnvQueryContext _context;
+
         public object Execute(DialogEnvQueryContext context)
         {
-            var npc = context.GetNpcID(0, 1);
-            var wudaoSkill = context.GetMyArgs(1, -1);
+            _context = context;
+
+            switch (context.Args.Length)
+            {
+                case 1:
+                    var wudaoSkill = _context.GetMyArgs(0, -1);
+                    return context.Env.player.wuDaoMag.IsStudy(wudaoSkill);
+                case 2:
+                    return GetNpcWudao();
+            }
+
+
+            return false;
+        }
+
+        public object GetNpcWudao()
+        {
+            var npc = _context.GetNpcID(0, 1);
+            var wudaoSkill = _context.GetMyArgs(1, -1);
             if (npc > 0)
             {
-                var wudaoMag = context.Env.player.wuDaoMag;
+                var wudaoMag = _context.Env.player.wuDaoMag;
                 switch (npc)
                 {
                     case 1:
 
-                        return wudaoMag.GetAllWuDaoSkills().Exists(item => item.itemId == wudaoSkill);
+                        return wudaoMag.IsStudy(wudaoSkill);
                     default:
                         return wudaoMag.MonstarGetAllWuDaoSkills(npc).Exists(item => item.itemId == wudaoSkill);
                 }

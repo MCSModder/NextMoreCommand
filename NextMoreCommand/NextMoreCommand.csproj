@@ -19,7 +19,7 @@
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
         <Optimize>false</Optimize>
-        <OutputPath>..\..\..\本地Mod测试\NextMoreCommandBuild\plugins</OutputPath>
+        <OutputPath>..\..\..\本地Mod测试\NextMoreCommandBuild\build</OutputPath>
         <DefineConstants>DEBUG;TRACE</DefineConstants>
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
@@ -28,7 +28,7 @@
         <PlatformTarget>AnyCPU</PlatformTarget>
         <DebugType>pdbonly</DebugType>
         <Optimize>true</Optimize>
-        <OutputPath>..\..\..\本地Mod测试\NextMoreCommandBuild\plugins</OutputPath>
+        <OutputPath>..\..\..\本地Mod测试\NextMoreCommandBuild\build</OutputPath>
         <DefineConstants>TRACE</DefineConstants>
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
@@ -37,7 +37,6 @@
     </PropertyGroup>
     <PropertyGroup>
       <PostBuildEvent>"C:\Confuser\Confuser.CLI.exe" "$(SolutionDir)Next.crproj"
-
 </PostBuildEvent>
     </PropertyGroup>
     <ItemGroup>
@@ -164,6 +163,7 @@
         <Compile Include="NextCommandExtension\Npc\Wudao\UpdateNpcWuDao.cs" />
         <Compile Include="NextCommandExtension\Npc\Wudao\AddNpcWudaoExp.cs" />
         <Compile Include="NextCommandExtension\Npc\Wudao\SetNpcWudaoExp.cs" />
+        <Compile Include="NextCommandExtension\Utils\SetAllRemoveEquip.cs" />
         <Compile Include="NextEnvExtension\DongFu\GetDongFu.cs" />
         <Compile Include="NextEnvExtension\DongFu\GetAllDongFu.cs" />
         <Compile Include="NextEnvExtension\DongFu\GetMenPaiDongFu.cs" />
