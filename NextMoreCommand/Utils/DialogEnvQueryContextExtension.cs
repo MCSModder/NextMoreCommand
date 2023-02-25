@@ -23,7 +23,7 @@ public class DialogEnvironmentContext
     public DialogEnvironmentContext(DialogEnvironment env)
     {
         RawEnv = env;
-      var m =  GetTraverse("").Property("").GetValue();
+     
     }
 }
 
