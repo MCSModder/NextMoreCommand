@@ -11,7 +11,33 @@ public class SetDongFuJuLingZhen : IDialogEvent
 {
     private int _id;
     private int _level;
-
+    /// <summary>
+    /// 设置洞府聚灵阵指令<br/>
+    /// lua使用方法:
+    /// <code>
+    /// function XXX(指令,环境)
+    /// --指令.设置洞府聚灵阵(洞府id,聚灵阵等级(1-3))
+    /// --指令.SetDongFuJuLingZhen(洞府id,聚灵阵等级(1-3))
+    /// 指令.设置洞府聚灵阵(1,3)
+    /// 指令.SetDongFuJuLingZhen(1,3);
+    /// end
+    /// </code>
+    /// Json使用方法:
+    /// <code>
+    /// [{
+    /// "id": "测试剧情",
+    /// "character": {},
+    /// "dialog": [
+    /// "设置洞府聚灵阵*1#3",
+    /// "SetDongFuJuLingZhen*1#3",
+    /// ],
+    /// "option": []
+    /// }]
+    /// </code>
+    /// </summary>
+    /// <param name="command"></param>
+    /// <param name="env"></param>
+    /// <param name="callback"></param>
     public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
     {
         MyLog.LogCommand(command);
