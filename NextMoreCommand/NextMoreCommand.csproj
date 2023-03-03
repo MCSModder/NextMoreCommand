@@ -163,6 +163,7 @@
         <Compile Include="NextCommandExtension\Npc\Wudao\AddNpcWudaoExp.cs" />
         <Compile Include="NextCommandExtension\Npc\Wudao\SetNpcWudaoExp.cs" />
         <Compile Include="NextCommandExtension\Utils\SetAllRemoveEquip.cs" />
+        <Compile Include="NextCommandExtension\Utils\SetRecordShengPing.cs" />
         <Compile Include="NextEnvExtension\DongFu\GetDongFu.cs" />
         <Compile Include="NextEnvExtension\DongFu\GetAllDongFu.cs" />
         <Compile Include="NextEnvExtension\DongFu\GetMenPaiDongFu.cs" />

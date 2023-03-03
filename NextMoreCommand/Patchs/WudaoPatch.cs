@@ -37,13 +37,8 @@ public static class NpcFactorySetNpcWudaoPatch
         _npcDate = npcDate;
         _npcId = NpcId;
 
-        foreach (var customWudao in CustomWuDaoTypeList)
+        foreach (var customWudao in CustomWuDaoTypeList.Where(customWudao => !_wudaoJson.HasField(customWudao.ToString())))
         {
-            if (_wudaoJson.HasField(customWudao.ToString()))
-            {
-                continue;
-            }
-
             WuDaoUtils.SetWudao(npcDate, customWudao);
         }
 
@@ -75,12 +70,14 @@ public static class NpcFactorySetNpcWudaoPatch
         var customWuDaoInfos = new List<CustomWuDaoInfo>();
         foreach (var wudaoId in CustomWuDaoTypeList)
         {
-            var key = $"value{wudaoId}";
-            if (json.HasField(key))
+            var key = $"value{wudaoId.ToString()}";
+            if (!json.HasField(key)) continue;
+            var value = json[key].I;
+            customWuDaoInfos.Add(new CustomWuDaoInfo()
             {
-                var value = json[key].I;
-                customWuDaoInfos.Add(new CustomWuDaoInfo() { Id = wudaoId, Value = value });
-            }
+                Id = wudaoId,
+                Value = value
+            });
         }
 
         if (customWuDaoInfos.Count == 0)
@@ -88,22 +85,20 @@ public static class NpcFactorySetNpcWudaoPatch
             return;
         }
 
-        if (level == _level && wudaoType == _wudaoType)
+        if (level != _level || wudaoType != _wudaoType) return;
+        foreach (var customWuDao in customWuDaoInfos)
         {
-            foreach (var customWuDao in customWuDaoInfos)
+            var wudaoJson = new WudaoJsonInfo()
             {
-                var wudaoJson = new WudaoJsonInfo()
-                {
-                    WudaoId = customWuDao.Id,
-                    Level = customWuDao.Value
-                };
-                var id = customWuDao.Id;
-                MyLog.Log("设置NPC结算自定义悟道", $"NPCFactory.SetNpcWuDao");
-                MyLog.Log("设置NPC自定义悟道", $"角色ID:{_npcId} 角色名字:{_npcDate.GetField("Name").str}");
-                MyLog.Log("设置NPC自定义悟道", $"悟道ID:{id} 悟道名字:{WuDaoAllType[id].name1} 悟道境界:{customWuDao.Value}");
-                wudaoJson.SetExpByLevel();
-                _wudaoJson.SetField(wudaoJson.Id, wudaoJson.ToJsonObject());
-            }
+                WudaoId = customWuDao.Id,
+                Level = customWuDao.Value
+            };
+            var id = customWuDao.Id;
+            MyLog.Log("设置NPC结算自定义悟道", $"NPCFactory.SetNpcWuDao");
+            MyLog.Log("设置NPC自定义悟道", $"角色ID:{_npcId.ToString()} 角色名字:{_npcDate.GetField("Name").str}");
+            MyLog.Log("设置NPC自定义悟道", $"悟道ID:{id.ToString()} 悟道名字:{WuDaoAllType[id].name1} 悟道境界:{customWuDao.Value.ToString()}");
+            wudaoJson.SetExpByLevel();
+            _wudaoJson.SetField(wudaoJson.Id, wudaoJson.ToJsonObject());
         }
     }
 }
@@ -145,8 +140,6 @@ public static class NpcJieSuanManagerUpdateNpcWuDaoPatch
 
         var dict = NPCWuDaoJson.DataDict.Where(item => item.Value.Type == _wudaoType && item.Value.lv == _level);
         var keyValuePairs = dict.ToList();
-        MyLog.Log("设置NPC结算自定义悟道",
-            $"dict:{keyValuePairs.Count} keyValuePairs:{JArray.FromObject(keyValuePairs).ToString(Formatting.None)}");
         foreach (var wuDao in keyValuePairs)
         {
             SetWudao(wuDao);
@@ -171,16 +164,15 @@ public static class NpcJieSuanManagerUpdateNpcWuDaoPatch
         var level = npcWuDao.lv;
         var wudaoType = npcWuDao.Type;
         var json = NpcWuDaoJson[index.ToString()];
-        var customWuDaoInfos = new List<CustomWuDaoInfo>();
-        foreach (var wudaoId in CustomWuDaoTypeList)
-        {
-            var key = $"value{wudaoId}";
-            if (json.HasField(key))
+        var customWuDaoInfos = (from wudaoId in CustomWuDaoTypeList
+            let key = $"value{wudaoId.ToString()}"
+            where json.HasField(key)
+            let value = json[key].I
+            select new CustomWuDaoInfo()
             {
-                var value = json[key].I;
-                customWuDaoInfos.Add(new CustomWuDaoInfo() { Id = wudaoId, Value = value });
-            }
-        }
+                Id = wudaoId,
+                Value = value
+            }).ToList();
 
         //MyLog.Log("设置NPC结算自定义悟道", $"level:{level} wudaoType:{wudaoType} customWuDaoInfos:{customWuDaoInfos.Count}");
         if (customWuDaoInfos.Count == 0)
@@ -198,8 +190,8 @@ public static class NpcJieSuanManagerUpdateNpcWuDaoPatch
             };
             var id = customWuDao.Id;
             MyLog.Log("设置NPC结算自定义悟道", $"触发NpcJieSuanManager.UpdateNpcWuDao");
-            MyLog.Log("设置NPC结算自定义悟道", $"角色ID:{_npcId} 角色名字:{_npcId.GetNpcName()}");
-            MyLog.Log("设置NPC结算自定义悟道", $"悟道ID:{id} 悟道名字:{WuDaoAllType[id].name1} 悟道境界:{customWuDao.Value}");
+            MyLog.Log("设置NPC结算自定义悟道", $"角色ID:{_npcId.ToString()} 角色名字:{_npcId.GetNpcName()}");
+            MyLog.Log("设置NPC结算自定义悟道", $"悟道ID:{id.ToString()} 悟道名字:{WuDaoAllType[id].name1} 悟道境界:{customWuDao.Value.ToString()}");
             wudaoJson.SetExpByLevel();
             _wudaoJson.SetField(wudaoJson.Id, wudaoJson.ToJsonObject());
         }

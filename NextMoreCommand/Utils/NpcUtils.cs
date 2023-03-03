@@ -295,16 +295,14 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
             var id = num.ToString();
             JSONObject jsonObject = null;
-            if (jsonData.instance != null)
+            if (jsonData.instance == null) return null;
+            if (AvatarRandomJsonData.HasField(id))
             {
-                if (AvatarRandomJsonData.HasField(id))
-                {
-                    jsonObject = AvatarRandomJsonData[id];
-                }
-                else if (AvatarJsonData.HasField(id))
-                {
-                    jsonObject = AvatarJsonData[id];
-                }
+                jsonObject = AvatarRandomJsonData[id];
+            }
+            else if (AvatarJsonData.HasField(id))
+            {
+                jsonObject = AvatarJsonData[id];
             }
 
             return jsonObject;
@@ -321,6 +319,42 @@ namespace SkySwordKill.NextMoreCommand.Utils
             }
 
             npc.SetField("Name", name);
+            return true;
+        }
+
+        public static bool SetNpcFullName(int id, string surname, string name)
+        {
+            var npc = GetNpcData(id);
+            if (npc == null)
+            {
+                return false;
+            }
+            var hasName = !string.IsNullOrWhiteSpace(name);
+            var hasSurname = !string.IsNullOrWhiteSpace(surname);
+
+            if (hasSurname && npc.HasField("FirstName"))
+            {
+                npc.SetField("FirstName", surname);
+                if (hasName)
+                {
+                    npc.SetField("Name", name);
+                }
+
+            }
+            else if (hasSurname && hasName)
+            {
+                npc.SetField("Name", surname + name);
+            }
+            else if (!hasSurname && hasName)
+            {
+                npc.SetField("Name", name);
+            }
+            else
+            {
+                return false;
+            }
+            UINPCJiaoHu.Inst.NowJiaoHuNPC.RefreshData();
+            NpcJieSuanManager.inst.isUpDateNpcList = true;
             return true;
         }
 
@@ -437,7 +471,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
             {
                 return;
             }
-            
+
             if (!UINPCJiaoHu.Inst.TNPCIDList.Contains(npcInfo.Id))
             {
                 UINPCJiaoHu.Inst.TNPCIDList.Add(npcInfo.Id);

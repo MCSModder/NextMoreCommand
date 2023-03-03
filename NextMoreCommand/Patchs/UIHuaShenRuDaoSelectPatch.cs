@@ -30,7 +30,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
         private Image lightImage;
         private Image darkImage;
         private FpBtn FpBtn;
-        public string Name = string.Empty;
+        public string Name => HuaShenData.DataDict.ContainsKey(Id) ? HuaShenData.DataDict[Id].Name : string.Empty;
         public int Id = 0;
         public ButtonState State = ButtonState.Dark;
         private void Awake()
@@ -55,9 +55,11 @@ namespace SkySwordKill.NextMoreCommand.Patchs
         }
         public void Refresh()
         {
-            if (!string.IsNullOrWhiteSpace(Name))
+            var gameObjectName = Name;
+            if (!string.IsNullOrWhiteSpace(gameObjectName))
             {
-                gameObject.name = Name;
+
+                gameObject.name = gameObjectName;
             }
             SetImage();
             SetState();
@@ -112,14 +114,20 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             var darkSprite = HuaShenRuDaoUtils.GetSprite($"{Name}/dark");
             if (btnSprite != null)
             {
+
+                FpBtn.nomalSprite = btnSprite;
                 btnImage.sprite = btnSprite;
             }
             if (lightSprite != null)
             {
+                FpBtn.stopClickSprite = lightSprite;
+                FpBtn.mouseEnterSprite = lightSprite;
+                FpBtn.mouseUpSprite = lightSprite;
                 lightImage.sprite = lightSprite;
             }
             if (darkSprite != null)
             {
+                FpBtn.mouseDownSprite = darkSprite;
                 darkImage.sprite = darkSprite;
             }
         }
@@ -159,13 +167,12 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             rectTransform.sizeDelta = new Vector2(100 * 6, 100 * 2);
             var wudaoObj = transform.GetChild(0).gameObject;
             wudaoObj.SetActive(false);
-            var key = dict.Keys.Where(i => i > 9).ToList();
+            var key = dict.Keys.Where(i => i > 22).ToList();
             foreach (var i in key)
             {
                 var clone = Object.Instantiate(wudaoObj, transform);
                 var custom = clone.AddMissingComponent<CustomHuaShenRuDao>();
                 custom.Id = i;
-                custom.Name = dict[i].Name;
                 HuaShenRuDaoUtils.CustomHuaShenRuDaos.Add(custom);
                 clone.SetActive(true);
             }
