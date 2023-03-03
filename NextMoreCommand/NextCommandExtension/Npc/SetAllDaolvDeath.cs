@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SkySwordKill.Next.DialogEvent;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.NextMoreCommand.Utils;
 
-namespace SkySwordKill.NextMoreCommand.NextCommandExtension;
+namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc;
 
 [DialogEvent("SetAllDaolvDeath")]
 [DialogEvent("设置所有道侣死亡")]

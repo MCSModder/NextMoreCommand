@@ -8,7 +8,7 @@ using SkySwordKill.Next;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.Next.FCanvas;
 using SkySwordKill.Next.Patch;
-using SkySwordKill.NextMoreCommand.NextCommandExtension.Teleport;
+using SkySwordKill.NextMoreCommand.NextCommandExtension.Npc.Teleport;
 using SkySwordKill.NextMoreCommand.Utils;
 using UnityEngine;
 using UnityEngine.SceneManagement;

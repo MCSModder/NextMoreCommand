@@ -5,7 +5,7 @@ using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.NextMoreCommand.Attribute;
 using SkySwordKill.NextMoreCommand.Utils;
 
-namespace SkySwordKill.NextMoreCommand.NextCommandExtension
+namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc
 {
     [RegisterCommand]
     [DialogEvent("SetNpcFlyToSky")]

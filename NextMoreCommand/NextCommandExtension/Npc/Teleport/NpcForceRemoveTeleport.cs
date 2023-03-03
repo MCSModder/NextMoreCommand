@@ -7,7 +7,7 @@ using SkySwordKill.NextMoreCommand.Attribute;
 using SkySwordKill.NextMoreCommand.DialogTrigger;
 using SkySwordKill.NextMoreCommand.Utils;
 
-namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Teleport
+namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc.Teleport
 {
     [RegisterCommand]
     [DialogEvent("NpcForceRemoveTeleport")]

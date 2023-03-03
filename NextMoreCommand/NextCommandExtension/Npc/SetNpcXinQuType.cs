@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using SkySwordKill.Next;
 using SkySwordKill.Next.DialogEvent;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.NextMoreCommand.Attribute;
 using SkySwordKill.NextMoreCommand.Utils;
 
-namespace SkySwordKill.NextMoreCommand.NextCommandExtension
+namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc
 {
     [RegisterCommand]
     [DialogEvent("SetNpcXinQuType")]
