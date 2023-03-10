@@ -488,12 +488,10 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 return;
             }
 
-            if (!UINPCJiaoHu.Inst.NPCIDList.Contains(npcInfo.Id))
-            {
-                UINPCJiaoHu.Inst.NPCIDList.Add(npcInfo.Id);
-                var list = Traverse.Create(UINPCJiaoHu.Inst).Field<List<JSONObject>>("npcjsonlist").Value;
-                list.Add(npcInfo.Id.NPCJson());
-            }
+            if (UINPCJiaoHu.Inst.NPCIDList.Contains(npcInfo.Id)) return;
+            UINPCJiaoHu.Inst.NPCIDList.Add(npcInfo.Id);
+            var list = Traverse.Create(UINPCJiaoHu.Inst).Field<List<JSONObject>>("npcjsonlist").Value;
+            list.Add(npcInfo.Id.NPCJson());
         }
 
         public static void RemoveNpc(int npc, out bool isRemove)

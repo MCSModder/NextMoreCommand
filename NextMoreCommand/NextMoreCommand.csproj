@@ -65,6 +65,7 @@
         </Reference>
         <Reference Include="MiniExcel, Version=1.30.0.0, Culture=neutral, PublicKeyToken=e7310002a53eac39, processorArchitecture=MSIL">
           <HintPath>..\packages\MiniExcel.1.30.0\lib\net45\MiniExcel.dll</HintPath>
+          <Private>False</Private>
         </Reference>
         <Reference Include="Newtonsoft.Json">
           <HintPath>..\..\..\觅长生_Data\Managed\Newtonsoft.Json.dll</HintPath>
@@ -119,6 +120,10 @@
           <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.AssetBundleModule.dll</HintPath>
           <Private>False</Private>
         </Reference>
+        <Reference Include="UnityEngine.AudioModule">
+          <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.AudioModule.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
         <Reference Include="UnityEngine.CoreModule">
           <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
           <Private>False</Private>
@@ -162,8 +167,13 @@
         <Compile Include="NextCommandExtension\Npc\Wudao\UpdateNpcWuDao.cs" />
         <Compile Include="NextCommandExtension\Npc\Wudao\AddNpcWudaoExp.cs" />
         <Compile Include="NextCommandExtension\Npc\Wudao\SetNpcWudaoExp.cs" />
+        <Compile Include="NextCommandExtension\Utils\ChangeTianFuBuff.cs" />
         <Compile Include="NextCommandExtension\Utils\SetAllRemoveEquip.cs" />
         <Compile Include="NextCommandExtension\Utils\SetRecordShengPing.cs" />
+        <Compile Include="NextCommandExtension\Utils\ChangeSelectTianFu.cs" />
+        <Compile Include="NextCommandExtension\Utils\ShowGaoshi.cs" />
+        <Compile Include="NextCommandExtension\Utils\ShowMenPaiShop.cs" />
+        <Compile Include="NextCommandExtension\Utils\ShowMiniShop.cs" />
         <Compile Include="NextEnvExtension\DongFu\GetDongFu.cs" />
         <Compile Include="NextEnvExtension\DongFu\GetAllDongFu.cs" />
         <Compile Include="NextEnvExtension\DongFu\GetMenPaiDongFu.cs" />
