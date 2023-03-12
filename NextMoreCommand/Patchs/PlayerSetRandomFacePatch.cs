@@ -177,7 +177,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
         private static Avatar Player => PlayerEx.Player;
         public bool SetAvatarId(int monstarID)
         {
-            _avatarId = monstarID;
+            _avatarId = NPCEx.NPCIDToOld(monstarID);
             string faceId;
             if (_avatarId == 1)
             {
@@ -187,7 +187,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             }
             else
             {
-                var npcJson = _avatarId.NPCJson();
+                var npcJson = _avatarId.ToNpcNewId().NPCJson();
                 //lihui = npcJson.HasField("workshoplihui") ? npcJson["workshoplihui"].str : string.Empty;
                 faceId = npcJson["face"].I.ToString();
             }
@@ -219,7 +219,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
         }
         public void SetLive2D()
         {
-            if (!Main.Res.TryGetFileAsset($"Assets/Live2D/7200/江疏影.model3.json", out var fileAsset)) return;
+            if (!Main.Res.TryGetFileAsset($"Assets/Live2D/{_avatarId.ToString()}/{_avatarId.ToString()}.model3.json", out var fileAsset)) return;
             model3Json = CubismModel3Json.LoadAtPath(fileAsset.FileRawPath, BuiltinLoadAssetAtPath);
             model = model3Json.ToModel();
             model.transform.SetParent(transform.parent);
@@ -242,7 +242,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             if (assetType == typeof(Texture2D))
             {
 
-                var texture = new Texture2D(1, 1, TextureFormat.ARGB32, false);
+                var texture = new Texture2D(1, 1);
                 texture.hideFlags = HideFlags.HideAndDontSave;
                 texture.LoadImage(File.ReadAllBytes(assetPath));
                 return texture;
