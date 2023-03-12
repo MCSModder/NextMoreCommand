@@ -18,7 +18,7 @@
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
         <Optimize>false</Optimize>
-        <OutputPath>..\..\..\本地Mod测试\NextMoreCommandBuild\build</OutputPath>
+        <OutputPath>..\..\..\本地Mod测试\NextMoreCommand\plugins\</OutputPath>
         <DefineConstants>DEBUG;TRACE</DefineConstants>
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
@@ -27,16 +27,12 @@
         <PlatformTarget>AnyCPU</PlatformTarget>
         <DebugType>pdbonly</DebugType>
         <Optimize>true</Optimize>
-        <OutputPath>..\..\..\本地Mod测试\NextMoreCommandBuild\build</OutputPath>
+        <OutputPath>..\..\..\本地Mod测试\NextMoreCommand\plugins\</OutputPath>
         <DefineConstants>TRACE</DefineConstants>
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
         <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
         <DocumentationFile></DocumentationFile>
-    </PropertyGroup>
-    <PropertyGroup>
-      <PostBuildEvent>"C:\Confuser\Confuser.CLI.exe" "$(SolutionDir)Next.crproj"
-</PostBuildEvent>
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="0Harmony">
@@ -81,6 +77,10 @@
         </Reference>
         <Reference Include="spine-unity">
           <HintPath>..\..\..\觅长生_Data\Managed\spine-unity.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="spine-unity-examples">
+          <HintPath>..\..\..\觅长生_Data\Managed\spine-unity-examples.dll</HintPath>
           <Private>False</Private>
         </Reference>
         <Reference Include="System" />
@@ -128,12 +128,36 @@
           <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
           <Private>False</Private>
         </Reference>
+        <Reference Include="UnityEngine.ImageConversionModule">
+          <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
         <Reference Include="UnityEngine.UI">
           <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.UI.dll</HintPath>
           <Private>False</Private>
         </Reference>
         <Reference Include="UnityEngine.UIElementsModule">
           <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="UnityEngine.UnityWebRequestAssetBundleModule">
+          <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="UnityEngine.UnityWebRequestAudioModule">
+          <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="UnityEngine.UnityWebRequestModule">
+          <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.UnityWebRequestModule.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="UnityEngine.UnityWebRequestTextureModule">
+          <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="UnityEngine.UnityWebRequestWWWModule">
+          <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
           <Private>False</Private>
         </Reference>
         <Reference Include="VContainer">
@@ -193,6 +217,7 @@
         <Compile Include="Patchs\BiaoBaiManagerCalcBiaoBaiScorePatch.cs" />
         <Compile Include="Patchs\DialogAnalysisTryTriggerPatch.cs" />
         <Compile Include="Patchs\DongFuCreatePatch.cs" />
+        <Compile Include="Patchs\PlayerSetRandomFacePatch.cs" />
         <Compile Include="Patchs\ResManagerLoadSpriteAtlasPatch.cs" />
         <Compile Include="Patchs\UIHuaShenRuDaoSelectPatch.cs" />
         <Compile Include="Patchs\UISiXuItemPatch.cs" />
@@ -346,6 +371,20 @@
     </ItemGroup>
     <ItemGroup>
       <Content Include="obfuscar.xml" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Live2D\Live2D.csproj">
+        <Project>{86551753-449d-4bea-9775-a1baf68cb43c}</Project>
+        <Name>Live2D</Name>
+      </ProjectReference>
+      <ProjectReference Include="..\MGGIF\MGGIF.csproj">
+        <Project>{f5e9640f-f922-40a5-b0f8-5711f6c0a6ae}</Project>
+        <Name>MGGIF</Name>
+      </ProjectReference>
+      <ProjectReference Include="..\Unity-GifDecoder\Unity-GifDecoder.csproj">
+        <Project>{9883b4e0-45f2-413f-99d4-e708f0a03b14}</Project>
+        <Name>Unity-GifDecoder</Name>
+      </ProjectReference>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

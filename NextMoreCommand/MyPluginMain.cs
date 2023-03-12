@@ -65,10 +65,7 @@ namespace SkySwordKill.NextMoreCommand
             };
         }
 
-        private void Start()
-        {
- 
-        }
+      
 
         private void Update()
         {
@@ -144,6 +141,7 @@ namespace SkySwordKill.NextMoreCommand
                 new Lazy<string>(() => Utility.CombinePaths(
                     dllPath,
                     @"Lib"));
+            DllTools.LoadDllFile(dllPath,"Live2DCubismCore.dll");
         }
 
         public Lazy<string> PathPatchersDir { get; set; }
