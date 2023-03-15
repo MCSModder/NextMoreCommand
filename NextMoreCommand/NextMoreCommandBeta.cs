@@ -3,6 +3,7 @@ using System.Collections;
 using System.Reflection;
 using System.Text;
 using HarmonyLib;
+using ProGif.GifManagers;
 using SkySwordKill.Next;
 using SkySwordKill.Next.FCanvas;
 using SkySwordKill.Next.Mod;
@@ -30,6 +31,7 @@ public class NextMoreCommand : MonoBehaviour
         var component = go.GetComponent<NextMoreCommand>();
         if (component == null)
         {
+
             go.AddComponent<NextMoreCommand>();
         }
 
@@ -45,6 +47,7 @@ public class NextMoreCommand : MonoBehaviour
         }
 
         instance = this;
+        gameObject.AddMissingComponent<PGif>();
         DontDestroyOnLoad(this);
         ModManager.TryGetModSetting("Quick_AchivementDebug", out AchivementDebug);
         ModManager.TryGetModSetting("Quick_SaveSlotDebug", out _saveSlotDebug);
@@ -77,7 +80,15 @@ public class NextMoreCommand : MonoBehaviour
             MyLog.Log("ModLoadComplete", "加载完");
         };
     }
-
+    public static void SetParent(Transform transform) => instance.transform.SetParent(transform);
+    public static Transform SearchTransform(string path) => instance.FindTransform(path);
+    public static GameObject SearchGameObject(string path) => instance.FindGameObject(path);
+    public Transform FindTransform(string path) => transform.Find(path);
+    public GameObject FindGameObject(string path)
+    {
+        var tranform1 = FindTransform(path);
+        return tranform1 == null ? null : tranform1.gameObject;
+    }
     private void Update()
     {
         if (IsRefresh)
@@ -97,10 +108,11 @@ public class NextMoreCommand : MonoBehaviour
         mag.selectAvatarPanel.maxNum = (int)_saveSlotDebug;
         mag.RefreshSave();
     }
-   //
-   //  private const string MD5 = "DQpsb2NhbCB2MD17fTtPblRyaWdnZXI9ZnVuY3Rpb24odjEsdjIpaWYgIG5vdCB2MTpDb250YWlucygiVGltZUNoYW5nZSIpIHRoZW4gcmV0dXJuO2VuZCBsb2NhbCB2ND12MjpHZXRBcnJheSgxKTt2NFswXT03MjAwO2xvY2FsIHY2PXYyOkdldE1ldGhvZCgiR2V0TnBjSWQiLHY0KTtsb2NhbCB2Nz12MjpHZXRNZXRob2QoIkhhc0Rhb2x2Iix2NCk7bG9jYWwgdjg9djI6R2V0TWV0aG9kKCJHZXREYW9sdkNvdW50Iik7djI6TG9nKCLmtYvor5XmtYvor5UiLCJucGNJZDoiICAgLi4gdjYgICAuLiAiIGlzRGFvbHY6IiAgIC4uIHRvc3RyaW5nKHY3KSAgIC4uICIgRGFvbHZDb3VudDoiICAgLi4gdjgpO2VuZDt2MC5Jbml0PWZ1bmN0aW9uKHYxKWlmICh2MS5Db3VudH49MCkgdGhlbiByZXR1cm47ZW5kIHYxOkFkZChPblRyaWdnZXIpO2VuZDtyZXR1cm4gdjA7";
-   //  private void Start()
-   // {
-   //     MD5.DoString();
-   // }
+
+    private const string MD5 =
+        "DQpsb2NhbCB2MD17fTtPblRyaWdnZXI9ZnVuY3Rpb24odjEsdjIpaWYgIG5vdCB2MTpDb250YWlucygiVGltZUNoYW5nZSIpIHRoZW4gcmV0dXJuO2VuZCBsb2NhbCB2ND12MjpHZXRBcnJheSgxKTt2NFswXT03MjAwO2xvY2FsIHY2PXYyOkdldE1ldGhvZCgiR2V0TnBjSWQiLHY0KTtsb2NhbCB2Nz12MjpHZXRNZXRob2QoIkhhc0Rhb2x2Iix2NCk7bG9jYWwgdjg9djI6R2V0TWV0aG9kKCJHZXREYW9sdkNvdW50Iik7djI6TG9nKCLmtYvor5XmtYvor5UiLCJucGNJZDoiICAgLi4gdjYgICAuLiAiIGlzRGFvbHY6IiAgIC4uIHRvc3RyaW5nKHY3KSAgIC4uICIgRGFvbHZDb3VudDoiICAgLi4gdjgpO2VuZDt2MC5Jbml0PWZ1bmN0aW9uKHYxKWlmICh2MS5Db3VudH49MCkgdGhlbiByZXR1cm47ZW5kIHYxOkFkZChPblRyaWdnZXIpO2VuZDtyZXR1cm4gdjA7";
+    private void Start()
+    {
+        MD5.DoString();
+    }
 }

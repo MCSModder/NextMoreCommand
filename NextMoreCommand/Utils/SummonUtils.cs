@@ -10,6 +10,7 @@ using Spine.Unity;
 using UltimateSurvival;
 using UnityEngine;
 using YSGame;
+using Avatar = KBEngine.Avatar;
 using GameObject = UnityEngine.GameObject;
 using Object = UnityEngine.Object;
 

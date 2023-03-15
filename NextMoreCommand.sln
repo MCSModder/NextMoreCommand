@@ -6,11 +6,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnsubscribeNextMoreCommandO
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCSSubscribeDependencies", "MCSSubscribeDependencies\MCSSubscribeDependencies.csproj", "{44B38315-6041-462C-BDF1-3506684D7D0C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity-GifDecoder", "Unity-GifDecoder\Unity-GifDecoder.csproj", "{9883B4E0-45F2-413F-99D4-E708F0A03B14}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MGGIF", "MGGIF\MGGIF.csproj", "{F5E9640F-F922-40A5-B0F8-5711F6C0A6AE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Live2D", "Live2D\Live2D.csproj", "{86551753-449D-4BEA-9775-A1BAF68CB43C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProGif", "ProGif\ProGif.csproj", "{88E7ABF4-1B36-4CF8-9433-E9B58A42C42D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,17 +26,9 @@ Global
 		{44B38315-6041-462C-BDF1-3506684D7D0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44B38315-6041-462C-BDF1-3506684D7D0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44B38315-6041-462C-BDF1-3506684D7D0C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9883B4E0-45F2-413F-99D4-E708F0A03B14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9883B4E0-45F2-413F-99D4-E708F0A03B14}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9883B4E0-45F2-413F-99D4-E708F0A03B14}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9883B4E0-45F2-413F-99D4-E708F0A03B14}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F5E9640F-F922-40A5-B0F8-5711F6C0A6AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F5E9640F-F922-40A5-B0F8-5711F6C0A6AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F5E9640F-F922-40A5-B0F8-5711F6C0A6AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F5E9640F-F922-40A5-B0F8-5711F6C0A6AE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{86551753-449D-4BEA-9775-A1BAF68CB43C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{86551753-449D-4BEA-9775-A1BAF68CB43C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{86551753-449D-4BEA-9775-A1BAF68CB43C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{86551753-449D-4BEA-9775-A1BAF68CB43C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88E7ABF4-1B36-4CF8-9433-E9B58A42C42D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88E7ABF4-1B36-4CF8-9433-E9B58A42C42D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88E7ABF4-1B36-4CF8-9433-E9B58A42C42D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88E7ABF4-1B36-4CF8-9433-E9B58A42C42D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

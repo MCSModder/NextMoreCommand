@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using YSGame;
+using Avatar = KBEngine.Avatar;
 using GameObject = UnityEngine.GameObject;
 using Object = UnityEngine.Object;
 

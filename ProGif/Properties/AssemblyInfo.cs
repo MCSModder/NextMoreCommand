@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Live2D")]
+[assembly: AssemblyTitle("ProGif")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Live2D")]
+[assembly: AssemblyProduct("ProGif")]
 [assembly: AssemblyCopyright("Copyright ©  2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("86551753-449D-4BEA-9775-A1BAF68CB43C")]
+[assembly: Guid("88E7ABF4-1B36-4CF8-9433-E9B58A42C42D")]
 
 // Version information for an assembly consists of the following four values:
 //

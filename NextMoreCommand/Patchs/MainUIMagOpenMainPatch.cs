@@ -5,7 +5,7 @@ using SkySwordKill.NextMoreCommand.Utils;
 namespace SkySwordKill.NextMoreCommand.Patchs;
 
 [HarmonyPatch(typeof(MainUIMag), nameof(MainUIMag.RefreshSave))]
-public static class MainUIMagOpenMainPatch
+public static class MainUIMagRefreshSavePatch
 {
     public static void Prefix(MainUIMag __instance)
     {
@@ -14,7 +14,7 @@ public static class MainUIMagOpenMainPatch
             if (saveSlotDebug > 9)
             {
                 var save = (int)saveSlotDebug;
-                __instance.maxNum =save ;
+                __instance.maxNum = save;
                 __instance.selectAvatarPanel.maxNum = save;
             }
             else
@@ -22,6 +22,15 @@ public static class MainUIMagOpenMainPatch
                 ModManager.SetModSetting("Quick_SaveSlotDebug", 9);
             }
         }
+    }
+}
+
+[HarmonyPatch(typeof(MainUIMag), nameof(MainUIMag.OpenMain))]
+public static class MainUIMagOpenMainPatch
+{
+    public static void Prefix()
+    {
+        GifUtils.Clear();
     }
 }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 using HarmonyLib;
 using SkySwordKill.Next;
@@ -13,14 +14,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public static string PadRightEx(this string msg, int totalWidth)
         {
             var coding = Encoding.GetEncoding("UTF-8");
-            var count = 0;
-            foreach (var ch in msg.ToCharArray())
-            {
-                if (coding.GetByteCount(ch.ToString()) > 1)
-                {
-                    count++;
-                }
-            }
+            var count = msg.ToCharArray().Count(ch => coding.GetByteCount(ch.ToString()) > 1);
 
             return msg.PadRight(totalWidth - count);
         }
@@ -73,6 +67,10 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
         public static void LogStatus(object str, bool isError = false)
         {
+            if (!MyPluginMain.IsDebugMode)
+            {
+                return;
+            }
             if (isError)
             {
                 LogError(str);

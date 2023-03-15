@@ -116,6 +116,10 @@
           <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.dll</HintPath>
           <Private>False</Private>
         </Reference>
+        <Reference Include="UnityEngine.AnimationModule">
+          <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.AnimationModule.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
         <Reference Include="UnityEngine.AssetBundleModule">
           <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.AssetBundleModule.dll</HintPath>
           <Private>False</Private>
@@ -132,12 +136,20 @@
           <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
           <Private>False</Private>
         </Reference>
+        <Reference Include="UnityEngine.IMGUIModule">
+          <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
         <Reference Include="UnityEngine.UI">
           <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.UI.dll</HintPath>
           <Private>False</Private>
         </Reference>
         <Reference Include="UnityEngine.UIElementsModule">
           <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="UnityEngine.UIModule">
+          <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.UIModule.dll</HintPath>
           <Private>False</Private>
         </Reference>
         <Reference Include="UnityEngine.UnityWebRequestAssetBundleModule">
@@ -158,6 +170,10 @@
         </Reference>
         <Reference Include="UnityEngine.UnityWebRequestWWWModule">
           <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="UnityEngine.VideoModule">
+          <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.VideoModule.dll</HintPath>
           <Private>False</Private>
         </Reference>
         <Reference Include="VContainer">
@@ -226,6 +242,7 @@
         <Compile Include="Slave\SlaveUtils.cs" />
         <Compile Include="Utils\DongFuUtils.cs" />
         <Compile Include="Utils\FightUtils.cs" />
+        <Compile Include="Utils\GifUtils.cs" />
         <Compile Include="Utils\ItemUtils.cs" />
         <Compile Include="Utils\JsonUtils.cs" />
         <Compile Include="Utils\UiUtils.cs" />
@@ -373,17 +390,9 @@
       <Content Include="obfuscar.xml" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\Live2D\Live2D.csproj">
-        <Project>{86551753-449d-4bea-9775-a1baf68cb43c}</Project>
-        <Name>Live2D</Name>
-      </ProjectReference>
-      <ProjectReference Include="..\MGGIF\MGGIF.csproj">
-        <Project>{f5e9640f-f922-40a5-b0f8-5711f6c0a6ae}</Project>
-        <Name>MGGIF</Name>
-      </ProjectReference>
-      <ProjectReference Include="..\Unity-GifDecoder\Unity-GifDecoder.csproj">
-        <Project>{9883b4e0-45f2-413f-99d4-e708f0a03b14}</Project>
-        <Name>Unity-GifDecoder</Name>
+      <ProjectReference Include="..\ProGif\ProGif.csproj">
+        <Project>{88e7abf4-1b36-4cf8-9433-e9b58a42c42d}</Project>
+        <Name>ProGif</Name>
       </ProjectReference>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

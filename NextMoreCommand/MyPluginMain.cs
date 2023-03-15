@@ -14,6 +14,8 @@ using SkySwordKill.Next.Mod;
 using UnityEngine;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using ProGif.GifManagers;
+using ProGif.Lib;
 using SkySwordKill.NextMoreCommand.Attribute;
 using SkySwordKill.NextMoreCommand.Custom.NPC;
 using SkySwordKill.NextMoreCommand.Custom.SkillCombo;
@@ -30,7 +32,8 @@ namespace SkySwordKill.NextMoreCommand
     [BepInPlugin("skyswordkill.plugin.NextMoreCommands", "NextMoreCommands", "1.0.3")]
     public class MyPluginMain : BaseUnityPlugin
     {
-        private KeyCode DramaDebugKey;
+        private static KeyCode DramaDebugKey;
+        public static  bool IsDebugMode = false;
 
         public static MyPluginMain Instance;
         public static MyPluginMain I => Instance;
@@ -48,6 +51,7 @@ namespace SkySwordKill.NextMoreCommand
             _harmony = new Harmony("skyswordkill.plugin.NextMoreCommands");
             _harmony.PatchAll();
             InitDir();
+           
             NextMoreCoreBinder.BindAll();
             ModManager.ModReload += () =>
             {
@@ -58,14 +62,16 @@ namespace SkySwordKill.NextMoreCommand
             ModManager.ModSettingChanged += () =>
             {
                 ModManagerUtils.TryGetModSetting("Quick_DramaDebugKey", out DramaDebugKey);
+                ModManager.TryGetModSetting("Quick_IsDebugMode", out IsDebugMode);
             };
             ModManager.ModLoadComplete += () =>
             {
                 ModManagerUtils.TryGetModSetting("Quick_DramaDebugKey", out DramaDebugKey);
+                ModManager.TryGetModSetting("Quick_IsDebugMode", out IsDebugMode);
+                GifUtils.Clear();
             };
         }
 
-      
 
         private void Update()
         {
@@ -141,7 +147,7 @@ namespace SkySwordKill.NextMoreCommand
                 new Lazy<string>(() => Utility.CombinePaths(
                     dllPath,
                     @"Lib"));
-            DllTools.LoadDllFile(dllPath,"Live2DCubismCore.dll");
+            // DllTools.LoadDllFile(dllPath,"Live2DCubismCore.dll");
         }
 
         public Lazy<string> PathPatchersDir { get; set; }
