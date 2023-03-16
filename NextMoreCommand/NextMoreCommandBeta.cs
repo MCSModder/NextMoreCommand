@@ -9,8 +9,10 @@ using SkySwordKill.Next.FCanvas;
 using SkySwordKill.Next.Mod;
 using SkySwordKill.NextMoreCommand.Custom.RealizeSeid.Skills;
 using SkySwordKill.NextMoreCommand.Patchs;
+using SkySwordKill.NextMoreCommand.Puerts;
 using SkySwordKill.NextMoreCommand.Utils;
 using UnityEngine;
+using UnityEngine.Serialization;
 using XLua;
 using YSGame.TuJian;
 
@@ -51,7 +53,14 @@ public class NextMoreCommand : MonoBehaviour
         DontDestroyOnLoad(this);
         ModManager.TryGetModSetting("Quick_AchivementDebug", out AchivementDebug);
         ModManager.TryGetModSetting("Quick_SaveSlotDebug", out _saveSlotDebug);
+        ModManager.ModReload += () =>
+        {
+            if (jsEnvManager != null)
+            {
+                jsEnvManager.Reset();
+            }
 
+        };
         ModManager.ModSettingChanged += () =>
         {
             ModManager.TryGetModSetting("Quick_AchivementDebug", out AchivementDebug);
@@ -79,6 +88,7 @@ public class NextMoreCommand : MonoBehaviour
 
             MyLog.Log("ModLoadComplete", "加载完");
         };
+
     }
     public static void SetParent(Transform transform) => instance.transform.SetParent(transform);
     public static Transform SearchTransform(string path) => instance.FindTransform(path);
@@ -108,11 +118,10 @@ public class NextMoreCommand : MonoBehaviour
         mag.selectAvatarPanel.maxNum = (int)_saveSlotDebug;
         mag.RefreshSave();
     }
-
-    private const string MD5 =
-        "DQpsb2NhbCB2MD17fTtPblRyaWdnZXI9ZnVuY3Rpb24odjEsdjIpaWYgIG5vdCB2MTpDb250YWlucygiVGltZUNoYW5nZSIpIHRoZW4gcmV0dXJuO2VuZCBsb2NhbCB2ND12MjpHZXRBcnJheSgxKTt2NFswXT03MjAwO2xvY2FsIHY2PXYyOkdldE1ldGhvZCgiR2V0TnBjSWQiLHY0KTtsb2NhbCB2Nz12MjpHZXRNZXRob2QoIkhhc0Rhb2x2Iix2NCk7bG9jYWwgdjg9djI6R2V0TWV0aG9kKCJHZXREYW9sdkNvdW50Iik7djI6TG9nKCLmtYvor5XmtYvor5UiLCJucGNJZDoiICAgLi4gdjYgICAuLiAiIGlzRGFvbHY6IiAgIC4uIHRvc3RyaW5nKHY3KSAgIC4uICIgRGFvbHZDb3VudDoiICAgLi4gdjgpO2VuZDt2MC5Jbml0PWZ1bmN0aW9uKHYxKWlmICh2MS5Db3VudH49MCkgdGhlbiByZXR1cm47ZW5kIHYxOkFkZChPblRyaWdnZXIpO2VuZDtyZXR1cm4gdjA7";
+    public static JsEnvManager JsEnv => instance.jsEnvManager;
+    [FormerlySerializedAs("javaScript")] public JsEnvManager jsEnvManager;
     private void Start()
     {
-        MD5.DoString();
+        jsEnvManager = gameObject.AddMissingComponent<JsEnvManager>();
     }
 }

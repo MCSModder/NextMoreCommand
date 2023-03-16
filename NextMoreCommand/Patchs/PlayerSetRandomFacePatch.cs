@@ -7,6 +7,9 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using HarmonyLib;
 using KBEngine;
+using Live2D.Cubism.Framework.Json;
+using Live2D.Cubism.Framework.Motion;
+using Live2D.Cubism.Framework.MotionFade;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ProGif.GifManagers;
@@ -23,150 +26,7 @@ using Image = UnityEngine.UI.Image;
 
 namespace SkySwordKill.NextMoreCommand.Patchs
 {
-    // public static class ExtendsColor
-    // {
-    //
-    //
-    //     public static void SetGifFrame(this RawImage rawImage, GifFrame gifFrame)
-    //     {
-    //
-    //         rawImage.texture = gifFrame.Texture;
-    //     }
-    // }
-    //
-    // public class GifFrame
-    // {
-    //     public float Delay { get; }
-    //     [JsonIgnore]
-    //     public Texture2D Texture { get; }
-    //
-    //     public GifFrame(Image image)
-    //     {
-    //         Texture = image.CreateTexture();
-    //         Delay = image.Delay / 1000.0f;
-    //     }
-    //
-    // }
-    //
-    //
-    // class AnimatedTextures : MonoBehaviour
-    // {
-    //
-    //     public List<GifFrame> frames = new List<GifFrame>();
-    //     // private CacheCacheTexture2D _cacheTexture = new CacheCacheTexture2D();
-    //     private int avatarId;
-    //     public int curFrame = 0;
-    //     private float time = 0.0f;
-    //     private bool isFinish = false;
-    //     private RawImage renderer;
-    //     private Transform rawImageTranform;
-    //     private CustomImage customImage;
-    //     private GameObject goCanvas;
-    //     private GameObject rawImageCanvas;
-    //     private Decoder _decoder;
-    //     private GifFrame CurFrame => frames[curFrame];
-    //     // private string CurImageStr => JArray.FromObject(CurImage.RawImage).ToString(Formatting.Indented);
-    //     private void Awake()
-    //     {
-    //         //_cacheTexture._animatedTextures = this;
-    //         renderer = gameObject.GetComponentInChildren<RawImage>();
-    //         if (renderer != null) return;
-    //         goCanvas = new GameObject("Canvas", typeof(Canvas));
-    //         var canvas = goCanvas.AddMissingComponent<Canvas>();
-    //         canvas.renderMode = RenderMode.ScreenSpaceCamera;
-    //         canvas.worldCamera = Camera.main;
-    //
-    //         canvas.planeDistance = 1;
-    //
-    //         rawImageCanvas = new GameObject("RawImage", typeof(RawImage));
-    //         rawImageTranform = rawImageCanvas.transform;
-    //         rawImageTranform.SetParent(goCanvas.transform);
-    //
-    //         renderer = rawImageCanvas.AddMissingComponent<RawImage>();
-    //         rawImageCanvas.SetActive(false);
-    //     }
-    //
-    //
-    //     private void Update()
-    //     {
-    //         if (!isFinish && _decoder != null)
-    //         {
-    //             StartCoroutine(SetGif());
-    //         }
-    //
-    //         if (frames.Count == 0 || avatarId <= 0)
-    //         {
-    //             return;
-    //         }
-    //         if (!isFinish)
-    //         {
-    //             return;
-    //         }
-    //         time += Time.deltaTime;
-    //         if (!(time >= CurFrame.Delay)) return;
-    //         curFrame = (curFrame + 1) % frames.Count;
-    //         time = 0.0f;
-    //         renderer.SetGifFrame(CurFrame);
-    //
-    //
-    //     }
-    //     public void SetAvatar(int monstarId, CustomImage image)
-    //     {
-    //         avatarId = monstarId;
-    //         customImage = image;
-    //         if (frames.Count != 0) return;
-    //         goCanvas.transform.SetParent(image.transform.parent);
-    //         if (Main.Res.TryGetFileAsset($"Assets/Gif/{monstarId.ToString()}/Idle.gif", out var fileAsset))
-    //         {
-    //             _decoder = new Decoder(File.ReadAllBytes(fileAsset.FileRawPath));
-    //             var isPlayer = monstarId == 1;
-    //             rawImageTranform.eulerAngles = new Vector3(0, isPlayer ? 0 : 180, 0);
-    //             rawImageTranform.localScale = new Vector3(5f, 5f, 1);
-    //             rawImageTranform.localPosition = new Vector3(isPlayer ? -660 : 660, 0, 0);
-    //
-    //
-    //             //DestroyImmediate(this);
-    //             return;
-    //         }
-    //
-    //
-    //         MyLog.Log($"角色ID:{monstarId.ToString()}");
-    //
-    //     }
-    //     public IEnumerator SetGif()
-    //     {
-    //
-    //
-    //         var img = _decoder.NextImage();
-    //         if (img != null)
-    //         {
-    //             var gifFrame = new GifFrame(img);
-    //             frames.Add(gifFrame);
-    //             var count = frames.Count;
-    //
-    //             if (count == 1)
-    //             {
-    //                 renderer.texture = gifFrame.Texture;
-    //             }
-    //
-    //         }
-    //         else
-    //         {
-    //             isFinish = true;
-    //             if (customImage._skeletonAnimation != null)
-    //             {
-    //                 customImage._skeletonAnimation.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
-    //             }
-    //
-    //             customImage.gameObject.SetActive(false);
-    //             rawImageCanvas.SetActive(true);
-    //         }
-    //
-    //         yield break;
-    //     }
-    //
-    //
-    // }
+
     enum EStateType
     {
         None,
@@ -584,6 +444,57 @@ namespace SkySwordKill.NextMoreCommand.Patchs
                 Destroy(_displayHandler);
             }
         }
+        public void SetLive2D()
+        {
+            if (!Main.Res.TryGetFileAsset($"Assets/Live2D/{_avatarId.ToString()}/{_avatarId.ToString()}.model3.json", out var fileAsset)) return;
+            var model3Json = CubismModel3Json.LoadAtPath(fileAsset.FileRawPath, BuiltinLoadAssetAtPath);
+            if (!Main.Res.TryGetFileAsset($"Assets/Live2D/{_avatarId.ToString()}/Idle.motion3.json", out var motion3Asset)) return;
+            var model = model3Json.ToModel();
+            var motion = CubismMotion3Json.LoadFrom(File.ReadAllText(motion3Asset.FileRawPath));
+            Transform transform1;
+            (transform1 = model.transform).SetParent(transform.parent);
+            transform1.localScale = new Vector3(7, 7, 1);
+            var animationClip = motion.ToAnimationClip(isCallFormModelJson: true);
+            animationClip.legacy = false;
+            var fadeController = model.gameObject.AddMissingComponent<CubismFadeController>();
+            fadeController.CubismFadeMotionList = ScriptableObject.CreateInstance<CubismFadeMotionList>();
+            fadeController.CubismFadeMotionList.CubismFadeMotionObjects = new CubismFadeMotionData[]
+            {
+                CubismFadeMotionData.CreateInstance(motion,"Idle",animationClip.length)
+            };
+            fadeController.CubismFadeMotionList.MotionInstanceIds = new[]
+            {
+                animationClip.GetInstanceID()
+            };
+            var motionController = model.gameObject.AddMissingComponent<CubismMotionController>();
+ 
+            motionController.PlayAnimation(animationClip, isLoop: true);
+        }
+        private static object BuiltinLoadAssetAtPath(Type assetType, string assetPath)
+        {
+            MyLog.Log($"assetType:{assetType.Name} 路径:{assetPath}");
+            // Explicitly deal with byte arrays.
+            if (assetType == typeof(byte[]))
+            {
+                return File.ReadAllBytes(assetPath);
+
+            }
+            if (assetType == typeof(string))
+            {
+
+                return File.ReadAllText(assetPath);
+
+            }
+            if (assetType == typeof(Texture2D))
+            {
+
+                var texture = new Texture2D(1, 1);
+                texture.hideFlags = HideFlags.HideAndDontSave;
+                texture.LoadImage(File.ReadAllBytes(assetPath));
+                return texture;
+            }
+            return null;
+        }
     }
 
     [HarmonyPatch(typeof(PlayerSetRandomFace), nameof(PlayerSetRandomFace.randomAvatar))]
@@ -592,8 +503,14 @@ namespace SkySwordKill.NextMoreCommand.Patchs
         public static int avartarID;
         public static void Prefix(PlayerSetRandomFace __instance, int monstarID)
         {
-
             avartarID = monstarID;
+            var isAvatar = avartarID == 1 || avartarID >= 20000;
+            if (SceneEx.NowSceneName == "MainMenu" || !isAvatar)
+            {
+                return;
+            }
+
+
             MyLog.Log($"Prefix avartarID:{avartarID.ToString()} monstarID:{monstarID.ToString()}");
             if (__instance.BaseImage == null)
             {
@@ -607,6 +524,12 @@ namespace SkySwordKill.NextMoreCommand.Patchs
         }
         public static void Postfix(PlayerSetRandomFace __instance, int monstarID)
         {
+            var isAvatar = avartarID == 1 || avartarID >= 20000;
+            if (SceneEx.NowSceneName == "MainMenu" || !isAvatar)
+            {
+                return;
+            }
+
             var img = __instance.BaseImage;
             if (img == null) return;
 

@@ -21,6 +21,7 @@ using SkySwordKill.NextMoreCommand.Custom.NPC;
 using SkySwordKill.NextMoreCommand.Custom.SkillCombo;
 using SkySwordKill.NextMoreCommand.CustomModDebug;
 using SkySwordKill.NextMoreCommand.CustomModDebug.NextMoreCore;
+using SkySwordKill.NextMoreCommand.Puerts;
 using SkySwordKill.NextMoreCommand.Utils;
 using Steamworks;
 using YSGame.TuJian;
@@ -33,13 +34,18 @@ namespace SkySwordKill.NextMoreCommand
     public class MyPluginMain : BaseUnityPlugin
     {
         private static KeyCode DramaDebugKey;
-        public static  bool IsDebugMode = false;
+        public static bool IsDebugMode = false;
 
         public static MyPluginMain Instance;
         public static MyPluginMain I => Instance;
         public static void LogInfo(object obj) => I.Logger.LogInfo(obj);
+        public static void LogWarning(object obj) => I.Logger.LogWarning(obj);
         public static void LogError(object obj) => I.Logger.LogError(obj);
+        public static void LogDebug(object obj) => I.Logger.LogDebug(obj);
+        public static void LogFatal(object obj) => I.Logger.LogFatal(obj);
+        public static void LogMessage(object obj) => I.Logger.LogMessage(obj);
         private Harmony _harmony;
+        public List<string>  files;
 
         private void Awake()
         {
@@ -51,13 +57,14 @@ namespace SkySwordKill.NextMoreCommand
             _harmony = new Harmony("skyswordkill.plugin.NextMoreCommands");
             _harmony.PatchAll();
             InitDir();
-           
+          
             NextMoreCoreBinder.BindAll();
             ModManager.ModReload += () =>
             {
                 CustomNpc.CustomNpcs.Clear();
                 SkillComboManager.SkillCombos.Clear();
                 SkillComboManager.CacheSkillCombos.Clear();
+                
             };
             ModManager.ModSettingChanged += () =>
             {
@@ -143,14 +150,24 @@ namespace SkySwordKill.NextMoreCommand
 
             PathLocalModsDir =
                 new Lazy<string>(() => BepInEx.Paths.GameRootPath + @"\本地Mod测试");
-            PathPatchersDir =
+            PathLibDir =
                 new Lazy<string>(() => Utility.CombinePaths(
                     dllPath,
                     @"Lib"));
-            // DllTools.LoadDllFile(dllPath,"Live2DCubismCore.dll");
+            var dir = PathLibDir.Value;
+            if (string.IsNullOrWhiteSpace(dir)) return;
+            files = Directory.GetFiles(dir).Select(Path.GetFileName).ToList();
+            files.ForEach(filePathName =>
+            {
+                LogInfo($"开始加载:{filePathName}");
+                DllTools.LoadDllFile(dir, filePathName);
+            });
+           
+
+
         }
 
-        public Lazy<string> PathPatchersDir { get; set; }
+        public Lazy<string> PathLibDir { get; set; }
 
         public Lazy<string> PathLocalModsDir { get; set; }
 

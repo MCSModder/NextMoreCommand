@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using HarmonyLib;
 using Newtonsoft.Json;
@@ -8,8 +9,10 @@ using Newtonsoft.Json.Linq;
 using SkySwordKill.Next;
 using SkySwordKill.Next.Extension;
 using SkySwordKill.Next.Mod;
+using SkySwordKill.Next.Res;
 using SkySwordKill.NextMoreCommand.Custom.NPC;
 using SkySwordKill.NextMoreCommand.Custom.SkillCombo;
+using SkySwordKill.NextMoreCommand.Puerts;
 
 namespace SkySwordKill.NextMoreCommand.Patchs;
 
@@ -41,7 +44,11 @@ public static class ModManagerLoadModData
             Name = "天宫警花",
             Title = "天宫仙子",
             SexType = 2,
-            CustomWujiang = new List<CustomWujiang>() { new CustomWujiang(), new CustomWujiang() },
+            CustomWujiang = new List<CustomWujiang>()
+            {
+                new CustomWujiang(),
+                new CustomWujiang()
+            },
             CustomNpcImportantDate = new CustomNpcImportantDate(),
             CustomBackPack = new CustomBackPack(),
         };
@@ -52,12 +59,47 @@ public static class ModManagerLoadModData
         File.WriteAllText(dir.CombinePath("天宫警花.json"),
             npc.ToString());
     }
+    private static string[] JsExt = new[]
+    {
+        ".js",
+        ".cjs",
+        ".mjs",
+    };
+    private static void LoadCustomJsData(ModConfig modConfig, string rootPath) => Main.Res.DirectoryHandle("", rootPath, (ResourcesManager.FileHandle)((virtualPath, filePath) =>
+    {
 
-
+        if (!JsExt.Contains(Path.GetExtension(filePath)))
+            return;
+        var jsFileCache = new JsFileCache()
+        {
+            FromMod = modConfig,
+            FilePath = filePath.Replace("\\", "/")
+        };
+        var jsPath = Path.GetFileNameWithoutExtension(virtualPath).Replace("\\", "/");
+        try
+        {
+            JsEnvManager.AddJsFileCache(jsPath, jsFileCache);
+        }
+        catch (Exception ex)
+        {
+            throw new ModLoadException(string.Format("JavaScript {0} 加载失败。", (object)jsPath), ex);
+        }
+    }));
     public static void Prefix(ModConfig modConfig)
     {
-        var isWorkshop = modConfig.Path.Contains("workshop\\content\\1189490");
+     
+        var path = modConfig.Path;
+        var isWorkshop = path.Contains("workshop\\content\\1189490");
         var modNDataDirDir = modConfig.GetNDataDir();
+
+        if (HasPath(path.CombinePath("JS")))
+        {
+            MyPluginMain.LogInfo($"=================== NextMore开始加载 =====================");
+
+            LoadCustomJsData(modConfig, path.CombinePath("JS"));
+            MyPluginMain.LogInfo($"=================== NextMore结束加载 =====================");
+
+        }
 
         if (HasPath(modNDataDirDir.CombinePath("CustomNpc")) && !isWorkshop)
         {
