@@ -235,6 +235,7 @@
         <Compile Include="Patchs\DongFuCreatePatch.cs" />
         <Compile Include="Patchs\PlayerSetRandomFacePatch.cs" />
         <Compile Include="Patchs\ResManagerLoadSpriteAtlasPatch.cs" />
+        <Compile Include="Patchs\TabGongFaPanelPatch.cs" />
         <Compile Include="Patchs\UIHuaShenRuDaoSelectPatch.cs" />
         <Compile Include="Patchs\UISiXuItemPatch.cs" />
         <Compile Include="Patchs\WudaoPatch.cs" />
@@ -244,7 +245,7 @@
         <Compile Include="Slave\SlaveUtils.cs" />
         <Compile Include="Utils\DongFuUtils.cs" />
         <Compile Include="Utils\FightUtils.cs" />
-        <Compile Include="Utils\GifUtils.cs" />
+        <Compile Include="Utils\AssetsUtils.cs" />
         <Compile Include="Utils\ItemUtils.cs" />
         <Compile Include="Utils\JsonUtils.cs" />
         <Compile Include="Utils\UiUtils.cs" />
@@ -392,10 +393,6 @@
       <Content Include="obfuscar.xml" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\Live2D\Live2D.csproj">
-        <Project>{86551753-449d-4bea-9775-a1baf68cb43c}</Project>
-        <Name>Live2D</Name>
-      </ProjectReference>
       <ProjectReference Include="..\ProGif\ProGif.csproj">
         <Project>{88e7abf4-1b36-4cf8-9433-e9b58a42c42d}</Project>
         <Name>ProGif</Name>

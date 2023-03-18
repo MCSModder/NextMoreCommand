@@ -20,6 +20,11 @@ public class DialogEnvironmentContext
     public object[] GetArray( int index) => new object[index];
     public Traverse GetTraverse(string name)=>Traverse.Create(Type.GetType(name));
     public void Log(string pre, object msg, bool isError = false)=>MyLog.Log(pre, msg,  isError);
+    public DialogEnvironmentContext()
+    {
+        RawEnv = new DialogEnvironment();
+     
+    }
     public DialogEnvironmentContext(DialogEnvironment env)
     {
         RawEnv = env;

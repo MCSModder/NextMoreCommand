@@ -53,14 +53,8 @@ public class NextMoreCommand : MonoBehaviour
         DontDestroyOnLoad(this);
         ModManager.TryGetModSetting("Quick_AchivementDebug", out AchivementDebug);
         ModManager.TryGetModSetting("Quick_SaveSlotDebug", out _saveSlotDebug);
-        ModManager.ModReload += () =>
-        {
-            if (jsEnvManager != null)
-            {
-                jsEnvManager.Reset();
-            }
 
-        };
+
         ModManager.ModSettingChanged += () =>
         {
             ModManager.TryGetModSetting("Quick_AchivementDebug", out AchivementDebug);
@@ -119,9 +113,21 @@ public class NextMoreCommand : MonoBehaviour
         mag.RefreshSave();
     }
     public static JsEnvManager JsEnv => instance.jsEnvManager;
-    [FormerlySerializedAs("javaScript")] public JsEnvManager jsEnvManager;
+    public JsEnvManager jsEnvManager;
     private void Start()
     {
-        jsEnvManager = gameObject.AddMissingComponent<JsEnvManager>();
+        InitJsEnvManager();
+    }
+    public static void InitJsEnvManager()
+    {
+        if (JsEnv != null)
+        {
+            JsEnv.Reset();
+        }
+        if (instance != null)
+        {
+            instance.jsEnvManager = instance.gameObject.AddMissingComponent<JsEnvManager>();
+        }
+
     }
 }

@@ -1,25 +1,13 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using HarmonyLib;
-using KBEngine;
-using Live2D.Cubism.Framework.Json;
-using Live2D.Cubism.Framework.Motion;
-using Live2D.Cubism.Framework.MotionFade;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using ProGif.GifManagers;
 using ProGif.Lib;
-using SkySwordKill.Next;
 using SkySwordKill.NextMoreCommand.Utils;
 using Spine.Unity;
 using UnityEngine;
-using UnityEngine.Networking;
-using UnityEngine.UI;
+using UnityEngine.Serialization;
 using Avatar = KBEngine.Avatar;
 using GameObject = UnityEngine.GameObject;
 using Image = UnityEngine.UI.Image;
@@ -38,17 +26,17 @@ namespace SkySwordKill.NextMoreCommand.Patchs
     {
         public Transform spine;
         private SpriteRenderer _spriteRenderer;
-        public SkeletonAnimation _skeletonAnimation;
+        [FormerlySerializedAs("_skeletonAnimation")] public SkeletonAnimation skeletonAnimation;
         private int _avatarId;
-        private PlayerSetRandomFace playerSetRandomFace;
+        private PlayerSetRandomFace _playerSetRandomFace;
         private Image _image;
         private DImageDisplayHandler _displayHandler;
-        private EStateType stateType;
+        private EStateType _stateType;
 
         public void SetSpine(PlayerSetRandomFace playerSetRandom)
         {
             spine = playerSetRandom.transform;
-            playerSetRandomFace = playerSetRandom;
+            _playerSetRandomFace = playerSetRandom;
 
             if (!NpcUtils.IsFightScene || playerSetRandom.GetComponent<SkeletonGraphic>() != null)
             {
@@ -56,17 +44,17 @@ namespace SkySwordKill.NextMoreCommand.Patchs
                 _image = playerSetRandom.BaseImage.GetComponentInChildren<Image>();
                 if (_image == null) return;
                 _displayHandler = gameObject.AddMissingComponent<DImageDisplayHandler>();
-                stateType = EStateType.Image;
+                _stateType = EStateType.Image;
 
             }
             else
             {
-                _skeletonAnimation = playerSetRandom.GetComponent<SkeletonAnimation>();
+                skeletonAnimation = playerSetRandom.GetComponent<SkeletonAnimation>();
                 _spriteRenderer = gameObject.AddMissingComponent<SpriteRenderer>();
                 var transform1 = transform;
                 transform1.SetParent(spine.parent);
                 // _animatedTextures = transform.parent.gameObject.AddMissingComponent<AnimatedTextures>();
-                stateType = EStateType.SpriteRenderer;
+                _stateType = EStateType.SpriteRenderer;
                 transform1.localRotation = spine.localRotation;
                 transform1.localPosition = new Vector3(0, 3, 0);
                 transform1.localScale = new Vector3(0.5f, 0.5f, 0);
@@ -87,18 +75,24 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             MyLog.Log($"当前角色ID:{monstarID.ToString()} 角色ID:{_avatarId.ToString()}");
             StartCoroutine(SetAvatar(NPCEx.NPCIDToOld(monstarID)));
         }
+        private string _gifPlayerName = string.Empty;
         public string GifPlayerName
         {
             get
             {
-                if (_avatarId <= 1 || stateType == EStateType.None)
+                if (_avatarId <= 1 || _stateType == EStateType.None)
                 {
                     return string.Empty;
                 }
+                if (!string.IsNullOrWhiteSpace(_gifPlayerName)) return _gifPlayerName;
+                //  MyPluginMain.LogInfo($"gif:{_gifPlayerName}");
                 var npcName = _avatarId.GetNpcName();
-                return $"{_avatarId.ToString()}_{npcName}_{stateType.GetName()}_Idle";
+                _gifPlayerName = $"{_avatarId.ToString()}_{npcName}_{_stateType.GetName()}_Idle";
+                return _gifPlayerName;
+
             }
         }
+        // ReSharper disable Unity.PerformanceAnalysis
         public IEnumerator SetAvatar(int avatar)
         {
             MyLog.Log($"角色ID:{avatar.ToString()}");
@@ -126,15 +120,20 @@ namespace SkySwordKill.NextMoreCommand.Patchs
                 _spriteRenderer.sprite = sprite;
             }
 
-            if (_skeletonAnimation != null)
+            if (skeletonAnimation != null)
             {
-                _skeletonAnimation.maskInteraction = hasSprite ? SpriteMaskInteraction.VisibleInsideMask : SpriteMaskInteraction.None;
+                skeletonAnimation.maskInteraction = hasSprite ? SpriteMaskInteraction.VisibleInsideMask : SpriteMaskInteraction.None;
 
             }
 
-            if (!GifUtils.GetGifPath(avatar, out var path)) yield break;
+            if (!AssetsUtils.GetGifPath(avatar, out var path))
             {
-                if (stateType == EStateType.None)
+                //    Destroy(this);
+                yield break;
+            }
+
+            {
+                if (_stateType == EStateType.None)
                 {
                     yield break;
                 }
@@ -157,7 +156,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
                         go = playerTranform.gameObject;
                         go.SetActive(false);
                     }
-                    switch (stateType)
+                    switch (_stateType)
                     {
                         case EStateType.SpriteRenderer:
                             var spriteRenderer = go.AddMissingComponent<SpriteRenderer>();
@@ -178,7 +177,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
                     }
                     go.SetActive(true);
                     player = PGif.iGetPlayer(playerName);
-                    switch (stateType)
+                    switch (_stateType)
                     {
                         case EStateType.SpriteRenderer:
                             player.AddExtraDestination(_spriteRenderer);
@@ -209,7 +208,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
                             go = playerTranform.gameObject;
                             go.SetActive(false);
                         }
-                        switch (stateType)
+                        switch (_stateType)
                         {
                             case EStateType.SpriteRenderer:
                                 var spriteRenderer = go.AddMissingComponent<SpriteRenderer>();
@@ -230,7 +229,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
                         }
 
                         player = PGif.iGetPlayer(playerName);
-                        switch (stateType)
+                        switch (_stateType)
                         {
                             case EStateType.SpriteRenderer:
                                 go.SetActive(true);
@@ -241,6 +240,9 @@ namespace SkySwordKill.NextMoreCommand.Patchs
                                 player.AddExtraDestination(_image);
                                 break;
                             case EStateType.None:
+                                break;
+                            default:
+                                //throw new ArgumentOutOfRangeException();
                                 break;
                         }
 
@@ -268,7 +270,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
                                 go.SetActive(true);
                                 player.AddExtraDestination(_spriteRenderer);
                                 break;
-                            case ProGifPlayerSpriteRenderer playerSpriteRenderer:
+                            case ProGifPlayerSpriteRenderer:
                                 go.SetActive(true);
                                 player.ChangeDestination(_spriteRenderer);
                                 break;
@@ -276,13 +278,13 @@ namespace SkySwordKill.NextMoreCommand.Patchs
                                 go.SetActive(true);
                                 player.AddExtraDestination(_image);
                                 break;
-                            case ProGifPlayerImage proGifPlayerImage:
+                            case ProGifPlayerImage:
                                 go.SetActive(true);
                                 player.ChangeDestination(_image);
                                 break;
                             case not null:
 
-                                switch (stateType)
+                                switch (_stateType)
                                 {
                                     case EStateType.SpriteRenderer:
                                         go.SetActive(true);
@@ -306,6 +308,10 @@ namespace SkySwordKill.NextMoreCommand.Patchs
         }
         private void OnDisable()
         {
+            if (string.IsNullOrWhiteSpace(_gifPlayerName))
+            {
+                return;
+            }
             var playerName = GifPlayerName;
             var player = PGif.iGetPlayer(playerName);
             if (player == null || player.playerComponent == null) return;
@@ -362,6 +368,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
                     break;
                 }
             }
+            _gifPlayerName = string.Empty;
         }
         private void OnDestroy()
         {
@@ -435,83 +442,57 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             {
                 Destroy(_spriteRenderer);
             }
-            _skeletonAnimation = null;
+            skeletonAnimation = null;
             _avatarId = 0;
-            playerSetRandomFace = null;
-
+            _playerSetRandomFace = null;
+            _gifPlayerName = string.Empty;
             if (_image != null && _displayHandler != null)
             {
                 Destroy(_displayHandler);
             }
-        }
-        public void SetLive2D()
-        {
-            if (!Main.Res.TryGetFileAsset($"Assets/Live2D/{_avatarId.ToString()}/{_avatarId.ToString()}.model3.json", out var fileAsset)) return;
-            var model3Json = CubismModel3Json.LoadAtPath(fileAsset.FileRawPath, BuiltinLoadAssetAtPath);
-            if (!Main.Res.TryGetFileAsset($"Assets/Live2D/{_avatarId.ToString()}/Idle.motion3.json", out var motion3Asset)) return;
-            var model = model3Json.ToModel();
-            var motion = CubismMotion3Json.LoadFrom(File.ReadAllText(motion3Asset.FileRawPath));
-            Transform transform1;
-            (transform1 = model.transform).SetParent(transform.parent);
-            transform1.localScale = new Vector3(7, 7, 1);
-            var animationClip = motion.ToAnimationClip(isCallFormModelJson: true);
-            animationClip.legacy = false;
-            var fadeController = model.gameObject.AddMissingComponent<CubismFadeController>();
-            fadeController.CubismFadeMotionList = ScriptableObject.CreateInstance<CubismFadeMotionList>();
-            fadeController.CubismFadeMotionList.CubismFadeMotionObjects = new CubismFadeMotionData[]
-            {
-                CubismFadeMotionData.CreateInstance(motion,"Idle",animationClip.length)
-            };
-            fadeController.CubismFadeMotionList.MotionInstanceIds = new[]
-            {
-                animationClip.GetInstanceID()
-            };
-            var motionController = model.gameObject.AddMissingComponent<CubismMotionController>();
- 
-            motionController.PlayAnimation(animationClip, isLoop: true);
-        }
-        private static object BuiltinLoadAssetAtPath(Type assetType, string assetPath)
-        {
-            MyLog.Log($"assetType:{assetType.Name} 路径:{assetPath}");
-            // Explicitly deal with byte arrays.
-            if (assetType == typeof(byte[]))
-            {
-                return File.ReadAllBytes(assetPath);
-
-            }
-            if (assetType == typeof(string))
-            {
-
-                return File.ReadAllText(assetPath);
-
-            }
-            if (assetType == typeof(Texture2D))
-            {
-
-                var texture = new Texture2D(1, 1);
-                texture.hideFlags = HideFlags.HideAndDontSave;
-                texture.LoadImage(File.ReadAllBytes(assetPath));
-                return texture;
-            }
-            return null;
         }
     }
 
     [HarmonyPatch(typeof(PlayerSetRandomFace), nameof(PlayerSetRandomFace.randomAvatar))]
     public static class PlayerSetRandomFaceRandomAvatarPatch
     {
-        public static int avartarID;
-        public static void Prefix(PlayerSetRandomFace __instance, int monstarID)
+        public static int m_avartarID;
+        public static bool customSpine;
+        public static bool Prefix(PlayerSetRandomFace __instance, int monstarID)
         {
-            avartarID = monstarID;
-            var isAvatar = avartarID == 1 || avartarID >= 20000;
+            customSpine = false;
+            m_avartarID = monstarID;
+            var isAvatar = m_avartarID == 1 || m_avartarID >= 20000;
             if (SceneEx.NowSceneName == "MainMenu" || !isAvatar)
             {
-                return;
+                return true;
+            }
+            var avartarID = NPCEx.NPCIDToOld(m_avartarID);
+            if (AssetsUtils.GetSkeletonData(avartarID, out var skeletonData))
+            {
+                var baseSpine = __instance.BaseSpine;
+                var skeletonGraphic = baseSpine.GetComponent<SkeletonGraphic>();
+                if (skeletonGraphic != null)
+                {
+                    skeletonGraphic.skeletonDataAsset = skeletonData;
+                    skeletonGraphic.initialSkinName = "default";
+                    skeletonGraphic.startingAnimation = "Idle_0";
+                    skeletonGraphic.Initialize(true);
+                }
+                else
+                {
+                    var skeletonAnimation = baseSpine.GetComponent<SkeletonAnimation>();
+                    skeletonAnimation.skeletonDataAsset = skeletonData;
+                    skeletonAnimation.initialSkinName = "default";
+                    skeletonAnimation.AnimationName = "Idle_0";
+                    skeletonAnimation.Initialize(true);
+                }
+                customSpine = true;
+                return false;
+
             }
 
-
-            MyLog.Log($"Prefix avartarID:{avartarID.ToString()} monstarID:{monstarID.ToString()}");
+            MyLog.Log($"Prefix avartarID:{m_avartarID.ToString()} monstarID:{monstarID.ToString()}");
             if (__instance.BaseImage == null)
             {
                 var gameObject = new GameObject("Image", typeof(CustomImage));
@@ -520,12 +501,12 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             var customImage = __instance.BaseImage.AddMissingComponent<CustomImage>();
             customImage.SetSpine(__instance);
 
-
+            return true;
         }
         public static void Postfix(PlayerSetRandomFace __instance, int monstarID)
         {
-            var isAvatar = avartarID == 1 || avartarID >= 20000;
-            if (SceneEx.NowSceneName == "MainMenu" || !isAvatar)
+            var isAvatar = m_avartarID == 1 || m_avartarID >= 20000;
+            if (SceneEx.NowSceneName == "MainMenu" || !isAvatar || customSpine)
             {
                 return;
             }
@@ -533,11 +514,11 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             var img = __instance.BaseImage;
             if (img == null) return;
 
-            MyLog.Log($"Postfix avartarID:{avartarID.ToString()} monstarID:{monstarID.ToString()}");
+            MyLog.Log($"Postfix avartarID:{m_avartarID.ToString()} monstarID:{monstarID.ToString()}");
             var customImage = img.AddMissingComponent<CustomImage>();
 
             img.SetActive(true);
-            customImage.SetAvatarId(avartarID);
+            customImage.SetAvatarId(m_avartarID);
             if (!NpcUtils.IsFightScene && __instance.GetComponent<SkeletonGraphic>() != null)
             {
 

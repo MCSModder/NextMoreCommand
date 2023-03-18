@@ -1,61 +1,87 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using BepInEx;
 using Puerts;
 using SkySwordKill.Next;
+using SkySwordKill.NextMoreCommand.Patchs;
 
 namespace SkySwordKill.NextMoreCommand.Puerts
 {
     public class NextLoader : ILoader, IModuleChecker
     {
 
-        public bool FileExists(string filepath)
+        public bool FileExists(string filePath)
         {
-           // MyPluginMain.LogInfo($"判断文件路径:{filepath}");
-            if (filepath.StartsWith("puerts/") && Main.Res.fileAssets.ContainsKey($"Assets/Resources/{filepath}"))
+            if (!ModManagerLoadModData.JsExt.Contains(Path.GetExtension(filePath)) && !filePath.EndsWith(".js"))
+            {
+                filePath += ".js";
+            }
+            // MyPluginMain.LogInfo($"判断文件路径:{filePath}");
+            if (mockFileContent.ContainsKey(filePath))
             {
                 return true;
             }
-            if (JsEnvManager.JsFileCaches.ContainsKey(filepath))
+            if (JsEnvManager.JsFileCaches.ContainsKey(filePath))
             {
                 return true;
             }
+
             var lib = MyPluginMain.I.PathLibDir.Value;
-            return File.Exists(Utility.CombinePaths(lib,"puerts", filepath));
+            return File.Exists(Utility.CombinePaths(lib, filePath)) || File.Exists(Utility.CombinePaths(lib, "puerts", filePath));
         }
         private string PathToUse(string filepath)
         {
             return
                 filepath.EndsWith(".cjs") || filepath.EndsWith(".mjs") ? filepath.Substring(0, filepath.Length - 4) : filepath;
         }
-        public string ReadFile(string filepath, out string debugpath)
+        public string ReadFile(string filePath, out string debugPath)
         {
-          //  MyPluginMain.LogInfo($"读取文件路径:{filepath}");
-            string filePath;
-            if (filepath.StartsWith("puerts/") && Main.Res.TryGetFileAsset($"Assets/Resources/{filepath}", out var fileAsset))
+            if (!ModManagerLoadModData.JsExt.Contains(Path.GetExtension(filePath)) && !filePath.EndsWith(".js"))
             {
-                filePath = fileAsset.FileRawPath;
-                debugpath = Directory.GetDirectoryRoot(filePath);
-                return File.ReadAllText(filePath);
+                filePath += ".js";
             }
-            if (JsEnvManager.JsFileCaches.TryGetValue(filepath, out var jsFileCache))
+            // MyPluginMain.LogInfo($"读取文件路径:{filePath}");
+            string filepath;
+            if (JsEnvManager.JsFileCaches.TryGetValue(filePath, out var jsFileCache))
             {
-                filePath = jsFileCache.FilePath;
-                debugpath = filePath;
+                filepath = jsFileCache.FilePath;
+                debugPath = filePath;
                 return File.ReadAllText(filepath);
             }
-            var lib = MyPluginMain.I.PathLibDir.Value;
-            filePath = Utility.CombinePaths(lib,"puerts", filepath);
-            if (File.Exists(filePath))
+            if (mockFileContent.ContainsKey(filePath))
             {
-                debugpath = filepath;
-                return File.ReadAllText(filePath);
+                debugPath = filePath;
+                return mockFileContent[filePath];
             }
-            debugpath = string.Empty;
-            return debugpath;
+            var lib = MyPluginMain.I.PathLibDir.Value;
+            filepath = Utility.CombinePaths(lib, "puerts", filePath);
+            if (File.Exists(filepath))
+            {
+                debugPath = filepath;
+                return File.ReadAllText(filepath);
+            }
+            filepath = Utility.CombinePaths(lib, filePath);
+            if (File.Exists(filepath))
+            {
+                debugPath = filepath;
+                return File.ReadAllText(filepath);
+            }
+            debugPath = string.Empty;
+            return debugPath;
         }
         public bool IsESM(string filepath)
         {
             return filepath.Length >= 4 && !filepath.EndsWith(".cjs");
+        }
+        public readonly Dictionary<string, string> mockFileContent = new Dictionary<string, string>();
+        public void AddMockFileContent(string filePath, string context)
+        {
+            if (!ModManagerLoadModData.JsExt.Contains(Path.GetExtension(filePath)) && !filePath.EndsWith(".js"))
+            {
+                filePath += ".js";
+            }
+            mockFileContent[filePath] = context;
         }
     }
 }

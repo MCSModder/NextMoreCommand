@@ -59,7 +59,7 @@ public static class ModManagerLoadModData
         File.WriteAllText(dir.CombinePath("天宫警花.json"),
             npc.ToString());
     }
-    private static string[] JsExt = new[]
+    public static string[] JsExt = new[]
     {
         ".js",
         ".cjs",

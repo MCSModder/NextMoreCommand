@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using FairyGUI;
 using HarmonyLib;
 using KBEngine;
@@ -187,9 +188,13 @@ public class NextReloadManager : MonoBehaviour
             YSSaveGame.Reset();
             KBEngineApp.app.entities[10] = null;
             KBEngineApp.app.entities.Remove(10);
-            Tools.instance.loadOtherScenes("MainMenu");
+            var tools = Tools.instance;
+            tools.loadSceneType = 0;
+            tools.ohtherSceneName = "MainMenu";
+            tools.isNeedSetTalk = true;
+            tools.CanOpenTab = false;
+            ModManager.ReloadAllModAsync();
             DestroyImmediate(this);
-            ModManager.ReloadAllMod();
         }, null, true);
     }
     
@@ -229,9 +234,13 @@ public class NextReloadManager : MonoBehaviour
         YSSaveGame.Reset();
         KBEngineApp.app.entities[10] = null;
         KBEngineApp.app.entities.Remove(10);
-        Tools.instance.loadOtherScenes("MainMenu");
+        var tools = Tools.instance;
+        tools.loadSceneType = 0;
+        tools.ohtherSceneName = "MainMenu";
+        tools.isNeedSetTalk = true;
+        tools.CanOpenTab = false;
+        ModManager.ReloadAllModAsync();
         DestroyImmediate(this);
-        ModManager.ReloadAllMod();
     }
 }
 

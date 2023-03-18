@@ -7,6 +7,8 @@ using ProGif.GifManagers;
 using ProGif.Lib;
 using SkySwordKill.Next;
 using SkySwordKill.Next.Res;
+using Spine;
+using Spine.Unity;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -24,9 +26,10 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
     }
 
-    public static class GifUtils
+    public static class AssetsUtils
     {
         public readonly static Dictionary<string, FileAsset> CacheFileAssets = new Dictionary<string, FileAsset>();
+        public readonly static Dictionary<string, AssetBundle> CacheAssetBundle = new Dictionary<string, AssetBundle>();
         public static bool GetFileAsset(string path, out FileAsset fileAsset)
         {
             if (CacheFileAssets.ContainsKey(path))
@@ -45,6 +48,53 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
 
             return true;
+        }
+        public static bool GetAssetBundle(string path, out AssetBundle assetBundle)
+        {
+            if (CacheAssetBundle.ContainsKey(path))
+            {
+                assetBundle = CacheAssetBundle[path];
+                return true;
+            }
+            if (Main.Res.TryGetAsset(path, out Object asset))
+            {
+                if (asset is AssetBundle bundle)
+                {
+                    assetBundle = bundle;
+                    CacheAssetBundle.Add(path, assetBundle);
+                    return true;
+                }
+            }
+            assetBundle = null;
+            return false;
+        }
+        public static AssetBundle GetAssetBundle(string path) => GetAssetBundle(path, out var assetBundle) ? assetBundle : null;
+        public static SkeletonDataAsset GetSkeletonData(int avatar) => GetSkeletonData(avatar, out var skeletonData) ? skeletonData : null;
+        public static bool GetSkeletonData(int avatar, out SkeletonDataAsset skeletonData)
+        {
+            var abPath = $"Assets/Avatar/Spine/{avatar.ToString()}/{avatar.ToString()}.ab";
+            var skeletonPath = $"Assets/Skeleton/{avatar.ToString()}";
+
+            if (CacheAssetBundle.ContainsKey(abPath))
+            {
+                var ab = CacheAssetBundle[abPath];
+                skeletonData = ab.LoadAsset<SkeletonDataAsset>(skeletonPath);
+            }
+            else if (!Main.Res.TryGetAsset(abPath, out AssetBundle assetBundle))
+            {
+                skeletonData = null;
+
+                return false;
+            }
+            else
+            {
+                CacheAssetBundle.Add(abPath, assetBundle);
+                skeletonData = assetBundle.LoadAsset<SkeletonDataAsset>(skeletonPath);
+
+            }
+
+
+            return skeletonData != null;
         }
         public static string GetName<T>(this T instance) where T : Enum
         {
@@ -65,6 +115,11 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public static void Clear()
         {
             CacheFileAssets.Clear();
+            foreach (var assetBundle in CacheAssetBundle.Values)
+            {
+                assetBundle.Unload(true);
+            }
+            CacheAssetBundle.Clear();
             if (NextMoreCommand.Instance == null)
             {
                 return;

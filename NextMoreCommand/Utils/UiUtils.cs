@@ -74,7 +74,7 @@ public static class UiUtils
 
     }
     private static UIMenPaiShop _uiMenPaiShop => UIMenPaiShop.Inst;
-    public static void ShowMenPaiShop(string title, bool isMoney = false)
+    public static void ShowMenPaiShop(string title, bool isMoney = false,float ratio = 1f)
     {
         var all = NomelShopJsonData.DataList.FindAll(item => item.Title == title);
         if (all.Count == 0)
@@ -120,6 +120,10 @@ public static class UiUtils
                 if (nomelShopJsonData.SType == 1 && levelType < item.quality && (item.type == 3 || item.type == 4)) continue;
                 var shopItem = Object.Instantiate(uiMenPaiShop.UIMenPaiShopItemPrefab, uiMenPaiShop.ShopRT[index]).GetComponent<UIMenPaiShopItem>();
                 var price = isMoney ? item.price : item.price / good.percent;
+                if (ratio > 0)
+                {
+                    price = (int)(price * ratio);
+                }
                 if (!isMoney && item.price % good.percent > 0)
                     price++;
                 shopItem.PriceText.text = price.ToString();

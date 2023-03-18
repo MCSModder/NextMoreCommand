@@ -30,7 +30,7 @@ public static class MainUIMagOpenMainPatch
 {
     public static void Prefix()
     {
-        GifUtils.Clear();
+        AssetsUtils.Clear();
     }
 }
 

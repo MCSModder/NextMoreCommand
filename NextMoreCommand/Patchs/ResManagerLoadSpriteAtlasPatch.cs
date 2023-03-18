@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using HarmonyLib;
-using Live2D.Cubism.Rendering.Masking;
+//using Live2D.Cubism.Rendering.Masking;
 using SkySwordKill.Next;
 using SkySwordKill.NextMoreCommand.Utils;
 using UnityEngine;
@@ -11,53 +11,53 @@ using Object = UnityEngine.Object;
 
 namespace SkySwordKill.NextMoreCommand.Patchs;
 
-enum EType
-{
-    Material,
-    RuntimeAnimatorController
-}
+// enum EType
+// {
+//     Material,
+//     RuntimeAnimatorController
+// }
 
-[HarmonyPatch(typeof(Resources), nameof(Resources.Load), typeof(string), typeof(Type))]
-public static class ResourcesLoadPatch
-{
-    private static AssetBundle assetBundle;
-    private static Dictionary<Type, EType> _types = new Dictionary<Type, EType>()
-    {
-        {
-            typeof(Material), EType.Material
-        },
-        {
-            typeof(RuntimeAnimatorController), EType.RuntimeAnimatorController
-        },
-    };
-    public static bool Prefix(string path, Type systemTypeInstance, ref Object __result)
-    {
-
-
-        if (!path.StartsWith("Live2D")) return true;
-        if (path == "Live2D/Cubism/GlobalMaskTexture" && systemTypeInstance == typeof(CubismMaskTexture))
-        {
-            __result = ScriptableObject.CreateInstance<CubismMaskTexture>();
-
-            return false;
-        }
-        if (assetBundle == null && Main.Res.TryGetAsset($"Assets/Resources/Live2D/live2d.ab", out var fileAsset))
-        {
-            assetBundle = fileAsset as AssetBundle;
-        }
-        if (assetBundle == null) return true;
-        if (!_types.ContainsKey(systemTypeInstance)) return true;
-        var ext = _types[systemTypeInstance] switch
-        {
-            EType.RuntimeAnimatorController => ".controller",
-            EType.Material => ".mat",
-            _ => ""
-        };
-        __result = assetBundle.LoadAsset($"assets/{path}{ext}", systemTypeInstance);
-        return false;
-
-    }
-}
+// [HarmonyPatch(typeof(Resources), nameof(Resources.Load), typeof(string), typeof(Type))]
+// public static class ResourcesLoadPatch
+// {
+//     private static AssetBundle assetBundle;
+//     private static Dictionary<Type, EType> _types = new Dictionary<Type, EType>()
+//     {
+//         {
+//             typeof(Material), EType.Material
+//         },
+//         {
+//             typeof(RuntimeAnimatorController), EType.RuntimeAnimatorController
+//         },
+//     };
+//     public static bool Prefix(string path, Type systemTypeInstance, ref Object __result)
+//     {
+//
+//
+//         if (!path.StartsWith("Live2D")) return true;
+//         if (path == "Live2D/Cubism/GlobalMaskTexture" && systemTypeInstance == typeof(CubismMaskTexture))
+//         {
+//             __result = ScriptableObject.CreateInstance<CubismMaskTexture>();
+//
+//             return false;
+//         }
+//         if (assetBundle == null && Main.Res.TryGetAsset($"Assets/Resources/Live2D/live2d.ab", out var fileAsset))
+//         {
+//             assetBundle = fileAsset as AssetBundle;
+//         }
+//         if (assetBundle == null) return true;
+//         if (!_types.ContainsKey(systemTypeInstance)) return true;
+//         var ext = _types[systemTypeInstance] switch
+//         {
+//             EType.RuntimeAnimatorController => ".controller",
+//             EType.Material => ".mat",
+//             _ => ""
+//         };
+//         __result = assetBundle.LoadAsset($"assets/{path}{ext}", systemTypeInstance);
+//         return false;
+//
+//     }
+// }
 
 [HarmonyPatch(typeof(ResManager), nameof(ResManager.LoadSpriteAtlas))]
 public static class ResManagerLoadSpriteAtlasPatch

@@ -59,11 +59,13 @@ namespace SkySwordKill.NextMoreCommand
             InitDir();
           
             NextMoreCoreBinder.BindAll();
+       
             ModManager.ModReload += () =>
             {
                 CustomNpc.CustomNpcs.Clear();
                 SkillComboManager.SkillCombos.Clear();
                 SkillComboManager.CacheSkillCombos.Clear();
+                NextMoreCommand.InitJsEnvManager();
                 
             };
             ModManager.ModSettingChanged += () =>
@@ -75,7 +77,7 @@ namespace SkySwordKill.NextMoreCommand
             {
                 ModManagerUtils.TryGetModSetting("Quick_DramaDebugKey", out DramaDebugKey);
                 ModManager.TryGetModSetting("Quick_IsDebugMode", out IsDebugMode);
-                GifUtils.Clear();
+                AssetsUtils.Clear();
             };
         }
 
