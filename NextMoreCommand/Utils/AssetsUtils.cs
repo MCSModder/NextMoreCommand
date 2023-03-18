@@ -73,7 +73,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public static bool GetSkeletonData(int avatar, out SkeletonDataAsset skeletonData)
         {
             var abPath = $"Assets/Avatar/Spine/{avatar.ToString()}/{avatar.ToString()}.ab";
-            var skeletonPath = $"Assets/Skeleton/{avatar.ToString()}";
+            var skeletonPath = $"assets/skeleton/{avatar.ToString()}_skeletondata.asset";
 
             if (CacheAssetBundle.ContainsKey(abPath))
             {

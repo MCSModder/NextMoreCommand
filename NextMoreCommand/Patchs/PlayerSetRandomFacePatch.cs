@@ -506,11 +506,14 @@ namespace SkySwordKill.NextMoreCommand.Patchs
         public static void Postfix(PlayerSetRandomFace __instance, int monstarID)
         {
             var isAvatar = m_avartarID == 1 || m_avartarID >= 20000;
-            if (SceneEx.NowSceneName == "MainMenu" || !isAvatar || customSpine)
+            if (SceneEx.NowSceneName == "MainMenu" || !isAvatar )
             {
                 return;
             }
-
+            if (customSpine)
+            {
+                return;
+            }
             var img = __instance.BaseImage;
             if (img == null) return;
 
