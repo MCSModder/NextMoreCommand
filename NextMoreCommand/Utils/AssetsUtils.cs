@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BehaviorDesigner.Runtime.Tasks.Basic.UnityGameObject;
 using Fungus;
 using JetBrains.Annotations;
@@ -30,6 +31,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
     {
         public readonly static Dictionary<string, FileAsset> CacheFileAssets = new Dictionary<string, FileAsset>();
         public readonly static Dictionary<string, AssetBundle> CacheAssetBundle = new Dictionary<string, AssetBundle>();
+        public readonly static Dictionary<int, List<string>> CacheAnimation = new Dictionary<int, List<string>>();
         public static bool GetFileAsset(string path, out FileAsset fileAsset)
         {
             if (CacheFileAssets.ContainsKey(path))
@@ -68,33 +70,33 @@ namespace SkySwordKill.NextMoreCommand.Utils
             assetBundle = null;
             return false;
         }
+        public static bool GetAssetBundle(int avatar, out AssetBundle assetBundle) => GetAssetBundle($"Assets/Avatar/Spine/{avatar.ToString()}/{avatar.ToString()}.ab", out assetBundle);
         public static AssetBundle GetAssetBundle(string path) => GetAssetBundle(path, out var assetBundle) ? assetBundle : null;
+        public static AssetBundle GetAssetBundle(int avatar) => GetAssetBundle(avatar, out var assetBundle) ? assetBundle : null;
         public static SkeletonDataAsset GetSkeletonData(int avatar) => GetSkeletonData(avatar, out var skeletonData) ? skeletonData : null;
         public static bool GetSkeletonData(int avatar, out SkeletonDataAsset skeletonData)
         {
-            var abPath = $"Assets/Avatar/Spine/{avatar.ToString()}/{avatar.ToString()}.ab";
             var skeletonPath = $"assets/skeleton/{avatar.ToString()}_skeletondata.asset";
-
-            if (CacheAssetBundle.ContainsKey(abPath))
-            {
-                var ab = CacheAssetBundle[abPath];
-                skeletonData = ab.LoadAsset<SkeletonDataAsset>(skeletonPath);
-            }
-            else if (!Main.Res.TryGetAsset(abPath, out AssetBundle assetBundle))
+            var hasAssetBundle = GetAssetBundle(avatar, out var assetBundle);
+            if (!hasAssetBundle)
             {
                 skeletonData = null;
-
                 return false;
             }
-            else
-            {
-                CacheAssetBundle.Add(abPath, assetBundle);
-                skeletonData = assetBundle.LoadAsset<SkeletonDataAsset>(skeletonPath);
-
-            }
-
-
+            skeletonData = assetBundle.LoadAsset<SkeletonDataAsset>(skeletonPath);
             return skeletonData != null;
+        }
+        public static bool GetSkeletonAnimation(int avatar, out GameObject skeletonAnimation)
+        {
+            var skeletonPath = $"assets/skeleton/skeletonanimation.prefab";
+            var hasAssetBundle = GetAssetBundle(avatar, out var assetBundle);
+            if (!hasAssetBundle)
+            {
+                skeletonAnimation = null;
+                return false;
+            }
+            skeletonAnimation = assetBundle.LoadAsset<GameObject>(skeletonPath);
+            return skeletonAnimation != null;
         }
         public static string GetName<T>(this T instance) where T : Enum
         {
@@ -112,9 +114,23 @@ namespace SkySwordKill.NextMoreCommand.Utils
             path = string.Empty;
             return false;
         }
+        public static bool CheckAnimation(int avatar, Skeleton skeleton, string animationName)
+        {
+            var list = new List<string>();
+            if (CacheAnimation.ContainsKey(avatar))
+            {
+                list = CacheAnimation[avatar];
+                return list.Contains(animationName);
+            }
+            CacheAnimation.Add(avatar, list);
+            var animations = skeleton.Data.Animations;
+            list.AddRange(animations.Select(animation => animation.Name));
+            return list.Contains(animationName);
+        }
         public static void Clear()
         {
             CacheFileAssets.Clear();
+            CacheAnimation.Clear();
             foreach (var assetBundle in CacheAssetBundle.Values)
             {
                 assetBundle.Unload(true);

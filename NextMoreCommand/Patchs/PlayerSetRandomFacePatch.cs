@@ -5,12 +5,15 @@ using HarmonyLib;
 using ProGif.GifManagers;
 using ProGif.Lib;
 using SkySwordKill.NextMoreCommand.Utils;
+using Spine;
 using Spine.Unity;
 using UnityEngine;
 using UnityEngine.Serialization;
+using AnimationState = Spine.AnimationState;
 using Avatar = KBEngine.Avatar;
 using GameObject = UnityEngine.GameObject;
 using Image = UnityEngine.UI.Image;
+using Object = UnityEngine.Object;
 
 namespace SkySwordKill.NextMoreCommand.Patchs
 {
@@ -470,25 +473,58 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             var avartarID = NPCEx.NPCIDToOld(m_avartarID);
             if (AssetsUtils.GetSkeletonData(avartarID, out var skeletonData))
             {
-                var baseSpine = __instance.BaseSpine;
-                var skeletonGraphic = baseSpine.GetComponent<SkeletonGraphic>();
+
+                var skeletonGraphic = __instance.GetComponent<SkeletonGraphic>();
+                var skeletonAnimation = __instance.GetComponent<SkeletonAnimation>();
                 if (skeletonGraphic != null)
                 {
                     skeletonGraphic.skeletonDataAsset = skeletonData;
                     skeletonGraphic.initialSkinName = "default";
+                    skeletonGraphic.Skeleton.SetToSetupPose();
                     skeletonGraphic.startingAnimation = "Idle_0";
                     skeletonGraphic.Initialize(true);
+                    customSpine = true;
                 }
-                else
+                else if (skeletonAnimation != null)
                 {
-                    var skeletonAnimation = baseSpine.GetComponent<SkeletonAnimation>();
-                    skeletonAnimation.skeletonDataAsset = skeletonData;
-                    skeletonAnimation.initialSkinName = "default";
-                    skeletonAnimation.AnimationName = "Idle_0";
-                    skeletonAnimation.Initialize(true);
+                    if (AssetsUtils.GetSkeletonAnimation(avartarID, out var skeletonAnimationGo))
+                    {
+                        skeletonAnimation.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+                        var gameObject = Object.Instantiate(skeletonAnimationGo, skeletonAnimation.transform.parent);
+                        var skeletonAnimation1 = gameObject.GetComponent<SkeletonAnimation>();
+                        skeletonAnimation.AnimationState.Start += entry =>
+                        {
+                          //  MyPluginMain.LogInfo(entry.Animation.Name);
+                            var name = entry.Animation.Name;
+                            var hasAnimation = AssetsUtils.CheckAnimation(avartarID, skeletonAnimation1.Skeleton, name);
+                            if (!hasAnimation) return;
+                            var isIdle = name == "Idle_0";
+                            var trackEntry = skeletonAnimation1.AnimationState.GetCurrent(0);
+                            if (trackEntry != null)
+                            {
+                                skeletonAnimation1.AnimationState.ClearTrack(0);
+                            }
+                            skeletonAnimation1.AnimationState.SetAnimation(0, name, isIdle);
+
+                        };
+                        customSpine = true;
+                    }
                 }
-                customSpine = true;
-                return false;
+                var baseSpine = __instance.BaseSpine;
+                if (baseSpine != null)
+                {
+                    baseSpine.SetActive(customSpine);
+                }
+                var baseImage = __instance.BaseImage;
+                if (baseImage != null)
+                {
+                    baseImage.SetActive(!customSpine);
+                }
+                if (customSpine)
+                {
+                    return false;
+                }
+
 
             }
 
@@ -506,7 +542,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
         public static void Postfix(PlayerSetRandomFace __instance, int monstarID)
         {
             var isAvatar = m_avartarID == 1 || m_avartarID >= 20000;
-            if (SceneEx.NowSceneName == "MainMenu" || !isAvatar )
+            if (SceneEx.NowSceneName == "MainMenu" || !isAvatar)
             {
                 return;
             }
