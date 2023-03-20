@@ -5,6 +5,7 @@ using SkySwordKill.NextMoreCommand.Utils;
 namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Npc
 {
     [DialogEnvQuery("HasNpcFace")]
+    [DialogEnvQuery("检测角色捏脸")]
     public class HasNpcFace : IDialogEnvQuery
     {
         public object Execute(DialogEnvQueryContext context)

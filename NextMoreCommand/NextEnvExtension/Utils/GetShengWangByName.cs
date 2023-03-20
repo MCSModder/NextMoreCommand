@@ -5,6 +5,7 @@ using SkySwordKill.NextMoreCommand.Utils;
 
 namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Utils;
 [DialogEnvQuery("GetShengWangByName")]
+[DialogEnvQuery("获得势力声望")]
 public class GetShengWangByName:IDialogEnvQuery
 {
     public Dictionary<string, int> Shili = new();

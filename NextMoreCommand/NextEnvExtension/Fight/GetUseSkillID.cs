@@ -7,6 +7,7 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Fight
 {
 
     [DialogEnvQuery("GetUseSkillID")]
+    [DialogEnvQuery("获得使用神通ID")]
     public class GetUseSkillID : IDialogEnvQuery
     {
         public object Execute(DialogEnvQueryContext context)

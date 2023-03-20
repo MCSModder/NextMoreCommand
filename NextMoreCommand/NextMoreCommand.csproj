@@ -223,6 +223,8 @@
         <Compile Include="NextEnvExtension\DongFu\HasDongFu.cs" />
         <Compile Include="NextEnvExtension\DongFu\HasMenPaiDongFu.cs" />
         <Compile Include="NextEnvExtension\DongFu\HasYiFengChengDongFu.cs" />
+        <Compile Include="NextEnvExtension\Fight\GetFightTypeName.cs" />
+        <Compile Include="NextEnvExtension\Npc\GetNpcData.cs" />
         <Compile Include="NextEnvExtension\Npc\GetNpcFace.cs" />
         <Compile Include="NextEnvExtension\Npc\GetNpcLiHui.cs" />
         <Compile Include="NextEnvExtension\Npc\HasNpcFace.cs" />
@@ -330,7 +332,6 @@
         <Compile Include="NextEnvExtension\Fight\IsFightFeiSheng.cs" />
         <Compile Include="NextEnvExtension\Fight\IsMonsterTurn.cs" />
         <Compile Include="NextEnvExtension\Fight\IsPlayerTurn.cs" />
-        <Compile Include="NextEnvExtension\Npc\GetAvatarJsonData.AvatarJsonData.cs" />
         <Compile Include="NextEnvExtension\Npc\GetAvatarJsonData.cs" />
         <Compile Include="NextEnvExtension\Npc\GetDaolvList.cs" />
         <Compile Include="NextEnvExtension\Npc\GetDaolvCount.cs" />

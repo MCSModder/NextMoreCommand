@@ -4,7 +4,7 @@ using SkySwordKill.NextMoreCommand.Utils;
 namespace SkySwordKill.NextMoreCommand.NextEnvExtension.DongFu
 {
     [DialogEnvQuery("HasDongFu")]
-    [DialogEnvQuery("获得洞府是否存在")]
+    [DialogEnvQuery("检测洞府")]
     public class HasDongFu : IDialogEnvQuery
     {
         public object Execute(DialogEnvQueryContext context)

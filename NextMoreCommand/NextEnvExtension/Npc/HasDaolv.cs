@@ -4,6 +4,7 @@ using SkySwordKill.NextMoreCommand.Utils;
 namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Npc
 {
     [DialogEnvQuery("HasDaolv")]
+    [DialogEnvQuery("检测道侣")]
     public class HasDaolv : IDialogEnvQuery
     {
         public object Execute(DialogEnvQueryContext context)

@@ -5,6 +5,7 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Utils
 {
 
     [DialogEnvQuery("GetIntGroup")]
+    [DialogEnvQuery("获得整数群")]
     public class GetIntGroup : IDialogEnvQuery
     {
         public object Execute(DialogEnvQueryContext context)

@@ -4,6 +4,7 @@ using SkySwordKill.NextMoreCommand.Utils;
 namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Fight;
 
 [DialogEnvQuery("GetStaticSkillLevel")]
+[DialogEnvQuery("获得功法等级")]
 public class GetStaticSkillLevel : IDialogEnvQuery
 {
     public object Execute(DialogEnvQueryContext context)

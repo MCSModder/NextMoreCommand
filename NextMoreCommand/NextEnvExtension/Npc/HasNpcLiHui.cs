@@ -5,6 +5,7 @@ using SkySwordKill.NextMoreCommand.Utils;
 namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Npc
 {
     [DialogEnvQuery("HasNpcLiHui")]
+    [DialogEnvQuery("检测角色立绘")]
     public class HasNpcLiHui : IDialogEnvQuery
     {
         public object Execute(DialogEnvQueryContext context)

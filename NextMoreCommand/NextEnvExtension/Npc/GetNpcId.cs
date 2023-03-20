@@ -5,6 +5,7 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Npc
 {
 
     [DialogEnvQuery("GetNpcId")]
+    [DialogEnvQuery("获得角色ID")]
     public class GetNpcId : IDialogEnvQuery
     {
         public object Execute(DialogEnvQueryContext context)

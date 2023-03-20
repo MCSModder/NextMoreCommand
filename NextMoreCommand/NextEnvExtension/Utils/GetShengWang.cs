@@ -3,6 +3,7 @@ using SkySwordKill.NextMoreCommand.Utils;
 
 namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Utils;
 [DialogEnvQuery("GetShengWang")]
+[DialogEnvQuery("获得声望")]
 public class GetShengWang:IDialogEnvQuery
 {
     public object Execute(DialogEnvQueryContext context)

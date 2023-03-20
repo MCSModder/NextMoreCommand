@@ -4,6 +4,7 @@ using SkySwordKill.NextMoreCommand.Utils;
 namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Npc
 {
     [DialogEnvQuery("GetNpcMoney")]
+    [DialogEnvQuery("获得角色灵石")]
     public class GetNpcMoney : IDialogEnvQuery
     {
         public object Execute(DialogEnvQueryContext context)

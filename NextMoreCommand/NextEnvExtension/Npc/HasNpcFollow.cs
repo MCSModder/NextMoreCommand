@@ -5,6 +5,7 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Npc
 {
 
     [DialogEnvQuery("HasNpcFollow")]
+    [DialogEnvQuery("检测跟随角色")]
     public class HasNpcFollow : IDialogEnvQuery
     {
         public object Execute(DialogEnvQueryContext context)

@@ -76,7 +76,6 @@ namespace SkySwordKill.NextMoreCommand.Puerts
             // });
 
         }
-        private object _result;
         public void ClearCache() => JsEnv?.ClearModuleCache();
         private void Start()
         {

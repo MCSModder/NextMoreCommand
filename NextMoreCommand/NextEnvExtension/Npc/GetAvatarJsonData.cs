@@ -5,484 +5,281 @@ using SkySwordKill.Next;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.NextMoreCommand.Utils;
 
-namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Npc;
-
-public partial class AvatarJsonData
+namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Npc
 {
-    [JsonIgnore] private JSONObject AvatarRandomJsonData => jsonData.instance.AvatarRandomJsonData[Id];
-    [JsonIgnore] public int Id { get; set; }
-
-    [JsonIgnore]
-    public string Name
+    public  class AvatarJsonData
     {
-        get => _name;
-        set
+
+        public AvatarJsonData(int id)
         {
-            _name = value;
-            AvatarRandomJsonData.SetField("Name", value);
+            Id = id.ToNpcNewId();
         }
-    }
+        private JSONObject AvatarRandomJsonData => jsonData.instance.AvatarRandomJsonData[Id.ToString()];
+        private string Str => AvatarRandomJsonData?.ToString(true);
+        public int Id { get; }
 
-    [JsonIgnore]
-    public string BirthdayTime
-    {
-        get => _birthdayTime;
-        set
+
+        public string Name
         {
-            _birthdayTime = value;
-            AvatarRandomJsonData.SetField("BirthdayTime", value);
+            get => AvatarRandomJsonData?.GetField("Name").Str;
+            set => AvatarRandomJsonData?.SetField("Name", value);
         }
-    }
 
-    // ReSharper disable once HeapView.BoxingAllocation
-    public void SetBirthdayTime(int year, int mouth, int day) =>
-        BirthdayTime = $"{year:0000}-{mouth.ToString()}-{day.ToString()}";
 
-    [JsonIgnore]
-    public int Sex
-    {
-        get => _sex;
-        set
+        public string BirthdayTime
         {
-            _sex = value;
-            AvatarRandomJsonData.SetField("Sex", value);
+            get => AvatarRandomJsonData?.GetField("BirthdayTime").Str;
+            private set => AvatarRandomJsonData?.SetField("BirthdayTime", value);
         }
-    }
 
-    [JsonIgnore]
-    public int Feature
-    {
-        get => _feature;
-        set
+        // ReSharper disable once HeapView.BoxingAllocation
+        public void SetBirthdayTime(int year, int mouth, int day) =>
+            BirthdayTime = $"{year:0000}-{mouth.ToString()}-{day.ToString()}";
+
+
+        public int Sex
         {
-            _feature = value;
-            AvatarRandomJsonData.SetField("feature", value);
+            get => AvatarRandomJsonData.GetField("Sex").I;
+            private set => AvatarRandomJsonData?.SetField("Sex", value);
         }
-    }
 
-    [JsonIgnore]
-    public int YanYing
-    {
-        get => _yanying;
-        set
+
+        public int Feature
         {
-            _yanying = value;
-            AvatarRandomJsonData.SetField("yanying", value);
+            get => AvatarRandomJsonData.GetField("feature").I;
+            set => AvatarRandomJsonData?.SetField("feature", value);
         }
-    }
 
-    [JsonIgnore]
-    public int Mask
-    {
-        get => _aMask;
-        set
+
+        public int YanYing
         {
-            _aMask = value;
-            AvatarRandomJsonData.SetField("a_mask", value);
+            get => AvatarRandomJsonData.GetField("yanying").I;
+            set => AvatarRandomJsonData?.SetField("yanying", value);
         }
-    }
 
-    [JsonIgnore]
-    public int ShawlHair
-    {
-        get => _shawlHair;
-        set
+
+        public int Mask
         {
-            _shawlHair = value;
-            AvatarRandomJsonData.SetField("Shawl_hair", value);
+            get => AvatarRandomJsonData.GetField("a_mask").I;
+            set => AvatarRandomJsonData?.SetField("a_mask", value);
         }
-    }
 
-    [JsonIgnore]
-    public int BackGown
-    {
-        get => _backGown;
-        set
+
+        public int ShawlHair
         {
-            _backGown = value;
-            AvatarRandomJsonData.SetField("back_gown", value);
+            get => AvatarRandomJsonData.GetField("Shawl_hair").I;
+            set => AvatarRandomJsonData?.SetField("Shawl_hair", value);
         }
-    }
 
-    [JsonIgnore]
-    public int RightArm
-    {
-        get => _rARM;
-        set
+
+        public int BackGown
         {
-            _rARM = value;
-            AvatarRandomJsonData.SetField("r_arm", value);
+            get => AvatarRandomJsonData.GetField("back_gown").I;
+            set => AvatarRandomJsonData?.SetField("back_gown", value);
         }
-    }
 
-    [JsonIgnore]
-    public int Gown
-    {
-        get => _gown;
-        set
+
+        public int RightArm
         {
-            _gown = value;
-            AvatarRandomJsonData.SetField("gown", value);
+            get => AvatarRandomJsonData.GetField("r_arm").I;
+            set => AvatarRandomJsonData?.SetField("r_arm", value);
         }
-    }
 
-    [JsonIgnore]
-    public int LeftArm
-    {
-        get => _lARM;
-        set
+
+        public int Gown
         {
-            _lARM = value;
-            AvatarRandomJsonData.SetField("l_arm", value);
+            get => AvatarRandomJsonData.GetField("gown").I;
+            set => AvatarRandomJsonData?.SetField("gown", value);
         }
-    }
 
-    [JsonIgnore]
-    public int LeftBigArm
-    {
-        get => _lBigARM;
-        set
+
+        public int LeftArm
         {
-            _lBigARM = value;
-            AvatarRandomJsonData.SetField("l_big_arm", value);
+            get => AvatarRandomJsonData.GetField("l_arm").I;
+            set => AvatarRandomJsonData?.SetField("l_arm", value);
         }
-    }
 
-    [JsonIgnore]
-    public int LowerBody
-    {
-        get => _lowerBody;
-        set
+
+        public int LeftBigArm
         {
-            _lowerBody = value;
-            AvatarRandomJsonData.SetField("lower_body", value);
+            get => AvatarRandomJsonData.GetField("l_big_arm").I;
+            set => AvatarRandomJsonData?.SetField("l_big_arm", value);
         }
-    }
 
-    [JsonIgnore]
-    public int RightBigArm
-    {
-        get => _rBigARM;
-        set
+
+        public int LowerBody
         {
-            _rBigARM = value;
-            AvatarRandomJsonData.SetField("r_big_arm", value);
-        }
-    }
+            get => AvatarRandomJsonData.GetField("lower_body").I;
+            set => AvatarRandomJsonData?.SetField("lower_body", value);
 
-    [JsonIgnore]
-    public int Blush
-    {
-        get => _blush;
-        set
+        }
+
+        public int RightBigArm
         {
-            _blush = value;
-            AvatarRandomJsonData.SetField("blush", value);
+            get => AvatarRandomJsonData.GetField("r_big_arm").I;
+            set => AvatarRandomJsonData?.SetField("r_big_arm", value);
         }
-    }
-
-    [JsonIgnore]
-    public int Tattoo
-    {
-        get => _tattoo;
-        set
+        public int Blush
         {
-            _tattoo = value;
-            AvatarRandomJsonData.SetField("tattoo", value);
+            get => AvatarRandomJsonData.GetField("blush").I;
+            set => AvatarRandomJsonData?.SetField("blush", value);
         }
-    }
-
-    [JsonIgnore]
-    public int Shoes
-    {
-        get => _shoes;
-        set
+        public int Tattoo
         {
-            _shoes = value;
-            AvatarRandomJsonData.SetField("shoes", value);
+            get => AvatarRandomJsonData.GetField("tattoo").I;
+            set => AvatarRandomJsonData?.SetField("tattoo", value);
         }
-    }
-
-    [JsonIgnore]
-    public int UpperBody
-    {
-        get => _upperBody;
-        set
+        public int Shoes
         {
-            _upperBody = value;
-            AvatarRandomJsonData.SetField("upper_body", value);
+            get => AvatarRandomJsonData.GetField("shoes").I;
+            set => AvatarRandomJsonData?.SetField("shoes", value);
         }
-    }
-
-    [JsonIgnore]
-    public int YanQiu
-    {
-        get => _yanqiu;
-        set
+        public int UpperBody
         {
-            _yanqiu = value;
-            AvatarRandomJsonData.SetField("yanqiu", value);
+            get => AvatarRandomJsonData.GetField("upper_body").I;
+            set => AvatarRandomJsonData?.SetField("upper_body", value);
         }
-    }
-
-    [JsonIgnore]
-    public int MouthColor
-    {
-        get => _mouthColor;
-        set
+        public int YanQiu
         {
-            _mouthColor = value;
-            AvatarRandomJsonData.SetField("mouthColor", value);
+            get => AvatarRandomJsonData.GetField("yanqiu").I;
+            set => AvatarRandomJsonData?.SetField("yanqiu", value);
         }
-    }
-
-    [JsonIgnore]
-    public int TattooColor
-    {
-        get => _tattooColor;
-        set
+        public int MouthColor
         {
-            _tattooColor = value;
-            AvatarRandomJsonData.SetField("tattooColor", value);
+            get => AvatarRandomJsonData.GetField("mouthColor").I;
+            set => AvatarRandomJsonData?.SetField("mouthColor", value);
         }
-    }
-
-    [JsonIgnore]
-    public int BlushColor
-    {
-        get => _blushColor;
-        set
+        public int TattooColor
         {
-            _blushColor = value;
-            AvatarRandomJsonData.SetField("blushColor", value);
+            get => AvatarRandomJsonData.GetField("tattooColor").I;
+            set => AvatarRandomJsonData?.SetField("tattooColor", value);
         }
-    }
-
-    [JsonIgnore]
-    public int HaoGanDu
-    {
-        get => _haoGanDu;
-        set
+        public int BlushColor
         {
-            _haoGanDu = value;
-            AvatarRandomJsonData.SetField("HaoGanDu", value);
+            get => AvatarRandomJsonData.GetField("blushColor").I;
+            set => AvatarRandomJsonData?.SetField("blushColor", value);
         }
-    }
-
-    [JsonIgnore]
-    public int Head
-    {
-        get => _head;
-        set
+        public int HaoGanDu
         {
-            _head = value;
-            AvatarRandomJsonData.SetField("head", value);
+            get => AvatarRandomJsonData.GetField("HaoGanDu").I;
+            set => AvatarRandomJsonData?.SetField("HaoGanDu", value);
         }
-    }
-
-    [JsonIgnore]
-    public int Eyes
-    {
-        get => _eyes;
-        set
+        public int Head
         {
-            _eyes = value;
-            AvatarRandomJsonData.SetField("eyes", value);
+            get => AvatarRandomJsonData.GetField("head").I;
+            set => AvatarRandomJsonData?.SetField("head", value);
         }
-    }
-
-    [JsonIgnore]
-    public int Mouth
-    {
-        get => _mouth;
-        set
+        public int Eyes
         {
-            _mouth = value;
-            AvatarRandomJsonData.SetField("mouth", value);
+            get => AvatarRandomJsonData.GetField("eyes").I;
+            set => AvatarRandomJsonData?.SetField("eyes", value);
         }
-    }
-
-    [JsonIgnore]
-    public int Nose
-    {
-        get => _nose;
-        set
+        public int Mouth
         {
-            _nose = value;
-            AvatarRandomJsonData.SetField("nose", value);
+            get => AvatarRandomJsonData.GetField("mouth").I;
+            set => AvatarRandomJsonData?.SetField("mouth", value);
         }
-    }
-
-    [JsonIgnore]
-    public int Eyebrow
-    {
-        get => _eyebrow;
-        set
+        public int Nose
         {
-            _eyebrow = value;
-            AvatarRandomJsonData.SetField("eyebrow", value);
+            get => AvatarRandomJsonData.GetField("nose").I;
+            set => AvatarRandomJsonData?.SetField("nose", value);
         }
-    }
-
-    [JsonIgnore]
-    public int Hair
-    {
-        get => _hair;
-        set
+        public int Eyebrow
         {
-            _hair = value;
-            AvatarRandomJsonData.SetField("hair", value);
+            get => AvatarRandomJsonData.GetField("eyebrow").I;
+            set => AvatarRandomJsonData?.SetField("eyebrow", value);
         }
-    }
-
-    [JsonIgnore]
-    public int AHair
-    {
-        get => _aHair;
-        set
+        public int Hair
         {
-            _aHair = value;
-            AvatarRandomJsonData.SetField("a_hair", value);
+            get => AvatarRandomJsonData.GetField("hair").I;
+            set => AvatarRandomJsonData?.SetField("hair", value);
         }
-    }
-
-    [JsonIgnore]
-    public int BHair
-    {
-        get => _bHair;
-        set
+        public int AHair
         {
-            _bHair = value;
-            AvatarRandomJsonData.SetField("b_hair", value);
+            get => AvatarRandomJsonData.GetField("a_hair").I;
+            set => AvatarRandomJsonData?.SetField("a_hair", value);
         }
-    }
-
-    [JsonIgnore]
-    public int Characteristic
-    {
-        get => _characteristic;
-        set
+        public int BHair
         {
-            _characteristic = value;
-            AvatarRandomJsonData.SetField("characteristic", value);
+            get => AvatarRandomJsonData.GetField("b_hair").I;
+            set => AvatarRandomJsonData?.SetField("b_hair", value);
         }
-    }
-
-    [JsonIgnore]
-    public int Suit
-    {
-        get => _aSuit;
-        set
+        public int Characteristic
         {
-            _aSuit = value;
-            AvatarRandomJsonData.SetField("a_suit", value);
+            get => AvatarRandomJsonData.GetField("characteristic").I;
+            set => AvatarRandomJsonData?.SetField("characteristic", value);
         }
-    }
-
-    [JsonIgnore]
-    public int YanZhuColor
-    {
-        get => _yanzhuColor;
-        set
+        public int Suit
         {
-            _yanzhuColor = value;
-            AvatarRandomJsonData.SetField("yanzhuColor", value);
+            get => AvatarRandomJsonData.GetField("a_suit").I;
+            set => AvatarRandomJsonData?.SetField("a_suit", value);
         }
-    }
-
-    [JsonIgnore]
-    public int TeZhengColor
-    {
-        get => _tezhengColor;
-        set
+        public int YanZhuColor
         {
-            _tezhengColor = value;
-            AvatarRandomJsonData.SetField("tezhengColor", value);
-        }
-    }
 
-    [JsonIgnore]
-    public int EyebrowColor
-    {
-        get => _eyebrowColor;
-        set
+            get => AvatarRandomJsonData.GetField("yanzhuColor").I;
+            set => AvatarRandomJsonData?.SetField("yanzhuColor", value);
+        }
+        public int TeZhengColor
         {
-            _eyebrowColor = value;
-            AvatarRandomJsonData.SetField("eyebrowColor", value);
-        }
-    }
 
+            get => AvatarRandomJsonData.GetField("tezhengColor").I;
+            set => AvatarRandomJsonData?.SetField("tezhengColor", value);
+        }
+        public int EyebrowColor
+        {
+
+            get => AvatarRandomJsonData.GetField("eyebrowColor").I;
+            set => AvatarRandomJsonData?.SetField("eyebrowColor", value);
+        }
     #region 头发颜色相关
 
-    [JsonIgnore]
-    public int HairColorRed
-    {
-        get => _hairColorRed;
-        set
+        public int HairColorRed
         {
-            _hairColorRed = value;
-            AvatarRandomJsonData.SetField("hairColorR", value);
-        }
-    }
 
-    [JsonIgnore]
-    public int HairColorBlue
-    {
-        get => _hairColorBlue;
-        set
-        {
-            _hairColorBlue = value;
-            AvatarRandomJsonData.SetField("hairColorB", value);
+            get => AvatarRandomJsonData.GetField("hairColorR").I;
+            set => AvatarRandomJsonData?.SetField("hairColorR", value);
         }
-    }
+        public int HairColorBlue
+        {
 
-    [JsonIgnore]
-    public int HairColorGreen
-    {
-        get => _hairColorGreen;
-        set
-        {
-            _hairColorGreen = value;
-            AvatarRandomJsonData.SetField("hairColorG", value);
-        }
-    }
 
-    public bool SetHairColor(int red, int blue, int green)
-    {
-        try
-        {
-            HairColorRed = red;
-            HairColorBlue = blue;
-            HairColorGreen = green;
-            return true;
+            get => AvatarRandomJsonData.GetField("hairColorB").I;
+            set => AvatarRandomJsonData?.SetField("hairColorB", value);
         }
-        catch (Exception)
+        public int HairColorGreen
         {
-            return false;
+
+            get => AvatarRandomJsonData.GetField("hairColorG").I;
+            set => AvatarRandomJsonData?.SetField("hairColorG", value);
         }
-    }
+
+        public bool SetHairColor(int red, int blue, int green)
+        {
+            try
+            {
+                HairColorRed = red;
+                HairColorBlue = blue;
+                HairColorGreen = green;
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
 
     #endregion
-}
+    }
 
-[DialogEnvQuery("GetAvatarJsonData")]
-public class GetAvatarJsonData : IDialogEnvQuery
-{
-    public object Execute(DialogEnvQueryContext context)
+    [DialogEnvQuery("GetAvatarRandomJsonData")]
+    [DialogEnvQuery("获取NPC捏脸数据")]
+    public class GetAvatarRandomJsonData : IDialogEnvQuery
     {
-        MyPluginMain.LogInfo($"Args:{JArray.FromObject(context.Args)}");
-        var npcId = context.GetNpcID(0, 0);
-        MyPluginMain.LogInfo($"npcID:{npcId.ToString()}");
-        var data = jsonData.instance.AvatarRandomJsonData.TryGetField(npcId.ToString()).ToString();
-        MyPluginMain.LogInfo($"npc:{data}");
-        var avatar = string.IsNullOrWhiteSpace(data) || data == "null"
-            ? null
-            : JObject.Parse(data).ToObject<AvatarJsonData>();
-        if (avatar != null)
+        public object Execute(DialogEnvQueryContext context)
         {
-            avatar.Id = npcId;
+            var npcId = context.GetNpcID(0, 0);
+            return jsonData.instance.AvatarRandomJsonData.HasField(npcId.ToString()) ? new AvatarJsonData(npcId) : null;
         }
-
-        return avatar;
     }
 }

@@ -5,6 +5,7 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Npc
 {
 
     [DialogEnvQuery("GetNpcFollowDialog")]
+    [DialogEnvQuery("获得跟随角色剧情ID")]
     public class GetNpcFollowDialog : IDialogEnvQuery
     {
         public object Execute(DialogEnvQueryContext context)

@@ -5,6 +5,7 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Utils
 {
 
     [DialogEnvQuery("GetIntToString")]
+    [DialogEnvQuery("获得整数转字符串")]
     public class GetIntToString : IDialogEnvQuery
     {
         public object Execute(DialogEnvQueryContext context)

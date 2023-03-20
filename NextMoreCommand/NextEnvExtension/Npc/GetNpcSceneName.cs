@@ -5,6 +5,7 @@ using SkySwordKill.NextMoreCommand.Utils;
 namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Npc
 {
     [DialogEnvQuery("GetNpcSceneName")]
+    [DialogEnvQuery("获得角色场景名字")]
     public class GetNpcSceneName : IDialogEnvQuery
     {
         public object Execute(DialogEnvQueryContext context)
