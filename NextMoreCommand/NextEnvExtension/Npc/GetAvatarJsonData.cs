@@ -273,7 +273,7 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Npc
     }
 
     [DialogEnvQuery("GetAvatarRandomJsonData")]
-    [DialogEnvQuery("获取NPC捏脸数据")]
+    [DialogEnvQuery("获取角色捏脸数据")]
     public class GetAvatarRandomJsonData : IDialogEnvQuery
     {
         public object Execute(DialogEnvQueryContext context)
