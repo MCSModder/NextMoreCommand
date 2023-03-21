@@ -250,6 +250,7 @@
         <Compile Include="Utils\AssetsUtils.cs" />
         <Compile Include="Utils\ItemUtils.cs" />
         <Compile Include="Utils\JsonUtils.cs" />
+        <Compile Include="Utils\NpcFactoryUtils.cs" />
         <Compile Include="Utils\UiUtils.cs" />
         <Compile Include="Utils\WuDaoUtils.cs" />
         <Compile Include="NextCommandExtension\Fight\SetFightCustomFace.cs" />

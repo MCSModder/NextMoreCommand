@@ -4,6 +4,7 @@ using System.Linq;
 using Fungus;
 using HarmonyLib;
 using JiaoYi;
+using KBEngine;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ProGif.GifManagers;
@@ -34,74 +35,33 @@ namespace SkySwordKill.NextMoreCommand.Patchs
         public Transform spine;
         private SpriteRenderer _spriteRenderer;
         public SkeletonAnimation skeletonAnimation;
-        private int _avatarId;
-        private PlayerSetRandomFace _playerSetRandomFace;
         private Image _image;
         // private EStateType _stateType;
 
         public void SetSpine(PlayerSetRandomFace playerSetRandom)
         {
             spine = playerSetRandom.transform;
-            _playerSetRandomFace = playerSetRandom;
 
-            if (!NpcUtils.IsFightScene || playerSetRandom.GetComponent<SkeletonGraphic>() != null)
-            {
-                if (playerSetRandom.BaseImage == null) return;
-                _image = playerSetRandom.BaseImage.GetComponentInChildren<Image>();
-                if (_image == null) return;
-                // _displayHandler = gameObject.AddMissingComponent<DImageDisplayHandler>();
-                // _stateType = EStateType.Image;
+            skeletonAnimation = playerSetRandom.GetComponent<SkeletonAnimation>();
+            _spriteRenderer = gameObject.AddMissingComponent<SpriteRenderer>();
+            var transform1 = transform;
+            transform1.SetParent(spine.parent);
+            transform1.localRotation = spine.localRotation;
+            transform1.localPosition = new Vector3(0, 3, 0);
+            transform1.localScale = new Vector3(0.5f, 0.5f, 0);
 
-            }
-            else
-            {
-                skeletonAnimation = playerSetRandom.GetComponent<SkeletonAnimation>();
-                _spriteRenderer = gameObject.AddMissingComponent<SpriteRenderer>();
-                var transform1 = transform;
-                transform1.SetParent(spine.parent);
-                // _animatedTextures = transform.parent.gameObject.AddMissingComponent<AnimatedTextures>();
-                // _stateType = EStateType.SpriteRenderer;
-                transform1.localRotation = spine.localRotation;
-                transform1.localPosition = new Vector3(0, 3, 0);
-                transform1.localScale = new Vector3(0.5f, 0.5f, 0);
-            }
-
-        }
-        private void OnEnable()
-        {
-            if (_avatarId > 0)
-            {
-                SetAvatarId(_avatarId);
-            }
         }
         private static Avatar Player => PlayerEx.Player;
         public void SetAvatarId(int monstarID)
         {
-            _avatarId = NPCEx.NPCIDToOld(monstarID);
-            // MyLog.Log($"当前角色ID:{monstarID.ToString()} 角色ID:{_avatarId.ToString()}");
+
             StartCoroutine(SetAvatar(NPCEx.NPCIDToOld(monstarID)));
         }
 
         public IEnumerator SetAvatar(int avatar)
         {
-            // MyLog.Log($"角色ID:{avatar.ToString()}");
-
-            string faceId;
-            if (avatar == 1)
-            {
-                var player = Player;
-                // lihui = player.FaceWorkshop;
-                faceId = player.Face.ToString();
-            }
-            else
-            {
-                var npcJson = avatar.ToNpcNewId().NPCJson();
-                //lihui = npcJson.HasField("workshoplihui") ? npcJson["workshoplihui"].str : string.Empty;
-                faceId = npcJson["face"].I.ToString();
-            }
-            // MyLog.Log($"角色id:{faceId} 立绘id:{faceId}");
-            //var imagePath = string.IsNullOrWhiteSpace(lihui) ? $"Effect/Prefab/gameEntity/Avater/Avater{faceId}/{faceId}" : $"workshop_{lihui}_{faceId}";
-
+            var npcJson = avatar.ToNpcNewId().NPCJson();
+            var faceId = npcJson["face"].I.ToString();
             var sprite = ModResources.LoadSprite($"Effect/Prefab/gameEntity/Avater/Avater{faceId}/{faceId}");
             var hasSprite = sprite != null;
             if (_spriteRenderer != null)
@@ -125,11 +85,9 @@ namespace SkySwordKill.NextMoreCommand.Patchs
 
             if (_spriteRenderer != null)
             {
-                Destroy(_spriteRenderer);
+                DestroyImmediate(_spriteRenderer);
             }
             skeletonAnimation = null;
-            _avatarId = 0;
-            _playerSetRandomFace = null;
         }
     }
 
@@ -317,14 +275,13 @@ namespace SkySwordKill.NextMoreCommand.Patchs
         {
             m_customSpine = false;
             m_avartarID = monstarID;
-            var isAvatar = m_avartarID == 1 || m_avartarID >= 20000;
 
-            if (SceneEx.NowSceneName == "MainMenu" || !isAvatar)
+
+            if (SceneEx.NowSceneName == "MainMenu" || m_avartarID < 20000)
             {
                 return true;
             }
             var avartarID = NPCEx.NPCIDToOld(m_avartarID);
-            // MyLog.Log($"Prefix avartarID:{avartarID.ToString()} monstarID:{monstarID.ToString()}");
             if (AssetsUtils.GetSkeletonData(avartarID, out var skeletonData))
             {
 
@@ -334,7 +291,6 @@ namespace SkySwordKill.NextMoreCommand.Patchs
                 {
                     skeletonGraphic.skeletonDataAsset = skeletonData;
                     skeletonGraphic.initialSkinName = "default";
-                    // skeletonGraphic.Skeleton.SetToSetupPose();
                     skeletonGraphic.startingAnimation = "Idle_0";
                     skeletonGraphic.Initialize(true);
                     var customSpine = __instance.gameObject.AddMissingComponent<CustomSpine>();
@@ -350,7 +306,6 @@ namespace SkySwordKill.NextMoreCommand.Patchs
                         var skeletonAnimation1 = gameObject.GetComponent<SkeletonAnimation>();
                         skeletonAnimation.AnimationState.Start += entry =>
                         {
-                            //  MyPluginMain.LogInfo(entry.Animation.Name);
                             var name = entry.Animation.Name;
                             var hasAnimation = AssetsUtils.CheckAnimation(avartarID, name, out var isIdle);
                             if (!hasAnimation) return;
@@ -384,49 +339,16 @@ namespace SkySwordKill.NextMoreCommand.Patchs
 
             }
 
-
-            if (__instance.BaseImage == null)
+            if (NpcUtils.IsFightScene && __instance.BaseImage == null)
             {
                 var gameObject = new GameObject("Image", typeof(CustomImage));
-                __instance.BaseImage = gameObject;
+
+                var customImage = gameObject.AddMissingComponent<CustomImage>();
+                customImage.SetSpine(__instance);
+                customImage.SetAvatarId(m_avartarID);
             }
-            var customImage = __instance.BaseImage.AddMissingComponent<CustomImage>();
-            customImage.SetSpine(__instance);
 
             return true;
-        }
-        public static void Postfix(PlayerSetRandomFace __instance, int monstarID)
-        {
-            var isAvatar = m_avartarID == 1 || m_avartarID >= 20000;
-            if (SceneEx.NowSceneName == "MainMenu" || !isAvatar)
-            {
-                return;
-            }
-            if (m_customSpine)
-            {
-                return;
-            }
-            var img = __instance.BaseImage;
-            if (img == null) return;
-
-            // MyLog.Log($"Postfix avartarID:{m_avartarID.ToString()} monstarID:{monstarID.ToString()}");
-            var customImage = img.AddMissingComponent<CustomImage>();
-
-            img.SetActive(true);
-            customImage.SetAvatarId(m_avartarID);
-            if (!NpcUtils.IsFightScene && __instance.GetComponent<SkeletonGraphic>() != null)
-            {
-
-                if (__instance.BaseSpine != null && __instance.BaseSpine.activeSelf)
-                {
-                    img.SetActive(false);
-                }
-            }
-            else
-            {
-                img.SetActive(true);
-            }
-
         }
     }
 
