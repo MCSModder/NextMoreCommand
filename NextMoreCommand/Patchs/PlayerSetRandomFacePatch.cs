@@ -74,7 +74,10 @@ namespace SkySwordKill.NextMoreCommand.Patchs
                 skeletonAnimation.maskInteraction = hasSprite ? SpriteMaskInteraction.VisibleInsideMask : SpriteMaskInteraction.None;
 
             }
-
+            if (!hasSprite)
+            {
+                DestroyImmediate(this);
+            }
             yield break;
         }
 

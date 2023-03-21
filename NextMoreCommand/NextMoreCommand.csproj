@@ -196,6 +196,7 @@
         <Compile Include="NextCommandExtension\DongFu\SetDongFuJuLingZhen.cs" />
         <Compile Include="NextCommandExtension\DongFu\SetLoadDongFu.cs" />
         <Compile Include="NextCommandExtension\DongFu\SetNewDongFu.cs" />
+        <Compile Include="NextCommandExtension\Npc\SetNpcFightFace.cs" />
         <Compile Include="NextCommandExtension\Npc\Teleport\NpcForceRemoveTeleport.cs" />
         <Compile Include="NextCommandExtension\Npc\Teleport\NpcForceTeleport.cs" />
         <Compile Include="NextCommandExtension\Npc\Teleport\SetAllDaolvFollow.cs" />
@@ -226,8 +227,10 @@
         <Compile Include="NextEnvExtension\Fight\GetFightTypeName.cs" />
         <Compile Include="NextEnvExtension\Npc\GetNpcData.cs" />
         <Compile Include="NextEnvExtension\Npc\GetNpcFace.cs" />
+        <Compile Include="NextEnvExtension\Npc\GetNpcFightFace.cs" />
         <Compile Include="NextEnvExtension\Npc\GetNpcLiHui.cs" />
         <Compile Include="NextEnvExtension\Npc\HasNpcFace.cs" />
+        <Compile Include="NextEnvExtension\Npc\HasNpcFightFace.cs" />
         <Compile Include="NextEnvExtension\Npc\HasNpcLiHui.cs" />
         <Compile Include="NextEnvExtension\Npc\HasDaolv.cs" />
         <Compile Include="NextEnvExtension\Npc\Wudao\GetWudao.cs" />
