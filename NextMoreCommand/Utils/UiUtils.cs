@@ -180,23 +180,23 @@ public class CustomMenPaiShop : MonoBehaviour, IESCClose
     {
         moneyType = moneyID;
         var player = Player;
-        string num;
+        string money;
         Sprite sprite = null;
         if (moneyID == 0)
         {
 
             sprite = SpriteMoney;
-            num = player.money.ToString();
+            money = player.money.ToString();
         }
         else
         {
             var item = ItemDatabase.items[moneyID];
-            num = player.getItemNum(moneyID).ToString();
+            money = player.getItemNum(moneyID).ToString();
             sprite = item.itemIconSprite;
         }
         var menPaiShop = UIMenPaiShop;
         menPaiShop.MoneyIcon.sprite = sprite;
-        menPaiShop.MoneyText.text = num;
+        menPaiShop.MoneyText.text = money;
     }
     public void Show()
     {
