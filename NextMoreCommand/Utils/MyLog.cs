@@ -80,7 +80,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 LogInfo(str);
             }
         }
-
+        public static void LogInfos(this DialogCommand command, object msg, bool isError = false, bool canShow = true) => Log(command, msg, isError, canShow);
         public static void Log(DialogCommand command, object msg, bool isError = false, bool canShow = true)
         {
             if (isError)
