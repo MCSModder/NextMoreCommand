@@ -403,9 +403,6 @@
         <None Include="packages.config" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="obfuscar.xml" />
-    </ItemGroup>
-    <ItemGroup>
         <ProjectReference Include="..\ProGif\ProGif.csproj">
             <Project>{88e7abf4-1b36-4cf8-9433-e9b58a42c42d}</Project>
             <Name>ProGif</Name>
