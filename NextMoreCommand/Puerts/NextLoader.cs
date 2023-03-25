@@ -30,11 +30,7 @@ namespace SkySwordKill.NextMoreCommand.Puerts
             var lib = MyPluginMain.I.PathLibDir.Value;
             return File.Exists(Utility.CombinePaths(lib, filePath)) || File.Exists(Utility.CombinePaths(lib, "puerts", filePath));
         }
-        private string PathToUse(string filepath)
-        {
-            return
-                filepath.EndsWith(".cjs") || filepath.EndsWith(".mjs") ? filepath.Substring(0, filepath.Length - 4) : filepath;
-        }
+ 
         public string ReadFile(string filePath, out string debugPath)
         {
             if (!ModManagerLoadModData.JsExt.Contains(Path.GetExtension(filePath)) && !filePath.EndsWith(".js"))
@@ -49,10 +45,10 @@ namespace SkySwordKill.NextMoreCommand.Puerts
                 debugPath = filePath;
                 return File.ReadAllText(filepath);
             }
-            if (mockFileContent.ContainsKey(filePath))
+            if (mockFileContent.TryGetValue(filePath, out var file))
             {
                 debugPath = filePath;
-                return mockFileContent[filePath];
+                return file;
             }
             var lib = MyPluginMain.I.PathLibDir.Value;
             filepath = Utility.CombinePaths(lib, "puerts", filePath);

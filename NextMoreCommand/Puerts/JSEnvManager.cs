@@ -2,15 +2,21 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using Puerts;
 using SkySwordKill.Next;
+using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.Next.Mod;
 using SkySwordKill.NextMoreCommand.Patchs;
 using SkySwordKill.NextMoreCommand.Utils;
 using UnityEngine;
+using WXB;
+using Object = UnityEngine.Object;
 
 namespace SkySwordKill.NextMoreCommand.Puerts
 {
+
+
     public class JsFileCache
     {
         public ModConfig FromMod { get; set; }
@@ -27,28 +33,19 @@ namespace SkySwordKill.NextMoreCommand.Puerts
 
     public class JsEnvManager : MonoBehaviour
     {
+        public static JsEnvManager Inst;
 
         public JsEnv JsEnv;
-        public void RunJavaScript(string scr, string funcName, object[] args)
+        public object RunJavaScript(string src, string funcName, object[] args)
         {
-            GetJavaScript<object>(scr, funcName, args);
+            return GetJavaScript<object>(src, funcName, args);
         }
-        public int GetInt(string scr, string funcName, object[] args) => GetJavaScript<int>(scr, funcName, args);
-        public string GetStr(string scr, string funcName, object[] args) => GetJavaScript<string>(scr, funcName, args);
-        public bool GetBoolean(string scr, string funcName, object[] args) => GetJavaScript<bool>(scr, funcName, args);
-        public object GetJavaScript(string scr, string funcName, Type type, object[] args) => GetType().GetMethod("GetJavaScript")
-            ?.MakeGenericMethod(type).Invoke(this, new object[]
-            {
-                scr, funcName, args
-            });
-        public T GetJavaScript<T>(string scr, string funcName, object[] args)
+        public T GetJavaScript<T>(string src, string funcName, object[] args)
         {
-            _loader?.AddMockFileContent("JsEnvManager/RunJavaScript.mjs", $"import * as all from '{scr}';export default function(funcName,args){{var func = all[funcName];return func ? func(args,all) : func}}");
-            JsEnv.UsingFunc<Func<string, object[], T>>();
-            var result = JsEnv?.ExecuteModule<Func<string, List<object>, T>>("JsEnvManager/RunJavaScript.mjs", "default");
-            return result != null ? result.Invoke(funcName, args.ToList()) : default(T);
+            JsEnv.UsingFunc<List<KeyValuePair<string, object>>, T>();
+            var result = JsEnv?.ExecuteModule<System.Func<List<object>, T>>(src, funcName);
+            return result != null ? result.Invoke(args.ToList()) : default(T);
         }
-        public List<object> GetJavaScript(string scr, string funcName, object[] args) => GetJavaScript<List<object>>(scr, funcName, args);
         private void Awake()
         {
             var files = MyPluginMain.I.files;
@@ -56,25 +53,40 @@ namespace SkySwordKill.NextMoreCommand.Puerts
             {
                 Destroy(this);
             }
-
+            if (Inst != null)
+            {
+                Destroy(this);
+                return;
+            }
+            Inst = this;
 
         }
-
+        public void InjectSupportForCjs()
+        {
+            JsEnv?.ExecuteModule("load.mjs");
+            JsEnv?.ExecuteModule("modular.mjs");
+        }
         private void InitJavaScriptEnv()
         {
 
             _loader = new NextLoader();
             JsEnv = new JsEnv(_loader);
-
-            // RunJavaScript("dialog.mjs", "default", new object[]
-            // {
-            //     "初始化", 1, this, new DialogEnvironmentContext(),
-            // });
-            // _result = GetJavaScript<object>("dialog.mjs", "default", new object[]
-            // {
-            //     "初始化", 1, this, new DialogEnvironmentContext(),
-            // });
-
+            InjectSupportForCjs();
+            // Test1();
+        }
+        public object Test1()
+        {
+           //  _loader.AddMockFileContent("JsEnvManager/RunJavaScript.mjs","import * as target from 'test.mjs';export default function(){return target};");
+           //  
+           // var jsObject =JsEnv.ExecuteModule<Func<JSObject>>("JsEnvManager/RunJavaScript.mjs","default");
+            return RunJavaScript("dialog.mjs", "default", new object[]
+            {
+                new DialogEnvironment()
+            });
+        }
+        public static object Test()
+        {
+            return Inst.Test1();
         }
         public void ClearCache() => JsEnv?.ClearModuleCache();
         private void Start()
@@ -89,21 +101,19 @@ namespace SkySwordKill.NextMoreCommand.Puerts
         public void Reset()
         {
             JsFileCaches.Clear();
-           // GC.Collect();
+            // GC.Collect();
             DestroyImmediate(this);
         }
         public static readonly Dictionary<string, JsFileCache> JsFileCaches = new Dictionary<string, JsFileCache>();
         private NextLoader _loader;
-
         public static void AddJsFileCache(string filePath, JsFileCache jsFileCache)
         {
             if (!ModManagerLoadModData.JsExt.Contains(Path.GetExtension(filePath)) && !filePath.EndsWith(".js"))
             {
                 filePath += ".js";
             }
-            if (JsFileCaches.ContainsKey(filePath))
+            if (JsFileCaches.TryGetValue(filePath, out var old))
             {
-                var old = JsFileCaches[filePath];
                 MyPluginMain.LogWarning("JavaScript\"" + filePath + "\"发生覆盖 [" + old.FromMod.Name + "]" + old.FilePath + " --> [" + jsFileCache.FromMod.Name + "]" + jsFileCache.FilePath);
             }
             else
@@ -123,6 +133,7 @@ namespace SkySwordKill.NextMoreCommand.Puerts
         }
         private void OnDestroy()
         {
+            Inst = null;
             JsEnv?.ClearModuleCache();
             JsEnv?.Dispose();
         }

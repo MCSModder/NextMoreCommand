@@ -18,6 +18,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fight
         public int Value { get; } = 1;
         public BuffInfo(string str)
         {
+            MyLog.Log(str);
             if (str.Contains(":"))
             {
                 var split = str.Split(':');
@@ -27,6 +28,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fight
             else
             {
                 Id = Convert.ToInt32(str);
+                Value = 1;
             }
         }
     }
@@ -37,18 +39,19 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fight
     public class AddFightBuff : IDialogEvent
     {
         private MonstarMag MonstarMag => Tools.instance.monstarMag;
+        private List<BuffInfo> _buffList;
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
 
             MyLog.LogCommand(command);
             var target = command.GetInt(0, 0);
-            var buffList = command.ToListString(1).Select(buff => new BuffInfo(buff));
+            _buffList = command.ToListString(1).Select(buff => new BuffInfo(buff)).ToList();
             var isPlayer = target == 0;
             if (NpcUtils.IsFightScene)
             {
                 var avatar = isPlayer ? env.player : env.player.OtherAvatar;
 
-                foreach (var buff in buffList)
+                foreach (var buff in _buffList)
                 {
                     command.LogInfos($"战斗BUFF添加 ID:{buff.Id} 数量:{buff.Value}");
                     avatar.spell.addDBuff(buff.Id, buff.Value);
@@ -65,7 +68,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fight
                     dict = MonstarMag.monstarAddBuff;
                 }
 
-                foreach (var buff in buffList)
+                foreach (var buff in _buffList)
                 {
                     var id = buff.Id;
                     var value = buff.Value;
