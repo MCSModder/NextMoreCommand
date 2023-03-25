@@ -190,6 +190,13 @@
         <Compile Include="Attribute\MapTypeAttribute.cs" />
         <Compile Include="Attribute\RegisterCommandAttribute.cs" />
         <Compile Include="Attribute\RegisterCustomModSettingAttribute.cs" />
+        <Compile Include="Custom\MenPaiShop\MenPaiShopChildInfo.cs" />
+        <Compile Include="Custom\MenPaiShop\MenPaiShopInfo.cs" />
+        <Compile Include="Custom\MenPaiShop\MenPaiShopItemInfo.cs" />
+        <Compile Include="Custom\MenPaiShop\MenPaiShopManager.cs" />
+        <Compile Include="Custom\MenPaiShop\MenPaiShopType.cs" />
+        <Compile Include="Custom\MenPaiShop\UIMenPaiShop.cs" />
+        <Compile Include="Custom\MenPaiShop\UIMenPaiShopItem.cs" />
         <Compile Include="DialogTrigger\OnShuangXiu.cs" />
         <Compile Include="DialogTrigger\OnBiGuan.cs" />
         <Compile Include="NextCommandExtension\Beta\SetLoadScene.cs" />
