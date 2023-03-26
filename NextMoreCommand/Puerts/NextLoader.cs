@@ -68,7 +68,8 @@ namespace SkySwordKill.NextMoreCommand.Puerts
         }
         public bool IsESM(string filepath)
         {
-            return filepath.Length >= 4 && !filepath.EndsWith(".cjs");
+            //MyPluginMain.LogInfo(filepath);
+            return filepath.Length >= 4 && filepath.EndsWith(".mjs");
         }
         public readonly Dictionary<string, string> mockFileContent = new Dictionary<string, string>();
         public void AddMockFileContent(string filePath, string context)

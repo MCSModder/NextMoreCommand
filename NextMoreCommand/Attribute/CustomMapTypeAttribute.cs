@@ -5,16 +5,15 @@ namespace SkySwordKill.NextMoreCommand.Attribute
     /// <summary>
     /// 
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class)]
-    public class CustomMapTypeAttribute:System.Attribute
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
+    public class CustomMenPaiShopType : System.Attribute
     {
-        public string Type;
+        public string Name;
         public string ChineseType;
 
-        public CustomMapTypeAttribute(string type,string chineseType)
+        public CustomMenPaiShopType(string name)
         {
-            Type = type;
-            ChineseType = chineseType;
+            Name = name;
         }
     }
 }

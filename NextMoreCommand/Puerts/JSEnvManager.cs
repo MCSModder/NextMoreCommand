@@ -40,11 +40,14 @@ namespace SkySwordKill.NextMoreCommand.Puerts
         {
             return GetJavaScript<object>(src, funcName, args);
         }
+
         public T GetJavaScript<T>(string src, string funcName, object[] args)
         {
-            JsEnv.UsingFunc<List<KeyValuePair<string, object>>, T>();
-            var result = JsEnv?.ExecuteModule<System.Func<List<object>, T>>(src, funcName);
-            return result != null ? result.Invoke(args.ToList()) : default(T);
+            JsEnv.UsingFunc<Func<string, string, object[], T>>();
+            var func = JsEnv?.ExecuteModule<Func<string, string, object[], T>>("runJs.mjs", "default");
+            if (func == null) return default(T);
+            var result = func.Invoke(src, funcName, args);
+            return result is JSObject ? default(T) : result;
         }
         private void Awake()
         {
@@ -72,14 +75,12 @@ namespace SkySwordKill.NextMoreCommand.Puerts
             _loader = new NextLoader();
             JsEnv = new JsEnv(_loader);
             InjectSupportForCjs();
-            // Test1();
+           // Test1();
         }
         public object Test1()
         {
-           //  _loader.AddMockFileContent("JsEnvManager/RunJavaScript.mjs","import * as target from 'test.mjs';export default function(){return target};");
-           //  
-           // var jsObject =JsEnv.ExecuteModule<Func<JSObject>>("JsEnvManager/RunJavaScript.mjs","default");
-            return RunJavaScript("dialog.mjs", "default", new object[]
+
+            return RunJavaScript("dialog.js", "dialog", new object[]
             {
                 new DialogEnvironment()
             });

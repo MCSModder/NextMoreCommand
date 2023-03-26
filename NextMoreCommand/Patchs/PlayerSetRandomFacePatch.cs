@@ -35,7 +35,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
         public Transform spine;
         private SpriteRenderer _spriteRenderer;
         public SkeletonAnimation skeletonAnimation;
-        private Image _image;
+       // private Image _image;
         // private EStateType _stateType;
 
         public void SetSpine(PlayerSetRandomFace playerSetRandom)
