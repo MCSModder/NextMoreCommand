@@ -218,6 +218,8 @@
         <Compile Include="NextCommandExtension\Npc\Wudao\AddNpcWudaoExp.cs" />
         <Compile Include="NextCommandExtension\Npc\Wudao\SetNpcWudaoExp.cs" />
         <Compile Include="NextCommandExtension\Utils\ChangeTianFuBuff.cs" />
+        <Compile Include="NextCommandExtension\Utils\NextSay.cs" />
+        <Compile Include="NextCommandExtension\Utils\RunJavaScript.cs" />
         <Compile Include="NextCommandExtension\Utils\SetAllRemoveEquip.cs" />
         <Compile Include="NextCommandExtension\Utils\SetRecordShengPing.cs" />
         <Compile Include="NextCommandExtension\Utils\ChangeSelectTianFu.cs" />
@@ -245,6 +247,7 @@
         <Compile Include="NextEnvExtension\Npc\HasDaolv.cs" />
         <Compile Include="NextEnvExtension\Npc\Wudao\GetWudao.cs" />
         <Compile Include="NextEnvExtension\Npc\Wudao\HasWudaoSkill.cs" />
+        <Compile Include="NextEnvExtension\Utils\GetJavascriptStr.cs" />
         <Compile Include="Patchs\BiaoBaiManagerCalcBiaoBaiScorePatch.cs" />
         <Compile Include="Patchs\DialogAnalysisTryTriggerPatch.cs" />
         <Compile Include="Patchs\DongFuCreatePatch.cs" />

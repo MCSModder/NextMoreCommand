@@ -77,18 +77,18 @@ namespace SkySwordKill.NextMoreCommand.Puerts
             InjectSupportForCjs();
            // Test1();
         }
-        public object Test1()
-        {
-
-            return RunJavaScript("dialog.js", "dialog", new object[]
-            {
-                new DialogEnvironment()
-            });
-        }
-        public static object Test()
-        {
-            return Inst.Test1();
-        }
+        // public object Test1()
+        // {
+        //
+        //     return RunJavaScript("dialog.js", "dialog", new object[]
+        //     {
+        //         new DialogEnvironment()
+        //     });
+        // }
+        // public static object Test()
+        // {
+        //     return Inst.Test1();
+        // }
         public void ClearCache() => JsEnv?.ClearModuleCache();
         private void Start()
         {
