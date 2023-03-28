@@ -69,13 +69,24 @@ namespace SkySwordKill.NextMoreCommand.Puerts
             JsEnv?.ExecuteModule("load.mjs");
             JsEnv?.ExecuteModule("modular.mjs");
         }
-        private void InitJavaScriptEnv()
+        public void InjectNextMoreCommandUtils()
+        {
+            JsEnv?.ExecuteModule("nextMoreCommand.mjs");
+        }
+        private async void InitJavaScriptEnv()
         {
 
-            _loader = new NextLoader();
-            JsEnv = new JsEnv(_loader);
+            NextLoader = new NextLoader();
+            var isDebugMode = MyPluginMain.IsDebugMode && MyPluginMain.JSDebugMode;
+            JsEnv = new JsEnv(NextLoader, isDebugMode ? (int)MyPluginMain.JSDebugPort : -1);
             InjectSupportForCjs();
-           // Test1();
+            InjectNextMoreCommandUtils();
+            if (isDebugMode)
+            {
+               await JsEnv.WaitDebuggerAsync();
+            }
+       
+            // Test1();
         }
         // public object Test1()
         // {
@@ -106,7 +117,7 @@ namespace SkySwordKill.NextMoreCommand.Puerts
             DestroyImmediate(this);
         }
         public static readonly Dictionary<string, JsFileCache> JsFileCaches = new Dictionary<string, JsFileCache>();
-        private NextLoader _loader;
+        public NextLoader NextLoader;
         public static void AddJsFileCache(string filePath, JsFileCache jsFileCache)
         {
             if (!ModManagerLoadModData.JsExt.Contains(Path.GetExtension(filePath)) && !filePath.EndsWith(".js"))

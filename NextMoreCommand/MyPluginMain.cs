@@ -35,6 +35,8 @@ namespace SkySwordKill.NextMoreCommand
     {
         private static KeyCode DramaDebugKey;
         public static bool IsDebugMode = false;
+        public static long JSDebugPort = -1;
+        public static bool JSDebugMode = false;
 
         public static MyPluginMain Instance;
         public static MyPluginMain I => Instance;
@@ -72,11 +74,15 @@ namespace SkySwordKill.NextMoreCommand
             {
                 ModManagerUtils.TryGetModSetting("Quick_DramaDebugKey", out DramaDebugKey);
                 ModManager.TryGetModSetting("Quick_IsDebugMode", out IsDebugMode);
+                ModManager.TryGetModSetting("Quick_JSDebugPort", out JSDebugPort);
+                ModManager.TryGetModSetting("Quick_JSDebugMode", out JSDebugMode);
             };
             ModManager.ModLoadComplete += () =>
             {
                 ModManagerUtils.TryGetModSetting("Quick_DramaDebugKey", out DramaDebugKey);
                 ModManager.TryGetModSetting("Quick_IsDebugMode", out IsDebugMode);
+                ModManager.TryGetModSetting("Quick_JSDebugPort", out JSDebugPort);
+                ModManager.TryGetModSetting("Quick_JSDebugMode", out JSDebugMode);
                 AssetsUtils.Clear();
             };
         }

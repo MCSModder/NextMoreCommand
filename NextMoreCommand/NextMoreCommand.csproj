@@ -225,8 +225,11 @@
         <Compile Include="NextCommandExtension\Utils\ChangeSelectTianFu.cs" />
         <Compile Include="NextCommandExtension\Utils\SetRemoveEquip.cs" />
         <Compile Include="NextCommandExtension\Utils\ShowGaoshi.cs" />
+        <Compile Include="NextCommandExtension\Utils\ShowLianDanPanel.cs" />
+        <Compile Include="NextCommandExtension\Utils\ShowLianQiPanel.cs" />
         <Compile Include="NextCommandExtension\Utils\ShowMenPaiShop.cs" />
         <Compile Include="NextCommandExtension\Utils\ShowMiniShop.cs" />
+        <Compile Include="NextCommandExtension\Utils\ShowOpenPanel.cs" />
         <Compile Include="NextEnvExtension\DongFu\GetDongFu.cs" />
         <Compile Include="NextEnvExtension\DongFu\GetAllDongFu.cs" />
         <Compile Include="NextEnvExtension\DongFu\GetMenPaiDongFu.cs" />

@@ -198,11 +198,11 @@ public static class UiUtils
                                 {
                                     if (isMoney)
                                     {
-                                        avatar.AddMoney(-price);
+                                        avatar.AddMoney(-total);
                                     }
                                     else
                                     {
-                                        avatar.removeItem(good.EXGoodsID, price);
+                                        avatar.removeItem(good.EXGoodsID, total);
                                     }
                                     avatar.addItem(good.GoodsID, i, Tools.CreateItemSeid(good.GoodsID));
 

@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 #if CSHARP_7_3_OR_NEWER
 using System.Threading.Tasks;
 #endif
@@ -728,7 +729,7 @@ namespace Puerts
 #endif
         }
 
-#if CSHARP_7_3_OR_NEWER
+#if !CSHARP_7_3_OR_NEWER
         TaskCompletionSource<bool> waitDebugerTaskSource;
         public Task WaitDebuggerAsync()
         {
