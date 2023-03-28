@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace SkySwordKill.NextMoreCommand.Custom.MenPaiShop
 {
@@ -9,5 +10,7 @@ namespace SkySwordKill.NextMoreCommand.Custom.MenPaiShop
         public int Id = 0;
         [JsonProperty("物品上限")]
         public int Limit = 0;
+        [JsonProperty("物品信息")]
+        public Dictionary<string, string> DataInfo = new Dictionary<string, string>();
     }
 }
