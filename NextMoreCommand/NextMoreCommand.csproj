@@ -190,6 +190,8 @@
         <Compile Include="Attribute\MapTypeAttribute.cs" />
         <Compile Include="Attribute\RegisterCommandAttribute.cs" />
         <Compile Include="Attribute\RegisterCustomModSettingAttribute.cs" />
+        <Compile Include="Custom\CustomCommand.cs" />
+        <Compile Include="Custom\CustomEnvMethod.cs" />
         <Compile Include="Custom\MenPaiShop\IMenPaiShopType.cs" />
         <Compile Include="Custom\MenPaiShop\MenPaiShopChildInfo.cs" />
         <Compile Include="Custom\MenPaiShop\MenPaiShopInfo.cs" />
@@ -205,6 +207,7 @@
         <Compile Include="NextCommandExtension\DongFu\SetLoadDongFu.cs" />
         <Compile Include="NextCommandExtension\DongFu\SetNewDongFu.cs" />
         <Compile Include="NextCommandExtension\Fight\AddFightBuff.cs" />
+        <Compile Include="NextCommandExtension\Npc\SetFightFace.cs" />
         <Compile Include="NextCommandExtension\Npc\SetNpcFightFace.cs" />
         <Compile Include="NextCommandExtension\Npc\Teleport\NpcForceRemoveTeleport.cs" />
         <Compile Include="NextCommandExtension\Npc\Teleport\NpcForceTeleport.cs" />

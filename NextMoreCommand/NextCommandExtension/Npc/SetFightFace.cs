@@ -7,22 +7,25 @@ using SkySwordKill.NextMoreCommand.Utils;
 namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc
 {
     [RegisterCommand]
-    [DialogEvent("SetNpcFightFace")]
-    [DialogEvent("设置角色战斗立绘")]
-    public class SetNpcFightFace : IDialogEvent
+    [DialogEvent("SetFightFace")]
+    [DialogEvent("设置战斗立绘")]
+    public class SetFightFace : IDialogEvent
     {
         private int npc;
-        private bool fightFace;
+        private int fightFace;
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
             MyLog.LogCommand(command);
             npc = command.ToNpcId();
-            fightFace = command.GetBool(1, false);
+            fightFace = command.GetInt(1, 0);
             if (npc > 0)
             {
-
-                NpcUtils.SetNpcFightFace(npc, fightFace);
+                var data = npc.NPCJson();
+                var nowFightFace = data.GetInt("fightFace").ToString();
+                MyLog.Log(command, $"角色ID:{npc} 角色名:{npc.GetNpcName()} 当前战斗立绘:{nowFightFace} 设置战斗立绘:{fightFace}");
+                MyLog.Log(command, $"");
+                data.SetField("fightFace", fightFace);
             }
             else
             {

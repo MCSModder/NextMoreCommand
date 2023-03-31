@@ -138,14 +138,12 @@ namespace SkySwordKill.NextMoreCommand
             LogInfo(init);
             foreach (var type in types)
             {
-                if (type.GetCustomAttributes(registerCommandType, true).Length > 0)
-                {
-                    var cEvent = Activator.CreateInstance(type) as IDialogEvent;
-                    LogInfo($"注册指令名: {type.Name}");
-                    LogInfo($"注册指令类: {cEvent}");
-                    LogInfo(init);
-                    DialogAnalysis.RegisterCommand(type.Name, cEvent);
-                }
+                if (type.GetCustomAttributes(registerCommandType, true).Length <= 0) continue;
+                var cEvent = Activator.CreateInstance(type) as IDialogEvent;
+                LogInfo($"注册指令名: {type.Name}");
+                LogInfo($"注册指令类: {cEvent}");
+                LogInfo(init);
+                DialogAnalysis.RegisterCommand(type.Name, cEvent);
             }
 
             LogInfo($"注册指令完毕.");

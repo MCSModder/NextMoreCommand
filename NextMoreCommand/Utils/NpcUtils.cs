@@ -130,20 +130,36 @@ namespace SkySwordKill.NextMoreCommand.Utils
         {
             return instance.HasGroup(NpcUtils.NpcFollow);
         }
+        public static bool HasNpcFightFaceGroup(this DataGroup<string> instance)
+        {
+            return instance.HasGroup(NpcUtils.NpcFightFace);
+        }
 
         public static Dictionary<string, string> GetNpcFollowGroup(this DataGroup<string> instance)
         {
             return instance.GetGroup(NpcUtils.NpcFollow);
+        }
+        public static Dictionary<string, int> GetNpcFightFaceGroup(this DataGroup<int> instance)
+        {
+            return instance.GetGroup(NpcUtils.NpcFightFace);
         }
 
         public static void SetNpcFollow(this DataGroup<string> instance, string key, string value)
         {
             instance.Set(NpcUtils.NpcFollow, key, value);
         }
+        public static void SetNpcFightFace(this DataGroup<int> instance, string key, int value)
+        {
+            instance.Set(NpcUtils.NpcFightFace, key, value);
+        }
 
         public static string GetNpcFollow(this DataGroup<string> instance, string key)
         {
             return instance.Get(NpcUtils.NpcFollow, key);
+        }
+        public static int GetNpcFollow(this DataGroup<int> instance, string key)
+        {
+            return instance.Get(NpcUtils.NpcFightFace, key);
         }
     }
 
@@ -155,9 +171,12 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public static bool IsNpc(int id) => NPCEx.NPCIDToNew(id) <= 1;
         public static bool IsNpc(string id) => IsNpc(Convert.ToInt32(id));
         public const string NpcFollow = "NPC_FOLLOW_NEXT";
+        public const string NpcFightFace = "NPC_FIGHT_FACE";
         public const string SelfName = "SELF_NAME";
         public static DataGroup<string> StrGroup => DialogAnalysis.AvatarNextData.StrGroup;
+        public static DataGroup<int> IntGroup => DialogAnalysis.AvatarNextData.IntGroup;
         public static Dictionary<string, string> NpcFollowGroup => StrGroup.GetNpcFollowGroup();
+        public static Dictionary<string, int> NpcFightFaceGroup => IntGroup.GetNpcFightFaceGroup();
         public static bool IsFightScene => Tools.getScreenName().ToUpper().Contains("YSNEW");
 
         public static void AddNpcNotDialogFollow()
@@ -395,7 +414,15 @@ namespace SkySwordKill.NextMoreCommand.Utils
             SelfNameDict[id] = name;
             return true;
         }
-
+        public static bool SetNpcFightFace(int id, bool value)
+        {
+            IntGroup.Set(NpcFightFace, id.ToNpcId(), value ? 1 : 0);
+            return true;
+        }
+        public static bool GetNpcFightFace(int id)
+        {
+            return  IntGroup.Get(NpcFightFace, id.ToNpcId()) != 0;
+        }
         public static List<int> GetNpcList(DialogCommand command, int count) => GetNpcList(command, count, count);
 
         public static List<int> GetNpcList(DialogCommand command, int minCount, int restCount)

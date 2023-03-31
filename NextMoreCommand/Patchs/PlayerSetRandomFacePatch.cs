@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Fungus;
 using HarmonyLib;
@@ -55,14 +56,27 @@ namespace SkySwordKill.NextMoreCommand.Patchs
         public void SetAvatarId(int monstarID)
         {
 
-            StartCoroutine(SetAvatar(NPCEx.NPCIDToOld(monstarID)));
+            StartCoroutine(SetAvatar(monstarID));
         }
 
         public IEnumerator SetAvatar(int avatar)
         {
-            var npcJson = avatar.ToNpcNewId().NPCJson();
+            var npcJson = avatar.NPCJson();
             var faceId = npcJson["face"].I.ToString();
-            var sprite = ModResources.LoadSprite($"Effect/Prefab/gameEntity/Avater/Avater{faceId}/{faceId}");
+            var lihui = npcJson.HasField("workshoplihui")? npcJson["workshoplihui"].str:string.Empty;
+            var path = string.Empty;
+            if (faceId == "0" && string.IsNullOrWhiteSpace(lihui))
+            {
+                DestroyImmediate(this);
+            }else if (!string.IsNullOrWhiteSpace(lihui))
+            {
+                path = $"workshop_{lihui}_{faceId}";
+            }
+            else
+            {
+                path = $"Effect/Prefab/gameEntity/Avater/Avater{faceId}/{faceId}";
+            }
+            var sprite = ModResources.LoadSprite(path);
             var hasSprite = sprite != null;
             if (_spriteRenderer != null)
             {
@@ -274,6 +288,10 @@ namespace SkySwordKill.NextMoreCommand.Patchs
     {
         public static int m_avartarID;
         public static bool m_customSpine;
+        public static List<int> CustomNpc = new List<int>()
+        {
+            8471,9740
+        };
         public static bool Prefix(PlayerSetRandomFace __instance, int monstarID)
         {
             m_customSpine = false;
@@ -285,10 +303,11 @@ namespace SkySwordKill.NextMoreCommand.Patchs
                 return true;
             }
             var avartarID = NPCEx.NPCIDToOld(m_avartarID);
+            var skeletonGraphic = __instance.GetComponent<SkeletonGraphic>();
             if (AssetsUtils.GetSkeletonData(avartarID, out var skeletonData))
             {
 
-                var skeletonGraphic = __instance.GetComponent<SkeletonGraphic>();
+             
                 var skeletonAnimation = __instance.GetComponent<SkeletonAnimation>();
                 if (skeletonGraphic != null)
                 {
@@ -342,13 +361,17 @@ namespace SkySwordKill.NextMoreCommand.Patchs
 
             }
 
-            if (NpcUtils.IsFightScene && __instance.BaseImage == null)
+            if (!NpcUtils.IsFightScene || __instance.BaseImage != null || skeletonGraphic != null) return true;
             {
+                var oldId = NPCEx.NPCIDToOld(m_avartarID);
+
+                if (!CustomNpc.Contains(oldId) && !NpcUtils.GetNpcFightFace(oldId)) return true;
                 var gameObject = new GameObject("Image", typeof(CustomImage));
 
                 var customImage = gameObject.AddMissingComponent<CustomImage>();
                 customImage.SetSpine(__instance);
                 customImage.SetAvatarId(m_avartarID);
+
             }
 
             return true;
