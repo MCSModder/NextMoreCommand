@@ -12,17 +12,17 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc
     public class SetNpcFightFace : IDialogEvent
     {
         private int npc;
-        private bool fightFace;
+        private bool show;
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
             MyLog.LogCommand(command);
             npc = command.ToNpcId();
-            fightFace = command.GetBool(1, false);
+            show = command.GetBool(1, false);
             if (npc > 0)
             {
 
-                NpcUtils.SetNpcFightFace(npc, fightFace);
+                NpcUtils.SetNpcFightFace(npc, show);
             }
             else
             {

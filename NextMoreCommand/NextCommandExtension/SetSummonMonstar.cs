@@ -13,6 +13,7 @@ public class SetSummonMonstar : IDialogEvent
 {
     public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
     {
+     
         var npc = command.ToNpcId();
         SummonUtils.CreateInstantiate(npc);
         callback?.Invoke();

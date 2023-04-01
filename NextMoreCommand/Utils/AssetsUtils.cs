@@ -49,13 +49,15 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public CustomSpineOption UINpcInfoPanelPos { get; set; } = CustomSpineOption.UINpcInfoPanelPos.Clone();
         [JsonProperty("对战立绘位置")]
         public CustomSpineOption FightAvatarPos { get; set; } = CustomSpineOption.FightAvatarPos.Clone();
+        [JsonProperty("战斗窗口位置")]
+        public CustomSpineOption FpUIMagPos { get; set; } = CustomSpineOption.FpUIMagPos.Clone();    
         [JsonIgnore]
         public Dictionary<string, SkeletonDataAsset> SkeletonDataAssetDictionary = new Dictionary<string, SkeletonDataAsset>();
         [JsonIgnore]
         public Dictionary<string, GameObject> AnimationPrefabDictionary = new Dictionary<string, GameObject>();
         [JsonIgnore]
         public Dictionary<string, List<string>> AnimationNameDictionary = new Dictionary<string, List<string>>();
-        private bool isInit =false;
+        private bool isInit = false;
         public T LoadAsset<T>(string path) where T : UnityEngine.Object
         {
             return AssetBundle == null ? null : AssetBundle.LoadAsset<T>(path);
@@ -84,7 +86,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
             }
             return AnimationPrefabDictionary.ContainsKey(key) ? AnimationPrefabDictionary[key] : null;
         }
-    
+
         public bool CheckAnimation(int key, string animationName, out bool isIdle) => CheckAnimation(key.ToString(), animationName, out isIdle);
         public bool CheckAnimation(string key, string animationName, out bool isIdle)
         {
@@ -93,7 +95,12 @@ namespace SkySwordKill.NextMoreCommand.Utils
             {
                 return false;
             }
-            return AnimationNameDictionary.ContainsKey(key) && AnimationNameDictionary[key].Contains(animationName);
+            var result = AnimationNameDictionary.ContainsKey(key) && AnimationNameDictionary[key].Contains(animationName);
+            if (result && animationName.ToLower().Contains("idle"))
+            {
+                isIdle = true;
+            }
+            return result;
         }
         public void Init()
         {
@@ -239,19 +246,30 @@ namespace SkySwordKill.NextMoreCommand.Utils
         }
         public static bool GetCustomSpineOption(int avatar, ESpineType spineType, out CustomSpineOption customSpineOption)
         {
+            customSpineOption = null;
             if (spineType == ESpineType.None || avatar <= 0)
             {
-                customSpineOption = null;
+               
                 return false;
             }
 
-            var hasAssetBundle = GetFileAsset($"Assets/Avatar/Spine/{avatar.ToString()}/{avatar.ToString()}.ab", out var fileAsset);
-            if (!hasAssetBundle)
+            var hasCustomSpineConfig =  GetCustomSpineConfig(avatar,out var customSpineConfig);
+            if (!hasCustomSpineConfig)
             {
-                customSpineOption = null;
                 return false;
             }
-            customSpineOption = new CustomSpineOption();
+
+            customSpineOption = spineType switch
+            {
+                ESpineType.FpUIMag => customSpineConfig.FpUIMagPos,
+                ESpineType.FightAvatar => customSpineConfig.FightAvatarPos,
+                ESpineType.SayDialog => customSpineConfig.SayDialogPos,
+                ESpineType.UINpcInfoPanel => customSpineConfig.UINpcInfoPanelPos,
+                ESpineType.UINpcSvItem => customSpineConfig.UINpcSvItemPos,
+                ESpineType.UINpcJiaoHuPop => customSpineConfig.UINpcJiaoHuPopPos,
+                _ => customSpineOption
+            };
+
             return customSpineOption != null;
         }
         public static bool GetSkeletonAnimation(int avatar, out GameObject skeletonAnimation)
@@ -281,7 +299,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
         //     path = string.Empty;
         //     return false;
         // }
-        public static bool CheckAnimation(int avatar, string animationName,out bool isIdle)
+        public static bool CheckAnimation(int avatar, string animationName, out bool isIdle)
         {
             isIdle = false;
             var hasCustomSpineConfig = GetCustomSpineConfig(avatar, out var customSpineConfig);

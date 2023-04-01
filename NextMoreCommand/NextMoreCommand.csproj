@@ -221,7 +221,6 @@
         <Compile Include="NextCommandExtension\Npc\Wudao\AddNpcWudaoExp.cs" />
         <Compile Include="NextCommandExtension\Npc\Wudao\SetNpcWudaoExp.cs" />
         <Compile Include="NextCommandExtension\Utils\ChangeTianFuBuff.cs" />
-        <Compile Include="NextCommandExtension\Utils\NextSay.cs" />
         <Compile Include="NextCommandExtension\Utils\RunJavaScript.cs" />
         <Compile Include="NextCommandExtension\Utils\SetAllRemoveEquip.cs" />
         <Compile Include="NextCommandExtension\Utils\SetRecordShengPing.cs" />

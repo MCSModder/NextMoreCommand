@@ -15,6 +15,7 @@ using Spine;
 using Spine.Unity;
 using UnityEngine;
 using UnityEngine.Serialization;
+using YSGame.Fight;
 using AnimationState = Spine.AnimationState;
 using Avatar = KBEngine.Avatar;
 using GameObject = UnityEngine.GameObject;
@@ -36,7 +37,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
         public Transform spine;
         private SpriteRenderer _spriteRenderer;
         public SkeletonAnimation skeletonAnimation;
-       // private Image _image;
+        // private Image _image;
         // private EStateType _stateType;
 
         public void SetSpine(PlayerSetRandomFace playerSetRandom)
@@ -63,12 +64,13 @@ namespace SkySwordKill.NextMoreCommand.Patchs
         {
             var npcJson = avatar.NPCJson();
             var faceId = npcJson["face"].I.ToString();
-            var lihui = npcJson.HasField("workshoplihui")? npcJson["workshoplihui"].str:string.Empty;
+            var lihui = npcJson.HasField("workshoplihui") ? npcJson["workshoplihui"].str : string.Empty;
             var path = string.Empty;
             if (faceId == "0" && string.IsNullOrWhiteSpace(lihui))
             {
                 DestroyImmediate(this);
-            }else if (!string.IsNullOrWhiteSpace(lihui))
+            }
+            else if (!string.IsNullOrWhiteSpace(lihui))
             {
                 path = $"workshop_{lihui}_{faceId}";
             }
@@ -116,7 +118,8 @@ namespace SkySwordKill.NextMoreCommand.Patchs
         UINpcJiaoHuPop,
         UINpcInfoPanel,
         FightAvatar,
-        JiaoYiUIMag
+        JiaoYiUIMag,
+        FpUIMag
     }
 
     [JsonObject]
@@ -154,6 +157,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
         public static readonly CustomSpineOption UINpcInfoPanelPos = new CustomSpineOption(new CustomSpinePos(0, -800), new CustomSpinePos(1, 1, 1));
         public static readonly CustomSpineOption FightAvatarPos = new CustomSpineOption(new CustomSpinePos(0, 0), new CustomSpinePos(0.4f, 0.4f, 1));
         public static readonly CustomSpineOption UINpcJiaoHuPopPos = new CustomSpineOption(new CustomSpinePos(0, -750), new CustomSpinePos(1, 1, 1));
+        public static readonly CustomSpineOption FpUIMagPos = new CustomSpineOption(new CustomSpinePos(0, -800), new CustomSpinePos(1, 1, 1));
 
         public CustomSpineOption()
         {
@@ -196,6 +200,8 @@ namespace SkySwordKill.NextMoreCommand.Patchs
         private UINPCInfoPanel _uiNpcInfoPanel;
         private InitAvatar _fightAvatar;
         private JiaoYiUIMag _jiaoYiUIMag;
+        private FpUIMag _fpUIMag;
+        private CustomSpineOption customSpineOption;
         private void Awake()
         {
             Init();
@@ -209,6 +215,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             _uiNpcInfoPanel = GetComponentInParent<UINPCInfoPanel>();
             _fightAvatar = GetComponentInParent<InitAvatar>();
             _jiaoYiUIMag = GetComponentInParent<JiaoYiUIMag>();
+            _fpUIMag = GetComponentInParent<FpUIMag>();
             if (_uiNpcSvItem != null)
             {
                 spineType = ESpineType.UINpcSvItem;
@@ -233,11 +240,17 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             {
                 spineType = ESpineType.JiaoYiUIMag;
             }
+            else if (_fpUIMag != null)
+            {
+                spineType = ESpineType.FpUIMag;
+            }
             Reset();
         }
+
         public void SetAvatar(int avatar)
         {
-
+            AssetsUtils.GetCustomSpineOption(avatar, spineType, out customSpineOption);
+            customSpineOption?.SetTransform(transform);
         }
         private void OnEnable()
         {
@@ -245,15 +258,11 @@ namespace SkySwordKill.NextMoreCommand.Patchs
         }
         private void OnDisable()
         {
-            if (spineType != ESpineType.JiaoYiUIMag)
-            {
-                Destroy(this);
-            }
-
+            Init();
         }
         public void Reset()
         {
-            CustomSpineOption customSpineOption = null;
+            customSpineOption = null;
             switch (spineType)
             {
                 case ESpineType.None:
@@ -274,6 +283,9 @@ namespace SkySwordKill.NextMoreCommand.Patchs
                 case ESpineType.FightAvatar:
                     customSpineOption = CustomSpineOption.FightAvatarPos;
                     break;
+                case ESpineType.FpUIMag:
+                    customSpineOption = CustomSpineOption.FpUIMagPos;
+                    break;
             }
             customSpineOption?.SetTransform(transform);
         }
@@ -290,7 +302,8 @@ namespace SkySwordKill.NextMoreCommand.Patchs
         public static bool m_customSpine;
         public static List<int> CustomNpc = new List<int>()
         {
-            8471,9740
+            8471,
+            9740
         };
         public static bool Prefix(PlayerSetRandomFace __instance, int monstarID)
         {
@@ -307,7 +320,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             if (AssetsUtils.GetSkeletonData(avartarID, out var skeletonData))
             {
 
-             
+
                 var skeletonAnimation = __instance.GetComponent<SkeletonAnimation>();
                 if (skeletonGraphic != null)
                 {
@@ -316,6 +329,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
                     skeletonGraphic.startingAnimation = "Idle_0";
                     skeletonGraphic.Initialize(true);
                     var customSpine = __instance.gameObject.AddMissingComponent<CustomSpine>();
+                    customSpine.SetAvatar(avartarID);
                     var jiaoYiUI = __instance.GetComponentInParent<JiaoYiUIMag>() == null;
                     m_customSpine = jiaoYiUI;
                 }
@@ -340,7 +354,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
 
                         };
                         m_customSpine = true;
-                        __instance.gameObject.AddMissingComponent<CustomSpine>();
+                        __instance.gameObject.AddMissingComponent<CustomSpine>().SetAvatar(m_avartarID);
                     }
                 }
                 var baseSpine = __instance.BaseSpine;
