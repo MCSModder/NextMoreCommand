@@ -172,6 +172,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public static bool IsNpc(string id) => IsNpc(Convert.ToInt32(id));
         public const string NpcFollow = "NPC_FOLLOW_NEXT";
         public const string NpcFightFace = "NPC_FIGHT_FACE";
+        public const string NpcFightSpine = "NPC_FIGHT_Spine";
         public const string SelfName = "SELF_NAME";
         public static DataGroup<string> StrGroup => DialogAnalysis.AvatarNextData.StrGroup;
         public static DataGroup<int> IntGroup => DialogAnalysis.AvatarNextData.IntGroup;
@@ -421,7 +422,16 @@ namespace SkySwordKill.NextMoreCommand.Utils
         }
         public static bool GetNpcFightFace(int id)
         {
-            return  IntGroup.Get(NpcFightFace, id.ToNpcId()) != 0;
+            return IntGroup.Get(NpcFightFace, id.ToNpcId()) != 0;
+        }
+        public static bool SetNpcFightSpine(int id, bool value)
+        {
+            IntGroup.Set(NpcFightSpine, id.ToNpcId(), value ? 1 : 0);
+            return true;
+        }
+        public static bool GetNpcFightSpine(int id)
+        {
+            return IntGroup.Get(NpcFightSpine, id.ToNpcId()) != 0;
         }
         public static List<int> GetNpcList(DialogCommand command, int count) => GetNpcList(command, count, count);
 
@@ -615,12 +625,9 @@ namespace SkySwordKill.NextMoreCommand.Utils
             }
 
 
-            foreach (var xinQuType in dict)
+            foreach (var xinQuType in dict.Where(xinQuType => xinQuType.Value.Name == TypeRaw))
             {
-                if (xinQuType.Value.Name == TypeRaw)
-                {
-                    return xinQuType.Value.Id;
-                }
+                return xinQuType.Value.Id;
             }
 
             return -1;
@@ -632,17 +639,14 @@ namespace SkySwordKill.NextMoreCommand.Utils
         {
             var id = _id > 0 ? _id : -1;
             var dict = XinQuTypeInfos;
-            if (_isNumber && dict.ContainsKey(id))
+            if (_isNumber && dict.TryGetValue(id, out var value))
             {
-                return dict[id].Name;
+                return value.Name;
             }
 
-            foreach (var xinQuType in dict)
+            foreach (var xinQuType in dict.Where(xinQuType => xinQuType.Value.Name == TypeRaw))
             {
-                if (xinQuType.Value.Name == TypeRaw)
-                {
-                    return xinQuType.Value.Name;
-                }
+                return xinQuType.Value.Name;
             }
 
 

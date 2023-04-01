@@ -4,14 +4,14 @@ using SkySwordKill.NextMoreCommand.Utils;
 
 namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Npc
 {
-    [DialogEnvQuery("GetNpcFightFace")]
-    [DialogEnvQuery("获得角色战斗立绘")]
-    public class GetNpcFightFace : IDialogEnvQuery
+    [DialogEnvQuery("GetNpcFightSpine")]
+    [DialogEnvQuery("获得角色战斗骨骼")]
+    public class GetNpcFightSpine : IDialogEnvQuery
     {
         public object Execute(DialogEnvQueryContext context)
         {
             var npc = context.GetNpcID(0, -1);
-            return NpcUtils.GetNpcFightFace(npc);
+            return NpcUtils.GetNpcFightSpine(npc);
         }
     }
 }

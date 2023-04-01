@@ -65,19 +65,14 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             var npcJson = avatar.NPCJson();
             var faceId = npcJson["face"].I.ToString();
             var lihui = npcJson.HasField("workshoplihui") ? npcJson["workshoplihui"].str : string.Empty;
-            var path = string.Empty;
-            if (faceId == "0" && string.IsNullOrWhiteSpace(lihui))
+
+            if (string.IsNullOrWhiteSpace(lihui) && faceId == "0")
             {
                 DestroyImmediate(this);
+                yield break;
             }
-            else if (!string.IsNullOrWhiteSpace(lihui))
-            {
-                path = $"workshop_{lihui}_{faceId}";
-            }
-            else
-            {
-                path = $"Effect/Prefab/gameEntity/Avater/Avater{faceId}/{faceId}";
-            }
+
+            var path = !string.IsNullOrWhiteSpace(lihui) ? $"workshop_{lihui}_{faceId}" : $"Effect/Prefab/gameEntity/Avater/Avater{faceId}/{faceId}";
             var sprite = ModResources.LoadSprite(path);
             var hasSprite = sprite != null;
             if (_spriteRenderer != null)
@@ -317,7 +312,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             }
             var avartarID = NPCEx.NPCIDToOld(m_avartarID);
             var skeletonGraphic = __instance.GetComponent<SkeletonGraphic>();
-            if (AssetsUtils.GetSkeletonData(avartarID, out var skeletonData))
+            if (NpcUtils.GetNpcFightFace(m_avartarID) && AssetsUtils.GetSkeletonData(avartarID, out var skeletonData))
             {
 
 
