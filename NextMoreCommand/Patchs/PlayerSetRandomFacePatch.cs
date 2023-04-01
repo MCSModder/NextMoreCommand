@@ -298,7 +298,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
         public static List<int> CustomNpc = new List<int>()
         {
             8471,
-            9740
+            9740,7200
         };
         public static bool Prefix(PlayerSetRandomFace __instance, int monstarID)
         {
@@ -312,7 +312,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             }
             var avartarID = NPCEx.NPCIDToOld(m_avartarID);
             var skeletonGraphic = __instance.GetComponent<SkeletonGraphic>();
-            if (NpcUtils.GetNpcFightFace(m_avartarID) && AssetsUtils.GetSkeletonData(avartarID, out var skeletonData))
+            if ( AssetsUtils.GetSkeletonData(avartarID, out var skeletonData) && NpcUtils.GetNpcFightSpine(avartarID) )
             {
 
 
