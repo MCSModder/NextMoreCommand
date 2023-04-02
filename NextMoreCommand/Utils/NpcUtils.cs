@@ -86,6 +86,22 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
             return list.Select(item => item.ToNpcId()).Where(item => item > 0).ToList();
         }
+        public static List<ulong> ToListULong(this DialogCommand instance, int index = 0)
+        {
+            if (instance.ParamList.Length <= index)
+            {
+                return new List<ulong>();
+            }
+
+            var list = new List<string>();
+
+            for (var i = index; i < instance.ParamList.Length; i++)
+            {
+                list.Add(instance.ParamList[i]);
+            }
+
+            return list.Select(item => Convert.ToUInt64(item)).ToList();
+        }
 
         public static List<int> ToListInt(this DialogCommand instance, int index = 0)
         {

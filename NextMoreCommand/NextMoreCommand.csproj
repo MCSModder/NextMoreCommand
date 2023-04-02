@@ -227,6 +227,7 @@
         <Compile Include="NextCommandExtension\Utils\SetRecordShengPing.cs" />
         <Compile Include="NextCommandExtension\Utils\ChangeSelectTianFu.cs" />
         <Compile Include="NextCommandExtension\Utils\SetRemoveEquip.cs" />
+        <Compile Include="NextCommandExtension\Utils\SetSubscribeMod.cs" />
         <Compile Include="NextCommandExtension\Utils\ShowGaoshi.cs" />
         <Compile Include="NextCommandExtension\Utils\ShowLianDanPanel.cs" />
         <Compile Include="NextCommandExtension\Utils\ShowLianQiPanel.cs" />
@@ -256,6 +257,8 @@
         <Compile Include="NextEnvExtension\Npc\Wudao\GetWudao.cs" />
         <Compile Include="NextEnvExtension\Npc\Wudao\HasWudaoSkill.cs" />
         <Compile Include="NextEnvExtension\Utils\GetJavascriptStr.cs" />
+        <Compile Include="NextEnvExtension\Utils\GetModList.cs" />
+        <Compile Include="NextEnvExtension\Utils\HasMod.cs" />
         <Compile Include="Patchs\BiaoBaiManagerCalcBiaoBaiScorePatch.cs" />
         <Compile Include="Patchs\DialogAnalysisTryTriggerPatch.cs" />
         <Compile Include="Patchs\DongFuCreatePatch.cs" />
@@ -276,6 +279,7 @@
         <Compile Include="Utils\JsonUtils.cs" />
         <Compile Include="Utils\NpcFactoryUtils.cs" />
         <Compile Include="Utils\UiUtils.cs" />
+        <Compile Include="Utils\WorkshopUtils.cs" />
         <Compile Include="Utils\WuDaoUtils.cs" />
         <Compile Include="NextCommandExtension\Fight\SetFightCustomFace.cs" />
         <Compile Include="NextCommandExtension\Fight\SetFightReplaceSkill.cs" />

@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using BepInEx;
 using HarmonyLib;
 using JSONClass;
+using MCSSubscribeDependencies;
 using SkySwordKill.Next;
 using SkySwordKill.Next.DialogEvent;
 using SkySwordKill.Next.DialogSystem;
@@ -79,6 +80,7 @@ namespace SkySwordKill.NextMoreCommand
             };
             ModManager.ModLoadComplete += () =>
             {
+                WorkshopUtils.WorkShopItems = WorkshopUtils.GetAllModWorkshopItem();
                 ModManagerUtils.TryGetModSetting("Quick_DramaDebugKey", out DramaDebugKey);
                 ModManager.TryGetModSetting("Quick_IsDebugMode", out IsDebugMode);
                 ModManager.TryGetModSetting("Quick_JSDebugPort", out JSDebugPort);
