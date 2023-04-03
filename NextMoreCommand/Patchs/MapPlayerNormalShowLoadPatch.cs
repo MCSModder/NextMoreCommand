@@ -29,15 +29,13 @@ namespace SkySwordKill.NextMoreCommand.Patchs
                 return false;
             }
 
-            if (AssetsUtils.GetCustomMapPlayerSpine($"Assets/Avatar/Spine/{name}/{name}.ab", out var customMapPlayerSpine))
-            {
-                nowSpineName.Value = spine;
-                var playerSpine = __instance.PlayerSpine;
-                var isNan = traverse.Field<MapPlayerController>("controller").Value.IsNan;
-                playerSpine.skeletonDataAsset = customMapPlayerSpine.LoadSkeletonDataAsset(name);
-                playerSpine.initialSkinName = isNan ? "男" : "女";
-                playerSpine.Initialize(true, false);
-            }
+            if (!AssetsUtils.GetCustomMapPlayerSpine(name, out var customMapPlayerSpine)) return false;
+            nowSpineName.Value = spine;
+            var playerSpine = __instance.PlayerSpine;
+            var isNan = traverse.Field<MapPlayerController>("controller").Value.IsNan;
+            playerSpine.skeletonDataAsset = customMapPlayerSpine.LoadSkeletonDataAsset(spine);
+            playerSpine.initialSkinName = isNan ? "男" : "女";
+            playerSpine.Initialize(true, false);
             return false;
         }
     }
