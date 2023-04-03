@@ -262,6 +262,7 @@
         <Compile Include="Patchs\BiaoBaiManagerCalcBiaoBaiScorePatch.cs" />
         <Compile Include="Patchs\DialogAnalysisTryTriggerPatch.cs" />
         <Compile Include="Patchs\DongFuCreatePatch.cs" />
+        <Compile Include="Patchs\MapPlayerNormalShowLoadPatch.cs" />
         <Compile Include="Patchs\PlayerSetRandomFacePatch.cs" />
         <Compile Include="Patchs\ResManagerLoadSpriteAtlasPatch.cs" />
         <Compile Include="Patchs\TabGongFaPanelPatch.cs" />

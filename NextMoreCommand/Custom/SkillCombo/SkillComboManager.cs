@@ -1,12 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
-using JetBrains.Annotations;
 using JSONClass;
 using KBEngine;
-using SkySwordKill.Next;
 using SkySwordKill.Next.DialogSystem;
-using SkySwordKill.NextMoreCommand.DialogTrigger;
 using YSGame.Fight;
 using Skill = GUIPackage.Skill;
 
@@ -14,11 +11,11 @@ namespace SkySwordKill.NextMoreCommand.Custom.SkillCombo;
 
 public class SkillInfoReplace
 {
-    public int OldSkillId;
-    public int NewSkillId;
-    public int Index;
-    public string OldSkillName;
-    public string NewSkillName;
+    public readonly int OldSkillId;
+    public readonly int NewSkillId;
+    public readonly int Index;
+    public readonly string OldSkillName;
+    public readonly string NewSkillName;
 
     public SkillInfoReplace(int oldSkill, int newSkill)
     {
@@ -40,7 +37,7 @@ public class SkillInfoReplace
 
     public bool IsValid()
     {
-        return OldSkillId > 0 && NewSkillId > 0 && Index <= 10 && Index >= 0;
+        return OldSkillId > 0 && NewSkillId > 0 && Index is <= 10 and >= 0;
     }
 
     public void SetReplace()
@@ -80,6 +77,7 @@ public static class SkillComboManager
 
     public static int GetSkillId(int skill)
     {
+        
         return Tools.getSkillKeyByID(skill, Player);
     }
 
@@ -91,9 +89,9 @@ public static class SkillComboManager
 
     public static int GetSkillId(string skillName)
     {
-        if (SkillName.ContainsKey(skillName))
+        if (SkillName.TryGetValue(skillName, out var value))
         {
-            return GetSkillId(SkillName[skillName]);
+            return GetSkillId(value);
         }
 
         foreach (var item in _skillJsonData.DataList)
