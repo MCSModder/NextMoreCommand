@@ -11,12 +11,12 @@ namespace SkySwordKill.NextMoreCommand.Patchs
         private static List<string> _original = new List<string>()
         {
             "MapPlayerYuJian",
-            "MapPlayerHeDianZu"
+            "MapPlayerHeDianZu",
+            "MapPlayerWalk"
         };
-        public static bool Prefix(MapPlayerNormalShow __instance)
+        public static bool Prefix(string spine,MapPlayerNormalShow __instance)
         {
             var seid = __instance.NowDunShuSpineSeid;
-            var spine = seid.Spine;
             if (_original.Contains(spine))
             {
                 return true;

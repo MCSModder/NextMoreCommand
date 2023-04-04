@@ -23,7 +23,9 @@ namespace SkySwordKill.NextMoreCommand.Utils
         Custom
     }
 
-    public class BaseSpine
+
+    [JsonObject]
+    public class CustomMapPlayerSpine
     {
         [JsonIgnore]
         public AssetBundle AssetBundle { get; set; }
@@ -121,29 +123,118 @@ namespace SkySwordKill.NextMoreCommand.Utils
         }
     }
 
-    public class CustomMapPlayerSpine : BaseSpine
-    {
-
-    }
-
-    public class CustomSpineConfig : BaseSpine
+    [JsonObject]
+    public class CustomSpineConfig
     {
 
 
-        [JsonProperty("剧情对话位置")]
-        public CustomSpineOption SayDialogPos { get; set; } = CustomSpineOption.SayDialogPos.Clone();
-        [JsonProperty("NPC列表位置")]
-        public CustomSpineOption UINpcSvItemPos { get; set; } = CustomSpineOption.UINpcSvItemPos.Clone();
-        [JsonProperty("交互窗口位置")]
-        public CustomSpineOption UINpcJiaoHuPopPos { get; set; } = CustomSpineOption.UINpcJiaoHuPopPos.Clone();
-        [JsonProperty("信息窗口位置")]
-        public CustomSpineOption UINpcInfoPanelPos { get; set; } = CustomSpineOption.UINpcInfoPanelPos.Clone();
-        [JsonProperty("对战立绘位置")]
-        public CustomSpineOption FightAvatarPos { get; set; } = CustomSpineOption.FightAvatarPos.Clone();
-        [JsonProperty("战斗窗口位置")]
-        public CustomSpineOption FpUIMagPos { get; set; } = CustomSpineOption.FpUIMagPos.Clone();
+        [JsonProperty("剧情对话位置", Required = Required.Default)]
+        public CustomSpineOption SayDialogPos { get; set; }
+        [JsonProperty("NPC列表位置", Required = Required.Default)]
+        public CustomSpineOption UINpcSvItemPos { get; set; }
+        [JsonProperty("交互窗口位置", Required = Required.Default)]
+        public CustomSpineOption UINpcJiaoHuPopPos { get; set; }
+        [JsonProperty("信息窗口位置", Required = Required.Default)]
+        public CustomSpineOption UINpcInfoPanelPos { get; set; }
+        [JsonProperty("对战立绘位置", Required = Required.Default)]
+        public CustomSpineOption FightAvatarPos { get; set; }
+        [JsonProperty("战斗窗口位置", Required = Required.Default)]
+        public CustomSpineOption FpUIMagPos { get; set; }
+
+        [JsonIgnore]
+        public AssetBundle AssetBundle { get; set; }
+        [JsonIgnore]
+        public FileAsset FileAsset { get; set; }
+        [JsonIgnore]
+        public Dictionary<string, SkeletonDataAsset> SkeletonDataAssetDictionary = new Dictionary<string, SkeletonDataAsset>();
+        [JsonIgnore]
+        public Dictionary<string, GameObject> AnimationPrefabDictionary = new Dictionary<string, GameObject>();
+        [JsonIgnore]
+        public Dictionary<string, List<string>> AnimationNameDictionary = new Dictionary<string, List<string>>();
+        private bool _isInit;
+        public T LoadAsset<T>(string path) where T : Object
+        {
+            return AssetBundle == null ? null : AssetBundle.LoadAsset<T>(path);
+        }
+        public Object LoadAsset(string path, Type type)
+        {
+            return AssetBundle == null ? null : AssetBundle.LoadAsset(path, type);
+        }
+        public SkeletonDataAsset LoadSkeletonDataAsset(int key) => LoadSkeletonDataAsset(key.ToString());
+        public SkeletonDataAsset LoadSkeletonDataAsset(string key)
+        {
+
+            if (SkeletonDataAssetDictionary.Count == 0)
+            {
+                return null;
+            }
+            return SkeletonDataAssetDictionary.TryGetValue(key, out var value) ? value : null;
+        }
+        public GameObject LoadSkeletonAnimation(int key) => LoadSkeletonAnimation(key.ToString());
+        public GameObject LoadSkeletonAnimation(string key)
+        {
+
+            if (AnimationPrefabDictionary.Count == 0)
+            {
+                return null;
+            }
+            return AnimationPrefabDictionary.TryGetValue(key, out var value) ? value : null;
+        }
+
+        public bool CheckAnimation(int key, string animationName, out bool isIdle) => CheckAnimation(key.ToString(), animationName, out isIdle);
+        public bool CheckAnimation(string key, string animationName, out bool isIdle)
+        {
+            isIdle = false;
+            if (AnimationNameDictionary.Count == 0)
+            {
+                return false;
+            }
+            var result = AnimationNameDictionary.ContainsKey(key) && AnimationNameDictionary[key].Contains(animationName);
+            if (result && animationName.ToLower().Contains("idle"))
+            {
+                isIdle = true;
+            }
+            return result;
+        }
+        public void Init()
+        {
+            if (_isInit)
+            {
+                return;
+            }
+            if (AssetBundle == null)
+            {
+                _isInit = true;
+                return;
+            }
 
 
+            foreach (var assetName in AssetBundle.GetAllAssetNames())
+            {
+                if (assetName.EndsWith("_skeletondata.asset"))
+                {
+                    var skeletonDataAsset = LoadAsset<SkeletonDataAsset>(assetName);
+                    var filename = Path.GetFileName(assetName).Replace("_skeletondata.asset", "");
+                    AnimationNameDictionary.Add(filename, skeletonDataAsset.GetSkeletonData(true).Animations.Select(animation => animation.Name).ToList());
+                    SkeletonDataAssetDictionary.Add(filename, skeletonDataAsset);
+                }
+                else if (assetName.EndsWith("_animation.prefab"))
+                {
+                    var animationPrefab = LoadAsset<GameObject>(assetName);
+                    var filename = Path.GetFileName(assetName).Replace("_animation.prefab", "");
+                    AnimationPrefabDictionary.Add(filename, animationPrefab);
+                }
+            }
+            _isInit = true;
+        }
+        public override string ToString()
+        {
+            return JObject.FromObject(this).ToString(Formatting.Indented);
+        }
+        public byte[] ToByte()
+        {
+            return Encoding.UTF8.GetBytes(ToString());
+        }
     }
 
     public static class AssetsUtils
@@ -206,15 +297,17 @@ namespace SkySwordKill.NextMoreCommand.Utils
             {
                 var directoryName = Path.GetDirectoryName(fileAsset.FileRawPath);
                 var configJsonPath = BepInEx.Utility.CombinePaths(directoryName, "config.json");
-                CustomSpineConfig config = null;
+                MyPluginMain.LogInfo($"configJsonPath:{configJsonPath} directoryName:{directoryName} ");
+                var config = new CustomSpineConfig();
                 var isExists = File.Exists(configJsonPath);
                 if (isExists)
                 {
-                    var textReader = new JsonTextReader(new StreamReader(configJsonPath));
-                    config = JToken.ReadFrom(textReader).ToObject<CustomSpineConfig>();
+                    var json = File.ReadAllText(configJsonPath);
+                    MyPluginMain.LogInfo(json);
+                    config = JObject.Parse(json).ToObject<CustomSpineConfig>() ?? new CustomSpineConfig();
 
                 }
-                config ??= new CustomSpineConfig();
+
                 config.AssetBundle = assetBundle;
                 config.FileAsset = fileAsset;
                 config.Init();
@@ -314,18 +407,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
         {
             return Enum.GetName(typeof(T), instance);
         }
-        // public static bool GetGifPath(int avatar, out string path, EPose pose = EPose.Idle)
-        // {
-        //     var id = NPCEx.NPCIDToOld(avatar);
-        //
-        //     if (GetFileAsset($"Assets/Gif/{id.ToString()}/{pose.GetName()}.gif", out var fileAsset))
-        //     {
-        //         path = fileAsset.FileRawPath;
-        //         return true;
-        //     }
-        //     path = string.Empty;
-        //     return false;
-        // }
+
         public static bool CheckAnimation(int avatar, string animationName, out bool isIdle)
         {
             isIdle = false;
@@ -335,6 +417,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public static void Clear()
         {
             CacheCustomSpineConfig.Clear();
+            CacheCustomMapPlayerSpine.Clear();
             CacheFileAssets.Clear();
             foreach (var assetBundle in CacheAssetBundle.Values)
             {

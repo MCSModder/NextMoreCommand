@@ -197,11 +197,8 @@ namespace SkySwordKill.NextMoreCommand.Patchs
         private JiaoYiUIMag _jiaoYiUIMag;
         private FpUIMag _fpUIMag;
         private CustomSpineOption customSpineOption;
-        private void Awake()
-        {
-            Init();
-        }
-        private void Init()
+   
+        public void Init()
         {
             spineType = ESpineType.None;
             _uiNpcSvItem = GetComponentInParent<UINPCSVItem>();
@@ -244,13 +241,21 @@ namespace SkySwordKill.NextMoreCommand.Patchs
 
         public void SetAvatar(int avatar)
         {
-            AssetsUtils.GetCustomSpineOption(avatar, spineType, out customSpineOption);
-            customSpineOption?.SetTransform(transform);
-        }
-        private void OnEnable()
-        {
             Init();
+            MyPluginMain.LogInfo($"avatar:{avatar} spineType:{spineType.GetName()}");
+            AssetsUtils.GetCustomSpineOption(avatar, spineType, out customSpineOption);
+            MyPluginMain.LogInfo($"customSpineOption:\n{customSpineOption}");
+            if (customSpineOption == null)
+            {
+                Reset();
+            }
+            else
+            {
+                customSpineOption.SetTransform(transform);
+            }
+
         }
+     
         private void OnDisable()
         {
             Init();
@@ -298,7 +303,8 @@ namespace SkySwordKill.NextMoreCommand.Patchs
         public static List<int> CustomNpc = new List<int>()
         {
             8471,
-            9740,7200
+            9740,
+            7200
         };
         public static bool Prefix(PlayerSetRandomFace __instance, int monstarID)
         {
@@ -312,7 +318,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             }
             var avartarID = NPCEx.NPCIDToOld(m_avartarID);
             var skeletonGraphic = __instance.GetComponent<SkeletonGraphic>();
-            if ( AssetsUtils.GetSkeletonData(avartarID, out var skeletonData) && NpcUtils.GetNpcFightSpine(avartarID) )
+            if (AssetsUtils.GetSkeletonData(avartarID, out var skeletonData) && NpcUtils.GetNpcFightSpine(avartarID))
             {
 
 
@@ -349,7 +355,8 @@ namespace SkySwordKill.NextMoreCommand.Patchs
 
                         };
                         m_customSpine = true;
-                        __instance.gameObject.AddMissingComponent<CustomSpine>().SetAvatar(m_avartarID);
+                        var customSpine = __instance.gameObject.AddMissingComponent<CustomSpine>();
+                        customSpine.SetAvatar(avartarID);
                     }
                 }
                 var baseSpine = __instance.BaseSpine;
