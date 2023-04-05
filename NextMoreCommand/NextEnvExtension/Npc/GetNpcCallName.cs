@@ -4,9 +4,9 @@ using SkySwordKill.NextMoreCommand.Utils;
 
 namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Npc
 {
-    [DialogEnvQuery("GetNpcSelfName")]
-    [DialogEnvQuery("获得角色自称")]
-    public class GetNpcSelfName : IDialogEnvQuery
+    [DialogEnvQuery("GetNpcCallName")]
+    [DialogEnvQuery("获得角色称呼")]
+    public class GetNpcCallName : IDialogEnvQuery
     {
         public object Execute(DialogEnvQueryContext context)
         {
@@ -16,8 +16,8 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Npc
                 return "";
             }
 
-            var name = DialogAnalysis.GetStr(NpcUtils.SelfName, npcId.ToString());
-            MyPluginMain.LogInfo($"npcId:{npcId.ToString()} 自称:{name}");
+            var name = NpcUtils.GetCallName(npcId);
+            MyPluginMain.LogInfo($"npcId:{npcId.ToString()} 称呼:{name}");
             return name;
         }
     }

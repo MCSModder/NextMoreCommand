@@ -42,7 +42,7 @@ public class SetNpcName : IDialogEvent
             case 3:
                 var surname = command.GetStr(1, null);
                 var name = command.GetStr(2, null);
-
+                MyLog.Log(command, $"姓氏:{surname} 名字:{name} ");
                 NpcUtils.SetNpcFullName(npcId, surname, name);
 
                 break;

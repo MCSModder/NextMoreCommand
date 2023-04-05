@@ -181,7 +181,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
     public static class NpcUtils
     {
-        public static Dictionary<int, string> SelfNameDict = new Dictionary<int, string>();
+
         public static JSONObject AvatarRandomJsonData => jsonData.instance.AvatarRandomJsonData;
         public static JSONObject AvatarJsonData => jsonData.instance.AvatarJsonData;
         public static bool IsNpc(int id) => NPCEx.NPCIDToNew(id) <= 1;
@@ -189,7 +189,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public const string NpcFollow = "NPC_FOLLOW_NEXT";
         public const string NpcFightFace = "NPC_FIGHT_FACE";
         public const string NpcFightSpine = "NPC_FIGHT_Spine";
-        public const string SelfName = "SELF_NAME";
+        public const string CallName = "CALL_NAME";
         public static DataGroup<string> StrGroup => DialogAnalysis.AvatarNextData.StrGroup;
         public static DataGroup<int> IntGroup => DialogAnalysis.AvatarNextData.IntGroup;
         public static Dictionary<string, string> NpcFollowGroup => StrGroup.GetNpcFollowGroup();
@@ -368,67 +368,59 @@ namespace SkySwordKill.NextMoreCommand.Utils
             var hasName = !string.IsNullOrWhiteSpace(name);
             var hasSurname = !string.IsNullOrWhiteSpace(surname);
 
-            if (hasSurname && npc.HasField("FirstName"))
+            switch (hasSurname)
             {
-                npc.SetField("FirstName", surname);
-                if (hasName)
+                case true when npc.HasField("FirstName"):
                 {
-                    npc.SetField("Name", name);
+                    npc.SetField("FirstName", surname);
+                    if (hasName)
+                    {
+                        npc.SetField("Name", name);
+                    }
+                    break;
                 }
+                case true when hasName:
+                    npc.SetField("Name", surname + name);
+                    break;
+                case false when hasName:
+                    npc.SetField("Name", name);
+                    break;
+                default:
+                    return false;
+            }
+            if (UINPCJiaoHu.Inst != null && UINPCJiaoHu.Inst.NowJiaoHuNPC?.ID == id)
+            {
+                UINPCJiaoHu.Inst.NowJiaoHuNPC.RefreshData();
 
             }
-            else if (hasSurname && hasName)
-            {
-                npc.SetField("Name", surname + name);
-            }
-            else if (!hasSurname && hasName)
-            {
-                npc.SetField("Name", name);
-            }
-            else
-            {
-                return false;
-            }
-            UINPCJiaoHu.Inst.NowJiaoHuNPC.RefreshData();
             NpcJieSuanManager.inst.isUpDateNpcList = true;
             return true;
         }
 
-        public static string GetSelfName(string id)
+        public static string GetCallName(string id)
         {
             var npcId = Convert.ToInt32(id);
-            if (npcId == 0)
-            {
-                return "";
-            }
+            return npcId == 0 ? "" : GetCallName(npcId);
 
-            return GetSelfName(npcId);
         }
 
-        public static string GetSelfName(int id)
+        public static string GetCallName(int id)
         {
-            if (SelfNameDict.TryGetValue(id, out string value))
-            {
-                return value;
-            }
+            var value = StrGroup.Get(CallName, id.ToNpcId());
+            return id <= 0 || string.IsNullOrWhiteSpace(value) ? "" : value;
 
-            return "";
         }
 
-        public static bool SetSelfName(string id, string name)
+        public static bool SetCallName(string id, string name)
         {
             var npcId = Convert.ToInt32(id);
-            if (npcId == 0)
-            {
-                return false;
-            }
+            return npcId != 0 && SetCallName(npcId, name);
 
-            return SetSelfName(npcId, name);
         }
 
-        public static bool SetSelfName(int id, string name)
+        public static bool SetCallName(int id, string name)
         {
-            SelfNameDict[id] = name;
+            StrGroup.Set(CallName, id.ToNpcId(), name);
             return true;
         }
         public static bool SetNpcFightFace(int id, bool value)

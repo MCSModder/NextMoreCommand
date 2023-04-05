@@ -264,6 +264,7 @@
         <Compile Include="Patchs\DialogAnalysisTryTriggerPatch.cs" />
         <Compile Include="Patchs\DongFuCreatePatch.cs" />
         <Compile Include="Patchs\MapPlayerNormalShowLoadPatch.cs" />
+        <Compile Include="Patchs\NPCTalkCmdHelperPatch.cs" />
         <Compile Include="Patchs\PlayerSetRandomFacePatch.cs" />
         <Compile Include="Patchs\ResManagerLoadSpriteAtlasPatch.cs" />
         <Compile Include="Patchs\RunDialogEventCommandPatch.cs" />
@@ -305,7 +306,7 @@
         <Compile Include="NextCommandExtension\Npc\SetNpcMoney.cs" />
         <Compile Include="NextCommandExtension\Npc\SetNpcName.cs" />
         <Compile Include="NextCommandExtension\Npc\SetNpcFlyToSky.cs" />
-        <Compile Include="NextCommandExtension\Npc\SetNpcSelfName.cs" />
+        <Compile Include="NextCommandExtension\Npc\SetNpcCallName.cs" />
         <Compile Include="NextCommandExtension\Npc\SetNpcXinQuType.cs" />
         <Compile Include="NextCommandExtension\Npc\SetNpcYuanYingTime.cs" />
         <Compile Include="NextCommandExtension\Npc\SetNpcZhuJiTime.cs" />
@@ -372,7 +373,7 @@
         <Compile Include="NextEnvExtension\Npc\GetNpcMoney.cs" />
         <Compile Include="NextEnvExtension\Npc\GetNpcName.cs" />
         <Compile Include="NextEnvExtension\Npc\GetNpcSceneName.cs" />
-        <Compile Include="NextEnvExtension\Npc\GetNpcSelfName.cs" />
+        <Compile Include="NextEnvExtension\Npc\GetNpcCallName.cs" />
         <Compile Include="NextEnvExtension\Npc\HasNpcFollow.cs" />
         <Compile Include="NextEnvExtension\Utils\GetIntGroup.cs" />
         <Compile Include="NextEnvExtension\Utils\GetIntToString.cs" />
