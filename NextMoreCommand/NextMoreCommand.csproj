@@ -266,6 +266,7 @@
         <Compile Include="Patchs\MapPlayerNormalShowLoadPatch.cs" />
         <Compile Include="Patchs\PlayerSetRandomFacePatch.cs" />
         <Compile Include="Patchs\ResManagerLoadSpriteAtlasPatch.cs" />
+        <Compile Include="Patchs\RunDialogEventCommandPatch.cs" />
         <Compile Include="Patchs\TabGongFaPanelPatch.cs" />
         <Compile Include="Patchs\UIHuaShenRuDaoSelectPatch.cs" />
         <Compile Include="Patchs\UISiXuItemPatch.cs" />

@@ -25,22 +25,6 @@ public class CustomDungeonsMore : BaseUnityPlugin
 [HarmonyPatch(typeof(Dungeon_ShowExit), (nameof(Dungeon_ShowExit.Execute)))]
 public static class DungeonShowExitExecutePatch
 {
-    private static List<string> _original = new List<string>()
-    {
-        "MapPlayerYuJian",
-        "MapPlayerHeDianZu",
-        "MapPlayerWalk"
-    };
-    public static void Postfix()
-    {
-        var normalShow = MapPlayerController.Inst.NormalShow;
-        var nowSpineName = Traverse.Create(normalShow).Field<string>("nowSpineName");
-        if (_original.Contains(nowSpineName.Value))
-        {
-            return;
-        }
-        nowSpineName.Value = "";
-        normalShow.Refresh();
-    }
+ 
 
 }
