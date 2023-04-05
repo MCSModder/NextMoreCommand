@@ -4,7 +4,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextMoreCommand", "NextMore
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnsubscribeNextMoreCommandOld", "UnsubscribeNextMoreCommandOld\UnsubscribeNextMoreCommandOld.csproj", "{0CC4D186-A8D3-4EDE-A25B-4BB9C3643CB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCSSubscribeDependencies", "MCSSubscribeDependencies\MCSSubscribeDependencies.csproj", "{44B38315-6041-462C-BDF1-3506684D7D0C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomDungeonsMore", "CustomDungeonsMore\CustomDungeonsMore.csproj", "{44B38315-6041-462C-BDF1-3506684D7D0C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProGif", "ProGif\ProGif.csproj", "{88E7ABF4-1B36-4CF8-9433-E9B58A42C42D}"
 EndProject

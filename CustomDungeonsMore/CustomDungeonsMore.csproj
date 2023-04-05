@@ -7,8 +7,8 @@
         <ProjectGuid>{44B38315-6041-462C-BDF1-3506684D7D0C}</ProjectGuid>
         <OutputType>Library</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>MCSSubscribeDependencies</RootNamespace>
-        <AssemblyName>MCSSubscribeDependencies</AssemblyName>
+        <RootNamespace>Zerxz.CustomDungeonsMore</RootNamespace>
+        <AssemblyName>CustomDungeonsMore</AssemblyName>
         <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
         <LangVersion>latest</LangVersion>
@@ -49,6 +49,10 @@
           <HintPath>..\..\..\..\..\workshop\content\1189490\2824349934\BepInEx\core\BepInEx.dll</HintPath>
           <Private>False</Private>
         </Reference>
+        <Reference Include="CustomDungeons">
+          <HintPath>..\..\..\..\..\workshop\content\1189490\2897391363\plugins\CustomDungeons.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
         <Reference Include="Newtonsoft.Json">
           <HintPath>..\..\..\觅长生_Data\Managed\Newtonsoft.Json.dll</HintPath>
           <Private>False</Private>
@@ -70,9 +74,8 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="SubscribeDependencies.cs" />
+        <Compile Include="CustomDungeonsMore.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
-        <Compile Include="WorkshopUtils.cs" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\NextMoreCommand\NextMoreCommand.csproj">

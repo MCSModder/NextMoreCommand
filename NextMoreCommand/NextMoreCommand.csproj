@@ -226,6 +226,7 @@
         <Compile Include="NextCommandExtension\Utils\SetAllRemoveEquip.cs" />
         <Compile Include="NextCommandExtension\Utils\SetRecordShengPing.cs" />
         <Compile Include="NextCommandExtension\Utils\ChangeSelectTianFu.cs" />
+        <Compile Include="NextCommandExtension\Utils\SetRefreshMapPlayer.cs" />
         <Compile Include="NextCommandExtension\Utils\SetRemoveEquip.cs" />
         <Compile Include="NextCommandExtension\Utils\SetSubscribeMod.cs" />
         <Compile Include="NextCommandExtension\Utils\ShowGaoshi.cs" />

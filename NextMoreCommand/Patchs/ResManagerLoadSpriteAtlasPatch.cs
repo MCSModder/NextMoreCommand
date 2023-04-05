@@ -6,6 +6,7 @@ using HarmonyLib;
 //using Live2D.Cubism.Rendering.Masking;
 using SkySwordKill.Next;
 using SkySwordKill.NextMoreCommand.Utils;
+using Spine.Unity;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -17,47 +18,33 @@ namespace SkySwordKill.NextMoreCommand.Patchs;
 //     RuntimeAnimatorController
 // }
 
-// [HarmonyPatch(typeof(Resources), nameof(Resources.Load), typeof(string), typeof(Type))]
-// public static class ResourcesLoadPatch
-// {
-//     private static AssetBundle assetBundle;
-//     private static Dictionary<Type, EType> _types = new Dictionary<Type, EType>()
-//     {
-//         {
-//             typeof(Material), EType.Material
-//         },
-//         {
-//             typeof(RuntimeAnimatorController), EType.RuntimeAnimatorController
-//         },
-//     };
-//     public static bool Prefix(string path, Type systemTypeInstance, ref Object __result)
-//     {
-//
-//
-//         if (!path.StartsWith("Live2D")) return true;
-//         if (path == "Live2D/Cubism/GlobalMaskTexture" && systemTypeInstance == typeof(CubismMaskTexture))
-//         {
-//             __result = ScriptableObject.CreateInstance<CubismMaskTexture>();
-//
-//             return false;
-//         }
-//         if (assetBundle == null && Main.Res.TryGetAsset($"Assets/Resources/Live2D/live2d.ab", out var fileAsset))
-//         {
-//             assetBundle = fileAsset as AssetBundle;
-//         }
-//         if (assetBundle == null) return true;
-//         if (!_types.ContainsKey(systemTypeInstance)) return true;
-//         var ext = _types[systemTypeInstance] switch
-//         {
-//             EType.RuntimeAnimatorController => ".controller",
-//             EType.Material => ".mat",
-//             _ => ""
-//         };
-//         __result = assetBundle.LoadAsset($"assets/{path}{ext}", systemTypeInstance);
-//         return false;
-//
-//     }
-// }
+[HarmonyPatch(typeof(Resources), nameof(Resources.Load), typeof(string), typeof(Type))]
+public static class ResourcesLoadPatch
+{
+    private static List<string> _original = new List<string>()
+    {
+        "MapPlayerYuJian",
+        "MapPlayerHeDianZu",
+        "MapPlayerWalk"
+    };
+    public static bool Prefix(string path, Type systemTypeInstance, ref Object __result)
+    {
+
+
+        if (!path.StartsWith("Spine/MapPlayer/") || systemTypeInstance != typeof(SkeletonDataAsset)) return true;
+        var spine = path.Replace("Spine/MapPlayer/", "").Split('/')[0];
+        if (_original.Contains(spine))
+        {
+            return true;
+        }
+        var nowDunShuSpineSeid = MapPlayerController.Inst.NormalShow.NowDunShuSpineSeid;
+        var name = Tools.instance.getStaticSkillName(nowDunShuSpineSeid.skillid);
+        if (!AssetsUtils.GetCustomMapPlayerSpine(name, out var customMapPlayerSpine)) return true;
+        __result = customMapPlayerSpine.LoadSkeletonDataAsset(spine.ToLower());
+        return false;
+
+    }
+}
 
 [HarmonyPatch(typeof(ResManager), nameof(ResManager.LoadSpriteAtlas))]
 public static class ResManagerLoadSpriteAtlasPatch
