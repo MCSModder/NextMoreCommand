@@ -7,6 +7,9 @@ using Newtonsoft.Json.Linq;
 using SkySwordKill.Next;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.NextMoreCommand.DialogTrigger;
+using SkySwordKill.NextMoreCommand.Patchs;
+using Spine.Unity;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace SkySwordKill.NextMoreCommand.Utils
@@ -190,6 +193,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public const string NpcFightFace = "NPC_FIGHT_FACE";
         public const string NpcFightSpine = "NPC_FIGHT_Spine";
         public const string NpcSkinSpine = "NPC_SKIN_Spine";
+        public const string NpcDefaultSkinSpine = "NPC_DEFAULT_SKIN_Spine";
         public const string CallName = "CALL_NAME";
         public static DataGroup<string> StrGroup => DialogAnalysis.AvatarNextData.StrGroup;
         public static DataGroup<int> IntGroup => DialogAnalysis.AvatarNextData.IntGroup;
@@ -389,13 +393,44 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 default:
                     return false;
             }
-            if (UINPCJiaoHu.Inst != null && UINPCJiaoHu.Inst.NowJiaoHuNPC?.ID == id)
+            RefreshNpc(id);
+            return true;
+        }
+        public static void RefreshNpc(int id)
+        {
+            var inst = UINPCJiaoHu.Inst;
+            if (inst != null && inst.NowJiaoHuNPC?.ID == id)
             {
-                UINPCJiaoHu.Inst.NowJiaoHuNPC.RefreshData();
-
+                inst.NowJiaoHuNPC.RefreshData();
+                if (inst.JiaoHuPop.isActiveAndEnabled)
+                {
+                    inst.HideJiaoHuPop();
+                    inst.ShowJiaoHuPop();
+                }
+                if (inst.InfoPanel.isActiveAndEnabled)
+                {
+                    inst.HideNPCInfoPanel();
+                    inst.ShowNPCInfoPanel();
+                }
+            }
+            var roundManager = RoundManager.instance;
+            if (roundManager != null && Tools.instance.MonstarID == id)
+            {
+                var target = roundManager.GetMonstar();
+                var renderObj = target.renderObj as GameObject;
+                if (renderObj != null)
+                {
+                    var old = NPCEx.NPCIDToOld(id);
+                    var skinName = NpcUtils.GetNpcSkinSpine(old);
+                    var skin = AssetsUtils.CheckSkin(old, skinName) ? skinName : GetNpcDefaultSkinSpine(old);
+                    var customSpine = renderObj.GetComponentInChildren<CustomSpine>();
+                    var skeletonAnimation =customSpine.gameObject.GetComponent<SkeletonAnimation>();
+                    skeletonAnimation.initialSkinName = skin;
+                    skeletonAnimation.Initialize(true);
+                }
+                
             }
             NpcJieSuanManager.inst.isUpDateNpcList = true;
-            return true;
         }
 
         public static string GetCallName(string id)
@@ -445,12 +480,31 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public static bool SetNpcSkinSpine(int id, string value)
         {
             StrGroup.Set(NpcSkinSpine, id.ToNpcId(), value);
+            RefreshNpc(id.ToNpcNewId());
             return true;
         }
+
         public static string GetNpcSkinSpine(int id)
         {
             var result = StrGroup.Get(NpcSkinSpine, id.ToNpcId());
+            return string.IsNullOrWhiteSpace(result) ? GetNpcDefaultSkinSpine(id) : result;
+        }
+        public static bool SetNpcDefaultSkinSpine(int id, string value)
+        {
+            StrGroup.Set(NpcDefaultSkinSpine, id.ToNpcId(), value);
+            RefreshNpc(id.ToNpcNewId());
+            return true;
+        }
+
+        public static string GetNpcDefaultSkinSpine(int id)
+        {
+            var result = StrGroup.Get(NpcDefaultSkinSpine, id.ToNpcId());
             return string.IsNullOrWhiteSpace(result) ? "default" : result;
+        }
+        public static bool HasNpcDefaultSkinSpine(int id)
+        {
+            var result = StrGroup.Get(NpcDefaultSkinSpine, id.ToNpcId());
+            return !string.IsNullOrWhiteSpace(result);
         }
         public static List<int> GetNpcList(DialogCommand command, int count) => GetNpcList(command, count, count);
 
