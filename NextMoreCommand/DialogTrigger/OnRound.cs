@@ -194,19 +194,20 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
     [HarmonyPatch(typeof(RoundManager), nameof(RoundManager.UseSkill))]
     public static class OnUseSkill
     {
-        private static RoundManager instance => RoundManager.instance;
-
+        private static RoundManager Instance => RoundManager.instance;
+        public static GUIPackage.Skill NowSkill => Instance.ChoiceSkill ?? Instance.CurSkill;
         public static bool Prefix()
         {
             var env = RoundUtils.NewEnv;
-            env.customData.Add("CurSkill", instance.ChoiceSkill);
+         
+            // MyLog.Log($"当前神通为{SkillComboManager.GetSkillName(NowSkill.skill_ID)}");
             if (RoundUtils.BreakPlayerUseSkillBefore(env))
             {
                 MyLog.FungusLog("进入打断玩家技能使用前触发器");
-                instance.OnPlayerEndRoundQiZhiLingQiCancelClick();
+                Instance.OnPlayerEndRoundQiZhiLingQiCancelClick();
                 return false;
             }
-            else if (RoundUtils.UseSkill(env))
+            if (RoundUtils.UseSkill(env))
             {
                 MyLog.FungusLog("进入玩家技能使用前触发器");
             }
@@ -217,7 +218,8 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
         public static void Postfix()
         {
             var env = RoundUtils.NewEnv;
-            env.customData.Add("CurSkill", instance.CurSkill);
+ 
+            // MyLog.Log($"当前神通为{SkillComboManager.GetSkillName(NowSkill.skill_ID)}");
             if (RoundUtils.UseSkill(env, false))
             {
                 MyLog.FungusLog("进入玩家技能使用后触发器");

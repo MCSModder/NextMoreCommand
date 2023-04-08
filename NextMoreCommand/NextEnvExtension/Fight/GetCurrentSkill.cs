@@ -1,4 +1,5 @@
 ﻿using SkySwordKill.Next.DialogSystem;
+using SkySwordKill.NextMoreCommand.DialogTrigger;
 
 namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Fight
 {
@@ -10,13 +11,8 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Fight
         public object Execute(DialogEnvQueryContext context)
         {
 
-            if (!context.Env.customData.ContainsKey("CurSkill"))
-            {
-                return null;
-            }
-            
-            context.Env.customData.TryGetValue("CurSkill", out object cSkill);
-            return cSkill;
+
+            return OnUseSkill.NowSkill;
         }
     }
 }

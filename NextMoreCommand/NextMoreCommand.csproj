@@ -210,6 +210,7 @@
         <Compile Include="NextCommandExtension\Npc\SetFightFace.cs" />
         <Compile Include="NextCommandExtension\Npc\SetNpcFightFace.cs" />
         <Compile Include="NextCommandExtension\Npc\SetNpcFightSpine.cs" />
+        <Compile Include="NextCommandExtension\Npc\SetNpcSkinSpine.cs" />
         <Compile Include="NextCommandExtension\Npc\Teleport\NpcForceRemoveTeleport.cs" />
         <Compile Include="NextCommandExtension\Npc\Teleport\NpcForceTeleport.cs" />
         <Compile Include="NextCommandExtension\Npc\Teleport\SetAllDaolvFollow.cs" />
@@ -245,12 +246,14 @@
         <Compile Include="NextEnvExtension\DongFu\HasMenPaiDongFu.cs" />
         <Compile Include="NextEnvExtension\DongFu\HasYiFengChengDongFu.cs" />
         <Compile Include="NextEnvExtension\Fight\GetFightTypeName.cs" />
+        <Compile Include="NextEnvExtension\Fight\CheckUseSkillName.cs" />
         <Compile Include="NextEnvExtension\Npc\GetFightFace.cs" />
         <Compile Include="NextEnvExtension\Npc\GetNpcData.cs" />
         <Compile Include="NextEnvExtension\Npc\GetNpcFace.cs" />
         <Compile Include="NextEnvExtension\Npc\GetNpcFightFace.cs" />
         <Compile Include="NextEnvExtension\Npc\GetNpcFightSpine.cs" />
         <Compile Include="NextEnvExtension\Npc\GetNpcLiHui.cs" />
+        <Compile Include="NextEnvExtension\Npc\GetNpcSkinSpine.cs" />
         <Compile Include="NextEnvExtension\Npc\HasNpcFace.cs" />
         <Compile Include="NextEnvExtension\Npc\HasNpcFightFace.cs" />
         <Compile Include="NextEnvExtension\Npc\HasNpcLiHui.cs" />
@@ -259,6 +262,7 @@
         <Compile Include="NextEnvExtension\Npc\Wudao\HasWudaoSkill.cs" />
         <Compile Include="NextEnvExtension\Utils\GetJavascriptStr.cs" />
         <Compile Include="NextEnvExtension\Utils\GetModList.cs" />
+        <Compile Include="NextEnvExtension\Utils\GetTask.cs" />
         <Compile Include="NextEnvExtension\Utils\HasMod.cs" />
         <Compile Include="Patchs\BiaoBaiManagerCalcBiaoBaiScorePatch.cs" />
         <Compile Include="Patchs\DialogAnalysisTryTriggerPatch.cs" />
@@ -361,7 +365,7 @@
         <Compile Include="NextEnvExtension\Fight\GetFightPlayer.cs" />
         <Compile Include="NextEnvExtension\Fight\GetFightType.cs" />
         <Compile Include="NextEnvExtension\Fight\GetStaticSkillLevel.cs" />
-        <Compile Include="NextEnvExtension\Fight\GetUseSkillID.cs" />
+        <Compile Include="NextEnvExtension\Fight\CheckUseSkillID.cs" />
         <Compile Include="NextEnvExtension\Fight\IsFightFeiSheng.cs" />
         <Compile Include="NextEnvExtension\Fight\IsMonsterTurn.cs" />
         <Compile Include="NextEnvExtension\Fight\IsPlayerTurn.cs" />
@@ -427,10 +431,6 @@
         <ProjectReference Include="..\ProGif\ProGif.csproj">
             <Project>{88e7abf4-1b36-4cf8-9433-e9b58a42c42d}</Project>
             <Name>ProGif</Name>
-        </ProjectReference>
-        <ProjectReference Include="..\Puerts\Puerts.csproj">
-            <Project>{5d514115-e2fb-4b3b-8ddd-080dbc94b7eb}</Project>
-            <Name>Puerts</Name>
         </ProjectReference>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

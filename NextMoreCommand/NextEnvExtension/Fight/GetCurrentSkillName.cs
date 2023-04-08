@@ -1,6 +1,7 @@
 ﻿using GUIPackage;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.NextMoreCommand.Custom.SkillCombo;
+using SkySwordKill.NextMoreCommand.DialogTrigger;
 
 namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Fight
 {
@@ -12,20 +13,8 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Fight
         public object Execute(DialogEnvQueryContext context)
         {
 
-            if (!context.Env.customData.ContainsKey("CurSkill"))
-            {
-                return string.Empty as object;
-            }
 
-            context.Env.customData.TryGetValue("CurSkill", out var cSkill);
-            var curSkill=cSkill as Skill;
-            if (curSkill == null)
-            {
-                return string.Empty as object;
-            }
-
-    
-            return SkillComboManager.GetSkillName(curSkill.skill_ID) as object;
+            return SkillComboManager.GetSkillName(OnUseSkill.NowSkill.skill_ID) as object;
         }
     }
 }

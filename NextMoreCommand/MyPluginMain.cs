@@ -22,7 +22,7 @@ using SkySwordKill.NextMoreCommand.Custom.NPC;
 using SkySwordKill.NextMoreCommand.Custom.SkillCombo;
 using SkySwordKill.NextMoreCommand.CustomModDebug;
 using SkySwordKill.NextMoreCommand.CustomModDebug.NextMoreCore;
-using SkySwordKill.NextMoreCommand.Puerts;
+// using SkySwordKill.NextMoreCommand.Puerts;
 using SkySwordKill.NextMoreCommand.Utils;
 using Steamworks;
 using YSGame.TuJian;
@@ -36,8 +36,8 @@ namespace SkySwordKill.NextMoreCommand
     {
         private static KeyCode DramaDebugKey;
         public static bool IsDebugMode = false;
-        public static long JSDebugPort = -1;
-        public static bool JSDebugMode = false;
+        // public static long JSDebugPort = -1;
+        // public static bool JSDebugMode = false;
 
         public static MyPluginMain Instance;
         public static MyPluginMain I => Instance;
@@ -68,23 +68,23 @@ namespace SkySwordKill.NextMoreCommand
                 CustomNpc.CustomNpcs.Clear();
                 SkillComboManager.SkillCombos.Clear();
                 SkillComboManager.CacheSkillCombos.Clear();
-                NextMoreCommand.InitJsEnvManager();
+                // NextMoreCommand.InitJsEnvManager();
                 
             };
             ModManager.ModSettingChanged += () =>
             {
                 ModManagerUtils.TryGetModSetting("Quick_DramaDebugKey", out DramaDebugKey);
                 ModManager.TryGetModSetting("Quick_IsDebugMode", out IsDebugMode);
-                ModManager.TryGetModSetting("Quick_JSDebugPort", out JSDebugPort);
-                ModManager.TryGetModSetting("Quick_JSDebugMode", out JSDebugMode);
+                // ModManager.TryGetModSetting("Quick_JSDebugPort", out JSDebugPort);
+                // ModManager.TryGetModSetting("Quick_JSDebugMode", out JSDebugMode);
             };
             ModManager.ModLoadComplete += () =>
             {
                 WorkshopUtils.WorkShopItems = WorkshopUtils.GetAllModWorkshopItem();
                 ModManagerUtils.TryGetModSetting("Quick_DramaDebugKey", out DramaDebugKey);
                 ModManager.TryGetModSetting("Quick_IsDebugMode", out IsDebugMode);
-                ModManager.TryGetModSetting("Quick_JSDebugPort", out JSDebugPort);
-                ModManager.TryGetModSetting("Quick_JSDebugMode", out JSDebugMode);
+                // ModManager.TryGetModSetting("Quick_JSDebugPort", out JSDebugPort);
+                // ModManager.TryGetModSetting("Quick_JSDebugMode", out JSDebugMode);
                 AssetsUtils.Clear();
             };
         }
@@ -162,15 +162,15 @@ namespace SkySwordKill.NextMoreCommand
                 new Lazy<string>(() => Utility.CombinePaths(
                     dllPath,
                     @"Lib"));
-            var dir = PathLibDir.Value;
-            if (string.IsNullOrWhiteSpace(dir)) return;
-            files = Directory.GetFiles(dir).Select(Path.GetFileName).ToList();
-            files.ForEach(filePathName =>
-            {
-                LogInfo($"开始加载:{filePathName}");
-                DllTools.LoadDllFile(dir, filePathName);
-            });
-           
+            // var dir = PathLibDir.Value;
+            // if (string.IsNullOrWhiteSpace(dir)) return;
+            // files = Directory.GetFiles(dir).Select(Path.GetFileName).ToList();
+            // files.ForEach(filePathName =>
+            // {
+            //     LogInfo($"开始加载:{filePathName}");
+            //     DllTools.LoadDllFile(dir, filePathName);
+            // });
+            //
 
 
         }

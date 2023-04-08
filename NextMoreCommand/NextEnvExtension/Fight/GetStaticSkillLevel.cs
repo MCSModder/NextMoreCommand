@@ -1,4 +1,5 @@
-﻿using SkySwordKill.Next.DialogSystem;
+﻿using System.Linq;
+using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.NextMoreCommand.Utils;
 
 namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Fight;
@@ -14,14 +15,9 @@ public class GetStaticSkillLevel : IDialogEnvQuery
         {
             return 0;
         }
-
         var staticSkillIDByKey = Tools.instance.getStaticSkillIDByKey(skillID);
         var list = Tools.instance.getPlayer().hasStaticSkillList;
-        foreach (var skillItem in list)
-        {
-            if (staticSkillIDByKey == skillItem.itemId) return skillItem.level;
-        }
+        return (from skillItem in list where staticSkillIDByKey == skillItem.itemId select skillItem.level).FirstOrDefault();
 
-        return 0;
     }
 }

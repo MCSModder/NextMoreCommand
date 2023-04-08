@@ -189,6 +189,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public const string NpcFollow = "NPC_FOLLOW_NEXT";
         public const string NpcFightFace = "NPC_FIGHT_FACE";
         public const string NpcFightSpine = "NPC_FIGHT_Spine";
+        public const string NpcSkinSpine = "NPC_SKIN_Spine";
         public const string CallName = "CALL_NAME";
         public static DataGroup<string> StrGroup => DialogAnalysis.AvatarNextData.StrGroup;
         public static DataGroup<int> IntGroup => DialogAnalysis.AvatarNextData.IntGroup;
@@ -406,7 +407,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
         public static string GetCallName(int id)
         {
-            var value = StrGroup.Get(CallName, id.ToNpcId());
+            var value = DialogAnalysis.GetStr(CallName, id.ToNpcId());
             return id <= 0 || string.IsNullOrWhiteSpace(value) ? "" : value;
 
         }
@@ -420,7 +421,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
         public static bool SetCallName(int id, string name)
         {
-            StrGroup.Set(CallName, id.ToNpcId(), name);
+            DialogAnalysis.SetStr(CallName, id.ToNpcId(), name);
             return true;
         }
         public static bool SetNpcFightFace(int id, bool value)
@@ -440,6 +441,16 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public static bool GetNpcFightSpine(int id)
         {
             return IntGroup.Get(NpcFightSpine, id.ToNpcId()) != 0;
+        }
+        public static bool SetNpcSkinSpine(int id, string value)
+        {
+            StrGroup.Set(NpcSkinSpine, id.ToNpcId(), value);
+            return true;
+        }
+        public static string GetNpcSkinSpine(int id)
+        {
+            var result = StrGroup.Get(NpcSkinSpine, id.ToNpcId());
+            return string.IsNullOrWhiteSpace(result) ? "default" : result;
         }
         public static List<int> GetNpcList(DialogCommand command, int count) => GetNpcList(command, count, count);
 

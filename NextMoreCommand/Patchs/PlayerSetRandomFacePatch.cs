@@ -197,7 +197,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
         private JiaoYiUIMag _jiaoYiUIMag;
         private FpUIMag _fpUIMag;
         private CustomSpineOption customSpineOption;
-   
+
         public void Init()
         {
             spineType = ESpineType.None;
@@ -255,7 +255,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             }
 
         }
-     
+
         private void OnDisable()
         {
             Init();
@@ -321,12 +321,13 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             if (AssetsUtils.GetSkeletonData(avartarID, out var skeletonData) && NpcUtils.GetNpcFightSpine(avartarID))
             {
 
-
+                var skinName = NpcUtils.GetNpcSkinSpine(m_avartarID);
+                var skin = AssetsUtils.CheckSkin(m_avartarID, skinName) ? skinName : "default";
                 var skeletonAnimation = __instance.GetComponent<SkeletonAnimation>();
                 if (skeletonGraphic != null)
                 {
                     skeletonGraphic.skeletonDataAsset = skeletonData;
-                    skeletonGraphic.initialSkinName = "default";
+                    skeletonGraphic.initialSkinName = skin;
                     skeletonGraphic.startingAnimation = "Idle_0";
                     skeletonGraphic.Initialize(true);
                     var customSpine = __instance.gameObject.AddMissingComponent<CustomSpine>();
@@ -341,6 +342,8 @@ namespace SkySwordKill.NextMoreCommand.Patchs
                         skeletonAnimation.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
                         var gameObject = Object.Instantiate(skeletonAnimationGo, skeletonAnimation.transform.parent);
                         var skeletonAnimation1 = gameObject.GetComponent<SkeletonAnimation>();
+                        skeletonAnimation1.initialSkinName = skin;
+                        skeletonGraphic.Initialize(true);
                         skeletonAnimation.AnimationState.Start += entry =>
                         {
                             var name = entry.Animation.Name;

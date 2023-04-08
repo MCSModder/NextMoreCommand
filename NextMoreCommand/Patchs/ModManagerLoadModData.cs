@@ -12,7 +12,7 @@ using SkySwordKill.Next.Mod;
 using SkySwordKill.Next.Res;
 using SkySwordKill.NextMoreCommand.Custom.NPC;
 using SkySwordKill.NextMoreCommand.Custom.SkillCombo;
-using SkySwordKill.NextMoreCommand.Puerts;
+// using SkySwordKill.NextMoreCommand.Puerts;
 
 namespace SkySwordKill.NextMoreCommand.Patchs;
 
@@ -59,32 +59,32 @@ public static class ModManagerLoadModData
         File.WriteAllText(dir.CombinePath("天宫警花.json"),
             npc.ToString());
     }
-    public static string[] JsExt = new[]
-    {
-        ".js",
-        ".cjs",
-        ".mjs",
-    };
-    private static void LoadCustomJsData(ModConfig modConfig, string rootPath) => Main.Res.DirectoryHandle("", rootPath, (ResourcesManager.FileHandle)((virtualPath, filePath) =>
-    {
-
-        if (!JsExt.Contains(Path.GetExtension(filePath)))
-            return;
-        var jsFileCache = new JsFileCache()
-        {
-            FromMod = modConfig,
-            FilePath = filePath.Replace("\\", "/")
-        };
-        var jsPath = Path.GetFileNameWithoutExtension(virtualPath).Replace("\\", "/");
-        try
-        {
-            JsEnvManager.AddJsFileCache(jsPath, jsFileCache);
-        }
-        catch (Exception ex)
-        {
-            throw new ModLoadException(string.Format("JavaScript {0} 加载失败。", (object)jsPath), ex);
-        }
-    }));
+    // public static string[] JsExt = new[]
+    // {
+    //     ".js",
+    //     ".cjs",
+    //     ".mjs",
+    // };
+    // private static void LoadCustomJsData(ModConfig modConfig, string rootPath) => Main.Res.DirectoryHandle("", rootPath, (ResourcesManager.FileHandle)((virtualPath, filePath) =>
+    // {
+    //
+    //     if (!JsExt.Contains(Path.GetExtension(filePath)))
+    //         return;
+    //     var jsFileCache = new JsFileCache()
+    //     {
+    //         FromMod = modConfig,
+    //         FilePath = filePath.Replace("\\", "/")
+    //     };
+    //     var jsPath = Path.GetFileNameWithoutExtension(virtualPath).Replace("\\", "/");
+    //     try
+    //     {
+    //         JsEnvManager.AddJsFileCache(jsPath, jsFileCache);
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         throw new ModLoadException(string.Format("JavaScript {0} 加载失败。", (object)jsPath), ex);
+    //     }
+    // }));
     public static void Prefix(ModConfig modConfig)
     {
      
@@ -92,14 +92,14 @@ public static class ModManagerLoadModData
         var isWorkshop = path.Contains("workshop\\content\\1189490");
         var modNDataDirDir = modConfig.GetNDataDir();
 
-        if (HasPath(path.CombinePath("JS")))
-        {
-            MyPluginMain.LogInfo($"=================== NextMore开始加载 =====================");
-
-            LoadCustomJsData(modConfig, path.CombinePath("JS"));
-            MyPluginMain.LogInfo($"=================== NextMore结束加载 =====================");
-
-        }
+        // if (HasPath(path.CombinePath("JS")))
+        // {
+        //     MyPluginMain.LogInfo($"=================== NextMore开始加载 =====================");
+        //
+        //     LoadCustomJsData(modConfig, path.CombinePath("JS"));
+        //     MyPluginMain.LogInfo($"=================== NextMore结束加载 =====================");
+        //
+        // }
 
         if (HasPath(modNDataDirDir.CombinePath("CustomNpc")) && !isWorkshop)
         {

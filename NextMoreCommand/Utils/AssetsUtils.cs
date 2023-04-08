@@ -151,6 +151,8 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public Dictionary<string, GameObject> AnimationPrefabDictionary = new Dictionary<string, GameObject>();
         [JsonIgnore]
         public Dictionary<string, List<string>> AnimationNameDictionary = new Dictionary<string, List<string>>();
+        [JsonIgnore]
+        public Dictionary<string, List<string>> SkinNameDictionary = new Dictionary<string, List<string>>();
         private bool _isInit;
         public T LoadAsset<T>(string path) where T : Object
         {
@@ -196,6 +198,18 @@ namespace SkySwordKill.NextMoreCommand.Utils
             }
             return result;
         }
+        public bool CheckSkin(int key, string skinName) => CheckSkin(key.ToString(), skinName);
+        public bool CheckSkin(string key, string skinName)
+        {
+           
+            if (AnimationNameDictionary.Count == 0)
+            {
+                return false;
+            }
+        
+         
+            return SkinNameDictionary.ContainsKey(key) && SkinNameDictionary[key].Contains(skinName);
+        }
         public void Init()
         {
             if (_isInit)
@@ -214,8 +228,10 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 if (assetName.EndsWith("_skeletondata.asset"))
                 {
                     var skeletonDataAsset = LoadAsset<SkeletonDataAsset>(assetName);
+
                     var filename = Path.GetFileName(assetName).Replace("_skeletondata.asset", "");
                     AnimationNameDictionary.Add(filename, skeletonDataAsset.GetSkeletonData(true).Animations.Select(animation => animation.Name).ToList());
+                    SkinNameDictionary.Add(filename, skeletonDataAsset.GetSkeletonData(true).Skins.Select(skin => skin.Name).ToList());
                     SkeletonDataAssetDictionary.Add(filename, skeletonDataAsset);
                 }
                 else if (assetName.EndsWith("_animation.prefab"))
@@ -413,6 +429,12 @@ namespace SkySwordKill.NextMoreCommand.Utils
             isIdle = false;
             var hasCustomSpineConfig = GetCustomSpineConfig(avatar, out var customSpineConfig);
             return hasCustomSpineConfig && customSpineConfig.CheckAnimation(avatar, animationName, out isIdle);
+        }
+        public static bool CheckSkin(int avatar, string skinName)
+        {
+         
+            var hasCustomSpineConfig = GetCustomSpineConfig(avatar, out var customSpineConfig);
+            return hasCustomSpineConfig && customSpineConfig.CheckSkin(avatar, skinName);
         }
         public static void Clear()
         {

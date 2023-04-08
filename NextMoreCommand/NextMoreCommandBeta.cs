@@ -9,7 +9,7 @@ using SkySwordKill.Next.FCanvas;
 using SkySwordKill.Next.Mod;
 using SkySwordKill.NextMoreCommand.Custom.RealizeSeid.Skills;
 using SkySwordKill.NextMoreCommand.Patchs;
-using SkySwordKill.NextMoreCommand.Puerts;
+// using SkySwordKill.NextMoreCommand.Puerts;
 using SkySwordKill.NextMoreCommand.Utils;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -112,22 +112,22 @@ public class NextMoreCommand : MonoBehaviour
         mag.selectAvatarPanel.maxNum = (int)_saveSlotDebug;
         mag.RefreshSave();
     }
-    public static JsEnvManager JsEnv => instance.jsEnvManager;
-    public JsEnvManager jsEnvManager;
+    // public static JsEnvManager JsEnv => instance.jsEnvManager;
+    // public JsEnvManager jsEnvManager;
     private void Start()
     {
-        InitJsEnvManager();
+        // InitJsEnvManager();
     }
-    public static void InitJsEnvManager()
-    {
-        if (JsEnv != null)
-        {
-            JsEnv.Reset();
-        }
-        if (instance != null)
-        {
-            instance.jsEnvManager = instance.gameObject.AddMissingComponent<JsEnvManager>();
-        }
-
-    }
+    // public static void InitJsEnvManager()
+    // {
+    //     if (JsEnv != null)
+    //     {
+    //         JsEnv.Reset();
+    //     }
+    //     if (instance != null)
+    //     {
+    //         instance.jsEnvManager = instance.gameObject.AddMissingComponent<JsEnvManager>();
+    //     }
+    //
+    // }
 }
