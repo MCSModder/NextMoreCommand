@@ -15,7 +15,8 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             }
             var normalShow = MapPlayerController.Inst.NormalShow;
             var nowSpineName = Traverse.Create(normalShow).Field<string>("nowSpineName");
-            if (_original.Contains(nowSpineName.Value))
+            var old = nowSpineName.Value;
+            if (_original.Contains(old) || string.IsNullOrWhiteSpace(old))
             {
                 return;
             }

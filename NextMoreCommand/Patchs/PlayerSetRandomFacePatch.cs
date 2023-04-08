@@ -306,6 +306,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             9740,
             7200
         };
+        
         public static bool Prefix(PlayerSetRandomFace __instance, int monstarID)
         {
             m_customSpine = false;
@@ -321,8 +322,9 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             if (AssetsUtils.GetSkeletonData(avartarID, out var skeletonData) && NpcUtils.GetNpcFightSpine(avartarID))
             {
 
-                var skinName = NpcUtils.GetNpcSkinSpine(m_avartarID);
-                var skin = AssetsUtils.CheckSkin(m_avartarID, skinName) ? skinName : "default";
+                var skinName = NpcUtils.GetNpcSkinSpine(avartarID);
+                var skin = AssetsUtils.CheckSkin(avartarID, skinName) ? skinName : NpcUtils.GetNpcDefaultSkinSpine(avartarID);
+                MyLog.Log($"skinName:{skinName} skin:{skin}");
                 var skeletonAnimation = __instance.GetComponent<SkeletonAnimation>();
                 if (skeletonGraphic != null)
                 {
@@ -342,8 +344,10 @@ namespace SkySwordKill.NextMoreCommand.Patchs
                         skeletonAnimation.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
                         var gameObject = Object.Instantiate(skeletonAnimationGo, skeletonAnimation.transform.parent);
                         var skeletonAnimation1 = gameObject.GetComponent<SkeletonAnimation>();
+                        skeletonAnimation1.skeletonDataAsset = skeletonData;
                         skeletonAnimation1.initialSkinName = skin;
-                        skeletonGraphic.Initialize(true);
+                        skeletonAnimation1.AnimationName  = "Idle_0";
+                        skeletonAnimation1.Initialize(true);
                         skeletonAnimation.AnimationState.Start += entry =>
                         {
                             var name = entry.Animation.Name;
@@ -358,7 +362,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
 
                         };
                         m_customSpine = true;
-                        var customSpine = __instance.gameObject.AddMissingComponent<CustomSpine>();
+                        var customSpine = gameObject.AddMissingComponent<CustomSpine>();
                         customSpine.SetAvatar(avartarID);
                     }
                 }

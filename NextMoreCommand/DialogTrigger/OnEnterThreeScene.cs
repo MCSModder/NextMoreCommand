@@ -22,24 +22,24 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
     [HarmonyPatch(typeof(ThreeSceneMag), nameof(ThreeSceneMag.init))]
     public static class OnEnterThreeScene
     {
-        public static void Prefix()
-        {
-
-            var transform = NextMoreCommand.Instance.transform;
-            var count = transform.childCount;
-            for (var i = 0; i < count; i++)
-            {
-                var child = transform.GetChild(i);
-                var go = child.gameObject;
-                var component = go.GetComponent<ProGifPlayerComponent>();
-                if (component == null) continue;
-                go.SetActive(true);
-                component.Clear();
-                go.SetActive(false);
-            }
-
-
-        }
+        // public static void Prefix()
+        // {
+        //
+        //     var transform = NextMoreCommand.Instance.transform;
+        //     var count = transform.childCount;
+        //     for (var i = 0; i < count; i++)
+        //     {
+        //         var child = transform.GetChild(i);
+        //         var go = child.gameObject;
+        //         var component = go.GetComponent<ProGifPlayerComponent>();
+        //         if (component == null) continue;
+        //         go.SetActive(true);
+        //         component.Clear();
+        //         go.SetActive(false);
+        //     }
+        //
+        //
+        // }
         private static List<Flowchart> _flowchartsInScene = new List<Flowchart>();
         private static List<Flowchart> _flowchartsInPatch = new List<Flowchart>();
 
