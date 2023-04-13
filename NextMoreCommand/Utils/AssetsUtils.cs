@@ -140,6 +140,10 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public CustomSpineOption FightAvatarPos { get; set; }
         [JsonProperty("战斗窗口位置", Required = Required.Default)]
         public CustomSpineOption FpUIMagPos { get; set; }
+        [JsonProperty("论道界面位置", Required = Required.Default)]
+        public CustomSpineOption LunDaoManagerPos { get; set; }
+        [JsonProperty("CG骨骼位置", Required = Required.Default)]
+        public CustomSpineOption CgSpineManagerPos { get; set; }
 
         [JsonIgnore]
         public AssetBundle AssetBundle { get; set; }
@@ -201,13 +205,13 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public bool CheckSkin(int key, string skinName) => CheckSkin(key.ToString(), skinName);
         public bool CheckSkin(string key, string skinName)
         {
-           
+
             if (AnimationNameDictionary.Count == 0)
             {
                 return false;
             }
-        
-         
+
+
             return SkinNameDictionary.ContainsKey(key) && SkinNameDictionary[key].Contains(skinName);
         }
         public void Init()
@@ -383,13 +387,18 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public static bool GetCustomSpineOption(int avatar, ESpineType spineType, out CustomSpineOption customSpineOption)
         {
             customSpineOption = null;
-            if (spineType == ESpineType.None || avatar <= 0)
+            return avatar > 0 && GetCustomSpineOption(avatar.ToString(), spineType, out customSpineOption);
+        }
+        public static bool GetCustomSpineOption(string key, ESpineType spineType, out CustomSpineOption customSpineOption)
+        {
+            customSpineOption = null;
+            if (spineType == ESpineType.None)
             {
 
                 return false;
             }
 
-            var hasCustomSpineConfig = GetCustomSpineConfig(avatar, out var customSpineConfig);
+            var hasCustomSpineConfig = GetCustomSpineConfig(key, out var customSpineConfig);
             if (!hasCustomSpineConfig)
             {
                 return false;
@@ -403,10 +412,23 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 ESpineType.UINpcInfoPanel => customSpineConfig.UINpcInfoPanelPos,
                 ESpineType.UINpcSvItem => customSpineConfig.UINpcSvItemPos,
                 ESpineType.UINpcJiaoHuPop => customSpineConfig.UINpcJiaoHuPopPos,
+                ESpineType.LunDaoManager => customSpineConfig.LunDaoManagerPos,
+                ESpineType.CGManager => customSpineConfig.CgSpineManagerPos,
                 _ => customSpineOption
             };
 
             return customSpineOption != null;
+        }
+        public static bool GetSkeletonAnimation(string key, out GameObject skeletonAnimation)
+        {
+            var hasCustomSpineConfig = GetCustomSpineConfig(key, out var customSpineConfig);
+            if (!hasCustomSpineConfig)
+            {
+                skeletonAnimation = null;
+                return false;
+            }
+            skeletonAnimation = customSpineConfig.LoadSkeletonAnimation(key);
+            return skeletonAnimation != null;
         }
         public static bool GetSkeletonAnimation(int avatar, out GameObject skeletonAnimation)
         {
@@ -430,11 +452,23 @@ namespace SkySwordKill.NextMoreCommand.Utils
             var hasCustomSpineConfig = GetCustomSpineConfig(avatar, out var customSpineConfig);
             return hasCustomSpineConfig && customSpineConfig.CheckAnimation(avatar, animationName, out isIdle);
         }
+        public static bool CheckAnimation(string key, string animationName)
+        {
+   
+            var hasCustomSpineConfig = GetCustomSpineConfig(key, out var customSpineConfig);
+            return hasCustomSpineConfig && customSpineConfig.CheckAnimation(key, animationName, out var _);
+        }
         public static bool CheckSkin(int avatar, string skinName)
         {
-         
-            var hasCustomSpineConfig = GetCustomSpineConfig(avatar, out var customSpineConfig);
-            return hasCustomSpineConfig && customSpineConfig.CheckSkin(avatar, skinName);
+
+
+            return CheckSkin(avatar.ToString(), skinName);
+        }
+        public static bool CheckSkin(string key, string skinName)
+        {
+
+            var hasCustomSpineConfig = GetCustomSpineConfig(key, out var customSpineConfig);
+            return hasCustomSpineConfig && customSpineConfig.CheckSkin(key, skinName);
         }
         public static void Clear()
         {

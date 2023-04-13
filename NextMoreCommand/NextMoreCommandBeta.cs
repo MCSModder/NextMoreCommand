@@ -8,6 +8,8 @@ using SkySwordKill.Next;
 using SkySwordKill.Next.FCanvas;
 using SkySwordKill.Next.Mod;
 using SkySwordKill.NextMoreCommand.Custom.RealizeSeid.Skills;
+using SkySwordKill.NextMoreCommand.CustomModDebug;
+using SkySwordKill.NextMoreCommand.DialogTrigger;
 using SkySwordKill.NextMoreCommand.Patchs;
 // using SkySwordKill.NextMoreCommand.Puerts;
 using SkySwordKill.NextMoreCommand.Utils;
@@ -26,6 +28,7 @@ public class NextMoreCommand : MonoBehaviour
     private long _saveSlotDebug = 9;
     public long SaveSlotDebug => _saveSlotDebug <= 9 ? 9 : _saveSlotDebug;
     public bool IsRefresh = false;
+    private static KeyCode ReloadModKey;
 
     public static NextMoreCommand Create()
     {
@@ -53,6 +56,7 @@ public class NextMoreCommand : MonoBehaviour
         DontDestroyOnLoad(this);
         ModManager.TryGetModSetting("Quick_AchivementDebug", out AchivementDebug);
         ModManager.TryGetModSetting("Quick_SaveSlotDebug", out _saveSlotDebug);
+        ModManagerUtils.TryGetModSetting("Quick_ReloadModKey", out ReloadModKey);
 
 
         ModManager.ModSettingChanged += () =>
@@ -64,7 +68,7 @@ public class NextMoreCommand : MonoBehaviour
                 _saveSlotDebug = 9;
                 ModManager.SetModSetting("Quick_SaveSlotDebug", _saveSlotDebug);
             }
-
+            ModManagerUtils.TryGetModSetting("Quick_ReloadModKey", out ReloadModKey);
             IsRefresh = true;
             MyLog.Log("ModSettingChanged", "修改完");
         };
@@ -77,7 +81,7 @@ public class NextMoreCommand : MonoBehaviour
                 _saveSlotDebug = 9;
                 ModManager.SetModSetting("Quick_SaveSlotDebug", _saveSlotDebug);
             }
-
+            ModManagerUtils.TryGetModSetting("Quick_ReloadModKey", out ReloadModKey);
             IsRefresh = true;
 
             MyLog.Log("ModLoadComplete", "加载完");
@@ -99,6 +103,10 @@ public class NextMoreCommand : MonoBehaviour
         {
             IsRefresh = false;
             StartCoroutine(Refresh());
+        }
+        if (!UiNpcJiaoHuRefreshNowMapNpcPatch.BanScene.Contains(UiNpcJiaoHuRefreshNowMapNpcPatch.NowSceneName) && Input.GetKey(ReloadModKey))
+        {
+            NextReloadManager.Instance.ReloadState = ReloadState.Next;
         }
     }
 

@@ -139,6 +139,15 @@ public static class DeathUtilsExtends
     {
         return Enum.GetName(typeof(NpcType), type);
     }
+    /// <summary>
+    /// 获得角色类型名字
+    /// </summary>
+    /// <param name="type">角色类型</param>
+    /// <returns>角色类型名字</returns>
+    public static string GetTypeName(this int type)
+    {
+        return  Enum.GetName(typeof(NpcType), (NpcType)type);
+    }
 
 
     internal static Dictionary<int, NpcDeathInfo> GetNpcDeathInfos(this JSONObject jsonObject)

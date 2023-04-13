@@ -114,6 +114,10 @@ public class NextReloadManager : MonoBehaviour
     {
         TabUIMag.OpenTab(6);
         yield return new WaitForSeconds(2);
+        if (TabUIMag.Instance == null)
+        {
+            yield break;
+        }
         TySelect.inst.Show("是否要返回主界面？", delegate
         {
             if (FpUIMag.inst != null)
@@ -155,6 +159,10 @@ public class NextReloadManager : MonoBehaviour
     {
         TabUIMag.OpenTab(6);
         yield return new WaitForSeconds(2);
+        if (TabUIMag.Instance == null)
+        {
+            yield break;
+        }
         TySelect.inst.Show("是否要返回主界面并重载NextMod？", () =>
         {
             if (FpUIMag.inst != null)
@@ -203,6 +211,10 @@ public class NextReloadManager : MonoBehaviour
     {
         TabUIMag.OpenTab(6);
         yield return new WaitForSeconds(2);
+        if (TabUIMag.Instance == null)
+        {
+            yield break;
+        }
         if (FpUIMag.inst != null)
         {
             UnityEngine.Object.Destroy(FpUIMag.inst.gameObject);

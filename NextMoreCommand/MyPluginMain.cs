@@ -92,16 +92,14 @@ namespace SkySwordKill.NextMoreCommand
 
         private void Update()
         {
-            if (Input.GetKeyDown(DramaDebugKey))
+            if (!Input.GetKeyDown(DramaDebugKey)) return;
+            if (ModDialogDebugWindow.Instance == null)
             {
-                if (ModDialogDebugWindow.Instance == null)
-                {
-                    new ModDialogDebugWindow().Show();
-                }
-                else
-                {
-                    ModDialogDebugWindow.Instance.Hide();
-                }
+                new ModDialogDebugWindow().Show();
+            }
+            else
+            {
+                ModDialogDebugWindow.Instance.Hide();
             }
         }
 
