@@ -237,6 +237,7 @@
         <Compile Include="NextCommandExtension\Utils\ShowMenPaiShop.cs" />
         <Compile Include="NextCommandExtension\Utils\ShowMiniShop.cs" />
         <Compile Include="NextCommandExtension\Utils\ShowOpenPanel.cs" />
+        <Compile Include="NextCommandExtension\Utils\TryRunCommand.cs" />
         <Compile Include="NextEnvExtension\DongFu\GetDongFu.cs" />
         <Compile Include="NextEnvExtension\DongFu\GetAllDongFu.cs" />
         <Compile Include="NextEnvExtension\DongFu\GetMenPaiDongFu.cs" />
@@ -267,7 +268,9 @@
         <Compile Include="NextEnvExtension\Utils\GetJavascriptStr.cs" />
         <Compile Include="NextEnvExtension\Utils\GetModList.cs" />
         <Compile Include="NextEnvExtension\Utils\GetTask.cs" />
+        <Compile Include="NextEnvExtension\Utils\HasCommand.cs" />
         <Compile Include="NextEnvExtension\Utils\HasMod.cs" />
+        <Compile Include="NextEnvExtension\Utils\HasTask.cs" />
         <Compile Include="Patchs\BiaoBaiManagerCalcBiaoBaiScorePatch.cs" />
         <Compile Include="Patchs\DialogAnalysisTryTriggerPatch.cs" />
         <Compile Include="Patchs\DongFuCreatePatch.cs" />

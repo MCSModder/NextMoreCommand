@@ -140,6 +140,8 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public CustomSpineOption FightAvatarPos { get; set; }
         [JsonProperty("战斗窗口位置", Required = Required.Default)]
         public CustomSpineOption FpUIMagPos { get; set; }
+        [JsonProperty("论道界面位置", Required = Required.Default)]
+        public CustomSpineOption LunDaoManagerPos { get; set; }
 
         [JsonIgnore]
         public AssetBundle AssetBundle { get; set; }
@@ -403,6 +405,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 ESpineType.UINpcInfoPanel => customSpineConfig.UINpcInfoPanelPos,
                 ESpineType.UINpcSvItem => customSpineConfig.UINpcSvItemPos,
                 ESpineType.UINpcJiaoHuPop => customSpineConfig.UINpcJiaoHuPopPos,
+                ESpineType.LunDaoManager => customSpineConfig.LunDaoManagerPos,
                 _ => customSpineOption
             };
 

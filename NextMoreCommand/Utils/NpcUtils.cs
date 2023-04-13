@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Fungus;
 using HarmonyLib;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -413,22 +414,35 @@ namespace SkySwordKill.NextMoreCommand.Utils
                     inst.ShowNPCInfoPanel();
                 }
             }
+   
             var roundManager = RoundManager.instance;
             if (roundManager != null && Tools.instance.MonstarID == id)
             {
                 var target = roundManager.GetMonstar();
                 var renderObj = target.renderObj as GameObject;
+
                 if (renderObj != null)
                 {
-                    var old = NPCEx.NPCIDToOld(id);
-                    var skinName = NpcUtils.GetNpcSkinSpine(old);
-                    var skin = AssetsUtils.CheckSkin(old, skinName) ? skinName : GetNpcDefaultSkinSpine(old);
                     var customSpine = renderObj.GetComponentInChildren<CustomSpine>();
-                    var skeletonAnimation =customSpine.gameObject.GetComponent<SkeletonAnimation>();
-                    skeletonAnimation.initialSkinName = skin;
-                    skeletonAnimation.Initialize(true);
+                    var skeletonAnimation = customSpine.gameObject.GetComponent<SkeletonAnimation>();
+                    if (skeletonAnimation == null)
+                    {
+                      var playerSetRandomFace =renderObj.GetComponentInChildren<PlayerSetRandomFace>();
+                      playerSetRandomFace.randomAvatar(id);
+                    }
+                    else
+                    {
+                        var old = NPCEx.NPCIDToOld(id);
+                        var skinName = NpcUtils.GetNpcSkinSpine(old);
+                        var skin = AssetsUtils.CheckSkin(old, skinName) ? skinName : GetNpcDefaultSkinSpine(old);
+
+
+                        skeletonAnimation.initialSkinName = skin;
+                        skeletonAnimation.Initialize(true);
+                    }
+                   
                 }
-                
+
             }
             NpcJieSuanManager.inst.isUpDateNpcList = true;
         }
