@@ -217,10 +217,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
         private LunDaoManager _lunDaoManager;
         private int _avatar;
         private CGManager _CgManager;
-        private void Awake()
-        {
-            Init();
-        }
+    
         private void OnEnable()
         {
             switch (spineType)
