@@ -225,6 +225,7 @@
         <Compile Include="NextCommandExtension\Npc\Wudao\AddNpcWudaoExp.cs" />
         <Compile Include="NextCommandExtension\Npc\Wudao\SetNpcWudaoExp.cs" />
         <Compile Include="NextCommandExtension\Utils\ChangeTianFuBuff.cs" />
+        <Compile Include="NextCommandExtension\Utils\HideCGSpine.cs" />
         <Compile Include="NextCommandExtension\Utils\RunJavaScript.cs" />
         <Compile Include="NextCommandExtension\Utils\SetAllRemoveEquip.cs" />
         <Compile Include="NextCommandExtension\Utils\SetRecordShengPing.cs" />
@@ -268,13 +269,16 @@
         <Compile Include="NextEnvExtension\Npc\HasNpcSkinSpine.cs" />
         <Compile Include="NextEnvExtension\Npc\Wudao\GetWudao.cs" />
         <Compile Include="NextEnvExtension\Npc\Wudao\HasWudaoSkill.cs" />
+        <Compile Include="NextEnvExtension\Utils\GetCGSpineManager.cs" />
         <Compile Include="NextEnvExtension\Utils\GetJavascriptStr.cs" />
         <Compile Include="NextEnvExtension\Utils\GetModList.cs" />
         <Compile Include="NextEnvExtension\Utils\GetShiliName.cs" />
         <Compile Include="NextEnvExtension\Utils\GetTask.cs" />
+        <Compile Include="NextEnvExtension\Utils\HasCGSpineName.cs" />
         <Compile Include="NextEnvExtension\Utils\HasCommand.cs" />
         <Compile Include="NextEnvExtension\Utils\HasMod.cs" />
         <Compile Include="NextEnvExtension\Utils\HasTask.cs" />
+        <Compile Include="NextEnvExtension\Utils\GetCGSpineName.cs" />
         <Compile Include="Patchs\BiaoBaiManagerCalcBiaoBaiScorePatch.cs" />
         <Compile Include="Patchs\DialogAnalysisTryTriggerPatch.cs" />
         <Compile Include="Patchs\DongFuCreatePatch.cs" />
@@ -437,12 +441,6 @@
     </ItemGroup>
     <ItemGroup>
         <None Include="packages.config" />
-    </ItemGroup>
-    <ItemGroup>
-        <ProjectReference Include="..\ProGif\ProGif.csproj">
-            <Project>{88e7abf4-1b36-4cf8-9433-e9b58a42c42d}</Project>
-            <Name>ProGif</Name>
-        </ProjectReference>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

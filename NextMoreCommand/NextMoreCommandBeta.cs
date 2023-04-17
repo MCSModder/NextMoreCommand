@@ -3,7 +3,7 @@ using System.Collections;
 using System.Reflection;
 using System.Text;
 using HarmonyLib;
-using ProGif.GifManagers;
+// using ProGif.GifManagers;
 using SkySwordKill.Next;
 using SkySwordKill.Next.FCanvas;
 using SkySwordKill.Next.Mod;
@@ -52,7 +52,7 @@ public class NextMoreCommand : MonoBehaviour
         }
 
         instance = this;
-        gameObject.AddMissingComponent<PGif>();
+        // gameObject.AddMissingComponent<PGif>();
         DontDestroyOnLoad(this);
         ModManager.TryGetModSetting("Quick_AchivementDebug", out AchivementDebug);
         ModManager.TryGetModSetting("Quick_SaveSlotDebug", out _saveSlotDebug);

@@ -9,8 +9,8 @@ using JiaoYi;
 using KBEngine;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using ProGif.GifManagers;
-using ProGif.Lib;
+// using ProGif.GifManagers;
+// using ProGif.Lib;
 using SkySwordKill.Next.DialogEvent;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.NextMoreCommand.Utils;
@@ -201,6 +201,10 @@ namespace SkySwordKill.NextMoreCommand.Patchs
         }
     }
 
+    public static class CustomSpineManager
+    {
+        
+    }
     public class CustomSpine : MonoBehaviour
     {
         private UINPCSVItem _uiNpcSvItem;
@@ -225,6 +229,26 @@ namespace SkySwordKill.NextMoreCommand.Patchs
                 case ESpineType.UINpcSvItem:
                     customSpineOption?.SetTransform(transform);
                     break;
+                case ESpineType.None:
+                    break;
+                case ESpineType.SayDialog:
+                    break;
+                case ESpineType.UINpcJiaoHuPop:
+                    break;
+                case ESpineType.UINpcInfoPanel:
+                    break;
+                case ESpineType.FightAvatar:
+                    break;
+                case ESpineType.JiaoYiUIMag:
+                    break;
+                case ESpineType.FpUIMag:
+                    break;
+                case ESpineType.LunDaoManager:
+                    break;
+                case ESpineType.CGManager:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -280,14 +304,23 @@ namespace SkySwordKill.NextMoreCommand.Patchs
         }
 
         // public void SetAvatar(int avatar, bool isSay = false)
-        public void SetAvatar(int avatar)
+        public void SetAvatar(int avatar, bool isSay = false)
         {
             _avatar = avatar;
-            SetAvatar(avatar.ToString());
+            SetAvatar(avatar.ToString(),isSay);
         }
-        public void SetAvatar(string avatar)
+        public void SetAvatar(string avatar, bool isSay = false)
         {
-            Init();
+            if (isSay)
+            {
+                spineType = ESpineType.SayDialog;
+                Reset();
+            }
+            else
+            {
+                Init();
+            }
+         
 
             customSpineOption = null;
 
@@ -387,21 +420,21 @@ namespace SkySwordKill.NextMoreCommand.Patchs
                 skeletonGraphic.startingAnimation = "Idle_0";
                 skeletonGraphic.Initialize(true);
                 var component = __instance.gameObject.AddMissingComponent<CustomSpine>();
-                // var sayTransform = __instance.transform;
-                // var say = false;
-                // for (var i = 0; i < 3; i++)
-                // {
-                //     sayTransform = sayTransform.parent;
-                //     if (sayTransform == null)
-                //     {
-                //         break;
-                //     }
-                //     if (i == 2)
-                //     {
-                //         say = sayTransform.name == "SayDialog";
-                //     }
-                // }
-                component.SetAvatar(avartarID);
+                var sayTransform = __instance.transform;
+                var say = false;
+                for (var i = 0; i < 3; i++)
+                {
+                    sayTransform = sayTransform.parent;
+                    if (sayTransform == null)
+                    {
+                        break;
+                    }
+                    if (i == 2)
+                    {
+                        say = sayTransform.name == "SayDialog";
+                    }
+                }
+                component.SetAvatar(avartarID,say);
                 var jiaoYiUI = __instance.GetComponentInParent<JiaoYiUIMag>() == null;
                 m_customSpine = jiaoYiUI;
             }

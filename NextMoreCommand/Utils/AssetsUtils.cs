@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using ProGif.GifManagers;
-using ProGif.Lib;
+// using ProGif.GifManagers;
+// using ProGif.Lib;
 using SkySwordKill.Next;
 using SkySwordKill.Next.Res;
 using SkySwordKill.NextMoreCommand.Patchs;
@@ -16,11 +16,10 @@ using Object = UnityEngine.Object;
 
 namespace SkySwordKill.NextMoreCommand.Utils
 {
-    public enum EPose
+    public enum ESpineAssetType
     {
-        Idle,
-        Hit,
-        Custom
+        Avatar,
+        Cg,
     }
 
 
@@ -304,8 +303,23 @@ namespace SkySwordKill.NextMoreCommand.Utils
             assetBundle = null;
             return false;
         }
-        public static bool GetCustomSpineConfig(int avatar, out CustomSpineConfig customSpineConfig) => GetCustomSpineConfig(avatar.ToString(), out customSpineConfig);
-        public static bool GetCustomSpineConfig(string key, out CustomSpineConfig customSpineConfig)
+        public static bool GetCustomSpineConfigAvatar(int avatar, out CustomSpineConfig customSpineConfig) => GetCustomSpineConfigAvatar(avatar.ToString(), out customSpineConfig);
+        public static bool GetCustomSpineConfigAvatar(string key, out CustomSpineConfig customSpineConfig) => GetCustomSpineConfig($"Assets/Avatar/Spine/{key}/{key}.ab", $"Avatar-{key}", out customSpineConfig);
+
+        public static bool GetCustomSpineConfigCG(string key, out CustomSpineConfig customSpineConfig) => GetCustomSpineConfig($"Assets/CG/Spine/{key}/{key}.ab", $"CG-{key}", out customSpineConfig);
+
+        public static bool GetCustomSpineConfig(int key, out CustomSpineConfig customSpineConfig, ESpineAssetType spineAssetType = ESpineAssetType.Avatar) => GetCustomSpineConfig(key.ToString(), out customSpineConfig, spineAssetType);
+        public static bool GetCustomSpineConfig(string key, out CustomSpineConfig customSpineConfig, ESpineAssetType spineAssetType = ESpineAssetType.Avatar)
+        {
+            customSpineConfig = null;
+            return spineAssetType switch
+            {
+                ESpineAssetType.Avatar => GetCustomSpineConfigAvatar(key, out customSpineConfig),
+                ESpineAssetType.Cg => GetCustomSpineConfigCG(key, out customSpineConfig),
+                _ => throw new ArgumentOutOfRangeException(nameof(spineAssetType), spineAssetType, null)
+            };
+        }
+        public static bool GetCustomSpineConfig(string path, string key, out CustomSpineConfig customSpineConfig)
         {
 
             if (CacheCustomSpineConfig.TryGetValue(key, out var value))
@@ -313,7 +327,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 customSpineConfig = value;
                 return true;
             }
-            if (GetAssetBundle($"Assets/Avatar/Spine/{key}/{key}.ab", out var assetBundle, out var fileAsset))
+            if (GetAssetBundle(path, out var assetBundle, out var fileAsset))
             {
                 var directoryName = Path.GetDirectoryName(fileAsset.FileRawPath);
                 var configJsonPath = BepInEx.Utility.CombinePaths(directoryName, "config.json");
@@ -373,9 +387,9 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public static AssetBundle GetAssetBundle(string path) => GetAssetBundle(path, out var assetBundle) ? assetBundle : null;
         public static AssetBundle GetAssetBundle(int avatar) => GetAssetBundle(avatar.ToString(), out var assetBundle) ? assetBundle : null;
         public static SkeletonDataAsset GetSkeletonData(int avatar) => GetSkeletonData(avatar, out var skeletonData) ? skeletonData : null;
-        public static bool GetSkeletonData(int avatar, out SkeletonDataAsset skeletonData)
+        public static bool GetSkeletonData(int avatar, out SkeletonDataAsset skeletonData, ESpineAssetType spineAssetType = ESpineAssetType.Avatar)
         {
-            var hasCustomSpineConfig = GetCustomSpineConfig(avatar, out var customSpineConfig);
+            var hasCustomSpineConfig = GetCustomSpineConfig(avatar, out var customSpineConfig, spineAssetType);
             if (!hasCustomSpineConfig)
             {
                 skeletonData = null;
@@ -384,12 +398,12 @@ namespace SkySwordKill.NextMoreCommand.Utils
             skeletonData = customSpineConfig.LoadSkeletonDataAsset(avatar);
             return skeletonData != null;
         }
-        public static bool GetCustomSpineOption(int avatar, ESpineType spineType, out CustomSpineOption customSpineOption)
+        public static bool GetCustomSpineOption(int avatar, ESpineType spineType, out CustomSpineOption customSpineOption, ESpineAssetType spineAssetType = ESpineAssetType.Avatar)
         {
             customSpineOption = null;
-            return avatar > 0 && GetCustomSpineOption(avatar.ToString(), spineType, out customSpineOption);
+            return avatar > 0 && GetCustomSpineOption(avatar.ToString(), spineType, out customSpineOption, spineAssetType);
         }
-        public static bool GetCustomSpineOption(string key, ESpineType spineType, out CustomSpineOption customSpineOption)
+        public static bool GetCustomSpineOption(string key, ESpineType spineType, out CustomSpineOption customSpineOption, ESpineAssetType spineAssetType = ESpineAssetType.Avatar)
         {
             customSpineOption = null;
             if (spineType == ESpineType.None)
@@ -398,7 +412,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 return false;
             }
 
-            var hasCustomSpineConfig = GetCustomSpineConfig(key, out var customSpineConfig);
+            var hasCustomSpineConfig = GetCustomSpineConfig(key, out var customSpineConfig, spineAssetType);
             if (!hasCustomSpineConfig)
             {
                 return false;
@@ -419,9 +433,9 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
             return customSpineOption != null;
         }
-        public static bool GetSkeletonAnimation(string key, out GameObject skeletonAnimation)
+        public static bool GetSkeletonAnimation(string key, out GameObject skeletonAnimation, ESpineAssetType spineAssetType = ESpineAssetType.Avatar)
         {
-            var hasCustomSpineConfig = GetCustomSpineConfig(key, out var customSpineConfig);
+            var hasCustomSpineConfig = GetCustomSpineConfig(key, out var customSpineConfig, spineAssetType);
             if (!hasCustomSpineConfig)
             {
                 skeletonAnimation = null;
@@ -432,7 +446,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
         }
         public static bool GetSkeletonAnimation(int avatar, out GameObject skeletonAnimation)
         {
-            var hasCustomSpineConfig = GetCustomSpineConfig(avatar, out var customSpineConfig);
+            var hasCustomSpineConfig = GetCustomSpineConfigAvatar(avatar, out var customSpineConfig);
             if (!hasCustomSpineConfig)
             {
                 skeletonAnimation = null;
@@ -446,16 +460,16 @@ namespace SkySwordKill.NextMoreCommand.Utils
             return Enum.GetName(typeof(T), instance);
         }
 
-        public static bool CheckAnimation(int avatar, string animationName, out bool isIdle)
+        public static bool CheckAnimation(int avatar, string animationName, out bool isIdle, ESpineAssetType spineAssetType = ESpineAssetType.Avatar)
         {
             isIdle = false;
-            var hasCustomSpineConfig = GetCustomSpineConfig(avatar, out var customSpineConfig);
+            var hasCustomSpineConfig = GetCustomSpineConfig(avatar, out var customSpineConfig, spineAssetType);
             return hasCustomSpineConfig && customSpineConfig.CheckAnimation(avatar, animationName, out isIdle);
         }
-        public static bool CheckAnimation(string key, string animationName)
+        public static bool CheckAnimation(string key, string animationName, ESpineAssetType spineAssetType = ESpineAssetType.Avatar)
         {
-   
-            var hasCustomSpineConfig = GetCustomSpineConfig(key, out var customSpineConfig);
+
+            var hasCustomSpineConfig = GetCustomSpineConfig(key, out var customSpineConfig, spineAssetType);
             return hasCustomSpineConfig && customSpineConfig.CheckAnimation(key, animationName, out var _);
         }
         public static bool CheckSkin(int avatar, string skinName)
@@ -464,10 +478,10 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
             return CheckSkin(avatar.ToString(), skinName);
         }
-        public static bool CheckSkin(string key, string skinName)
+        public static bool CheckSkin(string key, string skinName, ESpineAssetType spineAssetType = ESpineAssetType.Avatar)
         {
 
-            var hasCustomSpineConfig = GetCustomSpineConfig(key, out var customSpineConfig);
+            var hasCustomSpineConfig = GetCustomSpineConfig(key, out var customSpineConfig, spineAssetType);
             return hasCustomSpineConfig && customSpineConfig.CheckSkin(key, skinName);
         }
         public static void Clear()
@@ -485,22 +499,22 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 return;
 
             }
-            var dict = PGif.Instance.m_GifPlayerDict;
-            var transform = NextMoreCommand.Instance.transform;
-            var count = transform.childCount;
-            var list = new List<GameObject>();
-            for (var i = 0; i < count; i++)
-            {
-                var child = transform.GetChild(i);
-                var go = child.gameObject;
-                var component = go.GetComponent<ProGifPlayerComponent>();
-                if (component == null) continue;
-                go.SetActive(true);
-                component.Clear();
-                dict.Remove(go.name);
-                list.Add(go);
-            }
-            list.ForEach(Object.DestroyImmediate);
+            // var dict = PGif.Instance.m_GifPlayerDict;
+            // var transform = NextMoreCommand.Instance.transform;
+            // var count = transform.childCount;
+            // var list = new List<GameObject>();
+            // for (var i = 0; i < count; i++)
+            // {
+            //     var child = transform.GetChild(i);
+            //     var go = child.gameObject;
+            //     var component = go.GetComponent<ProGifPlayerComponent>();
+            //     if (component == null) continue;
+            //     go.SetActive(true);
+            //     component.Clear();
+            //     dict.Remove(go.name);
+            //     list.Add(go);
+            // }
+            // list.ForEach(Object.DestroyImmediate);
         }
     }
 }

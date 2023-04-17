@@ -19,7 +19,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
             var spine = command.GetStr(0);
             var cg = command.GetStr(1);
             var animation = command.GetStr(2);
-            var skin = command.GetStr(3);
+            var skin = command.GetStr(3, "default");
             if (!string.IsNullOrWhiteSpace(cg))
             {
                 CGSpineManager.Instance.SetCG(cg);
@@ -36,6 +36,19 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
         public GameObject skeletonAnimationGameObject;
         public SkeletonAnimation skeletonAnimation;
         private CustomSpine _customSpine;
+        public string nowSpine = string.Empty;
+        private bool _isInit;
+        public bool Enable
+        {
+            get => skeletonAnimationGameObject && skeletonAnimationGameObject.activeSelf;
+            set
+            {
+                if (skeletonAnimationGameObject)
+                {
+                    skeletonAnimationGameObject.SetActive(value);
+                }
+            }
+        }
         private void Awake()
         {
             if (Instance != null)
@@ -45,22 +58,69 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
             }
             Instance = this;
         }
-        public void SetSpine(string spine, string animation, string skin)
+        public void SetShow(bool show)
         {
-            if (!AssetsUtils.GetSkeletonAnimation(spine, out var prefab)) return;
-            prefab.AddComponent<CustomSpine>();
-            skeletonAnimationGameObject = Instantiate(prefab, CgManager.Image.transform);
-         
-            skeletonAnimation = skeletonAnimationGameObject.GetComponent<SkeletonAnimation>();
-            _customSpine = skeletonAnimationGameObject.GetComponent<CustomSpine>();
-            _customSpine.SetAvatar(spine);
-           
-            skeletonAnimation.initialSkinName =AssetsUtils.CheckSkin(spine,skin) ? skin : "default";
-            if (AssetsUtils.CheckAnimation(spine,animation))
+            CgManager.Enable = show;
+            Enable = show;
+        }
+        public void SetSkin(string skin)
+        {
+            var skinName = AssetsUtils.CheckSkin(nowSpine, skin) ? skin : "default";
+            if (_isInit)
+            {
+                skeletonAnimation.Skeleton.SetSkin(skinName);
+            }
+            else
+            {
+                skeletonAnimation.initialSkinName = skinName;
+            }
+        }
+        public void SetAnimation(string animation, bool isLoop = true)
+        {
+            if (!AssetsUtils.CheckAnimation(nowSpine, animation)) return;
+            if (_isInit)
+            {
+                skeletonAnimation.AnimationState.SetAnimation(0, animation, isLoop);
+            }
+            else
             {
                 skeletonAnimation.AnimationName = animation;
             }
-        
+        }
+        public void SetSpine(string spine, string animation, string skin)
+        {
+            if (string.IsNullOrWhiteSpace(spine))
+            {
+                return;
+            }
+            if (skeletonAnimationGameObject != null)
+            {
+                if (nowSpine == spine)
+                {
+                    SetSkin(skin);
+                    SetAnimation(animation);
+                    return;
+                }
+                DestroyImmediate(skeletonAnimationGameObject);
+            }
+            if (!AssetsUtils.GetSkeletonAnimation(spine, out var prefab, ESpineAssetType.Cg))
+            {
+                nowSpine = string.Empty;
+                _isInit = false;
+                return;
+            }
+
+            nowSpine = spine;
+            prefab.AddComponent<CustomSpine>();
+            skeletonAnimationGameObject = Instantiate(prefab, CgManager.Image.transform);
+            SetShow(true);
+
+            skeletonAnimation = skeletonAnimationGameObject.GetComponent<SkeletonAnimation>();
+            _customSpine = skeletonAnimationGameObject.GetComponent<CustomSpine>();
+            _customSpine.SetAvatar(spine);
+            SetSkin(skin);
+            SetAnimation(animation);
+            _isInit = true;
             skeletonAnimation.Initialize(true);
         }
         public void SetCG(string cgName)
