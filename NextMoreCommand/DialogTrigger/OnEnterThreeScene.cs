@@ -19,7 +19,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
 {
 
 
-    [HarmonyPatch(typeof(ThreeSceneMag), nameof(ThreeSceneMag.init))]
+    [HarmonyPatch(typeof(ThreeSceneMag))]
     public static class OnEnterThreeScene
     {
         // public static void Prefix()
@@ -42,9 +42,19 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
         // }
         private static List<Flowchart> _flowchartsInScene = new List<Flowchart>();
         private static List<Flowchart> _flowchartsInPatch = new List<Flowchart>();
-
-        public static void Postfix()
+        public static ThreeSceneMag ThreeSceneMag;
+        // [HarmonyP(nameof(ThreeSceneMag.init))]
+        [HarmonyPostfix]
+        [HarmonyPatch("OnDestroy")]
+        public static void OnEnterThreeSceneOnDestroy()
         {
+            ThreeSceneMag = null;
+        }
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(ThreeSceneMag.init))]
+        public static void OnEnterThreeScene_Postfix(ThreeSceneMag __instance)
+        {
+            ThreeSceneMag = __instance;
             var env = new DialogEnvironment()
             {
                 mapScene = Tools.getScreenName()

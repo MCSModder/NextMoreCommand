@@ -261,7 +261,8 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public readonly static Dictionary<string, FileAsset> CacheFileAssets = new Dictionary<string, FileAsset>();
         public readonly static Dictionary<string, AssetBundle> CacheAssetBundle = new Dictionary<string, AssetBundle>();
         public readonly static Dictionary<string, CustomSpineConfig> CacheCustomSpineConfig = new Dictionary<string, CustomSpineConfig>();
-        public readonly static Dictionary<string, CustomMapPlayerSpine> CacheCustomMapPlayerSpine = new Dictionary<string, CustomMapPlayerSpine>();
+           public readonly static Dictionary<string, CustomSpineOption> CacheCustomImageConfig = new Dictionary<string, CustomSpineOption>();
+           public readonly static Dictionary<string, CustomMapPlayerSpine> CacheCustomMapPlayerSpine = new Dictionary<string, CustomMapPlayerSpine>();
         public static bool GetFileAsset(string path, out FileAsset fileAsset)
         {
             if (CacheFileAssets.TryGetValue(path, out var asset))
@@ -318,6 +319,41 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 ESpineAssetType.Cg => GetCustomSpineConfigCG(key, out customSpineConfig),
                 _ => throw new ArgumentOutOfRangeException(nameof(spineAssetType), spineAssetType, null)
             };
+        }
+        public static bool GetCustomImageConfig(string path, out CustomSpineOption customSpineOption)
+        {
+            customSpineOption = null;
+            if (CacheCustomImageConfig.TryGetValue(path, out  customSpineOption))
+            {
+                return true;
+            }
+      
+            if (!GetFileAsset(path, out var fileAsset)) return false;
+            var directoryName = Path.GetDirectoryName(fileAsset.FileRawPath);
+            var configJsonPath = BepInEx.Utility.CombinePaths(directoryName, "config.json");
+            MyPluginMain.LogInfo($"configJsonPath:{configJsonPath} directoryName:{directoryName} ");
+            customSpineOption = new CustomSpineOption(new CustomSpinePos(0, 3), new CustomSpinePos(0.5f, 0.5f));
+            var isExists = File.Exists(configJsonPath);
+            switch (isExists)
+            {
+                case true:
+                {
+                    var json = File.ReadAllText(configJsonPath);
+                    MyPluginMain.LogInfo(json);
+                    customSpineOption = JObject.Parse(json).ToObject<CustomSpineOption>() ?? customSpineOption;
+                    CacheCustomImageConfig.Add(path,customSpineOption);
+                    return true;
+                }
+                case false when configJsonPath.Contains("本地Mod测试"):
+                {
+                    CacheCustomImageConfig.Add(path,customSpineOption);
+                    using var openWrite = File.OpenWrite(configJsonPath);
+                    var info = Encoding.UTF8.GetBytes(customSpineOption.ToString());
+                    openWrite.Write(info, 0, info.Length);
+                    break;
+                }
+            }
+            return false;
         }
         public static bool GetCustomSpineConfig(string path, string key, out CustomSpineConfig customSpineConfig)
         {
@@ -486,6 +522,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
         }
         public static void Clear()
         {
+            CacheCustomImageConfig.Clear();
             CacheCustomSpineConfig.Clear();
             CacheCustomMapPlayerSpine.Clear();
             CacheFileAssets.Clear();
