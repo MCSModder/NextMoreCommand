@@ -85,7 +85,19 @@ namespace SkySwordKill.NextMoreCommand.Patchs
                 yield break;
             }
 
-            var path = !string.IsNullOrWhiteSpace(lihui) ? $"workshop_{lihui}_{faceId}" : $"Effect/Prefab/gameEntity/Avater/Avater{faceId}/{faceId}";
+            var path =  $"workshop_{lihui}_{faceId}";
+            if (string.IsNullOrWhiteSpace(lihui))
+            {
+                path = $"Effect/Prefab/gameEntity/Avater/Avater{faceId}/{faceId}";
+                if ( AssetsUtils.GetCustomImageConfig("Assets/Res/"+path+".png",out CustomSpineOption customSpineOption))
+                {
+                    var transform1 = transform;
+                    var nowRotation = transform1.localRotation;
+                    customSpineOption?.SetTransform(transform1);
+                    transform.localRotation = nowRotation;
+                }
+                
+            }
             var sprite = ModResources.LoadSprite(path);
             var hasSprite = sprite != null;
             if (_spriteRenderer != null)
@@ -100,7 +112,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             }
             if (!hasSprite)
             {
-                DestroyImmediate(this);
+                DestroyImmediate(gameObject);
             }
             yield break;
         }
@@ -110,10 +122,10 @@ namespace SkySwordKill.NextMoreCommand.Patchs
 
             spine = null;
 
-            if (_spriteRenderer != null)
-            {
-                DestroyImmediate(_spriteRenderer);
-            }
+            // if (_spriteRenderer != null)
+            // {
+            //     DestroyImmediate(_spriteRenderer);
+            // }
             skeletonAnimation = null;
         }
     }

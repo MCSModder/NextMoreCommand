@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
+using Fungus;
 using HarmonyLib;
 using SkySwordKill.Next.DialogSystem;
+using SkySwordKill.NextMoreCommand.DialogTrigger;
+using UnityEngine;
 
 namespace SkySwordKill.NextMoreCommand.Patchs
 {
@@ -12,6 +15,12 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             if (command.Command != "Dungeon_Exit")
             {
                 return;
+            }
+            if (OnEnterThreeScene.ThreeSceneMag != null)
+            {
+              var go =  OnEnterThreeScene.ThreeSceneMag.gameObject;
+              Object.DestroyImmediate(OnEnterThreeScene.ThreeSceneMag);
+              go.AddMissingComponent<ThreeSceneMag>();
             }
             var normalShow = MapPlayerController.Inst.NormalShow;
             var nowSpineName = Traverse.Create(normalShow).Field<string>("nowSpineName");
