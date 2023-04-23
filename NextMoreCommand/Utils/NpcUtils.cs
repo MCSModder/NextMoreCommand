@@ -193,6 +193,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public const string NpcFollow = "NPC_FOLLOW_NEXT";
         public const string NpcFightFace = "NPC_FIGHT_FACE";
         public const string NpcFightSpine = "NPC_FIGHT_Spine";
+        public const string NpcFaceSpine = "NPC_FACE_Spine";
         public const string NpcSkinSpine = "NPC_SKIN_Spine";
         public const string NpcDefaultSkinSpine = "NPC_DEFAULT_SKIN_Spine";
         public const string CallName = "CALL_NAME";
@@ -414,7 +415,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
                     inst.ShowNPCInfoPanel();
                 }
             }
-   
+
             var roundManager = RoundManager.instance;
             if (roundManager != null && Tools.instance.MonstarID == id)
             {
@@ -427,8 +428,8 @@ namespace SkySwordKill.NextMoreCommand.Utils
                     var skeletonAnimation = customSpine.gameObject.GetComponent<SkeletonAnimation>();
                     if (skeletonAnimation == null)
                     {
-                      var playerSetRandomFace =renderObj.GetComponentInChildren<PlayerSetRandomFace>();
-                      playerSetRandomFace.randomAvatar(id);
+                        var playerSetRandomFace = renderObj.GetComponentInChildren<PlayerSetRandomFace>();
+                        playerSetRandomFace.randomAvatar(id);
                     }
                     else
                     {
@@ -440,7 +441,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
                         skeletonAnimation.initialSkinName = skin;
                         skeletonAnimation.Initialize(true);
                     }
-                   
+
                 }
 
             }
@@ -503,6 +504,18 @@ namespace SkySwordKill.NextMoreCommand.Utils
         {
             var result = StrGroup.Get(NpcSkinSpine, id.ToNpcId());
             return string.IsNullOrWhiteSpace(result) ? GetNpcDefaultSkinSpine(id) : result;
+        }
+        public static bool SetNpcFaceSpine(int id, string value)
+        {
+            StrGroup.Set(NpcFaceSpine, id.ToNpcId(), value);
+            // RefreshNpc(id.ToNpcNewId());
+            return true;
+        }
+
+        public static string GetNpcFaceSpine(int id)
+        {
+            var result = StrGroup.Get(NpcFaceSpine, id.ToNpcId());
+            return string.IsNullOrWhiteSpace(result) ? NPCEx.NPCIDToOld(id).ToString() : result;
         }
         public static bool SetNpcDefaultSkinSpine(int id, string value)
         {

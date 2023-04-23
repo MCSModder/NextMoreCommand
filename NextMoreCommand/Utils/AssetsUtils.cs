@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using BehaviorDesigner.Runtime.Tasks.Basic.UnityGameObject;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 // using ProGif.GifManagers;
@@ -138,11 +139,29 @@ namespace SkySwordKill.NextMoreCommand.Utils
         [JsonProperty("对战立绘位置", Required = Required.Default)]
         public CustomSpineOption FightAvatarPos { get; set; }
         [JsonProperty("战斗窗口位置", Required = Required.Default)]
-        public CustomSpineOption FpUIMagPos { get; set; }
+        public CustomSpineOption FpUIMagPos { get; set; } 
         [JsonProperty("论道界面位置", Required = Required.Default)]
         public CustomSpineOption LunDaoManagerPos { get; set; }
         [JsonProperty("CG骨骼位置", Required = Required.Default)]
-        public CustomSpineOption CgSpineManagerPos { get; set; }
+        public CustomSpineOption CgSpineManagerPos { get; set; } 
+        [JsonProperty("玩家头像位置", Required = Required.Default)]
+        public CustomSpineOption UiHeadPanelPos { get; set; } 
+        [JsonProperty("物品背包位置", Required = Required.Default)]
+        public CustomSpineOption TabUiMagPos { get; set; } 
+        public void Start()
+        {
+            SayDialogPos ??= CustomSpineOption.SayDialogPos;
+            UINpcSvItemPos ??= CustomSpineOption.UINpcSvItemPos;
+            UINpcJiaoHuPopPos ??= CustomSpineOption.UINpcJiaoHuPopPos;
+            UINpcInfoPanelPos ??= CustomSpineOption.UINpcInfoPanelPos;
+            UINpcInfoPanelPos ??= CustomSpineOption.UINpcInfoPanelPos;
+            FightAvatarPos ??= CustomSpineOption.FightAvatarPos;
+            FpUIMagPos ??= CustomSpineOption.FpUIMagPos;
+            LunDaoManagerPos ??= CustomSpineOption.LunDaoManagerPos;
+            CgSpineManagerPos ??= new CustomSpineOption();
+            UiHeadPanelPos ??= CustomSpineOption.UiHeadPanelPos;
+            TabUiMagPos ??= CustomSpineOption.TabUiMagPos;
+        }
 
         [JsonIgnore]
         public AssetBundle AssetBundle { get; set; }
@@ -204,15 +223,13 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public bool CheckSkin(int key, string skinName) => CheckSkin(key.ToString(), skinName);
         public bool CheckSkin(string key, string skinName)
         {
-
             if (AnimationNameDictionary.Count == 0)
             {
                 return false;
             }
-
-
             return SkinNameDictionary.ContainsKey(key) && SkinNameDictionary[key].Contains(skinName);
         }
+
         public void Init()
         {
             if (_isInit)
@@ -261,8 +278,8 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public readonly static Dictionary<string, FileAsset> CacheFileAssets = new Dictionary<string, FileAsset>();
         public readonly static Dictionary<string, AssetBundle> CacheAssetBundle = new Dictionary<string, AssetBundle>();
         public readonly static Dictionary<string, CustomSpineConfig> CacheCustomSpineConfig = new Dictionary<string, CustomSpineConfig>();
-           public readonly static Dictionary<string, CustomSpineOption> CacheCustomImageConfig = new Dictionary<string, CustomSpineOption>();
-           public readonly static Dictionary<string, CustomMapPlayerSpine> CacheCustomMapPlayerSpine = new Dictionary<string, CustomMapPlayerSpine>();
+        public readonly static Dictionary<string, CustomSpineOption> CacheCustomImageConfig = new Dictionary<string, CustomSpineOption>();
+        public readonly static Dictionary<string, CustomMapPlayerSpine> CacheCustomMapPlayerSpine = new Dictionary<string, CustomMapPlayerSpine>();
         public static bool GetFileAsset(string path, out FileAsset fileAsset)
         {
             if (CacheFileAssets.TryGetValue(path, out var asset))
@@ -323,11 +340,11 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public static bool GetCustomImageConfig(string path, out CustomSpineOption customSpineOption)
         {
             customSpineOption = null;
-            if (CacheCustomImageConfig.TryGetValue(path, out  customSpineOption))
+            if (CacheCustomImageConfig.TryGetValue(path, out customSpineOption))
             {
                 return true;
             }
-      
+
             if (!GetFileAsset(path, out var fileAsset)) return false;
             var directoryName = Path.GetDirectoryName(fileAsset.FileRawPath);
             var configJsonPath = BepInEx.Utility.CombinePaths(directoryName, "config.json");
@@ -341,12 +358,13 @@ namespace SkySwordKill.NextMoreCommand.Utils
                     var json = File.ReadAllText(configJsonPath);
                     MyPluginMain.LogInfo(json);
                     customSpineOption = JObject.Parse(json).ToObject<CustomSpineOption>() ?? customSpineOption;
-                    CacheCustomImageConfig.Add(path,customSpineOption);
+                    
+                    CacheCustomImageConfig.Add(path, customSpineOption);
                     return true;
                 }
                 case false when configJsonPath.Contains("本地Mod测试"):
                 {
-                    CacheCustomImageConfig.Add(path,customSpineOption);
+                    CacheCustomImageConfig.Add(path, customSpineOption);
                     using var openWrite = File.OpenWrite(configJsonPath);
                     var info = Encoding.UTF8.GetBytes(customSpineOption.ToString());
                     openWrite.Write(info, 0, info.Length);
@@ -377,7 +395,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
                     config = JObject.Parse(json).ToObject<CustomSpineConfig>() ?? new CustomSpineConfig();
 
                 }
-
+                config.Start();
                 config.AssetBundle = assetBundle;
                 config.FileAsset = fileAsset;
                 config.Init();
@@ -423,7 +441,8 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public static AssetBundle GetAssetBundle(string path) => GetAssetBundle(path, out var assetBundle) ? assetBundle : null;
         public static AssetBundle GetAssetBundle(int avatar) => GetAssetBundle(avatar.ToString(), out var assetBundle) ? assetBundle : null;
         public static SkeletonDataAsset GetSkeletonData(int avatar) => GetSkeletonData(avatar, out var skeletonData) ? skeletonData : null;
-        public static bool GetSkeletonData(int avatar, out SkeletonDataAsset skeletonData, ESpineAssetType spineAssetType = ESpineAssetType.Avatar)
+        public static bool GetSkeletonData(int avatar, out SkeletonDataAsset skeletonData, ESpineAssetType spineAssetType = ESpineAssetType.Avatar) => GetSkeletonData(avatar.ToString(), out skeletonData, spineAssetType);
+        public static bool GetSkeletonData(string avatar, out SkeletonDataAsset skeletonData, ESpineAssetType spineAssetType = ESpineAssetType.Avatar)
         {
             var hasCustomSpineConfig = GetCustomSpineConfig(avatar, out var customSpineConfig, spineAssetType);
             if (!hasCustomSpineConfig)
@@ -464,6 +483,8 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 ESpineType.UINpcJiaoHuPop => customSpineConfig.UINpcJiaoHuPopPos,
                 ESpineType.LunDaoManager => customSpineConfig.LunDaoManagerPos,
                 ESpineType.CGManager => customSpineConfig.CgSpineManagerPos,
+                ESpineType.UiHeadPanel => customSpineConfig.UiHeadPanelPos,
+                ESpineType.TabUiMag => customSpineConfig.TabUiMagPos,
                 _ => customSpineOption
             };
 
@@ -480,7 +501,8 @@ namespace SkySwordKill.NextMoreCommand.Utils
             skeletonAnimation = customSpineConfig.LoadSkeletonAnimation(key);
             return skeletonAnimation != null;
         }
-        public static bool GetSkeletonAnimation(int avatar, out GameObject skeletonAnimation)
+        public static bool GetSkeletonAnimation(int avatar, out GameObject skeletonAnimation) => GetSkeletonAnimation(avatar.ToString(), out skeletonAnimation);
+        public static bool GetSkeletonAnimation(string avatar, out GameObject skeletonAnimation)
         {
             var hasCustomSpineConfig = GetCustomSpineConfigAvatar(avatar, out var customSpineConfig);
             if (!hasCustomSpineConfig)
@@ -495,8 +517,8 @@ namespace SkySwordKill.NextMoreCommand.Utils
         {
             return Enum.GetName(typeof(T), instance);
         }
-
-        public static bool CheckAnimation(int avatar, string animationName, out bool isIdle, ESpineAssetType spineAssetType = ESpineAssetType.Avatar)
+        public static bool CheckAnimation(int avatar, string animationName, out bool isIdle, ESpineAssetType spineAssetType = ESpineAssetType.Avatar) => CheckAnimation(avatar.ToString(), animationName, out isIdle, spineAssetType);
+        public static bool CheckAnimation(string avatar, string animationName, out bool isIdle, ESpineAssetType spineAssetType = ESpineAssetType.Avatar)
         {
             isIdle = false;
             var hasCustomSpineConfig = GetCustomSpineConfig(avatar, out var customSpineConfig, spineAssetType);
@@ -522,6 +544,13 @@ namespace SkySwordKill.NextMoreCommand.Utils
         }
         public static void Clear()
         {
+            var uiHeadPanel = UIHeadPanel.Inst;
+            if (uiHeadPanel != null)
+            {
+                Object.DestroyImmediate(UIHeadPanel.Inst.gameObject);
+                Object.Instantiate(Resources.Load<GameObject>($"NewUI/Head/UIHeadPanel"), NewUICanvas.Inst.transform);
+            }
+
             CacheCustomImageConfig.Clear();
             CacheCustomSpineConfig.Clear();
             CacheCustomMapPlayerSpine.Clear();

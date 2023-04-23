@@ -200,6 +200,7 @@
         <Compile Include="Custom\MenPaiShop\BaseShopType.cs" />
         <Compile Include="Custom\MenPaiShop\UIMenPaiShop.cs" />
         <Compile Include="Custom\MenPaiShop\UIMenPaiShopItem.cs" />
+        <Compile Include="DialogTrigger\OnJiaoHuPop.cs" />
         <Compile Include="DialogTrigger\OnShuangXiu.cs" />
         <Compile Include="DialogTrigger\OnBiGuan.cs" />
         <Compile Include="NextCommandExtension\Beta\SetLoadScene.cs" />
@@ -209,6 +210,7 @@
         <Compile Include="NextCommandExtension\Fight\AddFightBuff.cs" />
         <Compile Include="NextCommandExtension\Npc\SetFightFace.cs" />
         <Compile Include="NextCommandExtension\Npc\SetNpcDefaultSkinSpine.cs" />
+        <Compile Include="NextCommandExtension\Npc\SetNpcFaceSpine.cs" />
         <Compile Include="NextCommandExtension\Npc\SetNpcFightFace.cs" />
         <Compile Include="NextCommandExtension\Npc\SetNpcFightSpine.cs" />
         <Compile Include="NextCommandExtension\Npc\SetNpcSkinSpine.cs" />
@@ -229,6 +231,7 @@
         <Compile Include="NextCommandExtension\Utils\HideCGSpine.cs" />
         <Compile Include="NextCommandExtension\Utils\RunJavaScript.cs" />
         <Compile Include="NextCommandExtension\Utils\SetAllRemoveEquip.cs" />
+        <Compile Include="NextCommandExtension\Utils\SetPlayerSpine.cs" />
         <Compile Include="NextCommandExtension\Utils\SetRecordShengPing.cs" />
         <Compile Include="NextCommandExtension\Utils\ChangeSelectTianFu.cs" />
         <Compile Include="NextCommandExtension\Utils\SetRefreshMapPlayer.cs" />
@@ -241,6 +244,7 @@
         <Compile Include="NextCommandExtension\Utils\ShowMenPaiShop.cs" />
         <Compile Include="NextCommandExtension\Utils\ShowMiniShop.cs" />
         <Compile Include="NextCommandExtension\Utils\ShowOpenPanel.cs" />
+        <Compile Include="NextCommandExtension\Utils\StopPlayMusic.cs" />
         <Compile Include="NextCommandExtension\Utils\TryRunCommand.cs" />
         <Compile Include="NextEnvExtension\DongFu\GetDongFu.cs" />
         <Compile Include="NextEnvExtension\DongFu\GetAllDongFu.cs" />
@@ -257,6 +261,7 @@
         <Compile Include="NextEnvExtension\Npc\GetNpcData.cs" />
         <Compile Include="NextEnvExtension\Npc\GetNpcDefaultSkinSpine.cs" />
         <Compile Include="NextEnvExtension\Npc\GetNpcFace.cs" />
+        <Compile Include="NextEnvExtension\Npc\GetNpcFaceSpine.cs" />
         <Compile Include="NextEnvExtension\Npc\GetNpcFightFace.cs" />
         <Compile Include="NextEnvExtension\Npc\GetNpcFightSpine.cs" />
         <Compile Include="NextEnvExtension\Npc\GetNpcLiHui.cs" />
@@ -274,7 +279,10 @@
         <Compile Include="NextEnvExtension\Utils\GetJavascriptStr.cs" />
         <Compile Include="NextEnvExtension\Utils\GetJiYiHuiFuDu.cs" />
         <Compile Include="NextEnvExtension\Utils\GetModList.cs" />
+        <Compile Include="NextEnvExtension\Utils\GetMusicMag.cs" />
         <Compile Include="NextEnvExtension\Utils\GetNowRecordShengPing.cs" />
+        <Compile Include="NextEnvExtension\Utils\GetPlayerSpine.cs" />
+        <Compile Include="NextEnvExtension\Utils\GetPlayerSurname.cs" />
         <Compile Include="NextEnvExtension\Utils\GetShiliName.cs" />
         <Compile Include="NextEnvExtension\Utils\GetTask.cs" />
         <Compile Include="NextEnvExtension\Utils\GetTianJiDaBiRound.cs" />

@@ -235,46 +235,48 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
     {
         public static bool Prefix(ref UINPCSVItem __instance)
         {
-            if (NpcUtils.IsFightScene)
+            var npc = Traverse.Create(__instance).Field<UINPCData>("npc").Value;
+            var env = new DialogEnvironment()
             {
-                var npc = Traverse.Create(__instance).Field<UINPCData>("npc").Value;
-                npc.RefreshData();
-                MyPluginMain.LogInfo($"[当前点击的npc]ID:{npc.ID} 名字:{npc.Name}");
-                UINPCJiaoHu.Inst.HideJiaoHuPop();
-                UINPCJiaoHu.Inst.NowJiaoHuNPC = npc;
-                UINPCSVItem.NowSelectedUINPCSVItem = __instance;
-                if (UINPCData.ThreeSceneNPCTalkCache.ContainsKey(npc.ID))
+                bindNpc = npc,
+                roleBindID = npc.ZhongYaoNPCID,
+                roleID = npc.ID,
+                roleName = npc.Name,
+                mapScene = Tools.getScreenName()
+            };
+            if (DialogAnalysis.TryTrigger(new[]
                 {
-                    UINPCData.ThreeSceneNPCTalkCache[npc.ID]();
-                }
-                else if (UINPCData.ThreeSceneZhongYaoNPCTalkCache.ContainsKey(npc.ID))
-                {
-                    UINPCData.ThreeSceneZhongYaoNPCTalkCache[npc.ID]();
-                }
-                else
-                {
-                    var env = new DialogEnvironment()
+                    "点击角色列表", "NPCSVItemOnClick"
+                }, env)) return false;
+            if (!NpcUtils.IsFightScene) return true;
+            npc.RefreshData();
+            MyPluginMain.LogInfo($"[当前点击的npc]ID:{npc.ID} 名字:{npc.Name}");
+            UINPCJiaoHu.Inst.HideJiaoHuPop();
+            UINPCJiaoHu.Inst.NowJiaoHuNPC = npc;
+            UINPCSVItem.NowSelectedUINPCSVItem = __instance;
+            if (UINPCData.ThreeSceneNPCTalkCache.TryGetValue(npc.ID, out var value1))
+            {
+                value1.Invoke();
+            }
+            else if (UINPCData.ThreeSceneZhongYaoNPCTalkCache.TryGetValue(npc.ID, out var value))
+            {
+                value.Invoke();
+            }
+            else
+            {
+          
+
+                if (DialogAnalysis.TryTrigger(new[]
                     {
-                        bindNpc = npc,
-                        roleBindID = npc.ZhongYaoNPCID,
-                        roleID = npc.ID,
-                        roleName = npc.Name,
-                        mapScene = Tools.getScreenName()
-                    };
-
-                    if (DialogAnalysis.TryTrigger(new[]
-                        {
-                            "围观战斗群众"
-                        }, env)) return false;
-                    var sb = new StringBuilder($"SetChar*gz#{npc.ID}\n");
-                    sb.AppendLine("gz#{daoyou}加油ヾ(◍°∇°◍)ﾉﾞ!!");
-                    DialogAnalysis.StartTestDialogEvent(sb.ToString(),env);
-                }
-
-                return false;
+                        "围观战斗群众"
+                    }, env)) return false;
+                var sb = new StringBuilder($"SetChar*gz#{npc.ID}\n");
+                sb.AppendLine("gz#{daoyou}加油ヾ(◍°∇°◍)ﾉﾞ!!");
+                DialogAnalysis.StartTestDialogEvent(sb.ToString(),env);
             }
 
-            return true;
+            return false;
+
         }
     }
 }
