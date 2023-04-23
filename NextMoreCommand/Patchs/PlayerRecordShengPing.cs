@@ -14,7 +14,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             shengPing = shengPingID;
             DialogAnalysis.TryTrigger(new[]
             {
-                "PlayerRecordShengPing", "shengPing"
+                "PlayerRecordShengPing", "记录生平"
             }, null, true);
         }
     }

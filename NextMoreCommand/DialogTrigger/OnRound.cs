@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using SkySwordKill.Next;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.NextMoreCommand.Custom.SkillCombo;
+using SkySwordKill.NextMoreCommand.Patchs;
 using SkySwordKill.NextMoreCommand.Utils;
 
 namespace SkySwordKill.NextMoreCommand.DialogTrigger
@@ -188,6 +189,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
             {
                 MyLog.FungusLog("进入结束战斗触发器");
             }
+            PlayerSetRandomFaceRandomAvatarPatch.PlayerInit = false;
         }
     }
 
