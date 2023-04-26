@@ -9,6 +9,7 @@ public static class MainUIMagRefreshSavePatch
 {
     public static void Prefix(MainUIMag __instance)
     {
+    
         if (ModManager.TryGetModSetting("Quick_SaveSlotDebug", out long saveSlotDebug))
         {
             if (saveSlotDebug > 9)

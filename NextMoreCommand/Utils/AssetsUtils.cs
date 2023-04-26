@@ -139,15 +139,15 @@ namespace SkySwordKill.NextMoreCommand.Utils
         [JsonProperty("对战立绘位置", Required = Required.Default)]
         public CustomSpineOption FightAvatarPos { get; set; }
         [JsonProperty("战斗窗口位置", Required = Required.Default)]
-        public CustomSpineOption FpUIMagPos { get; set; } 
+        public CustomSpineOption FpUIMagPos { get; set; }
         [JsonProperty("论道界面位置", Required = Required.Default)]
         public CustomSpineOption LunDaoManagerPos { get; set; }
         [JsonProperty("CG骨骼位置", Required = Required.Default)]
-        public CustomSpineOption CgSpineManagerPos { get; set; } 
+        public CustomSpineOption CgSpineManagerPos { get; set; }
         [JsonProperty("玩家头像位置", Required = Required.Default)]
-        public CustomSpineOption UiHeadPanelPos { get; set; } 
+        public CustomSpineOption UiHeadPanelPos { get; set; }
         [JsonProperty("物品背包位置", Required = Required.Default)]
-        public CustomSpineOption TabUiMagPos { get; set; } 
+        public CustomSpineOption TabUiMagPos { get; set; }
         public void Start()
         {
             SayDialogPos ??= CustomSpineOption.SayDialogPos;
@@ -358,7 +358,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
                     var json = File.ReadAllText(configJsonPath);
                     MyPluginMain.LogInfo(json);
                     customSpineOption = JObject.Parse(json).ToObject<CustomSpineOption>() ?? customSpineOption;
-                    
+
                     CacheCustomImageConfig.Add(path, customSpineOption);
                     return true;
                 }
@@ -545,10 +545,18 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public static void Clear()
         {
             var uiHeadPanel = UIHeadPanel.Inst;
+
             if (uiHeadPanel != null)
             {
-                Object.DestroyImmediate(UIHeadPanel.Inst.gameObject);
-                Object.Instantiate(Resources.Load<GameObject>($"NewUI/Head/UIHeadPanel"), NewUICanvas.Inst.transform);
+                var face = uiHeadPanel.Face;
+                var skeleton = face != null ? face.GetComponent<SkeletonGraphic>() : null;
+                if (skeleton != null && !face.SkeletonDataAsset.Contains(skeleton.SkeletonDataAsset))
+                {
+
+                    Object.DestroyImmediate(UIHeadPanel.Inst.gameObject);
+                    Object.Instantiate(Resources.Load<GameObject>($"NewUI/Head/UIHeadPanel"), NewUICanvas.Inst.transform);
+                }
+                
             }
 
             CacheCustomImageConfig.Clear();

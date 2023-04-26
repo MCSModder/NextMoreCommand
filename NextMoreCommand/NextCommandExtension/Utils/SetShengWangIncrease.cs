@@ -33,7 +33,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
                 callback?.Invoke();
                 return;
             }
-            else if (type == "宁州" ||
+             if (type == "宁州" ||
                      !list.Contains(type))
             {
                 MyLog.Log(command, $"给玩家减少宁州{add.ToString()}声望");

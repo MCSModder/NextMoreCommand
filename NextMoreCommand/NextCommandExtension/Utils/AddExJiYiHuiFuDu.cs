@@ -12,8 +12,14 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
             var memory = command.GetInt(0);
-            env.player.jianLingManager.AddExJiYiHuiFuDu(memory);
-     
+            var isAdd = command.GetBool(1, true);
+            var jianLingManager = env.player.jianLingManager;
+            if (isAdd)
+            {
+                memory += jianLingManager.GetJiYiHuiFuDu();
+            }
+            jianLingManager.AddExJiYiHuiFuDu(memory);
+            callback?.Invoke();
         }
     }
 }

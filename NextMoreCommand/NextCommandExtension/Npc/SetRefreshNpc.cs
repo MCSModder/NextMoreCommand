@@ -13,6 +13,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc
         {
             var npc = command.ToNpcId();
             NpcUtils.RefreshNpc(npc);
+            callback?.Invoke();
         }
     }
 }

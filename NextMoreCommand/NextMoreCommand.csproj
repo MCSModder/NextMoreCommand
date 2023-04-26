@@ -208,6 +208,7 @@
         <Compile Include="NextCommandExtension\DongFu\SetLoadDongFu.cs" />
         <Compile Include="NextCommandExtension\DongFu\SetNewDongFu.cs" />
         <Compile Include="NextCommandExtension\Fight\AddFightBuff.cs" />
+        <Compile Include="NextCommandExtension\Npc\SetBindNpc.cs" />
         <Compile Include="NextCommandExtension\Npc\SetFightFace.cs" />
         <Compile Include="NextCommandExtension\Npc\SetNpcDefaultSkinSpine.cs" />
         <Compile Include="NextCommandExtension\Npc\SetNpcFaceSpine.cs" />
@@ -267,6 +268,7 @@
         <Compile Include="NextEnvExtension\Npc\GetNpcLiHui.cs" />
         <Compile Include="NextEnvExtension\Npc\GetNpcSkinSpine.cs" />
         <Compile Include="NextEnvExtension\Npc\GetNpcType.cs" />
+        <Compile Include="NextEnvExtension\Npc\GetUINpcData.cs" />
         <Compile Include="NextEnvExtension\Npc\HasNpcDefaultSkinSpine.cs" />
         <Compile Include="NextEnvExtension\Npc\HasNpcFace.cs" />
         <Compile Include="NextEnvExtension\Npc\HasNpcFightFace.cs" />

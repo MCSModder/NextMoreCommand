@@ -1,6 +1,7 @@
 ﻿using System;
 using HarmonyLib;
 using JSONClass;
+using SkySwordKill.Next.DialogEvent;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.NextMoreCommand.Utils;
 
@@ -22,18 +23,51 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             str = str.Replace("{daoyou}", name).Replace("{qianbei}", name);
         }
     }
-    [HarmonyPatch(typeof(DialogAnalysis),nameof(DialogAnalysis.DealSayText))]
-    public static class DialogAnalysisDealSayText{
-        public static void Prefix(ref string  text, int sayRoleID)
+
+    [HarmonyPatch(typeof(Say), nameof(Say.Execute))]
+    public static class DialogEventSayPatch
+    {
+        public static DialogCommand Command { get; private set; }
+        public static DialogEnvironment Env { get; private set; }
+        public static void Prefix(DialogCommand command, DialogEnvironment env)
         {
+            Command = command;
+            Env = env;
+        }
+        public static void Postfix()
+        {
+            Command = null;
+            Env = null;
+        }
+    }
+
+    [HarmonyPatch(typeof(DialogAnalysis), nameof(DialogAnalysis.DealSayText))]
+    public static class DialogAnalysisDealSayText
+    {
+        public static void Prefix(ref string text, int sayRoleID)
+        {
+            var env = DialogEventSayPatch.Env ?? new DialogEnvironment();
+            var npc = env.bindNpc;
+            var npcId = env.roleID.ToNpcNewId();
+            if (sayRoleID == 1)
+            {
+                if (npc == null && npcId <= 0)
+                {
+                    return;
+                }
+                npc ??= new UINPCData(npcId);
+                npc.RefreshData();
+                text = text.ReplacePlayerTalkToNPCWord(npc);
+                return;
+            }
             var id = sayRoleID.ToNpcNewId();
-            if (sayRoleID <= 0 ||!jsonData.instance.AvatarJsonData.HasField(id.ToString()))
+            if (sayRoleID <= 0 || !jsonData.instance.AvatarJsonData.HasField(id.ToString()))
             {
                 return;
             }
-            var npc = new UINPCData(id);
+            npc = new UINPCData(id);
             npc.RefreshData();
-            text=  text.ReplaceTalkWord(npc);
+            text = text.ReplaceTalkWord(npc);
         }
     }
 }
