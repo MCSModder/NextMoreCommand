@@ -80,7 +80,7 @@ namespace SkySwordKill.NextMoreCommand
             };
             ModManager.ModLoadComplete += () =>
             {
-                WorkshopUtils.WorkShopItems = WorkshopUtils.GetAllModWorkshopItem();
+                WorkshopUtils.InitWorkShopItems();
                 ModManagerUtils.TryGetModSetting("Quick_DramaDebugKey", out DramaDebugKey);
                 ModManager.TryGetModSetting("Quick_IsDebugMode", out IsDebugMode);
                 // ModManager.TryGetModSetting("Quick_JSDebugPort", out JSDebugPort);

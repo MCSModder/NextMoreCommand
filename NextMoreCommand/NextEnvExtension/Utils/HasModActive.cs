@@ -9,12 +9,17 @@ using SkySwordKill.NextMoreCommand.Utils;
 namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Utils
 {
 
-    [DialogEnvQuery("HasMod")]
-    public class HasMod : IDialogEnvQuery
+    [DialogEnvQuery("HasModActive")]
+    public class HasModActive : IDialogEnvQuery
     {
         public object Execute(DialogEnvQueryContext context)
         {
-            return ulong.TryParse(context.GetMyArgs<string>(0), out var modId) && WorkshopUtils.WorkShopItemsDict.ContainsKey(modId);
+            
+            if (ulong.TryParse(context.GetMyArgs<string>(0), out var modId) && WorkshopUtils.WorkShopItemsDict.ContainsKey(modId))
+            {
+                return !WorkshopTool.CheckModIsDisable(modId.ToString());
+            }
+            return false;
 
         }
     }

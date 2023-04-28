@@ -67,6 +67,16 @@ public class WorkshopItemInfo
 public static class WorkshopUtils
 {
     public static List<WorkShopItem> WorkShopItems;
+    public static Dictionary<ulong,WorkShopItem> WorkShopItemsDict = new Dictionary<ulong, WorkShopItem>();
+    public static void InitWorkShopItems()
+    {
+        WorkShopItemsDict.Clear();
+        WorkShopItems = GetAllModWorkshopItem();
+        foreach (var workShopItem in WorkShopItems)
+        {
+            WorkShopItemsDict[workShopItem.SteamID] = workShopItem;
+        }
+    }
     public static void Subscribe(params ulong[] items)
     {
         var isAdd = false;
@@ -122,8 +132,8 @@ public static class WorkshopUtils
                 fileStream.Close();
                 return workShopItem;
             }).ToList();
-    }
-
+    }   
+  
     public static List<List<ulong>> HasAllModLastDependencies()
     {
         return GetAllModWorkshopItem().Where(item => item.LastDependencies != null && item.LastDependencies.Count != 0)

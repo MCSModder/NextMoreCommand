@@ -291,6 +291,7 @@
         <Compile Include="NextEnvExtension\Utils\HasCGSpineName.cs" />
         <Compile Include="NextEnvExtension\Utils\HasCommand.cs" />
         <Compile Include="NextEnvExtension\Utils\HasMod.cs" />
+        <Compile Include="NextEnvExtension\Utils\HasModActive.cs" />
         <Compile Include="NextEnvExtension\Utils\HasTask.cs" />
         <Compile Include="NextEnvExtension\Utils\GetCGSpineName.cs" />
         <Compile Include="NextEnvExtension\Utils\ToCNNumber.cs" />
