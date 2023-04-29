@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Fungus;
+using GUIPackage;
 using HarmonyLib;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -50,10 +51,9 @@ namespace SkySwordKill.NextMoreCommand.Utils
     {
         public static int ToNpcId(this string instance)
         {
-            var result = Convert.ToInt32(instance).ToNpcNewId();
-            if (result > 0)
+            if (int.TryParse(instance,out var result) && result > 0)
             {
-                return result;
+                return result.ToNpcNewId();
             }
 
             return -1;
@@ -76,57 +76,26 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
         public static List<int> ToNpcListId(this DialogCommand instance, int index = 0)
         {
-            if (instance.ParamList.Length <= index)
-            {
-                return new List<int>();
-            }
-
-            var list = new List<string>();
-
-            for (var i = index; i < instance.ParamList.Length; i++)
-            {
-                list.Add(instance.ParamList[i]);
-            }
-
-            return list.Select(item => item.ToNpcId()).Where(item => item > 0).ToList();
+            return instance.ToList(ToNpcId).Where(item => item > 0).ToList();
         }
         public static List<ulong> ToListULong(this DialogCommand instance, int index = 0)
         {
-            if (instance.ParamList.Length <= index)
-            {
-                return new List<ulong>();
-            }
 
-            var list = new List<string>();
-
-            for (var i = index; i < instance.ParamList.Length; i++)
-            {
-                list.Add(instance.ParamList[i]);
-            }
-
-            return list.Select(item => Convert.ToUInt64(item)).ToList();
+            return instance.ToList(Convert.ToUInt64);
         }
 
         public static List<int> ToListInt(this DialogCommand instance, int index = 0)
         {
-            if (instance.ParamList.Length <= index)
-            {
-                return new List<int>();
-            }
-
-            var list = new List<string>();
-
-            for (var i = index; i < instance.ParamList.Length; i++)
-            {
-                list.Add(instance.ParamList[i]);
-            }
-
-            return list.Select(item => Convert.ToInt32(item)).ToList();
+            return instance.ToList(Convert.ToInt32);
         }
 
         public static List<string> ToListString(this DialogCommand instance, int index = 0)
         {
-            var list = new List<string>();
+            return instance.ToList(item => item);
+        }
+        public static List<T> ToList<T>(this DialogCommand instance, Func<string, T> callback, int index = 0)
+        {
+            var list = new List<T>();
             if (instance.ParamList.Length <= index)
             {
                 return list;
@@ -135,12 +104,11 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
             for (var i = index; i < instance.ParamList.Length; i++)
             {
-                list.Add(instance.ParamList[i]);
+                list.Add(callback(instance.ParamList[i]));
             }
 
             return list;
         }
-
         public static int ToNpcId(this DialogCommand instance, int index = 0, int value = 0)
         {
             return instance.GetInt(index, value).ToNpcNewId();

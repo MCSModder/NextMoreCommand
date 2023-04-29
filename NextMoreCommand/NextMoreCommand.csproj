@@ -214,6 +214,7 @@
         <Compile Include="NextCommandExtension\Npc\SetNpcFaceSpine.cs" />
         <Compile Include="NextCommandExtension\Npc\SetNpcFightFace.cs" />
         <Compile Include="NextCommandExtension\Npc\SetNpcFightSpine.cs" />
+        <Compile Include="NextCommandExtension\Npc\SetNpcRandomFace.cs" />
         <Compile Include="NextCommandExtension\Npc\SetNpcSkinSpine.cs" />
         <Compile Include="NextCommandExtension\Npc\SetRefreshNpc.cs" />
         <Compile Include="NextCommandExtension\Npc\Teleport\NpcForceRemoveTeleport.cs" />
@@ -266,6 +267,7 @@
         <Compile Include="NextEnvExtension\Npc\GetNpcFightFace.cs" />
         <Compile Include="NextEnvExtension\Npc\GetNpcFightSpine.cs" />
         <Compile Include="NextEnvExtension\Npc\GetNpcLiHui.cs" />
+        <Compile Include="NextEnvExtension\Npc\GetNpcQingFeng.cs" />
         <Compile Include="NextEnvExtension\Npc\GetNpcSkinSpine.cs" />
         <Compile Include="NextEnvExtension\Npc\GetNpcType.cs" />
         <Compile Include="NextEnvExtension\Npc\GetUINpcData.cs" />
