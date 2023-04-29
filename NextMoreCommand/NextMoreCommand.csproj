@@ -280,6 +280,8 @@
         <Compile Include="NextEnvExtension\Utils\GetCGSpineManager.cs" />
         <Compile Include="NextEnvExtension\Utils\GetJavascriptStr.cs" />
         <Compile Include="NextEnvExtension\Utils\GetJiYiHuiFuDu.cs" />
+        <Compile Include="NextEnvExtension\Utils\GetModInfo.cs" />
+        <Compile Include="NextEnvExtension\Utils\GetModInfoList.cs" />
         <Compile Include="NextEnvExtension\Utils\GetModList.cs" />
         <Compile Include="NextEnvExtension\Utils\GetMusicMag.cs" />
         <Compile Include="NextEnvExtension\Utils\GetNowRecordShengPing.cs" />

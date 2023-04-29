@@ -66,6 +66,22 @@ public class WorkshopItemInfo
 
 public static class WorkshopUtils
 {
+    public class ModInfo
+    {
+        public WorkShopItem WorkShopItem { get; private set; }
+        public ulong Id { get; private set; }
+        public string Title { get; private set; }
+        public bool IsActive{ get; private set; }
+        
+        public ModInfo(WorkShopItem workShopItem)
+        {
+            
+            WorkShopItem = workShopItem;
+            Id = workShopItem.SteamID;
+            Title = workShopItem.Title;
+            IsActive = !WorkshopTool.CheckModIsDisable(Id.ToString());
+        }
+    }
     public static List<WorkShopItem> WorkShopItems;
     public static Dictionary<ulong,WorkShopItem> WorkShopItemsDict = new Dictionary<ulong, WorkShopItem>();
     public static void InitWorkShopItems()
