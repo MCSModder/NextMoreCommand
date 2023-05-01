@@ -1,0 +1,29 @@
+using SkySwordKill.Next.DialogSystem;
+
+namespace YueNing.TianMoDaoZhu
+{
+    [DialogEnvQuery("GetPlayerNames")]
+    [DialogEnvQuery("获得玩家名字及感叹号")]
+    public class GetPlayerNames : IDialogEnvQuery
+    {
+        public object Execute(DialogEnvQueryContext context)
+        {
+            KBEngine.Avatar player = Tools.instance.getPlayer();
+            string names = "";
+
+            foreach (var item in player.firstName)
+            {
+                names = string.Format("{0}{1}！", names, item);
+            }
+
+            foreach (var item in player.lastName)
+            {
+                names = string.Format("{0}{1}！", names, item);
+            }
+
+            return names;
+
+        }
+    }
+}
+
