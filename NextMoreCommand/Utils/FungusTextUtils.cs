@@ -722,7 +722,7 @@ public static class FungusTextUtils
     public static string Italic(this char str) => $"{{i}}{str}{{/i}}";
     public static string Size(this char str, int size) => $"{{size={size}}}{str}{{/size}}";
 
-    public static string TextHelper(string text, int size, Func<string, string> callback)
+    public static string TextHelper(this string text, int size, Func<string, string> callback)
     {
         var sb = new StringBuilder();
         if (size == 1)

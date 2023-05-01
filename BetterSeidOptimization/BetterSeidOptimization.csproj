@@ -7,8 +7,8 @@
         <ProjectGuid>{44B38315-6041-462C-BDF1-3506684D7D0C}</ProjectGuid>
         <OutputType>Library</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>Zerxz.CustomDungeonsMore</RootNamespace>
-        <AssemblyName>CustomDungeonsMore</AssemblyName>
+        <RootNamespace>Zerxz.BetterSeidOptimization</RootNamespace>
+        <AssemblyName>BetterSeidOptimization</AssemblyName>
         <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
         <LangVersion>latest</LangVersion>
@@ -74,7 +74,9 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="CustomDungeonsMore.cs" />
+        <Compile Include="BetterSeidOptimization.cs" />
+        <Compile Include="Patch\SkillPatch.cs" />
+        <Compile Include="Patch\SpellPatch.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>

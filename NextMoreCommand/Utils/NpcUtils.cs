@@ -76,22 +76,22 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
         public static List<int> ToNpcListId(this DialogCommand instance, int index = 0)
         {
-            return instance.ToList(ToNpcId).Where(item => item > 0).ToList();
+            return instance.ToList(ToNpcId,index).Where(item => item > 0).ToList();
         }
         public static List<ulong> ToListULong(this DialogCommand instance, int index = 0)
         {
 
-            return instance.ToList(Convert.ToUInt64);
+            return instance.ToList(Convert.ToUInt64,index);
         }
 
         public static List<int> ToListInt(this DialogCommand instance, int index = 0)
         {
-            return instance.ToList(Convert.ToInt32);
+            return instance.ToList(Convert.ToInt32,index);
         }
 
         public static List<string> ToListString(this DialogCommand instance, int index = 0)
         {
-            return instance.ToList(item => item);
+            return instance.ToList(item => item,index);
         }
         public static List<T> ToList<T>(this DialogCommand instance, Func<string, T> callback, int index = 0)
         {

@@ -287,6 +287,7 @@
         <Compile Include="NextEnvExtension\Utils\GetModList.cs" />
         <Compile Include="NextEnvExtension\Utils\GetMusicMag.cs" />
         <Compile Include="NextEnvExtension\Utils\GetNowRecordShengPing.cs" />
+        <Compile Include="NextEnvExtension\Utils\GetPlayerNames.cs" />
         <Compile Include="NextEnvExtension\Utils\GetPlayerSpine.cs" />
         <Compile Include="NextEnvExtension\Utils\GetPlayerSurname.cs" />
         <Compile Include="NextEnvExtension\Utils\GetShiliName.cs" />
