@@ -5,6 +5,7 @@ using HarmonyLib;
 using JSONClass;
 using KBEngine;
 using Newtonsoft.Json;
+using SkySwordKill.NextMoreCommand.Utils;
 using Skill = GUIPackage.Skill;
 
 namespace Zerxz.BetterSeidOptimization.Patch
@@ -77,19 +78,23 @@ namespace Zerxz.BetterSeidOptimization.Patch
         [HarmonyPatch(nameof(Skill.realizeSeid31))]
         public static bool RealizeSeid31(Skill __instance, int seid, List<int> damage, Avatar attaker, Avatar receiver, int type)
         {
+            var seidJson = __instance.GetSeidJson<SkillSeidJsonData31>(seid);
+            MyLog.Log(JsonConvert.SerializeObject(seidJson, Formatting.Indented));
+            MyLog.Log(__instance.getSeidJson(seid).ToString(true));
             if (!BetterSeidOptimization.BetterMode)
             {
                 return true;
             }
-            var seidJson = __instance.GetSeidJson<SkillSeidJsonData31>(seid);
+
             var xJson = seidJson.value1;
             var yJson = seidJson.value2;
+            var num = damage[4] > 1 ? damage[4] : 1;
 
             for (var index1 = 0; index1 < xJson.Count; index1++)
             {
                 var xValue = xJson[index1];
                 var yValue = yJson[index1];
-                attaker.spell.addBuff(xValue, yValue);
+                attaker.spell.addBuff(yValue, xValue * num);
                 // if (yValue >= 100)
                 // {
                 //     receiver.spell.addBuff(xValue, yValue);
@@ -107,8 +112,98 @@ namespace Zerxz.BetterSeidOptimization.Patch
             31
         };
         [HarmonyPrefix]
+        [HarmonyPatch(nameof(Skill.triggerBuffEndSeid))]
+        public static bool TriggerBuffEndSeid(Skill __instance, List<int> SeidList,
+            List<int> infoFlag,
+            Entity _attaker,
+            Entity _receiver,
+            int type)
+        {
+            if (!BetterSeidOptimization.BetterMode)
+            {
+                return true;
+            }
+            List<int> TempSeid = new List<int>();
+            SeidList.ForEach((Action<int>) (aa => TempSeid.Add(aa)));
+            int _index = 0;
+            foreach (int seid in TempSeid)
+            {
+                try
+                {
+                    if (infoFlag[2] == 1)
+                        break;
+                    if (__instance.setSeidNum(TempSeid, infoFlag, _index))
+                    {
+                        if (BanSeidForeach.Contains(seid))
+                        {
+                            __instance.realizeFinalSeid(seid, infoFlag, _attaker, _receiver, type);
+                        }
+                        else
+                        {
+                            for (int index = 0; index < infoFlag[4]; index++)
+                                __instance.realizeFinalSeid(seid, infoFlag, _attaker, _receiver, type);
+                        }
+                    }
+                    else
+                        __instance.realizeBuffEndSeid(seid, infoFlag, _attaker, _receiver, type);
+                }
+                catch (Exception ex)
+                {
+                    UnityEngine.Debug.LogError((object) ("检测到技能错误！错误 SkillID:" + (object) __instance.skill_ID + " 技能特性:" + (object) seid + "额外数据：" + infoFlag.ToString()));
+                    UnityEngine.Debug.LogError((object) ex);
+                }
+                _index++;
+            }
+            return false;
+        }
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(Skill.triggerSkillFinalSeid))]
+        public static bool TriggerSkillFinalSeid(Skill __instance, List<int> SeidList,
+            List<int> infoFlag,
+            Entity _attaker,
+            Entity _receiver,
+            int type)
+        {
+            if (!BetterSeidOptimization.BetterMode)
+            {
+                return true;
+            }
+            List<int> TempSeid = new List<int>();
+            SeidList.ForEach((Action<int>)(aa => TempSeid.Add(aa)));
+            int _index = 0;
+            foreach (int seid in TempSeid)
+            {
+                try
+                {
+                    if (__instance.setSeidNum(TempSeid, infoFlag, _index))
+                    {
+                        if (BanSeidForeach.Contains(seid))
+                        {
+                            __instance.realizeFinalSeid(seid, infoFlag, _attaker, _receiver, type);
+                        }
+                        else
+                        {
+                            for (int index = 0; index < infoFlag[4]; index++)
+                                __instance.realizeFinalSeid(seid, infoFlag, _attaker, _receiver, type);
+                        }
+                    }
+                    else
+                        __instance.realizeFinalSeid(seid, infoFlag, _attaker, _receiver, type);
+                    if (infoFlag[2] == 1)
+                        break;
+                }
+                catch (Exception ex)
+                {
+                    UnityEngine.Debug.LogError((object)("检测到技能错误！错误 SkillID:" + (object)__instance.skill_ID + " 技能特性:" + (object)seid + "额外数据：" + infoFlag.ToString()));
+                    UnityEngine.Debug.LogError((object)ex);
+                }
+                _index++;
+            }
+            return false;
+        }
+        [HarmonyPrefix]
         [HarmonyPatch(nameof(Skill.triggerStartSeid))]
-        public static bool RealizeSeid152(Skill __instance, List<int> SeidList,
+        public static bool TriggerStartSeid(Skill __instance, List<int> SeidList,
             List<int> infoFlag,
             Entity _attaker,
             Entity _receiver,
