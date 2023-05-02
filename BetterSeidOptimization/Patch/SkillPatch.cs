@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
 using JSONClass;
@@ -93,31 +94,94 @@ namespace Zerxz.BetterSeidOptimization.Patch
             }
             return false;
         }
-         // [HarmonyPrefix]
-         // [HarmonyPatch(nameof(Skill.realizeSeid152))]
-         // public static bool RealizeSeid152(Skill __instance, int seid, List<int> damage, Avatar attaker, Avatar receiver, int type)
-         // {
-         //     var seidJson = __instance.GetSeidJson<SkillSeidJsonData152>(seid);
-         //     var xJson = seidJson.value1;
-         //     var yJson = seidJson.value2;
-         //
-         //     for (var index1 = 0; index1 < xJson.Count; index1++)
-         //     {
-         //         var xValue = xJson[index1];
-         //         var yValue = yJson[index1];
-         //         attaker.spell.addBuff(xValue, yValue);
-         //         // if (yValue >= 100)
-         //         // {
-         //         //     receiver.spell.addBuff(xValue, yValue);
-         //         // }
-         //         // else
-         //         // {
-         //         //     for (int index2 = 0; index2 < yValue; ++index2)
-         //         //         receiver.spell.addDBuff(xValue);
-         //         // }
-         //     }
-         //     return false;
-         // }
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(Skill.triggerStartSeid))]
+        public static bool RealizeSeid152(Skill __instance, List<int> SeidList,
+            List<int> infoFlag,
+            Entity _attaker,
+            Entity _receiver,
+            int type)
+        {
+            List<int> tempSeid = new List<int>();
+            SeidList.ForEach((Action<int>)(aa => tempSeid.Add(aa)));
+            int _index = 0;
+            int num = -1;
+            foreach (int seid in tempSeid)
+            {
+                try
+                {
+                    if (num > 0)
+                    {
+                        if (tempSeid.IndexOf(seid) >= num)
+                        {
+                            infoFlag[2] = 0;
+                            num = -1;
+                        }
+                        else
+                            continue;
+                    }
+                    if (__instance.setSeidNum(tempSeid, infoFlag, _index))
+                    {
+                        if (seid == 31)
+                        {
+                            var seidJson = __instance.GetSeidJson<SkillSeidJsonData31>(seid);
+                            var xJson = seidJson.value1;
+                            var yJson = seidJson.value2;
+                            var attaker = (Avatar)_attaker;
+                            var time = infoFlag[4];
+                            for (var index1 = 0; index1 < xJson.Count; index1++)
+                            {
+                                var xValue = xJson[index1];
+                                var yValue = yJson[index1];
+                                attaker.spell.addBuff(xValue, yValue * time);
+                            }
+                        }
+                        else
+                        {
+                            for (int index = 0; index < infoFlag[4]; ++index)
+                                __instance.realizeSeid(seid, infoFlag, _attaker, _receiver, type);
+                        }
+
+                    }
+                    else
+                        __instance.realizeSeid(seid, infoFlag, _attaker, _receiver, type);
+                    if (infoFlag[2] == 1)
+                    {
+                        if (tempSeid.Contains(117))
+                        {
+                            for (int index = tempSeid.IndexOf(seid); index < tempSeid.Count; ++index)
+                            {
+                                if (tempSeid[index] == 117)
+                                {
+                                    num = index;
+                                    break;
+                                }
+                            }
+                        }
+                        if (num < 0)
+                            break;
+                    }
+                    else if (_attaker.isPlayer())
+                    {
+                        if (RoundManager.instance.PlayerSkillCheck != null)
+                            RoundManager.instance.PlayerSkillCheck.HasPassSeid.Add(seid);
+                    }
+                    else if (RoundManager.instance.NpcSkillCheck != null)
+                        RoundManager.instance.NpcSkillCheck.HasPassSeid.Add(seid);
+                }
+                catch (Exception ex)
+                {
+                    string str = "";
+                    for (int index = 0; index < infoFlag.Count; index++)
+                        str += string.Format(" {0}", (object)infoFlag[index]);
+                    UnityEngine.Debug.LogError((object)("检测到技能错误！错误 SkillID:" + (object)__instance.skill_ID + " 技能特性:" + (object)seid + "额外数据：" + str));
+                    UnityEngine.Debug.LogError((object)("异常信息:" + ex.Message + "\n异常位置:" + ex.StackTrace));
+                    UnityEngine.Debug.LogError((object)string.Format("{0}", (object)ex));
+                }
+                _index++;
+            }
+            return false;
+        }
     }
 
 }
