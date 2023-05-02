@@ -48,7 +48,10 @@ namespace Zerxz.BetterSeidOptimization.Patch
         [HarmonyPatch(nameof(Skill.realizeSeid4))]
         public static bool RealizeSeid4(Skill __instance, int seid, List<int> damage, Avatar attaker, Avatar receiver, int type)
         {
-
+            if (!BetterSeidOptimization.BetterMode)
+            {
+                return true;
+            }
             var seidJson = __instance.GetSeidJson<SkillSeidJsonData4>(seid);
             var xJson = seidJson.value1;
             var yJson = seidJson.value2;
@@ -74,6 +77,10 @@ namespace Zerxz.BetterSeidOptimization.Patch
         [HarmonyPatch(nameof(Skill.realizeSeid31))]
         public static bool RealizeSeid31(Skill __instance, int seid, List<int> damage, Avatar attaker, Avatar receiver, int type)
         {
+            if (!BetterSeidOptimization.BetterMode)
+            {
+                return true;
+            }
             var seidJson = __instance.GetSeidJson<SkillSeidJsonData31>(seid);
             var xJson = seidJson.value1;
             var yJson = seidJson.value2;
@@ -107,6 +114,10 @@ namespace Zerxz.BetterSeidOptimization.Patch
             Entity _receiver,
             int type)
         {
+            if (!BetterSeidOptimization.BetterMode)
+            {
+                return true;
+            }
             List<int> tempSeid = new List<int>();
             SeidList.ForEach((Action<int>)(aa => tempSeid.Add(aa)));
             int _index = 0;

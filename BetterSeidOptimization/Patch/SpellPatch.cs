@@ -22,6 +22,10 @@ namespace Zerxz.BetterSeidOptimization.Patch
         })]
         public static bool Spell_AddOneDBuff(Spell __instance, ref List<int> __result, int buffid)
         {
+            if (!BetterSeidOptimization.BetterMode)
+            {
+                return true;
+            }
             __result = new List<int>();
             if (!_BuffJsonData.DataDict.ContainsKey(buffid))
             {
@@ -201,7 +205,10 @@ namespace Zerxz.BetterSeidOptimization.Patch
         })]
         public static bool Spell_AddMultDBuff(Spell __instance, int buffid, int time)
         {
-
+            if (!BetterSeidOptimization.BetterMode)
+            {
+                return true;
+            }
             if (!_BuffJsonData.DataDict.ContainsKey(buffid))
             {
                 return true;
@@ -374,6 +381,10 @@ namespace Zerxz.BetterSeidOptimization.Patch
         })]
         public static bool Spell_AddMultBuff(Spell __instance, ref List<int> __result, int buffid, int num)
         {
+            if (!BetterSeidOptimization.BetterMode)
+            {
+                return true;
+            }
             __result = new List<int>();
             if (!_BuffJsonData.DataDict.ContainsKey(buffid))
             {

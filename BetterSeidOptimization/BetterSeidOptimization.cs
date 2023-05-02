@@ -6,16 +6,16 @@ using UniqueCream.CustomDungeons.NextSupport.NextEvent.DungeonEvent;
 
 namespace Zerxz.BetterSeidOptimization;
 
-
 [BepInPlugin("zerxz.plugin.BetterSeidOptimization", "BetterSeidOptimization", "1.0.0")]
 public class BetterSeidOptimization : BaseUnityPlugin
 {
     private Harmony _harmony;
     public static BetterSeidOptimization Inst;
-    public ConfigEntry<bool> BetterMode;
+    public static bool BetterMode => _betterMode.Value;
+    private static ConfigEntry<bool> _betterMode;
     private void Awake()
     {
-        BetterMode = Config.Bind("开启优化模式", "Seid优化", false, "");
+        _betterMode = Config.Bind("开启优化模式", "Seid优化", false, "");
         Inst = this;
         _harmony = new Harmony("zerxz.plugin.BetterSeidOptimization");
         _harmony.PatchAll();
@@ -25,9 +25,9 @@ public class BetterSeidOptimization : BaseUnityPlugin
     }
     private void InitSettingAction()
     {
-        BetterMode.SettingChanged += (sender, args) =>
+        _betterMode.SettingChanged += (sender, args) =>
         {
-            ModManager.SetModSetting("NMC_BetterSeidMode", BetterMode.Value);
+            ModManager.SetModSetting("NMC_BetterSeidMode", _betterMode.Value);
         };
 
     }
@@ -35,14 +35,14 @@ public class BetterSeidOptimization : BaseUnityPlugin
     {
         if (ModManager.TryGetModSetting("NMC_BetterSeidMode", out bool betterSeid))
         {
-            BetterMode.Value = betterSeid;
+            _betterMode.Value = betterSeid;
         }
 
     }
     private void ModLoadComplete()
     {
-        ModManager.SetModSetting("NMC_BetterSeidMode",  BetterMode.Value);
-        
+        ModManager.SetModSetting("NMC_BetterSeidMode", _betterMode.Value);
+
     }
     private void OnDestroy()
     {
