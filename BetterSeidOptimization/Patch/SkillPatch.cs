@@ -109,7 +109,8 @@ namespace Zerxz.BetterSeidOptimization.Patch
         }
         private readonly static List<int> BanSeidForeach = new List<int>()
         {
-            31
+            31,
+            4
         };
         [HarmonyPrefix]
         [HarmonyPatch(nameof(Skill.triggerBuffEndSeid))]

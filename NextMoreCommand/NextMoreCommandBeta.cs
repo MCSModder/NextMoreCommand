@@ -10,6 +10,7 @@ using SkySwordKill.Next.Mod;
 using SkySwordKill.NextMoreCommand.Custom.RealizeSeid.Skills;
 using SkySwordKill.NextMoreCommand.CustomModDebug;
 using SkySwordKill.NextMoreCommand.DialogTrigger;
+using SkySwordKill.NextMoreCommand.NextSeachNpcExtension;
 using SkySwordKill.NextMoreCommand.Patchs;
 // using SkySwordKill.NextMoreCommand.Puerts;
 using SkySwordKill.NextMoreCommand.Utils;
@@ -52,6 +53,7 @@ public class NextMoreCommand : MonoBehaviour
         }
 
         instance = this;
+        SearchNpcDataManager.Init();
         // gameObject.AddMissingComponent<PGif>();
         DontDestroyOnLoad(this);
         ModManager.TryGetModSetting("Quick_AchivementDebug", out AchivementDebug);

@@ -4,6 +4,7 @@ using SkySwordKill.NextMoreCommand.Utils;
 namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Npc
 {
     [DialogEnvQuery("GetDaolvCount")]
+    [DialogEnvQuery("GetDaoLvCount")]
     [DialogEnvQuery("获得道侣数量")]
     public class GetDaolvCount : IDialogEnvQuery
     {

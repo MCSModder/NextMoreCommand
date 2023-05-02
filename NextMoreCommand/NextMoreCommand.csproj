@@ -186,7 +186,7 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Attribute\CustomMapTypeAttribute.cs" />
+        <Compile Include="Attribute\SearchNpcMatchAttribute.cs" />
         <Compile Include="Attribute\MapTypeAttribute.cs" />
         <Compile Include="Attribute\RegisterCommandAttribute.cs" />
         <Compile Include="Attribute\RegisterCustomModSettingAttribute.cs" />
@@ -300,6 +300,13 @@
         <Compile Include="NextEnvExtension\Utils\HasTask.cs" />
         <Compile Include="NextEnvExtension\Utils\GetCGSpineName.cs" />
         <Compile Include="NextEnvExtension\Utils\ToCNNumber.cs" />
+        <Compile Include="NextSeachNpcExtension\ISearchNpcMatch.cs" />
+        <Compile Include="NextSeachNpcExtension\ItemInfo.cs" />
+        <Compile Include="NextSeachNpcExtension\SearchItem.cs" />
+        <Compile Include="NextSeachNpcExtension\SearchSkill.cs" />
+        <Compile Include="NextSeachNpcExtension\SearchNpcDataInfo.cs" />
+        <Compile Include="NextSeachNpcExtension\SearchNpcDataManager.cs" />
+        <Compile Include="NextSeachNpcExtension\SearchStaticSkill.cs" />
         <Compile Include="Patchs\BiaoBaiManagerCalcBiaoBaiScorePatch.cs" />
         <Compile Include="Patchs\DialogAnalysisTryTriggerPatch.cs" />
         <Compile Include="Patchs\DongFuCreatePatch.cs" />
@@ -309,6 +316,7 @@
         <Compile Include="Patchs\PlayerSetRandomFacePatch.cs" />
         <Compile Include="Patchs\ResManagerLoadSpriteAtlasPatch.cs" />
         <Compile Include="Patchs\RunDialogEventCommandPatch.cs" />
+        <Compile Include="Patchs\SearchNpcDataCheckPatch.cs" />
         <Compile Include="Patchs\TabGongFaPanelPatch.cs" />
         <Compile Include="Patchs\TianJiDaBiMatch.cs" />
         <Compile Include="Patchs\UIHuaShenRuDaoSelectPatch.cs" />

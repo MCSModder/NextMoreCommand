@@ -51,7 +51,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
     {
         public static int ToNpcId(this string instance)
         {
-            if (int.TryParse(instance,out var result) && result > 0)
+            if (int.TryParse(instance, out var result) && result > 0)
             {
                 return result.ToNpcNewId();
             }
@@ -76,22 +76,22 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
         public static List<int> ToNpcListId(this DialogCommand instance, int index = 0)
         {
-            return instance.ToList(ToNpcId,index).Where(item => item > 0).ToList();
+            return instance.ToList(ToNpcId, index).Where(item => item > 0).ToList();
         }
         public static List<ulong> ToListULong(this DialogCommand instance, int index = 0)
         {
 
-            return instance.ToList(Convert.ToUInt64,index);
+            return instance.ToList(Convert.ToUInt64, index);
         }
 
         public static List<int> ToListInt(this DialogCommand instance, int index = 0)
         {
-            return instance.ToList(Convert.ToInt32,index);
+            return instance.ToList(Convert.ToInt32, index);
         }
 
         public static List<string> ToListString(this DialogCommand instance, int index = 0)
         {
-            return instance.ToList(item => item,index);
+            return instance.ToList(item => item, index);
         }
         public static List<T> ToList<T>(this DialogCommand instance, Func<string, T> callback, int index = 0)
         {
@@ -610,6 +610,24 @@ namespace SkySwordKill.NextMoreCommand.Utils
             }
 
             NpcUtils.RemoveBindDialogEvent(npc);
+        }
+        public static bool RemoveNpc(int npc) => RemoveNpc(new[]
+        {
+            npc
+        });
+        public static bool RemoveNpc(params int[] npcList)
+        {
+            var list = npcList.Select(NPCEx.NPCIDToNew).Where(UINPCJiaoHu.Inst.TNPCIDList.Contains).ToList();
+
+            if (list.Count == 0) return false;
+            foreach (var id in list)
+            {
+                UINPCJiaoHu.Inst.TNPCIDList.Remove(id);
+                RemoveBindDialogEvent(id);
+            }
+            NpcJieSuanManager.inst.isUpDateNpcList = true;
+            return true;
+
         }
 
         public static void RemoveBindDialogEvent(int npc)

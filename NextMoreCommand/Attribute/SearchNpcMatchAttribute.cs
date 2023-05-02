@@ -2,16 +2,13 @@
 
 namespace SkySwordKill.NextMoreCommand.Attribute
 {
-    /// <summary>
-    /// 
-    /// </summary>
+
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public class CustomMenPaiShopType : System.Attribute
+    public class SearchNpcMatchAttribute: System.Attribute
     {
         public string Name;
-        public string ChineseType;
 
-        public CustomMenPaiShopType(string name)
+        public SearchNpcMatchAttribute(string name)
         {
             Name = name;
         }

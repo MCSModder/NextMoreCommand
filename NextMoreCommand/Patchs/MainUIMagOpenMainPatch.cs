@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using SkySwordKill.Next.Mod;
+using SkySwordKill.NextMoreCommand.NextSeachNpcExtension;
 using SkySwordKill.NextMoreCommand.Utils;
 
 namespace SkySwordKill.NextMoreCommand.Patchs;
@@ -31,7 +32,8 @@ public static class MainUIMagOpenMainPatch
 {
     public static void Prefix()
     {
-         AssetsUtils.Clear();
+       
+        AssetsUtils.Clear();
     }
 }
 
