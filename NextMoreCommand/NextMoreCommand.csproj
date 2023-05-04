@@ -208,6 +208,7 @@
         <Compile Include="NextCommandExtension\DongFu\SetLoadDongFu.cs" />
         <Compile Include="NextCommandExtension\DongFu\SetNewDongFu.cs" />
         <Compile Include="NextCommandExtension\Fight\AddFightBuff.cs" />
+        <Compile Include="NextCommandExtension\Fight\StartFight.cs" />
         <Compile Include="NextCommandExtension\Npc\SetBindNpc.cs" />
         <Compile Include="NextCommandExtension\Npc\SetFightFace.cs" />
         <Compile Include="NextCommandExtension\Npc\SetNpcDefaultSkinSpine.cs" />
@@ -230,6 +231,7 @@
         <Compile Include="NextCommandExtension\Npc\Wudao\SetNpcWudaoExp.cs" />
         <Compile Include="NextCommandExtension\Utils\AddExJiYiHuiFuDu.cs" />
         <Compile Include="NextCommandExtension\Utils\ChangeTianFuBuff.cs" />
+        <Compile Include="NextCommandExtension\Utils\CloseAllUI.cs" />
         <Compile Include="NextCommandExtension\Utils\HideCGSpine.cs" />
         <Compile Include="NextCommandExtension\Utils\RunJavaScript.cs" />
         <Compile Include="NextCommandExtension\Utils\SetAllRemoveEquip.cs" />
@@ -327,8 +329,10 @@
         <Compile Include="Puerts\NextLoader.cs" />
         <Compile Include="Slave\SlaveUtils.cs" />
         <Compile Include="Utils\DongFuUtils.cs" />
-        <Compile Include="Utils\FightUtils.cs" />
         <Compile Include="Utils\AssetsUtils.cs" />
+        <Compile Include="Utils\Fight\FightInfo.cs" />
+        <Compile Include="Utils\Fight\FightManager.cs" />
+        <Compile Include="Utils\Fight\FightUtils.cs" />
         <Compile Include="Utils\ItemUtils.cs" />
         <Compile Include="Utils\JsonUtils.cs" />
         <Compile Include="Utils\NpcFactoryUtils.cs" />

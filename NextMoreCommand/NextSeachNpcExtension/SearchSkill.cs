@@ -12,6 +12,8 @@ namespace SkySwordKill.NextMoreCommand.NextSeachNpcExtension
         public List<string> Alias { get; } = new List<string>()
         {
             "skill",
+            "sk",
+            "神",
             "神通"
         };
         public bool Match(SearchNpcDataInfo searchNpcDataInfo)

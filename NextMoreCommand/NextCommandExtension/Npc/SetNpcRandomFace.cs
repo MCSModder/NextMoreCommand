@@ -37,7 +37,6 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc
     {
         private int npc;
         private List<NpcFaceInfo> value;
-        private bool show;
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {

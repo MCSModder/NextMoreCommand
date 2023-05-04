@@ -12,6 +12,7 @@ namespace SkySwordKill.NextMoreCommand.NextSeachNpcExtension
         private static jsonData JsonData => jsonData.instance;
         private static Tools Tools => Tools.instance;
         public static SearchNpcDataInfo Inst { get; } = new SearchNpcDataInfo();
+        public static void Clear() => Inst?.Reset();
         public int Id { get; private set; }
         public string RawMatchStr { get; private set; }
         public SearchNpcData SearchNpcData { get; private set; }
@@ -19,6 +20,8 @@ namespace SkySwordKill.NextMoreCommand.NextSeachNpcExtension
         public string Value { get; private set; }
         public JSONObject NpcJson { get; private set; }
         public List<item> Items { get; private set; } = new List<item>();
+        public List<Skill> Skills { get; private set; } = new List<Skill>();
+        public List<Skill> StaticSkill { get; private set; } = new List<Skill>();
         public UINPCData GetNpcData()
         {
             var npcData = new UINPCData(SearchNpcData.ID);
@@ -41,25 +44,54 @@ namespace SkySwordKill.NextMoreCommand.NextSeachNpcExtension
             SearchNpcData = searchNpcData;
             Id = SearchNpcData.ID;
             NpcJson = Id.NPCJson();
+            RefreshData();
+        }
+
+        public void Reset()
+        {
+            RawMatchStr = string.Empty;
+            Key = string.Empty;
+            Value = string.Empty;
+            SearchNpcData = null;
+            NpcJson = null;
+            StaticSkill.Clear();
+            Skills.Clear();
+            Items.Clear();
+        }
+        public void RefreshData()
+        {
             GetItemList(true);
+            GetSkillList(true);
+            GetStaticSkillList(true);
         }
-        public List<Skill> GetSkillList()
+
+        public List<Skill> GetSkillList(bool isRefresh = false)
         {
-            if (!NpcJson.HasField("skills"))
+            if (!NpcJson.HasField("skills") || isRefresh)
             {
-                return new List<Skill>();
+                Skills.Clear();
             }
-            var list = DeserializeNpcField<List<int>>("skills");
-            return list.Select(SearchNpcDataManager.GetSkill).Where(skill => skill != null).ToList();
+            if (isRefresh)
+            {
+                var list = DeserializeNpcField<List<int>>("skills");
+                Skills = list.Select(SearchNpcDataManager.GetSkill).Where(skill => skill != null).ToList();
+            }
+
+            return Skills;
         }
-        public List<Skill> GetStaticSkillList()
+        public List<Skill> GetStaticSkillList(bool isRefresh = false)
         {
-            if (!NpcJson.HasField("staticSkills"))
+            if (!NpcJson.HasField("staticSkills") || isRefresh)
             {
-                return new List<Skill>();
+                StaticSkill.Clear();
             }
-            var list = DeserializeNpcField<List<int>>("staticSkills");
-            return list.Select(SearchNpcDataManager.GetSkill).Where(skill => skill != null).ToList();
+            if (isRefresh)
+            {
+                var list = DeserializeNpcField<List<int>>("staticSkills");
+                StaticSkill = list.Select(SearchNpcDataManager.GetSkill).Where(skill => skill != null).ToList();
+            }
+
+            return StaticSkill;
         }
         public List<item> GetItemList(bool isRefresh = false)
         {

@@ -12,6 +12,7 @@ using SkySwordKill.Next.FCanvas;
 using SkySwordKill.Next.Patch;
 using SkySwordKill.NextMoreCommand.NextCommandExtension.Npc.Teleport;
 using SkySwordKill.NextMoreCommand.Utils;
+using SkySwordKill.NextMoreCommand.Utils.Fight;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -71,6 +72,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
 
             NpcUtils.AddNpcFollow();
             FungusPatch();
+            FightManager.RunEvent();
         }
 
         public static void FungusPatch()

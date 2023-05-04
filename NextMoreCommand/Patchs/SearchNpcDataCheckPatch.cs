@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using GUIPackage;
-using HarmonyLib;
-using Newtonsoft.Json;
+﻿using HarmonyLib;
 using SkySwordKill.Next;
-using SkySwordKill.Next.DialogEvent;
-using SkySwordKill.NextMoreCommand.Attribute;
-using SkySwordKill.NextMoreCommand.Custom.SkillCombo;
 using SkySwordKill.NextMoreCommand.NextSeachNpcExtension;
-using SkySwordKill.NextMoreCommand.Utils;
 
 namespace SkySwordKill.NextMoreCommand.Patchs
 {
-
-
+    [HarmonyPatch(typeof(Main), "SearchNpc")]
+    public static class MainSearchNpcPatch
+    {
+        public static void Postfix()
+        {
+            SearchNpcDataInfo.Clear();
+        }
+    }
   
 
 

@@ -14,6 +14,7 @@ using SkySwordKill.NextMoreCommand.NextSeachNpcExtension;
 using SkySwordKill.NextMoreCommand.Patchs;
 // using SkySwordKill.NextMoreCommand.Puerts;
 using SkySwordKill.NextMoreCommand.Utils;
+using SkySwordKill.NextMoreCommand.Utils.Fight;
 using UnityEngine;
 using UnityEngine.Serialization;
 using XLua;
@@ -54,7 +55,7 @@ public class NextMoreCommand : MonoBehaviour
 
         instance = this;
         SearchNpcDataManager.Init();
-        // gameObject.AddMissingComponent<PGif>();
+         gameObject.AddMissingComponent<FightManager>();
         DontDestroyOnLoad(this);
         ModManager.TryGetModSetting("Quick_AchivementDebug", out AchivementDebug);
         ModManager.TryGetModSetting("Quick_SaveSlotDebug", out _saveSlotDebug);

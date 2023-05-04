@@ -1,27 +1,33 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Fungus;
 using MiniExcelLibs.Attributes;
 using Newtonsoft.Json;
+using SkySwordKill.Next.DialogSystem;
 
-namespace SkySwordKill.NextMoreCommand.Utils;
+namespace SkySwordKill.NextMoreCommand.Utils.Fight;
 
 [JsonObject]
 public class BuffInfo
 {
+
+    public static List<BuffInfo> ParseBuffInfo(string raw)
+    {
+        return raw.Split('|').Where(text => !string.IsNullOrWhiteSpace(text)).Select(buff => new BuffInfo(buff)).ToList();
+    }
     [JsonProperty("ID")] public int ID = 0;
     [JsonProperty("数量")] public int Count = 0;
     [JsonIgnore] public string Raw = string.Empty;
 
-    public BuffInfo()
-    {
-    }
-
+    private Tools Tools => Tools.instance;
+    public bool IsEmpty => string.IsNullOrWhiteSpace(Raw);
     public BuffInfo(string str)
     {
         Raw = str;
-        var split = str.Split(':');
+        var split = str.Split(new[]
+        {
+            ','
+        }, 2);
         if (split.Length == 2)
         {
             ID = int.Parse(split[0]);
@@ -31,6 +37,30 @@ public class BuffInfo
         {
             ID = int.Parse(Raw);
             Count = 1;
+        }
+    }
+    public void SetPlayer()
+    {
+        var player = Tools.monstarMag.HeroAddBuff;
+        if (player.ContainsKey(ID))
+        {
+            player[ID] += Count;
+        }
+        else
+        {
+            player.Add(ID,Count);
+        }
+    }
+    public void SetEnemy()
+    {
+        var enemy = Tools.monstarMag.monstarAddBuff;
+        if (enemy.ContainsKey(ID))
+        {
+            enemy[ID] += Count;
+        }
+        else
+        {
+            enemy.Add(ID,Count);
         }
     }
 }
@@ -132,9 +162,13 @@ public class FightInfoExcel : IFightInfo
     {
         Tags = str.Split(',').ToList();
     }
-    
+
 }
 
-public class FightUtils
+public static class FightUtils
 {
+    public static List<BuffInfo> ParseBuffInfo(this DialogCommand command, int index = 0, string defaultValue = "")
+    {
+        return BuffInfo.ParseBuffInfo(command.GetStr(index, defaultValue));
+    }
 }
