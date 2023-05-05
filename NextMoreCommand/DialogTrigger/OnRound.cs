@@ -27,15 +27,15 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
 
         #region 触发器
 
-        private static bool TryTrigger(params string[] param) => TryTrigger(NewEnv, true, param);
+        public static bool TryTrigger(params string[] param) => TryTrigger(NewEnv, true, param);
 
-        private static bool TryTrigger(DialogEnvironment env, params string[] param) =>
+        public static bool TryTrigger(DialogEnvironment env, params string[] param) =>
             DialogAnalysis.TryTrigger(param, env);
 
-        private static bool TryTrigger(bool triggerAll, params string[] param) =>
+        public static bool TryTrigger(bool triggerAll, params string[] param) =>
             DialogAnalysis.TryTrigger(param, NewEnv, triggerAll);
 
-        private static bool TryTrigger(DialogEnvironment env, bool triggerAll, params string[] param)
+        public static bool TryTrigger(DialogEnvironment env, bool triggerAll, params string[] param)
         {
             MyPluginMain.LogInfo($"进入触发器 {JArray.FromObject(param).ToString(Formatting.None)}");
             var result = DialogAnalysis.TryTrigger(param, env, triggerAll);
@@ -48,7 +48,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
             {
                 return true;
             }
-            else if (SkillComboManager.TryTriggerSkill(env, false, param))
+            if (SkillComboManager.TryTriggerSkill(env, false, param))
             {
                 return true;
             }
@@ -201,7 +201,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
         public static bool Prefix()
         {
             var env = RoundUtils.NewEnv;
-         
+
             // MyLog.Log($"当前神通为{SkillComboManager.GetSkillName(NowSkill.skill_ID)}");
             if (RoundUtils.BreakPlayerUseSkillBefore(env))
             {
@@ -220,7 +220,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
         public static void Postfix()
         {
             var env = RoundUtils.NewEnv;
- 
+
             // MyLog.Log($"当前神通为{SkillComboManager.GetSkillName(NowSkill.skill_ID)}");
             if (RoundUtils.UseSkill(env, false))
             {
@@ -228,6 +228,47 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
             }
 
             OnStartRound.Avatar = null;
+        }
+    }
+
+    [HarmonyPatch(typeof(RoundManager))]
+    public static class OnInitFightType
+    {
+        [HarmonyPostfix]
+        [HarmonyPatch("SetDuanTi")]
+        public static void SetDuanTi_Postfix()
+        {
+            RoundUtils.TryTrigger("开始锻体", "InitDuanTi");
+        }
+        [HarmonyPostfix]
+        [HarmonyPatch("SetFeiSheng")]
+        public static void SetFeiSheng_Postfix()
+        {
+            RoundUtils.TryTrigger("开始飞升", "InitFlySky");
+        }
+        [HarmonyPostfix]
+        [HarmonyPatch("SetHuaShen")]
+        public static void SetHuaShen_Postfix()
+        {
+            RoundUtils.TryTrigger("开始化神", "InitHuaShen");
+        }
+        [HarmonyPostfix]
+        [HarmonyPatch("setJieDan")]
+        public static void SetJieDan_Postfix()
+        {
+            RoundUtils.TryTrigger("开始结丹", "InitJieDan");
+        }
+        [HarmonyPostfix]
+        [HarmonyPatch("SetJieYing")]
+        public static void SetJieYing_Postfix()
+        {
+            RoundUtils.TryTrigger("开始结婴", "InitJieYing");
+        }
+        [HarmonyPostfix]
+        [HarmonyPatch("setZhuJi")]
+        public static void SetZhuJi_Postfix()
+        {
+            RoundUtils.TryTrigger("开始筑基", "InitZhuJi");
         }
     }
 }

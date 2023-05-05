@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using HarmonyLib;
 using JSONClass;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using SkySwordKill.Next.Mod;
 using SkySwordKill.NextMoreCommand.Utils;
 
 namespace SkySwordKill.NextMoreCommand.Patchs;
@@ -12,6 +14,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs;
 [HarmonyPatch(typeof(NPCFactory), nameof(NPCFactory.SetNpcWuDao))]
 public static class NpcFactorySetNpcWudaoPatch
 {
+  
     private static JSONObject _wudaoJson;
     private static int _level;
     private static int _npcId;
@@ -23,13 +26,32 @@ public static class NpcFactorySetNpcWudaoPatch
         WuDaoAllType.Keys.Where(index => index > 22).ToList();
 
     public static JSONObject NpcWuDaoJson => jsonData.instance.NPCWuDaoJson;
+    public static List<NPCWuDaoJson> CustomWudaoJson { get;  set; } = new List<NPCWuDaoJson>();
 
     private static int NpcId => _npcDate.HasField("BindingNpcID") && _npcDate["BindingNpcID"].I > 0
         ? _npcDate["BindingNpcID"].I
         : _npcDate["id"].I;
-
+    // [HarmonyPrefix]
+    // [HarmonyPatch(typeof(NPCFactory), nameof(NPCFactory.createNpc))]
+    // public static void createNpc_Prefix(JSONObject npcDate, bool isImportant, int ZhiDingindex , bool isNewPlayer, JSONObject importantJson)
+    // {
+    //     MyLog.Log("创建npc", $"是固定NPC:{isImportant} 指定索引:{ZhiDingindex}新建存档:{isNewPlayer}");
+    //     MyLog.Log("创建npc", $"NPC数据:{npcDate.ToString(true)}");
+    //     if (importantJson is null)
+    //     {
+    //         return;
+    //     }
+    //     MyLog.Log("创建npc", $"固定数据:{importantJson.ToString(true)}");
+    // }
+    // [HarmonyPostfix]
+    // [HarmonyPatch(typeof(NPCFactory), nameof(NPCFactory.createNpc))]
+    // public static void createNpc_Postfix()
+    // {
+    //     MyLog.Log("创建npc", $"创建完毕");
+    // }
     public static void Postfix(int level, int wudaoType, JSONObject npcDate)
     {
+
         if (CustomWuDaoTypeList.Count == 0) return;
         _level = level;
         _wudaoType = wudaoType;

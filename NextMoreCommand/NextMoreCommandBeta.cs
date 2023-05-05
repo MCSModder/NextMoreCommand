@@ -55,6 +55,7 @@ public class NextMoreCommand : MonoBehaviour
 
         instance = this;
         SearchNpcDataManager.Init();
+        
          gameObject.AddMissingComponent<FightManager>();
         DontDestroyOnLoad(this);
         ModManager.TryGetModSetting("Quick_AchivementDebug", out AchivementDebug);

@@ -186,10 +186,15 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Attribute\ModDataAttribute.cs" />
         <Compile Include="Attribute\SearchNpcMatchAttribute.cs" />
         <Compile Include="Attribute\MapTypeAttribute.cs" />
         <Compile Include="Attribute\RegisterCommandAttribute.cs" />
         <Compile Include="Attribute\RegisterCustomModSettingAttribute.cs" />
+        <Compile Include="CustomModData\CustomModDataManager.cs" />
+        <Compile Include="CustomModData\CustomNpcData.cs" />
+        <Compile Include="CustomModData\CustomSkillCombo.cs" />
+        <Compile Include="CustomModData\IModData.cs" />
         <Compile Include="Custom\CustomCommand.cs" />
         <Compile Include="Custom\CustomEnvMethod.cs" />
         <Compile Include="Custom\MenPaiShop\IMenPaiShopType.cs" />
@@ -208,6 +213,8 @@
         <Compile Include="NextCommandExtension\DongFu\SetLoadDongFu.cs" />
         <Compile Include="NextCommandExtension\DongFu\SetNewDongFu.cs" />
         <Compile Include="NextCommandExtension\Fight\AddFightBuff.cs" />
+        <Compile Include="NextCommandExtension\Fight\AddFightSkill.cs" />
+        <Compile Include="NextCommandExtension\Fight\ClearFightSkill.cs" />
         <Compile Include="NextCommandExtension\Fight\StartFight.cs" />
         <Compile Include="NextCommandExtension\Npc\SetBindNpc.cs" />
         <Compile Include="NextCommandExtension\Npc\SetFightFace.cs" />
