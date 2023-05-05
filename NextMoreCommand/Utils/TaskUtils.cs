@@ -24,8 +24,28 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
     public static class TaskUtils
     {
-        private static Avatar player => Tools.instance.getPlayer();
-        public static TaskMag TaskMag => player.taskMag;
+        public static void CheckTaskError()
+        {
+            var taskMag = Task.list;
+            foreach (var jsonObject in taskMag)
+            {
+                var id = jsonObject["id"].I.ToString();
+                if (jsonData.instance.TaskJsonData.HasField(id)) continue;
+                MyLog.Log($"检测任务错误", $"taskMag 任务不存在 id:{id}", true);
+                MyLog.Log($"检测任务错误", $"JSON:{jsonObject.ToString(true)}", true);
+
+            }
+            var nowTask = Player.nomelTaskMag.GetNowNTask();
+            foreach (var jsonObject in nowTask)
+            {
+                var id = jsonObject["id"].I.ToString();
+                if (jsonData.instance.NTaskAllType.HasField(id)) continue;
+                MyLog.Log($"检测任务错误", $"nomelTaskMag 任务不存在 id:{id}", true);
+                MyLog.Log($"检测任务错误", $"JSON:{jsonObject.ToString(true)}", true);
+            }
+        }
+        private static Avatar Player => PlayerEx.Player;
+        public static TaskMag TaskMag => Player.taskMag;
         public static JSONObject TaskData => TaskMag._TaskData;
         public static JSONObject Task => TaskData["Task"];
         public static JSONObject GetTaskIdData(int taskId) => Task[taskId.ToString()];

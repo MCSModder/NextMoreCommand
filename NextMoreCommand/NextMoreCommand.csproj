@@ -231,6 +231,7 @@
         <Compile Include="NextCommandExtension\Npc\Wudao\SetNpcWudaoExp.cs" />
         <Compile Include="NextCommandExtension\Utils\AddExJiYiHuiFuDu.cs" />
         <Compile Include="NextCommandExtension\Utils\ChangeTianFuBuff.cs" />
+        <Compile Include="NextCommandExtension\Utils\CheckTaskError.cs" />
         <Compile Include="NextCommandExtension\Utils\CloseAllUI.cs" />
         <Compile Include="NextCommandExtension\Utils\HideCGSpine.cs" />
         <Compile Include="NextCommandExtension\Utils\RunJavaScript.cs" />
