@@ -7,10 +7,10 @@ using SkySwordKill.NextMoreCommand.Attribute;
 
 namespace SkySwordKill.NextMoreCommand.NextSeachNpcExtension
 {
-       public static class SearchNpcDataManager
+    public static class SearchNpcDataManager
     {
         public static readonly Dictionary<string, ISearchNpcMatch> SearchNpcMatchEvent = new Dictionary<string, ISearchNpcMatch>();
-  
+
         public static void RegisterSearchNpcMatch(string key, ISearchNpcMatch searchNpcMatch) => SearchNpcMatchEvent[key] = searchNpcMatch;
 
         public static void Init()
@@ -23,6 +23,7 @@ namespace SkySwordKill.NextMoreCommand.NextSeachNpcExtension
                     if (!typeof(ISearchNpcMatch).IsAssignableFrom(type)) continue;
                     foreach (var attribute in type.GetCustomAttributes<SearchNpcMatchAttribute>())
                     {
+
                         var key = attribute.Name;
                         RegisterSearchNpcMatch(key, Activator.CreateInstance(type) as ISearchNpcMatch);
                     }

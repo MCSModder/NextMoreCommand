@@ -44,8 +44,12 @@ namespace SkySwordKill.NextMoreCommand.Patchs
     [HarmonyPatch(typeof(DialogAnalysis), nameof(DialogAnalysis.DealSayText))]
     public static class DialogAnalysisDealSayText
     {
-        public static void Prefix(ref string text, int sayRoleID)
+        public static void Postfix(ref string text, int sayRoleID, ref string __result)
         {
+            if (sayRoleID == 0)
+            {
+                return;
+            }
             var env = DialogEventSayPatch.Env ?? new DialogEnvironment();
             var npc = env.bindNpc;
             var npcId = env.roleID.ToNpcNewId();
@@ -57,7 +61,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
                 }
                 npc ??= new UINPCData(npcId);
                 npc.RefreshData();
-                text = text.ReplacePlayerTalkToNPCWord(npc);
+                __result = __result.ReplacePlayerTalkToNPCWord(npc);
                 return;
             }
             var id = sayRoleID.ToNpcNewId();
@@ -67,7 +71,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             }
             npc = new UINPCData(id);
             npc.RefreshData();
-            text = text.ReplaceTalkWord(npc);
+            __result = __result.ReplaceTalkWord(npc);
         }
     }
 }

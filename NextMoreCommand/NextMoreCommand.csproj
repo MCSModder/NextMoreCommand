@@ -193,6 +193,7 @@
         <Compile Include="Attribute\RegisterCustomModSettingAttribute.cs" />
         <Compile Include="CustomModData\CustomModDataManager.cs" />
         <Compile Include="CustomModData\CustomNpcData.cs" />
+        <Compile Include="CustomModData\CustomRandomChat.cs" />
         <Compile Include="CustomModData\CustomSkillCombo.cs" />
         <Compile Include="CustomModData\IModData.cs" />
         <Compile Include="Custom\CustomCommand.cs" />
@@ -217,6 +218,7 @@
         <Compile Include="NextCommandExtension\Fight\ClearFightSkill.cs" />
         <Compile Include="NextCommandExtension\Fight\StartFight.cs" />
         <Compile Include="NextCommandExtension\Npc\SetBindNpc.cs" />
+        <Compile Include="NextCommandExtension\Npc\SetDaolvName.cs" />
         <Compile Include="NextCommandExtension\Npc\SetFightFace.cs" />
         <Compile Include="NextCommandExtension\Npc\SetNpcDefaultSkinSpine.cs" />
         <Compile Include="NextCommandExtension\Npc\SetNpcFaceSpine.cs" />
@@ -241,6 +243,7 @@
         <Compile Include="NextCommandExtension\Utils\CheckTaskError.cs" />
         <Compile Include="NextCommandExtension\Utils\CloseAllUI.cs" />
         <Compile Include="NextCommandExtension\Utils\HideCGSpine.cs" />
+        <Compile Include="NextCommandExtension\Utils\RegisterChatInfo.cs" />
         <Compile Include="NextCommandExtension\Utils\RunJavaScript.cs" />
         <Compile Include="NextCommandExtension\Utils\SetAllRemoveEquip.cs" />
         <Compile Include="NextCommandExtension\Utils\SetPlayerSpine.cs" />
@@ -249,6 +252,8 @@
         <Compile Include="NextCommandExtension\Utils\SetRefreshMapPlayer.cs" />
         <Compile Include="NextCommandExtension\Utils\SetRemoveEquip.cs" />
         <Compile Include="NextCommandExtension\Utils\SetSubscribeMod.cs" />
+        <Compile Include="NextCommandExtension\Utils\SetUIJiaoHuBtn.cs" />
+        <Compile Include="NextCommandExtension\Utils\SetWaitForSeconds.cs" />
         <Compile Include="NextCommandExtension\Utils\ShowCGSpine.cs" />
         <Compile Include="NextCommandExtension\Utils\ShowGaoshi.cs" />
         <Compile Include="NextCommandExtension\Utils\ShowLianDanPanel.cs" />
@@ -300,6 +305,7 @@
         <Compile Include="NextEnvExtension\Utils\GetPlayerNames.cs" />
         <Compile Include="NextEnvExtension\Utils\GetPlayerSpine.cs" />
         <Compile Include="NextEnvExtension\Utils\GetPlayerSurname.cs" />
+        <Compile Include="NextEnvExtension\Utils\GetRandomChatInfo.cs" />
         <Compile Include="NextEnvExtension\Utils\GetShiliName.cs" />
         <Compile Include="NextEnvExtension\Utils\GetTask.cs" />
         <Compile Include="NextEnvExtension\Utils\GetTianJiDaBiRound.cs" />
@@ -335,7 +341,9 @@
         <Compile Include="Patchs\XiangShengXiangKePatch.cs" />
         <Compile Include="Puerts\JSEnvManager.cs" />
         <Compile Include="Puerts\NextLoader.cs" />
+        <Compile Include="Slave\SkillUtils.cs" />
         <Compile Include="Slave\SlaveUtils.cs" />
+        <Compile Include="Utils\DialogAnalysisUtils.cs" />
         <Compile Include="Utils\DongFuUtils.cs" />
         <Compile Include="Utils\AssetsUtils.cs" />
         <Compile Include="Utils\Fight\FightInfo.cs" />

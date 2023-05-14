@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using SkySwordKill.Next.DialogSystem;
+using SkySwordKill.NextMoreCommand.NextCommandExtension.Utils;
 
 namespace SkySwordKill.NextMoreCommand.DialogTrigger
 {
@@ -31,6 +32,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
             {
                 "角色交互界面", "UINPCJiaoHuPop"
             }, GetNpcEnv, true);
+            UINPCJiaoHuPopExtends.UiNPCJiaoHuPop.InitButton();
         }
         [HarmonyPrefix]
         [HarmonyPatch(nameof(UINPCJiaoHuPop.OnJiaoYiBtnClick))]

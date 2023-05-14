@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using BepInEx;
 using HarmonyLib;
 using JSONClass;
+using KBEngine;
 using MCSSubscribeDependencies;
 using SkySwordKill.Next;
 using SkySwordKill.Next.DialogEvent;
@@ -24,6 +25,7 @@ using SkySwordKill.NextMoreCommand.CustomModData;
 using SkySwordKill.NextMoreCommand.CustomModDebug;
 using SkySwordKill.NextMoreCommand.CustomModDebug.NextMoreCore;
 using SkySwordKill.NextMoreCommand.Patchs;
+using SkySwordKill.NextMoreCommand.Slave;
 // using SkySwordKill.NextMoreCommand.Puerts;
 using SkySwordKill.NextMoreCommand.Utils;
 using Steamworks;
@@ -64,12 +66,13 @@ namespace SkySwordKill.NextMoreCommand
             InitDir();
             CustomModDataManager.Init();
             NextMoreCoreBinder.BindAll();
-
+            // RegisterCommandSkillAttribute.Init();
             ModManager.ModReload += () =>
             {
                 CustomNpc.CustomNpcs.Clear();
                 SkillComboManager.SkillCombos.Clear();
                 SkillComboManager.CacheSkillCombos.Clear();
+                ChatRandomManager.Clear();
                 // NextMoreCommand.InitJsEnvManager();
 
             };

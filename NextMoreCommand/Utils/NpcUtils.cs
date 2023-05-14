@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Fungus;
 using GUIPackage;
 using HarmonyLib;
@@ -153,7 +154,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
     public static class NpcUtils
     {
-
+    
         public static JSONObject AvatarRandomJsonData => jsonData.instance.AvatarRandomJsonData;
         public static JSONObject AvatarJsonData => jsonData.instance.AvatarJsonData;
         public static bool IsNpc(int id) => NPCEx.NPCIDToNew(id) <= 1;
