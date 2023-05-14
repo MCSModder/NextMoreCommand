@@ -8,9 +8,10 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Utils
     [DialogEnvQuery("GetRandomChatInfo")]
     public class GetRandomChatInfo : IDialogEnvQuery
     {
-
+        public static DialogEnvQueryContext DialogEnvQueryContext;
         public object Execute(DialogEnvQueryContext context)
         {
+            DialogEnvQueryContext = context;
             var args = context.Args;
             if (args.Length == 0) return ChatRandomManager.GetRandomChatInfo();
             var list = ChatRandomManager.GetChatInfoList();

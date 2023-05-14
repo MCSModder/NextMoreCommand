@@ -21,13 +21,17 @@ namespace SkySwordKill.NextMoreCommand.CustomModData
         [JsonProperty("condition")]
         public string Condition = string.Empty;
         [JsonProperty("event")]
-        public string Event = string.Empty;
+        public List<string> Event = new List<string>();
         [JsonProperty("priority")]
         public int Priority = 0;
         [JsonProperty("bindNpc")]
         public int BindNpc = 0;
         [JsonIgnore]
-        public ModConfig ModConfig;
+        public ModConfig ModConfig = new ModConfig();
+        public void Init()
+        {
+            Event = Event.Where(dialog => !string.IsNullOrWhiteSpace(dialog)).ToList();
+        }
         public DialogEnvironment GetEnv(DialogEnvironment environment = null)
         {
             var env = environment ?? new DialogEnvironment()
@@ -43,15 +47,20 @@ namespace SkySwordKill.NextMoreCommand.CustomModData
         }
         public void RunEvent(DialogEnvironment environment = null)
         {
-            if (string.IsNullOrWhiteSpace(Event)) return;
+            var count = Event.Count;
+            if (count == 0)
+            {
+                return;
+            }
+            var @event = count == 1 ? Event[0] : Event[Random.Range(0, Event.Count - 1)];
             var env = GetEnv(environment);
             if (DialogAnalysis.IsRunningEvent)
             {
-                DialogAnalysis.SwitchDialogEvent(Event, env);
+                DialogAnalysis.SwitchDialogEvent(@event, env);
             }
             else
             {
-                DialogAnalysis.StartDialogEvent(Event, env);
+                DialogAnalysis.StartDialogEvent(@event, env);
             }
         }
         public bool CheckCondition(DialogEnvironment environment = null)
@@ -113,20 +122,18 @@ namespace SkySwordKill.NextMoreCommand.CustomModData
     [ModData("CustomRandomChat")]
     public class CustomRandomChat : IModData
     {
-        public const string directory = "RandomChatExpand";
         public void Read(ModConfig modConfig)
         {
-            CustomModDataManager.LoadData(modConfig.GetNDataDir(), directory, modConfig, LoadCustomRandomChat);
-
-
+            CustomModDataManager.LoadData(modConfig.GetNDataDir(), "RandomChatExpand", modConfig, LoadCustomRandomChat);
         }
         public bool Check(ModConfig modConfig)
         {
             var modNData = modConfig.GetNDataDir();
-            return modNData.CombinePath(directory).HasPath();
+            return Directory.Exists(modNData.CombinePath("RandomChatExpand"));
         }
         private static void LoadCustomRandomChat(string path, ModConfig modConfig)
         {
+            
             foreach (var filePath in Directory.GetFiles(path, "*.json", SearchOption.AllDirectories))
             {
                 try
@@ -135,6 +142,7 @@ namespace SkySwordKill.NextMoreCommand.CustomModData
                     foreach (var info in list)
                     {
                         info.ModConfig = modConfig;
+                        info.Init();
                     }
                     ChatRandomManager.RegisterChat(list);
                     MyPluginMain.LogInfo(string.Format("ModManager.LoadData".I18N(),

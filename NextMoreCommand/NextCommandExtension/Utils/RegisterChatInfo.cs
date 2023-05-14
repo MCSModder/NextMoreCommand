@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using SkySwordKill.Next.DialogEvent;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.NextMoreCommand.CustomModData;
@@ -13,7 +14,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
         {
             var id = command.GetStr(0);
             var condition = command.GetStr(1);
-            var @event = command.GetStr(2);
+            var @event = command.GetStr(2).Split('|').ToList();
             var priority = command.GetInt(3);
             var bindNpc = command.GetInt(4);
             if (!string.IsNullOrWhiteSpace(id))
@@ -26,6 +27,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
                     Priority = priority,
                     BindNpc = bindNpc
                 };
+                chat.Init();
                 ChatRandomManager.RegisterChat(chat);
             }
             callback?.Invoke();
