@@ -1,0 +1,17 @@
+﻿using SkySwordKill.Next.DialogSystem;
+using SkySwordKill.NextMoreCommand.NextCommandExtension.Utils;
+
+namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Utils
+{
+    [DialogEnvQuery("HasInt")]
+    public class HasInt : IDialogEnvQuery
+    {
+        public object Execute(DialogEnvQueryContext context)
+        {
+
+            var IntID = context.GetMyArgs(0, "");
+
+            return context.Env.GetInt(IntID) == 1;
+        }
+    }
+}
