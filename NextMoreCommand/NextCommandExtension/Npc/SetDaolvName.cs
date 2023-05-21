@@ -3,6 +3,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using SkySwordKill.Next.DialogEvent;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.NextMoreCommand.Utils;
+using SkySwordKill.NextMoreCommand.Utils.Npc;
 
 namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc
 {

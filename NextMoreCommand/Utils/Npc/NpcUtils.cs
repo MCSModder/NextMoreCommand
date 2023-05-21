@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using Fungus;
-using GUIPackage;
 using HarmonyLib;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -15,7 +12,7 @@ using Spine.Unity;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace SkySwordKill.NextMoreCommand.Utils
+namespace SkySwordKill.NextMoreCommand.Utils.Npc
 {
     public struct NpcInfo
     {
@@ -154,7 +151,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
     public static class NpcUtils
     {
-    
+
         public static JSONObject AvatarRandomJsonData => jsonData.instance.AvatarRandomJsonData;
         public static JSONObject AvatarJsonData => jsonData.instance.AvatarJsonData;
         public static bool IsNpc(int id) => NPCEx.NPCIDToNew(id) <= 1;
@@ -171,6 +168,8 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public static Dictionary<string, string> NpcFollowGroup => StrGroup.GetNpcFollowGroup();
         public static Dictionary<string, int> NpcFightFaceGroup => IntGroup.GetNpcFightFaceGroup();
         public static bool IsFightScene => Tools.getScreenName().ToUpper().Contains("YSNEW");
+        public static event Action OnCompleteAddNpcNotDialogFollow;
+        public static event Action<NpcInfo> OnAddNpcNotDialogFollow;
 
         public static void AddNpcNotDialogFollow()
         {
@@ -179,32 +178,28 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 return;
             }
 
-            foreach (var key in NpcFollowGroup)
+            foreach (var npcInfo in NpcFollowGroup.Select(key => new NpcInfo(key.Key.ToNpcId(), key.Value)).Where(npcInfo => npcInfo.IsEmpty))
             {
-                var npcInfo = new NpcInfo(key.Key.ToNpcId(), key.Value);
-                if (npcInfo.IsEmpty)
-                {
-                    AddNotDialogNpc(npcInfo);
-                }
+                OnAddNpcNotDialogFollow?.Invoke(npcInfo);
+                AddNotDialogNpc(npcInfo);
             }
-
+            OnCompleteAddNpcNotDialogFollow?.Invoke();
             UINPCJiaoHu.Inst.NPCList.needRefresh = true;
         }
+        public static event Action OnCompleteAddNpcFollow;
+        public static event Action<NpcInfo> OnAddNpcFollow;
 
         public static void AddNpcFollow()
         {
             MyPluginMain.LogInfo("开始添加npc跟随");
             var isAdd = false;
 
-            foreach (var key in NpcFollowGroup)
+            foreach (var npcInfo in NpcFollowGroup.Select(key => new NpcInfo(key.Key.ToNpcId(), key.Value)).Where(npcInfo => !npcInfo.IsEmpty || IsFightScene))
             {
-                var npcInfo = new NpcInfo(key.Key.ToNpcId(), key.Value);
-                if (!npcInfo.IsEmpty || IsFightScene)
-                {
-                    AddNpc(npcInfo, out isAdd);
-                }
+                OnAddNpcFollow?.Invoke(npcInfo);
+                AddNpc(npcInfo, out isAdd);
             }
-
+            OnCompleteAddNpcFollow?.Invoke();
             if (isAdd && !UiNpcJiaoHuRefreshNowMapNpcPatch.m_isRefresh)
             {
                 NpcJieSuanManager.inst.isUpDateNpcList = true;

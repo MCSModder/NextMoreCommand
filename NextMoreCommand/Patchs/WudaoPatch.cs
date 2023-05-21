@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SkySwordKill.Next.Mod;
 using SkySwordKill.NextMoreCommand.Utils;
+using SkySwordKill.NextMoreCommand.Utils.Npc;
 
 namespace SkySwordKill.NextMoreCommand.Patchs;
 

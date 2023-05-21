@@ -3,6 +3,7 @@ using HarmonyLib;
 using Newtonsoft.Json.Linq;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.NextMoreCommand.Patchs;
+using SkySwordKill.NextMoreCommand.Utils.Npc;
 
 namespace SkySwordKill.NextMoreCommand.Utils;
 

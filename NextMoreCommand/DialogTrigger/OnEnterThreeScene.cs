@@ -13,6 +13,7 @@ using SkySwordKill.Next.Patch;
 using SkySwordKill.NextMoreCommand.NextCommandExtension.Npc.Teleport;
 using SkySwordKill.NextMoreCommand.Utils;
 using SkySwordKill.NextMoreCommand.Utils.Fight;
+using SkySwordKill.NextMoreCommand.Utils.Npc;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

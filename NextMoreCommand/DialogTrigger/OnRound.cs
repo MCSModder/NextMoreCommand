@@ -7,6 +7,7 @@ using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.NextMoreCommand.Custom.SkillCombo;
 using SkySwordKill.NextMoreCommand.Patchs;
 using SkySwordKill.NextMoreCommand.Utils;
+using SkySwordKill.NextMoreCommand.Utils.Npc;
 
 namespace SkySwordKill.NextMoreCommand.DialogTrigger
 {

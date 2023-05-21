@@ -5,6 +5,7 @@ using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.NextMoreCommand.Attribute;
 using SkySwordKill.NextMoreCommand.DialogTrigger;
 using SkySwordKill.NextMoreCommand.Utils;
+using SkySwordKill.NextMoreCommand.Utils.Npc;
 
 namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc.Teleport
 {

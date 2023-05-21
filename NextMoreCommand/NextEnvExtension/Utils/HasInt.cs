@@ -1,5 +1,6 @@
 ﻿using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.NextMoreCommand.NextCommandExtension.Utils;
+using SkySwordKill.NextMoreCommand.Utils;
 
 namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Utils
 {
@@ -9,9 +10,9 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Utils
         public object Execute(DialogEnvQueryContext context)
         {
 
-            var IntID = context.GetMyArgs(0, "");
+            var key = context.GetMyArgs(0, "");
 
-            return context.Env.GetInt(IntID) == 1;
+            return !string.IsNullOrWhiteSpace(key)&&context.Env.GetInt(key) != 0;
         }
     }
 }

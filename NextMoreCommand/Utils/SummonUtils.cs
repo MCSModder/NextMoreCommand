@@ -6,6 +6,7 @@ using KBEngine;
 using PaiMai;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.NextMoreCommand.Patchs;
+using SkySwordKill.NextMoreCommand.Utils.Npc;
 using Spine.Unity;
 using UltimateSurvival;
 using UnityEngine;
