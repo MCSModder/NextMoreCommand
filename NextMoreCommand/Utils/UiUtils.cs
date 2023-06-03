@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GUIPackage;
 using JSONClass;
+using Newtonsoft.Json;
 using SkySwordKill.Next;
 using SkySwordKill.NextMoreCommand.Custom;
 using SkySwordKill.NextMoreCommand.Custom.MenPaiShop;
@@ -137,6 +138,10 @@ public static class UiUtils
                 var item = _ItemJsonData.DataDict[good.GoodsID];
                 if (nomelShopJsonData.SType == 1 && levelType < item.quality && (item.type == 3 || item.type == 4)) continue;
                 var shopItem = Object.Instantiate(uiMenPaiShop.UIMenPaiShopItemPrefab, uiMenPaiShop.ShopRT[index]).GetComponent<UIMenPaiShopItem>();
+                if (good.percent == 0)
+                {
+                    MyPluginMain.LogError($"percent不能为0\n{JsonConvert.SerializeObject(good)}");
+                }
                 var price = isMoney ? item.price : item.price / good.percent;
                 if (ratio > 0)
                 {

@@ -22,11 +22,11 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
                 var itemPanel = TabUIMag.Instance.WuPingPanel;
                 foreach (var equipSlot in itemPanel.EquipDict)
                 {
-                    if (equipSlot.Key == 1 || equipSlot.Value.Item == null)
+                    if (equipSlot.Key == 1 || equipSlot.Value.Item is null)
                     {
                         continue;
                     }
-                    UIFightPanel.Inst.CacheLingQiController.DestoryAllLingQi();
+         
                     itemPanel.RmoveEquip((EquipSlotType)equipSlot.Key);
                 }
                 TabUIMag.Instance.TryEscClose();

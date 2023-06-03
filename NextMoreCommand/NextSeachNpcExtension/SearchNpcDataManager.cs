@@ -16,7 +16,7 @@ namespace SkySwordKill.NextMoreCommand.NextSeachNpcExtension
         public static void Init()
         {
             foreach (var types in AppDomain.CurrentDomain.GetAssemblies()
-                         .Select(assembly => assembly.GetTypes()))
+                         .Select(assembly => assembly?.GetTypes()).Where(types=>types is not null))
             {
                 foreach (var type in types)
                 {
