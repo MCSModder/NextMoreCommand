@@ -8,7 +8,6 @@ using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.Next.StaticFace;
 using SkySwordKill.NextMoreCommand.Attribute;
 using SkySwordKill.NextMoreCommand.Utils;
-using SkySwordKill.NextMoreCommand.Utils.Npc;
 using GameObject = UnityEngine.GameObject;
 
 namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fight

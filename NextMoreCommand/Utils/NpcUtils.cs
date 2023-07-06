@@ -12,7 +12,7 @@ using Spine.Unity;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace SkySwordKill.NextMoreCommand.Utils.Npc
+namespace SkySwordKill.NextMoreCommand.Utils
 {
     public struct NpcInfo
     {

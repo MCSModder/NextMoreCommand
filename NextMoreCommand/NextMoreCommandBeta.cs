@@ -54,7 +54,7 @@ public class NextMoreCommand : MonoBehaviour
         }
 
         instance = this;
-        SearchNpcDataManager.Init();
+      
         
          gameObject.AddMissingComponent<FightManager>();
         DontDestroyOnLoad(this);

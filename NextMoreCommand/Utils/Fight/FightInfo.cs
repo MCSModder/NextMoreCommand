@@ -4,7 +4,6 @@ using System.Linq;
 using Fungus;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.NextMoreCommand.Utils;
-using SkySwordKill.NextMoreCommand.Utils.Npc;
 using YSGame;
 
 namespace SkySwordKill.NextMoreCommand.Utils.Fight

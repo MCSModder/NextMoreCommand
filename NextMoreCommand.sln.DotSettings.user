@@ -86,6 +86,7 @@
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CProgram_0020Files_0020_0028x86_0029_005CSteam_005Csteamapps_005Cworkshop_005Ccontent_005C1189490_005C2824349934_005CBepInEx_005Ccore_005C0Harmony_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CProgram_0020Files_0020_0028x86_0029_005CSteam_005Csteamapps_005Cworkshop_005Ccontent_005C1189490_005C2824349934_005CBepInEx_005Ccore_005CBepInEx_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CProgram_0020Files_0020_0028x86_0029_005CSteam_005Csteamapps_005Cworkshop_005Ccontent_005C1189490_005C2824349934_005CBepInEx_005Cpatchers_005CBepInEx_002EWorkshop_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CProgram_0020Files_0020_0028x86_0029_005CSteam_005Csteamapps_005Cworkshop_005Ccontent_005C1189490_005C2838215105_005Cplugins_005CMCSWorldExpand_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CProgram_0020Files_0020_0028x86_0029_005CSteam_005Csteamapps_005Cworkshop_005Ccontent_005C1189490_005C2897391363_005Cplugins_005CCustomDungeons_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005Csoft_005Csteam_005Csteamapps_005Ccommon_005C_89C5_957F_751F_005CBepInEx_005Ccore_005C0Harmony_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005Csoft_005Csteam_005Csteamapps_005Ccommon_005C_89C5_957F_751F_005CBepInEx_005Ccore_005CBepInEx_002Edll/@EntryIndexedValue">True</s:Boolean>
@@ -111,6 +112,8 @@
   &lt;Assembly Path="C:\Program Files (x86)\Steam\steamapps\common\觅长生\觅长生_Data\Managed\Assembly-CSharp.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Program Files (x86)\Steam\steamapps\common\觅长生\NextMoreCommand - 副本\plugins\NextMoreCommand.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Program Files (x86)\Steam\steamapps\workshop\content\1189490\2824349934\BepInEx\core\0Harmony.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Program Files (x86)\Steam\steamapps\common\觅长生\觅长生_Data\Managed\Newtonsoft.Json.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Program Files (x86)\Steam\steamapps\common\觅长生\Csharp\NextMoreCommand\packages\MiniExcel.1.30.0\lib\net45\MiniExcel.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
 	
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=wudao/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>

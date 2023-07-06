@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterSeidOptimization", "B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Puerts", "Puerts\Puerts.csproj", "{5D514115-E2FB-4B3B-8DDD-080DBC94B7EB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterAiOptimization", "BetterAiOptimization\BetterAiOptimization.csproj", "{30D3EBA1-5648-4367-A3A0-122FDBA405C3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{5D514115-E2FB-4B3B-8DDD-080DBC94B7EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D514115-E2FB-4B3B-8DDD-080DBC94B7EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D514115-E2FB-4B3B-8DDD-080DBC94B7EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30D3EBA1-5648-4367-A3A0-122FDBA405C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30D3EBA1-5648-4367-A3A0-122FDBA405C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30D3EBA1-5648-4367-A3A0-122FDBA405C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30D3EBA1-5648-4367-A3A0-122FDBA405C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

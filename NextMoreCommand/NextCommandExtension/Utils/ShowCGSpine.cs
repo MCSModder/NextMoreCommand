@@ -33,6 +33,8 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
     {
         public static CGSpineManager Instance { get; private set; }
         public static CGManager CgManager => CGManager.Instance;
+        public Canvas Canvas { get; set; }
+        public GameObject CgSpine { get; set; }
         public GameObject skeletonAnimationGameObject;
         public SkeletonAnimation skeletonAnimation;
         private CustomSpine _customSpine;
@@ -57,15 +59,26 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
                 return;
             }
             Instance = this;
+            Canvas = gameObject.AddMissingComponent<Canvas>();
+            Canvas.sortingOrder = 21;
+            Canvas.planeDistance = 100f;
+            Canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            CgSpine = new GameObject("CGSpine");
+            CgSpine.transform.SetParent(transform);
+            CgSpine.layer = 5;
+            Enable = false;
         }
         public void SetShow(bool show)
         {
-            CgManager.Enable = show;
+            // if (CgManager.CGSprite is not null)
+            // {
+            //     CgManager.Enable = show;
+            // }
             Enable = show;
         }
         public void SetSkin(string skin)
         {
-            var skinName = AssetsUtils.CheckSkin(nowSpine, skin) ? skin : "default";
+            var skinName = AssetsUtils.CheckSkin(nowSpine, skin,ESpineAssetType.Cg) ? skin : "default";
             if (_isInit)
             {
                 skeletonAnimation.Skeleton.SetSkin(skinName);
@@ -77,7 +90,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
         }
         public void SetAnimation(string animation, bool isLoop = true)
         {
-            if (!AssetsUtils.CheckAnimation(nowSpine, animation)) return;
+            if (!AssetsUtils.CheckAnimation(nowSpine, animation,ESpineAssetType.Cg)) return;
             if (_isInit)
             {
                 skeletonAnimation.AnimationState.SetAnimation(0, animation, isLoop);
@@ -112,7 +125,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
 
             nowSpine = spine;
             prefab.AddComponent<CustomSpine>();
-            skeletonAnimationGameObject = Instantiate(prefab, CgManager.Image.transform);
+            skeletonAnimationGameObject = Instantiate(prefab, CgSpine.transform);
             SetShow(true);
 
             skeletonAnimation = skeletonAnimationGameObject.GetComponent<SkeletonAnimation>();
@@ -125,6 +138,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
         }
         public void SetCG(string cgName)
         {
+            return;
             var path = $"Assets/CG/{cgName}.png";
             if (Main.Res.TryGetAsset(path, out var asset)
                 && asset is Texture2D texture)
@@ -142,6 +156,8 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
         {
             var go = new GameObject("NextCGSpineManager", typeof(CGSpineManager));
             DontDestroyOnLoad(go);
+            go.layer = 5;
+            
         }
 
     }

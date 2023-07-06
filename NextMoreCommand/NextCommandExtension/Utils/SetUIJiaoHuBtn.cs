@@ -5,7 +5,6 @@ using System.Linq;
 using SkySwordKill.Next.DialogEvent;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.NextMoreCommand.Utils;
-using SkySwordKill.NextMoreCommand.Utils.Npc;
 using UnityEngine;
 using UnityEngine.UI;
 

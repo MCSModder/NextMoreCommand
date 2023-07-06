@@ -352,8 +352,8 @@
         <Compile Include="Utils\Fight\FightUtils.cs" />
         <Compile Include="Utils\ItemUtils.cs" />
         <Compile Include="Utils\JsonUtils.cs" />
+        <Compile Include="Utils\NpcUtils.cs" />
         <Compile Include="Utils\Npc\NpcFactoryUtils.cs" />
-        <Compile Include="Utils\Npc\NpcUtils.cs" />
         <Compile Include="Utils\UiUtils.cs" />
         <Compile Include="Utils\WorkshopUtils.cs" />
         <Compile Include="Utils\WuDaoUtils.cs" />

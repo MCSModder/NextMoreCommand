@@ -4,7 +4,6 @@ using Newtonsoft.Json.Linq;
 using SkySwordKill.Next;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.NextMoreCommand.Utils;
-using SkySwordKill.NextMoreCommand.Utils.Npc;
 
 namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Npc
 {

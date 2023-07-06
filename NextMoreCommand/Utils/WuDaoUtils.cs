@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using SkySwordKill.NextMoreCommand.Utils.Npc;
 
 namespace SkySwordKill.NextMoreCommand.Utils;
 
@@ -20,7 +19,12 @@ public class WudaoJsonInfo
 
     public void SetExpByLevel()
     {
-        Exp = jsonData.instance.WuDaoJinJieJson[Level - 1]["Max"].I;
+        var wuDaoJinJieJson = jsonData.instance.WuDaoJinJieJson;
+        if (Level > 0 && wuDaoJinJieJson.HasField((Level - 1).ToString()))
+        {
+            Exp = wuDaoJinJieJson[Level - 1]["Max"].I;
+        }
+
     }
 
     public JSONObject ToJsonObject()
@@ -114,13 +118,13 @@ public static class WuDaoUtils
 
     public static WudaoJsonInfo GetWudao(int npcId, int wudaoId)
     {
-     
-         var npc = npcId.GetNpcData();
+
+        var npc = npcId.GetNpcData();
         var wudaoJson = npc["wuDaoJson"];
         var wudaoIdStr = wudaoId.ToString();
         if (wudaoJson.HasField(wudaoIdStr))
         {
- 
+
             return wudaoJson[wudaoIdStr].ToJObject().ToObject<WudaoJsonInfo>();
         }
 

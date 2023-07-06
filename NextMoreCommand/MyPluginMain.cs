@@ -24,6 +24,7 @@ using SkySwordKill.NextMoreCommand.Custom.SkillCombo;
 using SkySwordKill.NextMoreCommand.CustomModData;
 using SkySwordKill.NextMoreCommand.CustomModDebug;
 using SkySwordKill.NextMoreCommand.CustomModDebug.NextMoreCore;
+using SkySwordKill.NextMoreCommand.NextSeachNpcExtension;
 using SkySwordKill.NextMoreCommand.Patchs;
 using SkySwordKill.NextMoreCommand.Slave;
 // using SkySwordKill.NextMoreCommand.Puerts;
@@ -61,6 +62,7 @@ namespace SkySwordKill.NextMoreCommand
             // 注册事件
             RegisterCommand();
             RegisterCustomModSetting();
+            SearchNpcDataManager.Init();
             _harmony = new Harmony("skyswordkill.plugin.NextMoreCommands");
             _harmony.PatchAll();
             InitDir();

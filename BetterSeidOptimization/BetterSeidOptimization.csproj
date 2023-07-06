@@ -18,7 +18,7 @@
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
         <Optimize>false</Optimize>
-        <OutputPath>..\..\..\本地Mod测试\NextMoreCommand\scripts\</OutputPath>
+        <OutputPath>..\..\..\本地Mod测试\NextMoreCommand\plugins\</OutputPath>
         <DefineConstants>DEBUG;TRACE</DefineConstants>
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
@@ -75,6 +75,7 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="BetterSeidOptimization.cs" />
+        <Compile Include="Patch\McsExpandPatch.cs" />
         <Compile Include="Patch\SkillPatch.cs" />
         <Compile Include="Patch\SpellPatch.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />

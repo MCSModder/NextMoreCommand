@@ -174,6 +174,8 @@ namespace SkySwordKill.NextMoreCommand.Utils
         [JsonIgnore]
         public Dictionary<string, List<string>> AnimationNameDictionary = new Dictionary<string, List<string>>();
         [JsonIgnore]
+        public Dictionary<string, GameObject> SkeletonGraphicPrefabDictionary = new Dictionary<string, GameObject>();
+        [JsonIgnore]
         public Dictionary<string, List<string>> SkinNameDictionary = new Dictionary<string, List<string>>();
         private bool _isInit;
         public T LoadAsset<T>(string path) where T : Object
@@ -253,12 +255,21 @@ namespace SkySwordKill.NextMoreCommand.Utils
                     AnimationNameDictionary.Add(filename, skeletonDataAsset.GetSkeletonData(true).Animations.Select(animation => animation.Name).ToList());
                     SkinNameDictionary.Add(filename, skeletonDataAsset.GetSkeletonData(true).Skins.Select(skin => skin.Name).ToList());
                     SkeletonDataAssetDictionary.Add(filename, skeletonDataAsset);
+                    continue;
                 }
-                else if (assetName.EndsWith("_animation.prefab"))
+                if (assetName.EndsWith("_animation.prefab"))
                 {
                     var animationPrefab = LoadAsset<GameObject>(assetName);
                     var filename = Path.GetFileName(assetName).Replace("_animation.prefab", "");
                     AnimationPrefabDictionary.Add(filename, animationPrefab);
+                    continue;
+                }
+                if (assetName.EndsWith("_skeletongraphic.prefab"))
+                {
+                    var animationPrefab = LoadAsset<GameObject>(assetName);
+                    var filename = Path.GetFileName(assetName).Replace("_skeletongraphic.prefab", "");
+                    AnimationPrefabDictionary.Add(filename, animationPrefab);
+                    continue;
                 }
             }
             _isInit = true;
@@ -556,7 +567,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
                     Object.DestroyImmediate(UIHeadPanel.Inst.gameObject);
                     Object.Instantiate(Resources.Load<GameObject>($"NewUI/Head/UIHeadPanel"), NewUICanvas.Inst.transform);
                 }
-                
+
             }
 
             CacheCustomImageConfig.Clear();
