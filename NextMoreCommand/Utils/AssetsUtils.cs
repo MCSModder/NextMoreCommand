@@ -196,6 +196,16 @@ namespace SkySwordKill.NextMoreCommand.Utils
             }
             return SkeletonDataAssetDictionary.TryGetValue(key, out var value) ? value : null;
         }
+        public GameObject LoadSkeletonGraphic(int key) => LoadSkeletonGraphic(key.ToString());
+        public GameObject LoadSkeletonGraphic(string key)
+        {
+
+            if (SkeletonGraphicPrefabDictionary.Count == 0)
+            {
+                return null;
+            }
+            return SkeletonGraphicPrefabDictionary.TryGetValue(key, out var value) ? value : null;
+        }
         public GameObject LoadSkeletonAnimation(int key) => LoadSkeletonAnimation(key.ToString());
         public GameObject LoadSkeletonAnimation(string key)
         {
@@ -268,7 +278,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 {
                     var animationPrefab = LoadAsset<GameObject>(assetName);
                     var filename = Path.GetFileName(assetName).Replace("_skeletongraphic.prefab", "");
-                    AnimationPrefabDictionary.Add(filename, animationPrefab);
+                    SkeletonGraphicPrefabDictionary.Add(filename, animationPrefab);
                     continue;
                 }
             }
@@ -501,7 +511,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
             return customSpineOption != null;
         }
-        public static bool GetSkeletonAnimation(string key, out GameObject skeletonAnimation, ESpineAssetType spineAssetType = ESpineAssetType.Avatar)
+        public static bool GetSkeletonAnimation(string key, out GameObject skeletonAnimation, ESpineAssetType spineAssetType)
         {
             var hasCustomSpineConfig = GetCustomSpineConfig(key, out var customSpineConfig, spineAssetType);
             if (!hasCustomSpineConfig)
@@ -523,6 +533,29 @@ namespace SkySwordKill.NextMoreCommand.Utils
             }
             skeletonAnimation = customSpineConfig.LoadSkeletonAnimation(avatar);
             return skeletonAnimation != null;
+        }
+        public static bool GetSkeletonGraphic(string key, out GameObject skeletonGraphic, ESpineAssetType spineAssetType)
+        {
+            var hasCustomSpineConfig = GetCustomSpineConfig(key, out var customSpineConfig, spineAssetType);
+            if (!hasCustomSpineConfig)
+            {
+                skeletonGraphic = null;
+                return false;
+            }
+            skeletonGraphic = customSpineConfig.LoadSkeletonGraphic(key);
+            return skeletonGraphic != null;
+        }
+        public static bool GetSkeletonGraphic(int avatar, out GameObject skeletonGraphic) => GetSkeletonGraphic(avatar.ToString(), out skeletonGraphic);
+        public static bool GetSkeletonGraphic(string avatar, out GameObject skeletonGraphic)
+        {
+            var hasCustomSpineConfig = GetCustomSpineConfigAvatar(avatar, out var customSpineConfig);
+            if (!hasCustomSpineConfig)
+            {
+                skeletonGraphic = null;
+                return false;
+            }
+            skeletonGraphic = customSpineConfig.LoadSkeletonGraphic(avatar);
+            return skeletonGraphic != null;
         }
         public static string GetName<T>(this T instance) where T : Enum
         {

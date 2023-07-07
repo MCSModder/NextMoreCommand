@@ -35,19 +35,19 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
         public static CGManager CgManager => CGManager.Instance;
         public Canvas Canvas { get; set; }
         public GameObject CgSpine { get; set; }
-        public GameObject skeletonAnimationGameObject;
-        public SkeletonAnimation skeletonAnimation;
+        public GameObject skeletonGraphicGameObject;
+        public SkeletonGraphic skeletonGraphic;
         private CustomSpine _customSpine;
         public string nowSpine = string.Empty;
         private bool _isInit;
         public bool Enable
         {
-            get => skeletonAnimationGameObject && skeletonAnimationGameObject.activeSelf;
+            get => skeletonGraphicGameObject && skeletonGraphicGameObject.activeSelf;
             set
             {
-                if (skeletonAnimationGameObject)
+                if (skeletonGraphicGameObject)
                 {
-                    skeletonAnimationGameObject.SetActive(value);
+                    skeletonGraphicGameObject.SetActive(value);
                 }
             }
         }
@@ -70,34 +70,29 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
         }
         public void SetShow(bool show)
         {
-            // if (CgManager.CGSprite is not null)
-            // {
-            //     CgManager.Enable = show;
-            // }
+            CgManager.Image.enabled = CgManager.CGSprite is not null;
+            CgManager.Enable = show;
             Enable = show;
         }
         public void SetSkin(string skin)
         {
-            var skinName = AssetsUtils.CheckSkin(nowSpine, skin,ESpineAssetType.Cg) ? skin : "default";
+            var skinName = AssetsUtils.CheckSkin(nowSpine, skin, ESpineAssetType.Cg) ? skin : "default";
+            skeletonGraphic.initialSkinName = skinName;  
             if (_isInit)
             {
-                skeletonAnimation.Skeleton.SetSkin(skinName);
-            }
-            else
-            {
-                skeletonAnimation.initialSkinName = skinName;
+                skeletonGraphic.Initialize(true);
             }
         }
         public void SetAnimation(string animation, bool isLoop = true)
         {
-            if (!AssetsUtils.CheckAnimation(nowSpine, animation,ESpineAssetType.Cg)) return;
+            if (!AssetsUtils.CheckAnimation(nowSpine, animation, ESpineAssetType.Cg)) return;
             if (_isInit)
             {
-                skeletonAnimation.AnimationState.SetAnimation(0, animation, isLoop);
+                skeletonGraphic.AnimationState.SetAnimation(0, animation, isLoop);
             }
             else
             {
-                skeletonAnimation.AnimationName = animation;
+                skeletonGraphic.startingAnimation = animation;
             }
         }
         public void SetSpine(string spine, string animation, string skin)
@@ -106,7 +101,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
             {
                 return;
             }
-            if (skeletonAnimationGameObject != null)
+            if (skeletonGraphicGameObject != null)
             {
                 if (nowSpine == spine)
                 {
@@ -114,9 +109,9 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
                     SetAnimation(animation);
                     return;
                 }
-                DestroyImmediate(skeletonAnimationGameObject);
+                DestroyImmediate(skeletonGraphicGameObject);
             }
-            if (!AssetsUtils.GetSkeletonAnimation(spine, out var prefab, ESpineAssetType.Cg))
+            if (!AssetsUtils.GetSkeletonGraphic(spine, out var prefab, ESpineAssetType.Cg))
             {
                 nowSpine = string.Empty;
                 _isInit = false;
@@ -125,20 +120,19 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
 
             nowSpine = spine;
             prefab.AddComponent<CustomSpine>();
-            skeletonAnimationGameObject = Instantiate(prefab, CgSpine.transform);
+            skeletonGraphicGameObject = Instantiate(prefab, CgManager.transform);
             SetShow(true);
 
-            skeletonAnimation = skeletonAnimationGameObject.GetComponent<SkeletonAnimation>();
-            _customSpine = skeletonAnimationGameObject.GetComponent<CustomSpine>();
+            skeletonGraphic = skeletonGraphicGameObject.GetComponent<SkeletonGraphic>();
+            _customSpine = skeletonGraphicGameObject.GetComponent<CustomSpine>();
             _customSpine.SetAvatar(spine);
             SetSkin(skin);
             SetAnimation(animation);
             _isInit = true;
-            skeletonAnimation.Initialize(true);
+            skeletonGraphic.Initialize(true);
         }
         public void SetCG(string cgName)
         {
-            return;
             var path = $"Assets/CG/{cgName}.png";
             if (Main.Res.TryGetAsset(path, out var asset)
                 && asset is Texture2D texture)
@@ -157,7 +151,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
             var go = new GameObject("NextCGSpineManager", typeof(CGSpineManager));
             DontDestroyOnLoad(go);
             go.layer = 5;
-            
+
         }
 
     }
