@@ -10,6 +10,7 @@ using Newtonsoft.Json.Linq;
 // using ProGif.Lib;
 using SkySwordKill.Next;
 using SkySwordKill.Next.Res;
+using SkySwordKill.NextMoreCommand.NextCommandExtension.Utils;
 using SkySwordKill.NextMoreCommand.Patchs;
 using Spine.Unity;
 using UnityEngine;
@@ -235,7 +236,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public bool CheckSkin(int key, string skinName) => CheckSkin(key.ToString(), skinName);
         public bool CheckSkin(string key, string skinName)
         {
-            if (AnimationNameDictionary.Count == 0)
+            if (SkinNameDictionary.Count == 0)
             {
                 return false;
             }
@@ -602,7 +603,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 }
 
             }
-
+            CGSpineManager.Instance.Reset();
             CacheCustomImageConfig.Clear();
             CacheCustomSpineConfig.Clear();
             CacheCustomMapPlayerSpine.Clear();

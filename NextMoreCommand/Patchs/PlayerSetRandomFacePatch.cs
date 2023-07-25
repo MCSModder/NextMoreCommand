@@ -13,6 +13,7 @@ using Newtonsoft.Json.Linq;
 // using ProGif.Lib;
 using SkySwordKill.Next.DialogEvent;
 using SkySwordKill.Next.DialogSystem;
+using SkySwordKill.NextMoreCommand.NextCommandExtension.Utils;
 using SkySwordKill.NextMoreCommand.Utils;
 using Spine;
 using Spine.Unity;
@@ -239,7 +240,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
         private CustomSpineOption defaultSpineOption;
         private LunDaoManager _lunDaoManager;
         private int _avatar;
-        private CGManager _cgManager;
+        private CGSpineManager _cgManager;
         private UIHeadPanel _uiHeadPanel;
         private TabUIMag _tabUiMag;
 
@@ -288,7 +289,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             _jiaoYiUIMag = GetComponentInParent<JiaoYiUIMag>();
             _fpUIMag = GetComponentInParent<FpUIMag>();
             _lunDaoManager = GetComponentInParent<LunDaoManager>();
-            _cgManager = GetComponentInParent<CGManager>();
+            _cgManager = GetComponentInParent<CGSpineManager>() ;
             _uiHeadPanel = GetComponentInParent<UIHeadPanel>();
             _tabUiMag = GetComponentInParent<TabUIMag>();
             if (_uiNpcSvItem != null)
@@ -360,7 +361,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             customSpineOption = null;
 
             MyPluginMain.LogInfo($"avatar:{avatar} spineType:{spineType.GetName()}");
-            AssetsUtils.GetCustomSpineOption(avatar, spineType, out customSpineOption);
+            AssetsUtils.GetCustomSpineOption(avatar, spineType, out customSpineOption,spineType == ESpineType.CGManager ? ESpineAssetType.Cg : ESpineAssetType.Avatar);
             MyPluginMain.LogInfo($"customSpineOption:\n{customSpineOption}");
             if (customSpineOption == null)
             {
