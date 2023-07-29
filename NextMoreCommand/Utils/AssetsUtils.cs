@@ -221,6 +221,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public bool CheckAnimation(int key, string animationName, out bool isIdle) => CheckAnimation(key.ToString(), animationName, out isIdle);
         public bool CheckAnimation(string key, string animationName, out bool isIdle)
         {
+     
             isIdle = false;
             if (AnimationNameDictionary.Count == 0)
             {
@@ -240,7 +241,9 @@ namespace SkySwordKill.NextMoreCommand.Utils
             {
                 return false;
             }
-            return SkinNameDictionary.ContainsKey(key) && SkinNameDictionary[key].Contains(skinName);
+            var dictResult = SkinNameDictionary.ContainsKey(key);
+            var skinResult = dictResult && SkinNameDictionary[key].Contains(skinName);
+            return skinResult;
         }
 
         public void Init()

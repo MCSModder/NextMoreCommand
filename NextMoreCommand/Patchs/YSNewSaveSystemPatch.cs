@@ -14,7 +14,7 @@ public static class YsNewSaveSystemLoadPatch
     public static bool Prefix()
     {
         var cgSpineManager = CGSpineManager.Instance;
-        if (cgSpineManager.skeletonGraphicGameObject is null)
+        if (cgSpineManager.SpineObjects.Count == 0)
         {
             return true;
         }

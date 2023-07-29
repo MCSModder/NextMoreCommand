@@ -3,13 +3,13 @@ using SkySwordKill.NextMoreCommand.NextCommandExtension.Utils;
 
 namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Utils
 {
-    [DialogEnvQuery("GetCGSpineName")]
-    public class GetCGSpineName:IDialogEnvQuery
+    [DialogEnvQuery("GetCGSpineObject")]
+    public class GetCGSpineObject:IDialogEnvQuery
     {
 
         public object Execute(DialogEnvQueryContext context)
         {
-            return CGSpineManager.Instance.nowSpine;
+            return CGSpineManager.Instance.NowSpineObject;
         }
     }
 }

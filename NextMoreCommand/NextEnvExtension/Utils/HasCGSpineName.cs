@@ -11,7 +11,7 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Utils
         public object Execute(DialogEnvQueryContext context)
         {
              
-            return CGSpineManager.Instance.nowSpine == context.GetMyArgs(0,"");
+            return CGSpineManager.Instance.NowSpineObject.SpineName == context.GetMyArgs(0,"");
         }
     }
 }
