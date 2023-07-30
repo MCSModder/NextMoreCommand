@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Fungus;
 using HarmonyLib;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 // using ProGif.GifManagers;
 // using ProGif.Lib;
 using SkySwordKill.Next;
@@ -11,6 +13,7 @@ using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.Next.FCanvas;
 using SkySwordKill.Next.Patch;
 using SkySwordKill.NextMoreCommand.NextCommandExtension.Npc.Teleport;
+using SkySwordKill.NextMoreCommand.NextCommandExtension.Utils;
 using SkySwordKill.NextMoreCommand.Utils;
 using SkySwordKill.NextMoreCommand.Utils.Fight;
 using UnityEngine;
@@ -62,6 +65,16 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
             };
             //MyPluginMain.LogInfo("触发ThreeSceneMag");
             NpcForceTeleport.NotDialogNpcInfos.Clear();
+            // var strGroup=DialogAnalysis.AvatarNextData.StrGroup;
+            // if (strGroup.HasGroup("CG_SPINE"))
+            // {
+            //     var group = strGroup.GetGroup("CG_SPINE");
+            //     var spineObjects= CGSpineManager.Instance.SpineObjects;
+            //     foreach (var cgSpine in group.Where(spine=> !string.IsNullOrWhiteSpace(spine.Key) &&!spineObjects.ContainsKey(spine.Key)))
+            //     {
+            //         JsonConvert.DeserializeObject<PrepareCGSpineInfo>(cgSpine.Value)?.Prepare();
+            //     }
+            // }
             if (DialogAnalysis.TryTrigger(new[]
                 {
                     "进入场景后", "AfterEnterScene"

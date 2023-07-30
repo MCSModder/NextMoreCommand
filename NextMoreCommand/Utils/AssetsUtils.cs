@@ -606,11 +606,13 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 }
 
             }
+            SpineObject.Clear();
             CGSpineManager.Instance.Reset();
             CacheCustomImageConfig.Clear();
             CacheCustomSpineConfig.Clear();
             CacheCustomMapPlayerSpine.Clear();
             CacheFileAssets.Clear();
+
             foreach (var assetBundle in CacheAssetBundle.Values)
             {
                 assetBundle.Unload(true);
