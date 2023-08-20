@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterSeidOptimization", "B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Puerts", "Puerts\Puerts.csproj", "{5D514115-E2FB-4B3B-8DDD-080DBC94B7EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterAiOptimization", "BetterAiOptimization\BetterAiOptimization.csproj", "{30D3EBA1-5648-4367-A3A0-122FDBA405C3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextTileMapMore", "NextTileMapMore\NextTileMapMore.csproj", "{30D3EBA1-5648-4367-A3A0-122FDBA405C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
