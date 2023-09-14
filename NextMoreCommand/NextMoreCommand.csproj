@@ -59,10 +59,6 @@
             <HintPath>..\..\..\觅长生_Data\Managed\DOTweenPro.dll</HintPath>
             <Private>False</Private>
         </Reference>
-        <Reference Include="LinxueMCS">
-          <HintPath>..\..\..\..\..\workshop\content\1189490\2939918022\plugins\LinxueMCS.dll</HintPath>
-          <Private>False</Private>
-        </Reference>
         <Reference Include="MiniExcel, Version=1.31.2.0, Culture=neutral, PublicKeyToken=e7310002a53eac39, processorArchitecture=MSIL">
           <HintPath>..\packages\MiniExcel.1.31.2\lib\net45\MiniExcel.dll</HintPath>
         </Reference>
@@ -275,8 +271,11 @@
         <Compile Include="NextEnvExtension\DongFu\HasDongFu.cs" />
         <Compile Include="NextEnvExtension\DongFu\HasMenPaiDongFu.cs" />
         <Compile Include="NextEnvExtension\DongFu\HasYiFengChengDongFu.cs" />
+        <Compile Include="NextEnvExtension\Fight\GetBuffManager.cs" />
+        <Compile Include="NextEnvExtension\Fight\GetBuffSum.cs" />
         <Compile Include="NextEnvExtension\Fight\GetFightTypeName.cs" />
         <Compile Include="NextEnvExtension\Fight\CheckUseSkillName.cs" />
+        <Compile Include="NextEnvExtension\Fight\HasBuff.cs" />
         <Compile Include="NextEnvExtension\Npc\GetFightFace.cs" />
         <Compile Include="NextEnvExtension\Npc\GetNpcData.cs" />
         <Compile Include="NextEnvExtension\Npc\GetNpcDefaultSkinSpine.cs" />

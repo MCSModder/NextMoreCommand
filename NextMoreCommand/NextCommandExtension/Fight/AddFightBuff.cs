@@ -8,6 +8,8 @@ using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.Next.StaticFace;
 using SkySwordKill.NextMoreCommand.Attribute;
 using SkySwordKill.NextMoreCommand.Utils;
+using YSGame.Fight;
+using Event = KBEngine.Event;
 using GameObject = UnityEngine.GameObject;
 
 namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fight
@@ -15,7 +17,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fight
     class BuffInfo
     {
         public int Id { get; } = 0;
-        public int Value { get; } = 1;
+        public int Value { get; }
         public BuffInfo(string str)
         {
             MyLog.Log(str);
@@ -30,6 +32,11 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fight
                 Id = Convert.ToInt32(str);
                 Value = 1;
             }
+        }
+        public void Deconstruct(out int id, out int value)
+        {
+            id = Id;
+            value = Value;
         }
     }
 
@@ -51,10 +58,57 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fight
             {
                 var avatar = isPlayer ? env.player : env.player.OtherAvatar;
 
-                foreach (var buff in _buffList)
+                foreach (var (id, value) in _buffList)
                 {
-                    command.LogInfos($"战斗BUFF添加 ID:{buff.Id} 数量:{buff.Value}");
-                    avatar.spell.addDBuff(buff.Id, buff.Value);
+                    command.LogInfos($"战斗BUFF添加 ID:{id} 数量:{value}");
+                    switch (value)
+                    {
+                        case < 0 when avatar.buffmag.HasBuff(id):
+                        {
+                            var reduceBuff = -value;
+                            var buffSum = avatar.buffmag.GetBuffSum(id);
+
+                            var buffByID = avatar.buffmag.getBuffByID(id);
+                            if (reduceBuff > buffSum)
+                            {
+                                foreach (var buff in buffByID)
+                                {
+                                    buff[1] = 0;
+                                }
+                            }
+                            else
+                            {
+                                foreach (var buff in buffByID)
+                                {
+                                    if (reduceBuff <= 0)
+                                    {
+                                        break;
+                                    }
+                                    var buffNum = buff[1];
+
+                                    if (reduceBuff > buffNum)
+                                    {
+                                        reduceBuff -= buffNum;
+                                        buff[1] = 0;
+                                        continue;
+                                    }
+                                    buff[1] -= reduceBuff;
+                                }
+                            }
+
+                            if (UIFightPanel.Inst is not null)
+                                UIFightPanel.Inst.RefreshCD();
+                            Event.fireOut("UpdataBuff");
+                            continue;
+                        }
+                        case 0:
+                            continue;
+                        default:
+                            avatar.spell.addDBuff(id, value);
+                            break;
+                    }
+
+
                 }
             }
             else
@@ -75,8 +129,12 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fight
                     command.LogInfos($"战斗前BUFF添加 ID:{id} 数量:{value}");
                     if (dict.ContainsKey(id))
                     {
-                        dict[id] += value;
 
+                        dict[id] += value;
+                        if (dict[id] < 0)
+                        {
+                            dict[id] = 0;
+                        }
                     }
                     else
                     {

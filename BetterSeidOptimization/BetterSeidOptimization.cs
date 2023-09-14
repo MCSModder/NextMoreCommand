@@ -2,7 +2,6 @@
 using BepInEx.Configuration;
 using HarmonyLib;
 using SkySwordKill.Next.Mod;
-using UniqueCream.CustomDungeons.NextSupport.NextEvent.DungeonEvent;
 
 namespace Zerxz.BetterSeidOptimization;
 

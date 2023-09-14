@@ -23,7 +23,7 @@ namespace SkySwordKill.NextMoreCommand.CustomModData
         {
             var path = modConfig.Path;
             var modNDataDir = modConfig.GetNDataDir();
-            return !path.Contains("workshop\\content\\1189490") && modNDataDir.CombinePath("CustomNpc").HasPath();
+            return !path.Contains(@"workshop\content\1189490") && modNDataDir.CombinePath("CustomNpc").HasPath();
         }
 
 

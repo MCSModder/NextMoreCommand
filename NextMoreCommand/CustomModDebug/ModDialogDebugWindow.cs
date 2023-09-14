@@ -202,6 +202,7 @@ public class NextReloadManager : MonoBehaviour
             tools.isNeedSetTalk = true;
             tools.CanOpenTab = false;
             ModManager.ReloadAllModAsync();
+            
             DestroyImmediate(this);
         }, null, true);
     }

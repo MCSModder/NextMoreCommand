@@ -3,6 +3,7 @@ using System.IO;
 using HarmonyLib;
 using Newtonsoft.Json.Linq;
 using SkySwordKill.Next;
+using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.NextMoreCommand.NextCommandExtension.Utils;
 using SkySwordKill.NextMoreCommand.Utils;
 
@@ -22,39 +23,17 @@ public static class YsNewSaveSystemLoadPatch
         cgSpineManager.LoadSave();
         return false;
     }
-    
-    // public static JObject LoadData(int id, int index, string fileName)
-    // {
-    //     var savePath = Paths.GetNewSavePath();
-    //     var pathPre = YSNewSaveSystem.GetAvatarSavePathPre(id, index);
-    //     var path = $"{savePath}/{pathPre}/{fileName}";
-    //     if (!File.Exists(path))
-    //     {
-    //         return null;
-    //     }
-    //
-    //     var text = File.ReadAllText(path);
-    //    MyPluginMain.LogInfo(text);
-    //     return string.IsNullOrWhiteSpace(text)?null:JObject.Parse(text);
-    // }
-    //
-    // public static void Postfix(int avatarIndex, int slot, int DFIndex)
-    // {
-    //     var data = LoadData(avatarIndex, slot, "nickname.json");
-    //     if (data == null)
-    //     {
-    //         return;
-    //     }
-    //
-    //     NpcUtils.SelfNameDict = data.ToObject<Dictionary<int, string>>();
-    // }
 }
 
-// [HarmonyPatch(typeof(YSNewSaveSystem), nameof(YSNewSaveSystem.SaveGame))]
+// [HarmonyPatch(typeof(AuToSLMgr), nameof(AuToSLMgr.CanSave))]
 // public static class YsNewSaveSystemSavePatch
 // {
-//     public static void Prefix()
+//     public static bool Prefix(ref bool __result)
 //     {
-//         YSNewSaveSystem.Save("nickname.json", new JSONObject(JObject.FromObject(NpcUtils.SelfNameDict).ToString()));
+//         if (!DialogAnalysis.IsRunningEvent) return true;
+//         UIPopTip.Inst.Pop("当前运行MOD剧情状态禁止存档", PopTipIconType.叹号);
+//         UIPopTip.Inst.Pop("如果存档不了,按F4键找[剧情调试]点击[重置事件状态]", PopTipIconType.叹号);
+//         __result = false;
+//         return false;
 //     }
 // }
