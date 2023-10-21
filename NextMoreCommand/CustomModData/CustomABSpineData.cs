@@ -37,7 +37,7 @@ namespace SkySwordKill.NextMoreCommand.CustomModData
                 }
                 catch (Exception e)
                 {
-                    Main.LogWarning(e);
+                    Main.LogWarning(e.ToString());
                 }
            
             }

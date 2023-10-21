@@ -145,7 +145,8 @@ namespace SkySwordKill.NextMoreCommand.Patchs
         LunDaoManager,
         CGManager,
         UiHeadPanel,
-        TabUiMag
+        TabUiMag,
+        Custom
     }
 
     [JsonObject]
@@ -252,6 +253,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
                     customSpineOption?.SetTransform(transform);
                     break;
                 case ESpineType.None:
+                case ESpineType.Custom:
                     break;
                 case ESpineType.SayDialog:
                     break;
@@ -280,6 +282,10 @@ namespace SkySwordKill.NextMoreCommand.Patchs
 
         public void Init()
         {
+            if (spineType == ESpineType.Custom)
+            {
+                return;
+            }
             spineType = ESpineType.None;
             _uiNpcSvItem = GetComponentInParent<UINPCSVItem>();
             _sayDialog = GetComponentInParent<SayDialog>();
@@ -345,6 +351,24 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             _avatar = avatar;
             SetAvatar(avatar.ToString(), isSay);
         }
+        public void SetAvatarCustom(string avatar, string option,ESpineAssetType spineAssetType = ESpineAssetType.Avatar)
+        {
+            if (string.IsNullOrWhiteSpace(avatar))
+            {
+                return;
+            }
+            spineType = ESpineType.Custom;
+            AssetsUtils.GetCustomSpineConfig(avatar, out var customSpineConfig,spineAssetType);
+            customSpineConfig.CustomSpineOptions.TryGetValue(option, out customSpineOption);
+            if (customSpineOption == null)
+            {
+                Reset();
+            }
+            else
+            {
+                customSpineOption.SetTransform(transform);
+            }
+        }
         public void SetAvatar(string avatar, bool isSay = false)
         {
             if (isSay)
@@ -357,7 +381,10 @@ namespace SkySwordKill.NextMoreCommand.Patchs
                 Init();
             }
 
-
+            if (string.IsNullOrWhiteSpace(avatar))
+            {
+                return;
+            }
             customSpineOption = null;
 
             MyPluginMain.LogInfo($"avatar:{avatar} spineType:{spineType.GetName()}");
@@ -417,6 +444,8 @@ namespace SkySwordKill.NextMoreCommand.Patchs
                     break;
                 case ESpineType.TabUiMag:
                     // defaultSpineOption = CustomSpineOption.TabUiMagPos;
+                    break;
+                case ESpineType.Custom:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

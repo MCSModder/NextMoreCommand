@@ -151,6 +151,8 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public CustomSpineOption UiHeadPanelPos { get; set; }
         [JsonProperty("物品背包位置", Required = Required.Default)]
         public CustomSpineOption TabUiMagPos { get; set; }
+        [JsonProperty("自定义位置", Required = Required.Default)]
+        public Dictionary<string,CustomSpineOption> CustomSpineOptions { get; set; }
         public void Start()
         {
             SayDialogPos ??= CustomSpineOption.SayDialogPos;
@@ -164,6 +166,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
             CgSpineManagerPos ??= new CustomSpineOption();
             UiHeadPanelPos ??= CustomSpineOption.UiHeadPanelPos;
             TabUiMagPos ??= CustomSpineOption.TabUiMagPos;
+            CustomSpineOptions ??= new Dictionary<string, CustomSpineOption>();
         }
 
         [JsonIgnore]
