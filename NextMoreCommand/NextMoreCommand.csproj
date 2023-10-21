@@ -61,6 +61,7 @@
         </Reference>
         <Reference Include="MiniExcel, Version=1.31.2.0, Culture=neutral, PublicKeyToken=e7310002a53eac39, processorArchitecture=MSIL">
           <HintPath>..\packages\MiniExcel.1.31.2\lib\net45\MiniExcel.dll</HintPath>
+          <Private>False</Private>
         </Reference>
         <Reference Include="Newtonsoft.Json">
             <HintPath>..\..\..\觅长生_Data\Managed\Newtonsoft.Json.dll</HintPath>
@@ -111,6 +112,10 @@
             <HintPath>..\..\..\觅长生_Data\Managed\UniTask.TextMeshPro.dll</HintPath>
             <Private>False</Private>
         </Reference>
+        <Reference Include="Unity.TextMeshPro">
+          <HintPath>..\..\..\觅长生_Data\Managed\Unity.TextMeshPro.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
         <Reference Include="UnityEngine">
             <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.dll</HintPath>
             <Private>False</Private>
@@ -138,6 +143,14 @@
         <Reference Include="UnityEngine.IMGUIModule">
             <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
             <Private>False</Private>
+        </Reference>
+        <Reference Include="UnityEngine.TextCoreModule">
+          <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.TextCoreModule.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="UnityEngine.TextRenderingModule">
+          <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+          <Private>False</Private>
         </Reference>
         <Reference Include="UnityEngine.UI">
             <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.UI.dll</HintPath>
@@ -190,6 +203,7 @@
         <Compile Include="Attribute\MapTypeAttribute.cs" />
         <Compile Include="Attribute\RegisterCommandAttribute.cs" />
         <Compile Include="Attribute\RegisterCustomModSettingAttribute.cs" />
+        <Compile Include="CustomModData\CustomABSpineData.cs" />
         <Compile Include="CustomModData\CustomModDataManager.cs" />
         <Compile Include="CustomModData\CustomNpcData.cs" />
         <Compile Include="CustomModData\CustomRandomChat.cs" />
@@ -297,6 +311,8 @@
         <Compile Include="NextEnvExtension\Npc\Wudao\GetWudao.cs" />
         <Compile Include="NextEnvExtension\Npc\Wudao\HasWudaoSkill.cs" />
         <Compile Include="NextEnvExtension\Utils\GetCGSpineManager.cs" />
+        <Compile Include="NextEnvExtension\Utils\GetExp.cs" />
+        <Compile Include="NextEnvExtension\Utils\GetExpMax.cs" />
         <Compile Include="NextEnvExtension\Utils\GetJavascriptStr.cs" />
         <Compile Include="NextEnvExtension\Utils\GetJiYiHuiFuDu.cs" />
         <Compile Include="NextEnvExtension\Utils\GetModInfo.cs" />
@@ -352,6 +368,7 @@
         <Compile Include="Utils\Fight\FightInfo.cs" />
         <Compile Include="Utils\Fight\FightManager.cs" />
         <Compile Include="Utils\Fight\FightUtils.cs" />
+        <Compile Include="Utils\FontUtils.cs" />
         <Compile Include="Utils\ItemUtils.cs" />
         <Compile Include="Utils\JsonUtils.cs" />
         <Compile Include="Utils\NpcUtils.cs" />

@@ -142,7 +142,8 @@ namespace SkySwordKill.NextMoreCommand.Patchs
         public static Dictionary<string, string> HuaShenRuDaoGroup => StrGroup.GetGroup(Symbolkey);
         public static Sprite GetSprite(string path)
         {
-            return Main.Res.TryGetAsset($"Assets/HuaShenRuDao/{path}.png", out Texture2D texture2D) ? Main.Res.GetSpriteCache(texture2D) : null;
+          var texture2D=  Main.Res.LoadAsset<Texture2D>($"Assets/HuaShenRuDao/{path}.png");
+          return texture2D is null ? null : Main.Res.GetSpriteCache(texture2D);
         }
     }
 

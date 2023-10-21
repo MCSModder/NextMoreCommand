@@ -26,5 +26,4 @@ public static class ModManagerLoadModData
         CustomModDataManager.Read(modConfig);
     }
 
-
 }
