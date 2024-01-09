@@ -311,7 +311,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public readonly static Dictionary<string, CustomSpineConfig> CacheCustomSpineConfig = new Dictionary<string, CustomSpineConfig>();
         public readonly static Dictionary<string, CustomSpineOption> CacheCustomImageConfig = new Dictionary<string, CustomSpineOption>();
         public readonly static Dictionary<string, CustomMapPlayerSpine> CacheCustomMapPlayerSpine = new Dictionary<string, CustomMapPlayerSpine>();
-        public readonly static Dictionary<string, ABRefAsset> CacheABRefAsset= new Dictionary<string, ABRefAsset>();
+        public readonly static Dictionary<string, ABRefAsset> CacheAbRefAsset= new Dictionary<string, ABRefAsset>();
         // public static bool GetFileAsset(string path, out FileAsset fileAsset)
         // {
         //     if (CacheFileAssets.TryGetValue(path, out var asset))
@@ -355,7 +355,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
         // }
         public static bool TryGetABRefAsset(string path, out  ABRefAsset abRefAsset)
         {
-            if (CacheABRefAsset.TryGetValue(path,out abRefAsset))
+            if (CacheAbRefAsset.TryGetValue(path,out abRefAsset))
             {
                 return true;
             }
@@ -367,16 +367,16 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 var isMatch = abpath.EndsWith(_path);
                 if (!isMatch) continue;
                 abRefAsset = asset;
-                CacheABRefAsset[path] = abRefAsset;
+                CacheAbRefAsset[path] = abRefAsset;
                 return true;
             }
 
             return false;
         }
         public static bool GetCustomSpineConfigAvatar(int avatar, out CustomSpineConfig customSpineConfig) => GetCustomSpineConfigAvatar(avatar.ToString(), out customSpineConfig);
-        public static bool GetCustomSpineConfigAvatar(string key, out CustomSpineConfig customSpineConfig) => GetCustomSpineConfig($"Assets/Avatar/Spine/{key}/{key}.ab", $"Avatar-{key}", out customSpineConfig);
+        public static bool GetCustomSpineConfigAvatar(string key, out CustomSpineConfig customSpineConfig) => GetCustomSpineConfig($"Avatar/Spine/{key}/{key}.ab", $"Avatar-{key}", out customSpineConfig);
 
-        public static bool GetCustomSpineConfigCG(string key, out CustomSpineConfig customSpineConfig) => GetCustomSpineConfig($"Assets/CG/Spine/{key}/{key}.ab", $"CG-{key}", out customSpineConfig);
+        public static bool GetCustomSpineConfigCG(string key, out CustomSpineConfig customSpineConfig) => GetCustomSpineConfig($"CG/Spine/{key}/{key}.ab", $"CG-{key}", out customSpineConfig);
 
         public static bool GetCustomSpineConfig(int key, out CustomSpineConfig customSpineConfig, ESpineAssetType spineAssetType = ESpineAssetType.Avatar) => GetCustomSpineConfig(key.ToString(), out customSpineConfig, spineAssetType);
         public static bool GetCustomSpineConfig(string key, out CustomSpineConfig customSpineConfig, ESpineAssetType spineAssetType = ESpineAssetType.Avatar)
@@ -399,7 +399,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
             }
 
             // if (!GetFileAsset(path, out var fileAsset)) return false;
-            if (TryGetABRefAsset(path,out var abRefAsset))
+            if (!TryGetABRefAsset(path,out var abRefAsset))
             {
                 return false;
             }
@@ -482,7 +482,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 customMapPlayerSpine = value;
                 return true;
             }
-            if (TryGetABRefAsset($"Assets/Avatar/MapPlayer/{key}/{key}.ab",out var abRefAsset))
+            if (TryGetABRefAsset($"Avatar/MapPlayer/{key}/{key}.ab",out var abRefAsset))
             {
 
                 var config = new CustomMapPlayerSpine();
@@ -648,7 +648,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
             CacheCustomImageConfig.Clear();
             CacheCustomSpineConfig.Clear();
             CacheCustomMapPlayerSpine.Clear();
-            CacheABRefAsset.Clear();
+            CacheAbRefAsset.Clear();
             // CacheFileAssets.Clear();
             //
             // foreach (var assetBundle in CacheAssetBundle.Values)

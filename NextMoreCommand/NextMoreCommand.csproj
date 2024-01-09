@@ -252,6 +252,7 @@
         <Compile Include="NextCommandExtension\Npc\Wudao\AddNpcWudaoExp.cs" />
         <Compile Include="NextCommandExtension\Npc\Wudao\SetNpcWudaoExp.cs" />
         <Compile Include="NextCommandExtension\Utils\AddExJiYiHuiFuDu.cs" />
+        <Compile Include="NextCommandExtension\Utils\AddTianJieJiaSu.cs" />
         <Compile Include="NextCommandExtension\Utils\ChangeTianFuBuff.cs" />
         <Compile Include="NextCommandExtension\Utils\CheckTaskError.cs" />
         <Compile Include="NextCommandExtension\Utils\CloseAllUI.cs" />

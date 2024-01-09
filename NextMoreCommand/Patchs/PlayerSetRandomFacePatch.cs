@@ -91,7 +91,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             if (string.IsNullOrWhiteSpace(lihui))
             {
                 path = $"Effect/Prefab/gameEntity/Avater/Avater{faceId}/{faceId}";
-                if (AssetsUtils.GetCustomImageConfig("Assets/Res/" + path + ".png", out CustomSpineOption customSpineOption))
+                if (AssetsUtils.GetCustomImageConfig("Res/" + path + ".png", out CustomSpineOption customSpineOption))
                 {
                     var transform1 = transform;
                     var nowRotation = transform1.localRotation;
@@ -360,7 +360,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             spineType = ESpineType.Custom;
             AssetsUtils.GetCustomSpineConfig(avatar, out var customSpineConfig,spineAssetType);
             customSpineConfig.CustomSpineOptions.TryGetValue(option, out customSpineOption);
-            if (customSpineOption == null)
+            if (customSpineOption is null)
             {
                 Reset();
             }
@@ -390,7 +390,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             MyPluginMain.LogInfo($"avatar:{avatar} spineType:{spineType.GetName()}");
             AssetsUtils.GetCustomSpineOption(avatar, spineType, out customSpineOption,spineType == ESpineType.CGManager ? ESpineAssetType.Cg : ESpineAssetType.Avatar);
             MyPluginMain.LogInfo($"customSpineOption:\n{customSpineOption}");
-            if (customSpineOption == null)
+            if (customSpineOption is null)
             {
                 Reset();
             }

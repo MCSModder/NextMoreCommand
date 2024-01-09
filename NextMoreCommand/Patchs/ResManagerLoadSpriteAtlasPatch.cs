@@ -52,7 +52,7 @@ public static class ResManagerLoadSpriteAtlasPatch
     public static void Postfix(string path, ref Dictionary<string, Sprite> __result)
     {
         var lower = path.ToLower();
-        var files = Main.Res.FileResLoader.fileAssets.Where(item => item.Key.ToLower().StartsWith($"assets/{lower}/"))
+        var files = Main.Res.resMappers.Where(item => item.Key.ToLower().StartsWith($"assets/{lower}/"))
             .Select(item => item.Key).ToArray();
         MyLog.Log("ResManager.LoadSpriteAtlas", $"开始加载资源 路径:{path}");
         MyLog.Log("ResManager.LoadSpriteAtlas", $"加载资源中 路径:{path} 图片:{files.Length}");

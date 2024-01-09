@@ -5,8 +5,8 @@ using UniqueCream.CustomDungeons.Dungeon;
 
 namespace CustomDungeonsMore.EnvExtension
 {
-    [DialogEnvQuery("Dungeon_GetMapData")]
-    public class Dungeon_GetMapData : IDialogEnvQuery
+    [DialogEnvQuery("Dungeon_GetNowMapData")]
+    public class Dungeon_GetNowMapData : IDialogEnvQuery
     {
 
 
