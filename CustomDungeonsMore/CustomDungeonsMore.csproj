@@ -7,8 +7,8 @@
         <ProjectGuid>{30D3EBA1-5648-4367-A3A0-122FDBA405C3}</ProjectGuid>
         <OutputType>Library</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>NextTileMapMore</RootNamespace>
-        <AssemblyName>NextTileMapMore</AssemblyName>
+        <RootNamespace>CustomDungeonsMore</RootNamespace>
+        <AssemblyName>CustomDungeonsMore</AssemblyName>
         <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
         <LangVersion>12</LangVersion>
