@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using HarmonyLib;
 using Newtonsoft.Json.Linq;
 using SkySwordKill.Next.DialogSystem;
@@ -34,24 +35,20 @@ public class DialogEnvironmentContext
 
 public static class DialogEnvQueryContextExtension
 {
-    public static T GetMyArgs<T>(this DialogEnvQueryContext instance, int index, T defaultValue = default)
+    
+    public static T GetMyArgs<T>(this DialogEnvQueryContext instance, int index, T defaultValue = default(T))
     {
-        var args = JArray.FromObject(instance.Args);
-        if (index >= args.Count || index < 0)
+        if (index >= instance.Args.Length || index < 0)
         {
             return defaultValue;
         }
-
-        if (typeof(T) == typeof(int) && instance.Args[index] is string value)
+        var arg = instance.Args[index];
+        if (typeof(T) == arg.GetType())
         {
-            if (!int.TryParse(value, out int _))
-            {
-                return defaultValue;
-            }
+            return (T)arg;
         }
-
-        var result = args[index].ToObject<T>();
-        return result == null ? defaultValue : result;
+        var result = JToken.FromObject(arg).ToObject<T>();
+        return result is null ? defaultValue : result;
     }
 
     public static int GetNpcID(this DialogEnvQueryContext instance, int index, int defaultValue = default)

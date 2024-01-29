@@ -20,6 +20,8 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
             }
             jianLingManager.AddExJiYiHuiFuDu(memory);
             callback?.Invoke();
+
+                
         }
     }
 }

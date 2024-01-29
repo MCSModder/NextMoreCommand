@@ -45,9 +45,10 @@ namespace SkySwordKill.NextMoreCommand.CustomModData
         }
         public static void LoadData(string modDir, string folder, ModConfig modConfig, Action<string, ModConfig> onComplete)
         {
-            if (modDir.CombinePath(folder).HasPath())
+            var path = modDir.CombinePath(folder);
+            if (path.HasPath())
             {
-                onComplete.Invoke(modDir.CombinePath(folder), modConfig);
+                onComplete.Invoke(path, modConfig);
             }
         }
         private static void RegisterModData(string key, IModData modData)

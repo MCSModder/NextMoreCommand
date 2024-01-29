@@ -12,6 +12,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
         {
             get
             {
+          
                 _registerEvents ??= Traverse.Create(typeof(DialogAnalysis)).Field<Dictionary<string, IDialogEvent>>("_registerEvents").Value;
                 return _registerEvents;
             }

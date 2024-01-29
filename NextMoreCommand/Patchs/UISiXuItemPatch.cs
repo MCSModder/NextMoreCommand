@@ -26,14 +26,11 @@ public static class UISiXuItemPatch
         __instance.SiXuImage.sprite = UIBiGuanGanWuPanel.Inst.WuDaoTypeSpriteList[8];
         var path = $"Assets/Wudao/Sixu/{sixudata.WuDaoTypeStr}.png".ToLower();
         MyLog.Log("UISiXuItem", $"开始加载资源  加载路径:{path}");
-        if (Main.Res.TryGetAsset(path, out var fileAsset))
-        {
-            if (fileAsset is Texture2D texture2D)
-            {
-                MyLog.Log("UISiXuItem", $"加载资源完毕  加载路径:{path} 图片:{texture2D.name}");
-                __instance.SiXuImage.sprite = Main.Res.GetSpriteCache(texture2D);
-            }
-        }
+        var texture2D = Main.Res.LoadAsset<Texture2D>(path);
+        if (texture2D is null) return false;
+        
+        MyLog.Log("UISiXuItem", $"加载资源完毕  加载路径:{path} 图片:{texture2D.name}");
+        __instance.SiXuImage.sprite = Main.Res.GetSpriteCache(texture2D);
 
         return false;
     }
@@ -64,14 +61,12 @@ public static class UINPCWuDaoSVItemPatch
         __instance.TypeImage.sprite = __instance.WuDaoTypeSprites[8];
         var path = $"Assets/Wudao/NPCWuDao/{data.ID}.png".ToLower();
         MyLog.Log("UINPCWuDaoSVItemPatch", $"开始加载资源  加载路径:{path}");
-        if (Main.Res.TryGetAsset(path, out var fileAsset))
+        var texture2D = Main.Res.LoadAsset<Texture2D>(path);
+        if (texture2D is not null)
         {
-            if (fileAsset is Texture2D texture2D)
-            {
-                MyLog.Log("UINPCWuDaoSVItemPatch", $"加载资源完毕  加载路径:{path} 图片:{texture2D.name}");
+            MyLog.Log("UINPCWuDaoSVItemPatch", $"加载资源完毕  加载路径:{path} 图片:{texture2D.name}");
 
-                __instance.TypeImage.sprite = Main.Res.GetSpriteCache(texture2D);
-            }
+            __instance.TypeImage.sprite = Main.Res.GetSpriteCache(texture2D);
         }
 
         var stringBuilder = new StringBuilder();

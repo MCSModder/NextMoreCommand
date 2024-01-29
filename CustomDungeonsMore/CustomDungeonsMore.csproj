@@ -7,11 +7,11 @@
         <ProjectGuid>{30D3EBA1-5648-4367-A3A0-122FDBA405C3}</ProjectGuid>
         <OutputType>Library</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>NextTileMapMore</RootNamespace>
-        <AssemblyName>NextTileMapMore</AssemblyName>
+        <RootNamespace>CustomDungeonsMore</RootNamespace>
+        <AssemblyName>CustomDungeonsMore</AssemblyName>
         <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
-        <LangVersion>12</LangVersion>
+        <LangVersion>10</LangVersion>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <PlatformTarget>AnyCPU</PlatformTarget>
@@ -45,11 +45,20 @@
           <HintPath>..\..\..\..\..\workshop\content\1189490\2824349934\BepInEx\core\BepInEx.dll</HintPath>
           <Private>False</Private>
         </Reference>
+        <Reference Include="CustomDungeons">
+          <HintPath>..\..\..\..\..\workshop\content\1189490\2897391363\plugins\CustomDungeons.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
         <Reference Include="MiniExcel, Version=1.31.2.0, Culture=neutral, PublicKeyToken=e7310002a53eac39, processorArchitecture=MSIL">
           <HintPath>..\packages\MiniExcel.1.31.2\lib\net45\MiniExcel.dll</HintPath>
+          <Private>False</Private>
         </Reference>
         <Reference Include="Newtonsoft.Json">
           <HintPath>..\..\..\觅长生_Data\Managed\Newtonsoft.Json.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Next">
+          <HintPath>..\..\..\..\..\workshop\content\1189490\2824845357\plugins\Next.dll</HintPath>
           <Private>False</Private>
         </Reference>
         <Reference Include="System" />
@@ -123,12 +132,21 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="NextTile.cs" />
-        <Compile Include="NextTileMapMore.cs" />
+        <Compile Include="Data\MapData.cs" />
+        <Compile Include="EnvExtension\Dungeon_GetMapData.cs" />
+        <Compile Include="EnvExtension\Dungeon_GetNowMapData.cs" />
+        <Compile Include="CustomDungeonsMore.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="Utils\DungeonUtils.cs" />
     </ItemGroup>
     <ItemGroup>
       <None Include="packages.config" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\NextMoreCommand\NextMoreCommand.csproj">
+        <Project>{5f79f8ee-9bd4-4d1d-a72d-1c0115ad85c6}</Project>
+        <Name>NextMoreCommand</Name>
+      </ProjectReference>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

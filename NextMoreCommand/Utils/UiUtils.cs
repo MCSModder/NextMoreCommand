@@ -28,11 +28,9 @@ public static class UiUtils
         {
             return _spriteMoney;
         }
-        if (!Main.Res.TryGetAsset("assets/resources/lingshi.png", out var asset)) return null;
-        if (asset is Texture2D texture2D)
-        {
-            _spriteMoney = Main.Res.GetSpriteCache(texture2D);
-        }
+        var texture2D = Main.Res.LoadAsset<Texture2D>("assets/resources/lingshi.png");
+        if (texture2D is null) return null;
+        _spriteMoney = Main.Res.GetSpriteCache(texture2D);
         return _spriteMoney;
     }
     // public static void ShowCustomMenPaiShop(this UIMenPaiShop uiMenPaiShop)

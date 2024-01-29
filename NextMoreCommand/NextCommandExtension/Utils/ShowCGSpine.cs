@@ -415,8 +415,8 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
         public void SetCG(string cgName)
         {
             var path = $"Assets/CG/{cgName}.png";
-            if (Main.Res.TryGetAsset(path, out var asset)
-                && asset is Texture2D texture)
+            var texture = Main.Res.LoadAsset<Texture2D>(path);
+            if (texture is not null)
             {
                 var sprite = Main.Res.GetSpriteCache(texture);
                 CgManager.CGSprite = sprite;
