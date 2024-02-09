@@ -228,6 +228,7 @@
         <Compile Include="NextCommandExtension\DongFu\SetNewDongFu.cs" />
         <Compile Include="NextCommandExtension\Fight\AddFightBuff.cs" />
         <Compile Include="NextCommandExtension\Fight\AddFightSkill.cs" />
+        <Compile Include="NextCommandExtension\Fight\ChangeFightMonsterHpMax.cs" />
         <Compile Include="NextCommandExtension\Fight\ClearFightSkill.cs" />
         <Compile Include="NextCommandExtension\Fight\StartFight.cs" />
         <Compile Include="NextCommandExtension\Npc\SetBindNpc.cs" />
@@ -288,6 +289,7 @@
         <Compile Include="NextEnvExtension\DongFu\HasYiFengChengDongFu.cs" />
         <Compile Include="NextEnvExtension\Fight\GetBuffManager.cs" />
         <Compile Include="NextEnvExtension\Fight\GetBuffSum.cs" />
+        <Compile Include="NextEnvExtension\Fight\GetFightMonsterId.cs" />
         <Compile Include="NextEnvExtension\Fight\GetFightTypeName.cs" />
         <Compile Include="NextEnvExtension\Fight\CheckUseSkillName.cs" />
         <Compile Include="NextEnvExtension\Fight\HasBuff.cs" />
