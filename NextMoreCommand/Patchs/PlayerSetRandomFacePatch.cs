@@ -61,7 +61,6 @@ namespace SkySwordKill.NextMoreCommand.Patchs
         private static Avatar Player => PlayerEx.Player;
         public void SetAvatarId(int monstarID)
         {
-
             StartCoroutine(SetAvatar(monstarID));
         }
 
@@ -98,25 +97,21 @@ namespace SkySwordKill.NextMoreCommand.Patchs
                     customSpineOption?.SetTransform(transform1);
                     transform.localRotation = nowRotation;
                 }
-
             }
+
             var sprite = ModResources.LoadSprite(path);
-            var hasSprite = sprite != null;
-            if (_spriteRenderer != null)
-            {
-                _spriteRenderer.sprite = sprite;
-            }
 
-            if (skeletonAnimation != null)
+            if (sprite == null)
             {
-                skeletonAnimation.maskInteraction = hasSprite ? SpriteMaskInteraction.VisibleInsideMask : SpriteMaskInteraction.None;
-
-            }
-            if (!hasSprite)
-            {
+                if (skeletonAnimation) skeletonAnimation.maskInteraction = SpriteMaskInteraction.None;
                 DestroyImmediate(gameObject);
+                yield break;
             }
-            yield break;
+
+            // _spriteRenderer 是通过 AddMissingComponent 获取的，所以不会为 null
+            _spriteRenderer.sprite = sprite;
+
+            if (skeletonAnimation) skeletonAnimation.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
         }
 
         private void OnDestroy()
@@ -295,7 +290,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             _jiaoYiUIMag = GetComponentInParent<JiaoYiUIMag>();
             _fpUIMag = GetComponentInParent<FpUIMag>();
             _lunDaoManager = GetComponentInParent<LunDaoManager>();
-            _cgManager = GetComponentInParent<CGSpineManager>() ;
+            _cgManager = GetComponentInParent<CGSpineManager>();
             _uiHeadPanel = GetComponentInParent<UIHeadPanel>();
             _tabUiMag = GetComponentInParent<TabUIMag>();
             if (_uiNpcSvItem != null)
@@ -358,7 +353,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
                 return;
             }
             spineType = ESpineType.Custom;
-            AssetsUtils.GetCustomSpineConfig(avatar, out var customSpineConfig,spineAssetType);
+            AssetsUtils.GetCustomSpineConfig(avatar, out var customSpineConfig, spineAssetType);
             customSpineConfig.CustomSpineOptions.TryGetValue(option, out customSpineOption);
             if (customSpineOption is null)
             {
@@ -485,7 +480,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
        
             var skeletonAnimation = __instance.GetComponent<SkeletonAnimation>();
             var skin = string.Empty;
-            SkeletonDataAsset skeletonData = null;
+            SkeletonDataAsset skeletonData;
             var key = string.Empty;
             if (avartarID == 1)
             {
@@ -520,7 +515,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
                     return false;
                 }
                 key = NpcUtils.GetNpcFaceSpine(avartarID);
-                var result=AssetsUtils.GetSkeletonData(key, out skeletonData);
+                var result = AssetsUtils.GetSkeletonData(key, out skeletonData);
                 MyLog.Log($"key:{key}");
                 if (!result || skeletonData == null)
                 {
@@ -606,35 +601,39 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             avartarID = NPCEx.NPCIDToOld(m_avartarID);
             customSpine = null;
             skeletonGraphic = null;
-            var jiaoYiUIMag = __instance.GetComponentInParent<JiaoYiUIMag>();
-            if (jiaoYiUIMag != null || SceneEx.NowSceneName == "MainMenu" || m_avartarID is > 1 and < 20000)
-            {
-                return true;
-            }
+
+            // 逻辑运算遵循“短路原则” 因此最好是合并到一起 并且调整合适的顺序
+            if (m_avartarID is > 1 and < 20000 || 
+                SceneEx.NowSceneName == "MainMenu" ||
+                __instance.GetComponentInParent<JiaoYiUIMag>() != null
+                ) return true;
 
             if (NpcUtils.IsFightScene && avartarID == 1 && PlayerInit)
             {
                 return true;
             }
+
             skeletonGraphic = __instance.GetComponent<SkeletonGraphic>();
             if (SetSpine(__instance))
             {
                 return false;
             }
-            if (!NpcUtils.GetNpcFightFace(avartarID)) return true;
-            var isFight = NpcUtils.IsFightScene;
-            if (!isFight || __instance.BaseImage != null) return true;
 
+            // IsFightScene 是一个 static 数据 不需要额外引用
+            // 逻辑运算遵循“短路原则” 因此最好是合并到一起 并且调整合适的顺序
+            if (!NpcUtils.IsFightScene ||
+                __instance.BaseImage != null ||
+                !NpcUtils.GetNpcFightFace(avartarID)
+               ) return true;
 
-            var go = new GameObject("Image", typeof(CustomImage));
-
-            var customImage = go.AddMissingComponent<CustomImage>();
+            // 在创建 GameObject 的时候，如果使用 type 传递组件，内部会自动调用 AddComponent 但是返回的是 GameObject 对象
+            // 想要获取 Component 对象，还要额外 GetComponent ，而使用 AddMissingComponent 方法，内部也是调用 GetComponent 同时还要进行判空
+            // 综上所述，建议采用这种写法
+            var customImage = new GameObject("Image").AddComponent<CustomImage>();
             customImage.SetSpine(__instance);
             customImage.SetAvatarId(m_avartarID);
-
 
             return true;
         }
     }
-
 }
