@@ -39,9 +39,9 @@ namespace SkySwordKill.NextMoreCommand.Patchs
 
     public class CustomImage : MonoBehaviour
     {
-        public Transform spine;
-        private SpriteRenderer _spriteRenderer;
-        public SkeletonAnimation skeletonAnimation;
+        public  Transform         spine;
+        private SpriteRenderer    _spriteRenderer;
+        public  SkeletonAnimation skeletonAnimation;
         // private Image _image;
         // private EStateType _stateType;
 
@@ -54,14 +54,13 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             var transform1 = transform;
             transform1.SetParent(spine.parent);
             transform1.localRotation = spine.localRotation;
-            transform1.localPosition = new Vector3(0, 3, 0);
+            transform1.localPosition = new Vector3(0, 3,    0);
             transform1.localScale = new Vector3(0.5f, 0.5f, 0);
 
         }
         private static Avatar Player => PlayerEx.Player;
         public void SetAvatarId(int monstarID)
         {
-
             StartCoroutine(SetAvatar(monstarID));
         }
 
@@ -93,30 +92,26 @@ namespace SkySwordKill.NextMoreCommand.Patchs
                 path = $"Effect/Prefab/gameEntity/Avater/Avater{faceId}/{faceId}";
                 if (AssetsUtils.GetCustomImageConfig("Res/" + path + ".png", out CustomSpineOption customSpineOption))
                 {
-                    var transform1 = transform;
+                    var transform1  = transform;
                     var nowRotation = transform1.localRotation;
                     customSpineOption?.SetTransform(transform1);
                     transform.localRotation = nowRotation;
                 }
-
             }
+
             var sprite = ModResources.LoadSprite(path);
-            var hasSprite = sprite != null;
-            if (_spriteRenderer != null)
-            {
-                _spriteRenderer.sprite = sprite;
-            }
 
-            if (skeletonAnimation != null)
+            if (sprite == null)
             {
-                skeletonAnimation.maskInteraction = hasSprite ? SpriteMaskInteraction.VisibleInsideMask : SpriteMaskInteraction.None;
-
-            }
-            if (!hasSprite)
-            {
+                if (skeletonAnimation) skeletonAnimation.maskInteraction = SpriteMaskInteraction.None;
                 DestroyImmediate(gameObject);
+                yield break;
             }
-            yield break;
+
+            // _spriteRenderer 是通过 AddMissingComponent 获取的，所以不会为 null
+            _spriteRenderer.sprite = sprite;
+
+            if (skeletonAnimation) skeletonAnimation.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
         }
 
         private void OnDestroy()
@@ -153,10 +148,10 @@ namespace SkySwordKill.NextMoreCommand.Patchs
     public class CustomSpinePos
     {
         public static CustomSpinePos Zero => new CustomSpinePos();
-        public static CustomSpinePos One => new CustomSpinePos(1, 1, 1);
-        public float X { get; set; } = 0;
-        public float Y { get; set; } = 0;
-        public float Z { get; set; } = 0;
+        public static CustomSpinePos One  => new CustomSpinePos(1, 1, 1);
+        public        float          X    { get; set; } = 0;
+        public        float          Y    { get; set; } = 0;
+        public        float          Z    { get; set; } = 0;
         public CustomSpinePos() : this(0f, 0f)
         {
         }
@@ -179,15 +174,15 @@ namespace SkySwordKill.NextMoreCommand.Patchs
     [JsonObject]
     public class CustomSpineOption
     {
-        public static readonly CustomSpineOption UINpcSvItemPos = new CustomSpineOption(new CustomSpinePos(0, -888), new CustomSpinePos(1, 1, 1));
-        public static readonly CustomSpineOption SayDialogPos = new CustomSpineOption(new CustomSpinePos(0, -250.6f), new CustomSpinePos(1, 1, 1));
-        public static readonly CustomSpineOption UINpcInfoPanelPos = new CustomSpineOption(new CustomSpinePos(0, -800), new CustomSpinePos(1, 1, 1));
-        public static readonly CustomSpineOption FightAvatarPos = new CustomSpineOption(new CustomSpinePos(0, 0), new CustomSpinePos(0.4f, 0.4f, 1));
-        public static readonly CustomSpineOption UINpcJiaoHuPopPos = new CustomSpineOption(new CustomSpinePos(0, -750), new CustomSpinePos(1, 1, 1));
-        public static readonly CustomSpineOption FpUIMagPos = new CustomSpineOption(new CustomSpinePos(0, -800), new CustomSpinePos(1, 1, 1));
-        public static readonly CustomSpineOption LunDaoManagerPos = new CustomSpineOption(new CustomSpinePos(0, -750), new CustomSpinePos(1, 1, 1));
-        public static readonly CustomSpineOption UiHeadPanelPos = new CustomSpineOption(new CustomSpinePos(-13, -890), new CustomSpinePos(1, 1, 1));
-        public static readonly CustomSpineOption TabUiMagPos = new CustomSpineOption(new CustomSpinePos(262.8f, -891.7998f), new CustomSpinePos(0.8f, 0.8f, 1));
+        public static readonly CustomSpineOption UINpcSvItemPos    = new CustomSpineOption(new CustomSpinePos(0,      -888),       new CustomSpinePos(1,    1,    1));
+        public static readonly CustomSpineOption SayDialogPos      = new CustomSpineOption(new CustomSpinePos(0,      -250.6f),    new CustomSpinePos(1,    1,    1));
+        public static readonly CustomSpineOption UINpcInfoPanelPos = new CustomSpineOption(new CustomSpinePos(0,      -800),       new CustomSpinePos(1,    1,    1));
+        public static readonly CustomSpineOption FightAvatarPos    = new CustomSpineOption(new CustomSpinePos(0,      0),          new CustomSpinePos(0.4f, 0.4f, 1));
+        public static readonly CustomSpineOption UINpcJiaoHuPopPos = new CustomSpineOption(new CustomSpinePos(0,      -750),       new CustomSpinePos(1,    1,    1));
+        public static readonly CustomSpineOption FpUIMagPos        = new CustomSpineOption(new CustomSpinePos(0,      -800),       new CustomSpinePos(1,    1,    1));
+        public static readonly CustomSpineOption LunDaoManagerPos  = new CustomSpineOption(new CustomSpinePos(0,      -750),       new CustomSpinePos(1,    1,    1));
+        public static readonly CustomSpineOption UiHeadPanelPos    = new CustomSpineOption(new CustomSpinePos(-13,    -890),       new CustomSpinePos(1,    1,    1));
+        public static readonly CustomSpineOption TabUiMagPos       = new CustomSpineOption(new CustomSpinePos(262.8f, -891.7998f), new CustomSpinePos(0.8f, 0.8f, 1));
 
         public CustomSpineOption()
         {
@@ -229,21 +224,21 @@ namespace SkySwordKill.NextMoreCommand.Patchs
     public class CustomSpine : MonoBehaviour
     {
         private UINPCSVItem _uiNpcSvItem;
-        private SayDialog _sayDialog;
-        public ESpineType spineType = ESpineType.None;
+        private SayDialog   _sayDialog;
+        public  ESpineType  spineType = ESpineType.None;
         // private CustomSpineOption _customSpineOption = null;
-        private UINPCJiaoHuPop _uiNpcJiaoHuPop;
-        private UINPCInfoPanel _uiNpcInfoPanel;
-        private InitAvatar _fightAvatar;
-        private JiaoYiUIMag _jiaoYiUIMag;
-        private FpUIMag _fpUIMag;
+        private UINPCJiaoHuPop    _uiNpcJiaoHuPop;
+        private UINPCInfoPanel    _uiNpcInfoPanel;
+        private InitAvatar        _fightAvatar;
+        private JiaoYiUIMag       _jiaoYiUIMag;
+        private FpUIMag           _fpUIMag;
         private CustomSpineOption customSpineOption;
         private CustomSpineOption defaultSpineOption;
-        private LunDaoManager _lunDaoManager;
-        private int _avatar;
-        private CGSpineManager _cgManager;
-        private UIHeadPanel _uiHeadPanel;
-        private TabUIMag _tabUiMag;
+        private LunDaoManager     _lunDaoManager;
+        private int               _avatar;
+        private CGSpineManager    _cgManager;
+        private UIHeadPanel       _uiHeadPanel;
+        private TabUIMag          _tabUiMag;
 
         private void OnEnable()
         {
@@ -295,7 +290,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             _jiaoYiUIMag = GetComponentInParent<JiaoYiUIMag>();
             _fpUIMag = GetComponentInParent<FpUIMag>();
             _lunDaoManager = GetComponentInParent<LunDaoManager>();
-            _cgManager = GetComponentInParent<CGSpineManager>() ;
+            _cgManager = GetComponentInParent<CGSpineManager>();
             _uiHeadPanel = GetComponentInParent<UIHeadPanel>();
             _tabUiMag = GetComponentInParent<TabUIMag>();
             if (_uiNpcSvItem != null)
@@ -351,14 +346,14 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             _avatar = avatar;
             SetAvatar(avatar.ToString(), isSay);
         }
-        public void SetAvatarCustom(string avatar, string option,ESpineAssetType spineAssetType = ESpineAssetType.Avatar)
+        public void SetAvatarCustom(string avatar, string option, ESpineAssetType spineAssetType = ESpineAssetType.Avatar)
         {
             if (string.IsNullOrWhiteSpace(avatar))
             {
                 return;
             }
             spineType = ESpineType.Custom;
-            AssetsUtils.GetCustomSpineConfig(avatar, out var customSpineConfig,spineAssetType);
+            AssetsUtils.GetCustomSpineConfig(avatar, out var customSpineConfig, spineAssetType);
             customSpineConfig.CustomSpineOptions.TryGetValue(option, out customSpineOption);
             if (customSpineOption is null)
             {
@@ -388,7 +383,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             customSpineOption = null;
 
             MyPluginMain.LogInfo($"avatar:{avatar} spineType:{spineType.GetName()}");
-            AssetsUtils.GetCustomSpineOption(avatar, spineType, out customSpineOption,spineType == ESpineType.CGManager ? ESpineAssetType.Cg : ESpineAssetType.Avatar);
+            AssetsUtils.GetCustomSpineOption(avatar, spineType, out customSpineOption, spineType == ESpineType.CGManager ? ESpineAssetType.Cg : ESpineAssetType.Avatar);
             MyPluginMain.LogInfo($"customSpineOption:\n{customSpineOption}");
             if (customSpineOption is null)
             {
@@ -462,11 +457,11 @@ namespace SkySwordKill.NextMoreCommand.Patchs
     [HarmonyPatch(typeof(PlayerSetRandomFace), nameof(PlayerSetRandomFace.randomAvatar))]
     public static class PlayerSetRandomFaceRandomAvatarPatch
     {
-        public static int m_avartarID;
-        public static bool m_customSpine;
+        public static  int             m_avartarID;
+        public static  bool            m_customSpine;
         private static SkeletonGraphic skeletonGraphic;
-        private static int avartarID;
-        private static CustomSpine customSpine;
+        private static int             avartarID;
+        private static CustomSpine     customSpine;
         // public static List<int> CustomNpc = new List<int>()
         // {
         //     8471,
@@ -482,14 +477,14 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             {
                 PlayerInit = true;
             }
-       
-            var skeletonAnimation = __instance.GetComponent<SkeletonAnimation>();
-            var skin = string.Empty;
-            SkeletonDataAsset skeletonData = null;
-            var key = string.Empty;
+
+            var               skeletonAnimation = __instance.GetComponent<SkeletonAnimation>();
+            var               skin              = string.Empty;
+            SkeletonDataAsset skeletonData;
+            var               key = string.Empty;
             if (avartarID == 1)
             {
-                var spine = DialogAnalysis.GetStr("PLAYER_SPINE");
+                var spine     = DialogAnalysis.GetStr("PLAYER_SPINE");
                 var spineSkin = DialogAnalysis.GetStr("PLAYER_SPINE_SKIN");
                 if (int.TryParse(spine, out var id))
                 {
@@ -513,14 +508,14 @@ namespace SkySwordKill.NextMoreCommand.Patchs
                 }
             }
             else
-            
+
             {
                 if (!NpcUtils.GetNpcFightSpine(avartarID))
                 {
                     return false;
                 }
                 key = NpcUtils.GetNpcFaceSpine(avartarID);
-                var result=AssetsUtils.GetSkeletonData(key, out skeletonData);
+                var result = AssetsUtils.GetSkeletonData(key, out skeletonData);
                 MyLog.Log($"key:{key}");
                 if (!result || skeletonData == null)
                 {
@@ -539,9 +534,9 @@ namespace SkySwordKill.NextMoreCommand.Patchs
                 skeletonGraphic.initialSkinName = skin;
                 skeletonGraphic.startingAnimation = "Idle_0";
                 skeletonGraphic.Initialize(true);
-                var component = __instance.gameObject.AddMissingComponent<CustomSpine>();
+                var component    = __instance.gameObject.AddMissingComponent<CustomSpine>();
                 var sayTransform = __instance.transform;
-                var say = false;
+                var say          = false;
                 for (var i = 0; i < 3; i++)
                 {
                     sayTransform = sayTransform.parent;
@@ -563,7 +558,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
                 if (AssetsUtils.GetSkeletonAnimation(key, out var skeletonAnimationGo))
                 {
                     skeletonAnimation.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
-                    var gameObject = Object.Instantiate(skeletonAnimationGo, skeletonAnimation.transform.parent);
+                    var gameObject         = Object.Instantiate(skeletonAnimationGo, skeletonAnimation.transform.parent);
                     var skeletonAnimation1 = gameObject.GetComponent<SkeletonAnimation>();
                     skeletonAnimation1.skeletonDataAsset = skeletonData;
                     skeletonAnimation1.initialSkinName = skin;
@@ -571,7 +566,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
                     skeletonAnimation1.Initialize(true);
                     skeletonAnimation.AnimationState.Start += entry =>
                     {
-                        var name = entry.Animation.Name;
+                        var name         = entry.Animation.Name;
                         var hasAnimation = AssetsUtils.CheckAnimation(key, name, out var isIdle);
                         if (!hasAnimation) return;
                         var trackEntry = skeletonAnimation1.AnimationState.GetCurrent(0);
@@ -606,35 +601,40 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             avartarID = NPCEx.NPCIDToOld(m_avartarID);
             customSpine = null;
             skeletonGraphic = null;
-            var jiaoYiUIMag = __instance.GetComponentInParent<JiaoYiUIMag>();
-            if (jiaoYiUIMag != null || SceneEx.NowSceneName == "MainMenu" || m_avartarID is > 1 and < 20000)
-            {
-                return true;
-            }
+
+            // 逻辑运算遵循“短路原则” 因此最好是合并到一起 并且调整合适的顺序
+            if (
+                SceneEx.NowSceneName == "MainMenu" ||
+                __instance.GetComponentInParent<JiaoYiUIMag>() != null ||
+                m_avartarID is > 1 and < 20000
+            ) return true;
 
             if (NpcUtils.IsFightScene && avartarID == 1 && PlayerInit)
             {
                 return true;
             }
+
             skeletonGraphic = __instance.GetComponent<SkeletonGraphic>();
             if (SetSpine(__instance))
             {
                 return false;
             }
-            if (!NpcUtils.GetNpcFightFace(avartarID)) return true;
-            var isFight = NpcUtils.IsFightScene;
-            if (!isFight || __instance.BaseImage != null) return true;
 
+            // IsFightScene 是一个 static 数据 不需要额外引用
+            // 逻辑运算遵循“短路原则” 因此最好是合并到一起 并且调整合适的顺序
+            if (!NpcUtils.IsFightScene ||
+                __instance.BaseImage != null ||
+                !NpcUtils.GetNpcFightFace(avartarID)
+               ) return true;
 
-            var go = new GameObject("Image", typeof(CustomImage));
-
-            var customImage = go.AddMissingComponent<CustomImage>();
+            // 在创建 GameObject 的时候，如果使用 type 传递组件，内部会自动调用 AddComponent 但是返回的是 GameObject 对象
+            // 想要获取 Component 对象，还要额外 GetComponent ，而使用 AddMissingComponent 方法，内部也是调用 GetComponent 同时还要进行判空
+            // 综上所述，建议采用这种写法
+            var customImage = new GameObject("Image").AddComponent<CustomImage>();
             customImage.SetSpine(__instance);
             customImage.SetAvatarId(m_avartarID);
-
 
             return true;
         }
     }
-
 }
