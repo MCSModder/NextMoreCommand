@@ -53,7 +53,7 @@ namespace SkySwordKill.NextMoreCommand.CustomModData
                 return;
             }
             var @event = count == 1 ? Event[0] : Event[Random.Range(0, Event.Count - 1)];
-            var env = GetEnv(environment);
+            var env    = GetEnv(environment);
             if (DialogAnalysis.IsRunningEvent)
             {
                 DialogAnalysis.SwitchDialogEvent(@event, env);
@@ -133,7 +133,7 @@ namespace SkySwordKill.NextMoreCommand.CustomModData
         }
         private static void LoadCustomRandomChat(string path, ModConfig modConfig)
         {
-            
+
             foreach (var filePath in Directory.GetFiles(path, "*.json", SearchOption.AllDirectories))
             {
                 try

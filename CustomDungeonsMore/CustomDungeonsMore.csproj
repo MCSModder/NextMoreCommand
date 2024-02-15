@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')"/>
     <PropertyGroup>
         <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -34,121 +34,121 @@
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="0Harmony">
-          <HintPath>..\..\..\..\..\workshop\content\1189490\2824349934\BepInEx\core\0Harmony.dll</HintPath>
-          <Private>False</Private>
+            <HintPath>..\..\..\..\..\workshop\content\1189490\2824349934\BepInEx\core\0Harmony.dll</HintPath>
+            <Private>False</Private>
         </Reference>
         <Reference Include="Assembly-CSharp">
-          <HintPath>..\..\..\觅长生_Data\Managed\Assembly-CSharp.dll</HintPath>
-          <Private>False</Private>
+            <HintPath>..\..\..\觅长生_Data\Managed\Assembly-CSharp.dll</HintPath>
+            <Private>False</Private>
         </Reference>
         <Reference Include="BepInEx">
-          <HintPath>..\..\..\..\..\workshop\content\1189490\2824349934\BepInEx\core\BepInEx.dll</HintPath>
-          <Private>False</Private>
+            <HintPath>..\..\..\..\..\workshop\content\1189490\2824349934\BepInEx\core\BepInEx.dll</HintPath>
+            <Private>False</Private>
         </Reference>
         <Reference Include="CustomDungeons">
-          <HintPath>..\..\..\..\..\workshop\content\1189490\2897391363\plugins\CustomDungeons.dll</HintPath>
-          <Private>False</Private>
+            <HintPath>..\..\..\..\..\workshop\content\1189490\2897391363\plugins\CustomDungeons.dll</HintPath>
+            <Private>False</Private>
         </Reference>
         <Reference Include="MiniExcel, Version=1.31.2.0, Culture=neutral, PublicKeyToken=e7310002a53eac39, processorArchitecture=MSIL">
-          <HintPath>..\packages\MiniExcel.1.31.2\lib\net45\MiniExcel.dll</HintPath>
-          <Private>False</Private>
+            <HintPath>..\packages\MiniExcel.1.31.2\lib\net45\MiniExcel.dll</HintPath>
+            <Private>False</Private>
         </Reference>
         <Reference Include="Newtonsoft.Json">
-          <HintPath>..\..\..\觅长生_Data\Managed\Newtonsoft.Json.dll</HintPath>
-          <Private>False</Private>
+            <HintPath>..\..\..\觅长生_Data\Managed\Newtonsoft.Json.dll</HintPath>
+            <Private>False</Private>
         </Reference>
         <Reference Include="Next">
-          <HintPath>..\..\..\..\..\workshop\content\1189490\2824845357\plugins\Next.dll</HintPath>
-          <Private>False</Private>
+            <HintPath>..\..\..\..\..\workshop\content\1189490\2824845357\plugins\Next.dll</HintPath>
+            <Private>False</Private>
         </Reference>
-        <Reference Include="System" />
-        <Reference Include="System.Core" />
-        <Reference Include="System.Data" />
-        <Reference Include="System.IO.Compression" />
-        <Reference Include="System.Xml" />
+        <Reference Include="System"/>
+        <Reference Include="System.Core"/>
+        <Reference Include="System.Data"/>
+        <Reference Include="System.IO.Compression"/>
+        <Reference Include="System.Xml"/>
         <Reference Include="UniRx">
-          <HintPath>..\..\..\觅长生_Data\Managed\UniRx.dll</HintPath>
-          <Private>False</Private>
+            <HintPath>..\..\..\觅长生_Data\Managed\UniRx.dll</HintPath>
+            <Private>False</Private>
         </Reference>
         <Reference Include="UniTask">
-          <HintPath>..\..\..\觅长生_Data\Managed\UniTask.dll</HintPath>
-          <Private>False</Private>
+            <HintPath>..\..\..\觅长生_Data\Managed\UniTask.dll</HintPath>
+            <Private>False</Private>
         </Reference>
         <Reference Include="UniTask.Addressables">
-          <HintPath>..\..\..\觅长生_Data\Managed\UniTask.Addressables.dll</HintPath>
-          <Private>False</Private>
+            <HintPath>..\..\..\觅长生_Data\Managed\UniTask.Addressables.dll</HintPath>
+            <Private>False</Private>
         </Reference>
         <Reference Include="UniTask.DOTween">
-          <HintPath>..\..\..\觅长生_Data\Managed\UniTask.DOTween.dll</HintPath>
-          <Private>False</Private>
+            <HintPath>..\..\..\觅长生_Data\Managed\UniTask.DOTween.dll</HintPath>
+            <Private>False</Private>
         </Reference>
         <Reference Include="UniTask.Linq">
-          <HintPath>..\..\..\觅长生_Data\Managed\UniTask.Linq.dll</HintPath>
-          <Private>False</Private>
+            <HintPath>..\..\..\觅长生_Data\Managed\UniTask.Linq.dll</HintPath>
+            <Private>False</Private>
         </Reference>
         <Reference Include="UniTask.TextMeshPro">
-          <HintPath>..\..\..\觅长生_Data\Managed\UniTask.TextMeshPro.dll</HintPath>
-          <Private>False</Private>
+            <HintPath>..\..\..\觅长生_Data\Managed\UniTask.TextMeshPro.dll</HintPath>
+            <Private>False</Private>
         </Reference>
         <Reference Include="UnityEngine">
-          <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.dll</HintPath>
-          <Private>False</Private>
+            <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.dll</HintPath>
+            <Private>False</Private>
         </Reference>
         <Reference Include="UnityEngine.CoreModule">
-          <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
-          <Private>False</Private>
+            <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+            <Private>False</Private>
         </Reference>
         <Reference Include="UnityEngine.GridModule">
-          <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.GridModule.dll</HintPath>
-          <Private>False</Private>
+            <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.GridModule.dll</HintPath>
+            <Private>False</Private>
         </Reference>
         <Reference Include="UnityEngine.TerrainModule">
-          <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.TerrainModule.dll</HintPath>
-          <Private>False</Private>
+            <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.TerrainModule.dll</HintPath>
+            <Private>False</Private>
         </Reference>
         <Reference Include="UnityEngine.TilemapModule">
-          <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.TilemapModule.dll</HintPath>
-          <Private>False</Private>
+            <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.TilemapModule.dll</HintPath>
+            <Private>False</Private>
         </Reference>
         <Reference Include="UnityEngine.UI">
-          <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.UI.dll</HintPath>
-          <Private>False</Private>
+            <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.UI.dll</HintPath>
+            <Private>False</Private>
         </Reference>
         <Reference Include="UnityEngine.UIElementsModule">
-          <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
-          <Private>False</Private>
+            <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
+            <Private>False</Private>
         </Reference>
         <Reference Include="UnityEngine.UIModule">
-          <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.UIModule.dll</HintPath>
-          <Private>False</Private>
+            <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.UIModule.dll</HintPath>
+            <Private>False</Private>
         </Reference>
         <Reference Include="VContainer">
-          <HintPath>..\..\..\觅长生_Data\Managed\VContainer.dll</HintPath>
-          <Private>False</Private>
+            <HintPath>..\..\..\觅长生_Data\Managed\VContainer.dll</HintPath>
+            <Private>False</Private>
         </Reference>
         <Reference Include="VContainer.EnableCodeGen">
-          <HintPath>..\..\..\觅长生_Data\Managed\VContainer.EnableCodeGen.dll</HintPath>
-          <Private>False</Private>
+            <HintPath>..\..\..\觅长生_Data\Managed\VContainer.EnableCodeGen.dll</HintPath>
+            <Private>False</Private>
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Data\MapData.cs" />
-        <Compile Include="EnvExtension\Dungeon_GetMapData.cs" />
-        <Compile Include="EnvExtension\Dungeon_GetNowMapData.cs" />
-        <Compile Include="CustomDungeonsMore.cs" />
-        <Compile Include="Properties\AssemblyInfo.cs" />
-        <Compile Include="Utils\DungeonUtils.cs" />
+        <Compile Include="Data\MapData.cs"/>
+        <Compile Include="EnvExtension\Dungeon_GetMapData.cs"/>
+        <Compile Include="EnvExtension\Dungeon_GetNowMapData.cs"/>
+        <Compile Include="CustomDungeonsMore.cs"/>
+        <Compile Include="Properties\AssemblyInfo.cs"/>
+        <Compile Include="Utils\DungeonUtils.cs"/>
     </ItemGroup>
     <ItemGroup>
-      <None Include="packages.config" />
+        <None Include="packages.config"/>
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\NextMoreCommand\NextMoreCommand.csproj">
-        <Project>{5f79f8ee-9bd4-4d1d-a72d-1c0115ad85c6}</Project>
-        <Name>NextMoreCommand</Name>
-      </ProjectReference>
+        <ProjectReference Include="..\NextMoreCommand\NextMoreCommand.csproj">
+            <Project>{5f79f8ee-9bd4-4d1d-a72d-1c0115ad85c6}</Project>
+            <Name>NextMoreCommand</Name>
+        </ProjectReference>
     </ItemGroup>
-    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
          Other similar extension points exist, see Microsoft.Common.targets.
     <Target Name="BeforeBuild">

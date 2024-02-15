@@ -11,7 +11,7 @@ namespace SkySwordKill.NextMoreCommand.CustomModData
 {
     public static class CustomModDataManager
     {
-        public static bool HasPath(this string path) => Directory.Exists(path);
+        public static bool   HasPath(this     string path)                => Directory.Exists(path);
         public static string CombinePath(this string path, string folder) => Path.Combine(path, folder);
 
         public static bool HasDirectory(params string[] paths)

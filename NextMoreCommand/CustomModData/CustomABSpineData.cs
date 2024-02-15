@@ -15,11 +15,12 @@ namespace SkySwordKill.NextMoreCommand.CustomModData
     [ModData("CustomABSpineData")]
     public class CustomABSpineData : IModData
     {
-        public static event Action<string,ModConfig>  OnLoadCustomAB;
+        public static event Action<string, ModConfig> OnLoadCustomAB;
         public void Read(ModConfig modConfig)
-        {            var assetDir = modConfig.GetAssetDir();
-            CustomModDataManager.LoadData(assetDir, "Avatar", modConfig, LoadCustomAb);
-            CustomModDataManager.LoadData(assetDir, "CG", modConfig, LoadCustomAb);
+        {
+            var assetDir = modConfig.GetAssetDir();
+            CustomModDataManager.LoadData(assetDir, "Avatar",    modConfig, LoadCustomAb);
+            CustomModDataManager.LoadData(assetDir, "CG",        modConfig, LoadCustomAb);
             CustomModDataManager.LoadData(assetDir, "MapPlayer", modConfig, LoadCustomAb);
         }
         public static void LoadCustomAb(string filepath, ModConfig modConfig)
@@ -34,21 +35,21 @@ namespace SkySwordKill.NextMoreCommand.CustomModData
                 Main.LogInfo($"添加AB {file}");
                 try
                 {
-                
-                    OnLoadCustomAB?.Invoke(file,modConfig);
+
+                    OnLoadCustomAB?.Invoke(file, modConfig);
                     Main.Res.AddABAsset(file);
                 }
                 catch (Exception e)
                 {
                     Main.LogWarning(e.ToString());
                 }
-           
+
             }
         }
         public bool Check(ModConfig modConfig)
         {
             var assetDir = modConfig.GetAssetDir();
-            return assetDir.CombinePath("Avatar").HasPath() || assetDir.CombinePath("CG").HasPath() ;
+            return assetDir.CombinePath("Avatar").HasPath() || assetDir.CombinePath("CG").HasPath();
         }
     }
 }

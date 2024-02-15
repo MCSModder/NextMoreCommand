@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')"/>
     <PropertyGroup>
         <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -33,62 +33,62 @@
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="0Harmony">
-          <HintPath>..\..\..\..\..\workshop\content\1189490\2824349934\BepInEx\core\0Harmony.dll</HintPath>
-          <Private>False</Private>
+            <HintPath>..\..\..\..\..\workshop\content\1189490\2824349934\BepInEx\core\0Harmony.dll</HintPath>
+            <Private>False</Private>
         </Reference>
         <Reference Include="Assembly-CSharp">
-          <HintPath>..\..\..\觅长生_Data\Managed\Assembly-CSharp.dll</HintPath>
-          <Private>False</Private>
+            <HintPath>..\..\..\觅长生_Data\Managed\Assembly-CSharp.dll</HintPath>
+            <Private>False</Private>
         </Reference>
         <Reference Include="Assembly-CSharp-firstpass">
-          <HintPath>..\..\..\觅长生_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
-          <Private>False</Private>
+            <HintPath>..\..\..\觅长生_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+            <Private>False</Private>
         </Reference>
         <Reference Include="BepInEx">
-          <HintPath>..\..\..\..\..\workshop\content\1189490\2824349934\BepInEx\core\BepInEx.dll</HintPath>
-          <Private>False</Private>
+            <HintPath>..\..\..\..\..\workshop\content\1189490\2824349934\BepInEx\core\BepInEx.dll</HintPath>
+            <Private>False</Private>
         </Reference>
         <Reference Include="BepInEx.Workshop">
-          <HintPath>..\..\..\..\..\workshop\content\1189490\2824349934\BepInEx\patchers\BepInEx.Workshop.dll</HintPath>
-          <Private>False</Private>
+            <HintPath>..\..\..\..\..\workshop\content\1189490\2824349934\BepInEx\patchers\BepInEx.Workshop.dll</HintPath>
+            <Private>False</Private>
         </Reference>
         <Reference Include="Next">
-          <HintPath>..\..\..\..\..\workshop\content\1189490\2824845357\plugins\Next.dll</HintPath>
-          <Private>False</Private>
+            <HintPath>..\..\..\..\..\workshop\content\1189490\2824845357\plugins\Next.dll</HintPath>
+            <Private>False</Private>
         </Reference>
         <Reference Include="NextMoreCommand">
-          <HintPath>..\..\..\NextMoreCommand - 副本\plugins\NextMoreCommand.dll</HintPath>
-          <Private>False</Private>
+            <HintPath>..\..\..\NextMoreCommand - 副本\plugins\NextMoreCommand.dll</HintPath>
+            <Private>False</Private>
         </Reference>
-        <Reference Include="System" />
-        <Reference Include="System.Core" />
-        <Reference Include="System.Xml" />
+        <Reference Include="System"/>
+        <Reference Include="System.Core"/>
+        <Reference Include="System.Xml"/>
         <Reference Include="UnityEngine">
-          <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.dll</HintPath>
-          <Private>False</Private>
+            <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.dll</HintPath>
+            <Private>False</Private>
         </Reference>
         <Reference Include="UnityEngine.AssetBundleModule">
-          <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.AssetBundleModule.dll</HintPath>
-          <Private>False</Private>
+            <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.AssetBundleModule.dll</HintPath>
+            <Private>False</Private>
         </Reference>
         <Reference Include="UnityEngine.CoreModule">
-          <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
-          <Private>False</Private>
+            <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+            <Private>False</Private>
         </Reference>
         <Reference Include="UnityEngine.UI">
-          <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.UI.dll</HintPath>
-          <Private>False</Private>
+            <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.UI.dll</HintPath>
+            <Private>False</Private>
         </Reference>
         <Reference Include="UnityEngine.UIElementsModule">
-          <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
-          <Private>False</Private>
+            <HintPath>..\..\..\觅长生_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
+            <Private>False</Private>
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="UnsubscribeNextMoreCommandOld.cs" />
-        <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="UnsubscribeNextMoreCommandOld.cs"/>
+        <Compile Include="Properties\AssemblyInfo.cs"/>
     </ItemGroup>
-    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
          Other similar extension points exist, see Microsoft.Common.targets.
     <Target Name="BeforeBuild">
