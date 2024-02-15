@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using HarmonyLib;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SkySwordKill.Next;
@@ -14,7 +15,7 @@ namespace SkySwordKill.NextMoreCommand.CustomModData
     [ModData("CustomABSpineData")]
     public class CustomABSpineData : IModData
     {
-
+        public static event Action<string,ModConfig>  OnLoadCustomAB;
         public void Read(ModConfig modConfig)
         {            var assetDir = modConfig.GetAssetDir();
             CustomModDataManager.LoadData(assetDir, "Avatar", modConfig, LoadCustomAb);
@@ -33,6 +34,8 @@ namespace SkySwordKill.NextMoreCommand.CustomModData
                 Main.LogInfo($"添加AB {file}");
                 try
                 {
+                
+                    OnLoadCustomAB?.Invoke(file,modConfig);
                     Main.Res.AddABAsset(file);
                 }
                 catch (Exception e)
