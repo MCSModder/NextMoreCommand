@@ -17,14 +17,15 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc.Teleport
         public bool m_isRemove = false;
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
-        {   MyLog.LogCommand(command);
+        {
+            MyLog.LogCommand(command);
             var npcList = command.ToNpcListId();
             MyLog.Log(command, $"开始执行角色强制删除传送 角色ID列表:{JArray.FromObject(command.ParamList).ToString(Formatting.None)}");
             MyLog.Log(command, $"开始执行角色强制删除传送 有效角色ID列表:{JArray.FromObject(npcList).ToString(Formatting.None)}");
             foreach (var npc in npcList)
             {
                 NpcUtils.RemoveNpc(npc, out m_isRemove);
-                MyLog.Log(command, $"角色强制删除传送 角色ID:{npc} 角色名:{npc.GetNpcName()}" );
+                MyLog.Log(command, $"角色强制删除传送 角色ID:{npc} 角色名:{npc.GetNpcName()}");
             }
 
             if (m_isRemove && !UiNpcJiaoHuRefreshNowMapNpcPatch.m_isRefresh)

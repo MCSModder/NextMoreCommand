@@ -13,13 +13,13 @@ namespace SkySwordKill.NextMoreCommand.Utils
             this.taskId = taskId;
         }
 
-        private int taskId;
-        public int TaskID => taskId;
-        public int FinalIndex => TaskUtils.GetFinalIndex(taskId);
-        public int NowIndex => TaskUtils.GetNowIndex(taskId);
-        public JSONObject TaskIdData => TaskUtils.GetTaskIdData(taskId);
-        public bool HasTask() => TaskUtils.HasTask(taskId);
-        public bool NotHasTask() => !HasTask();
+        private int        taskId;
+        public  int        TaskID       => taskId;
+        public  int        FinalIndex   => TaskUtils.GetFinalIndex(taskId);
+        public  int        NowIndex     => TaskUtils.GetNowIndex(taskId);
+        public  JSONObject TaskIdData   => TaskUtils.GetTaskIdData(taskId);
+        public  bool       HasTask()    => TaskUtils.HasTask(taskId);
+        public  bool       NotHasTask() => !HasTask();
     }
 
     public static class TaskUtils
@@ -31,7 +31,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
             {
                 var id = jsonObject["id"].I.ToString();
                 if (jsonData.instance.TaskJsonData.HasField(id)) continue;
-                MyLog.Log($"检测任务错误", $"taskMag 任务不存在 id:{id}", true);
+                MyLog.Log($"检测任务错误", $"taskMag 任务不存在 id:{id}",            true);
                 MyLog.Log($"检测任务错误", $"JSON:{jsonObject.ToString(true)}", true);
 
             }
@@ -40,19 +40,19 @@ namespace SkySwordKill.NextMoreCommand.Utils
             {
                 var id = jsonObject["id"].I.ToString();
                 if (jsonData.instance.NTaskAllType.HasField(id)) continue;
-                MyLog.Log($"检测任务错误", $"nomelTaskMag 任务不存在 id:{id}", true);
+                MyLog.Log($"检测任务错误", $"nomelTaskMag 任务不存在 id:{id}",       true);
                 MyLog.Log($"检测任务错误", $"JSON:{jsonObject.ToString(true)}", true);
             }
         }
-        private static Avatar Player => PlayerEx.Player;
-        public static TaskMag TaskMag => Player.taskMag;
-        public static JSONObject TaskData => TaskMag._TaskData;
-        public static JSONObject Task => TaskData["Task"];
-        public static JSONObject GetTaskIdData(int taskId) => Task[taskId.ToString()];
-        public static int GetFinalIndex(int taskID) => TaskMag.getFinallyIndex(taskID);
-        public static int GetNowIndex(int taskID) => TaskMag.GetTaskNowIndex(taskID);
-        public static bool HasTask(int taskID) => TaskMag.isHasTask(taskID);
-        public static bool NotHasTask(int taskID) => !HasTask(taskID);
+        private static Avatar     Player                    => PlayerEx.Player;
+        public static  TaskMag    TaskMag                   => Player.taskMag;
+        public static  JSONObject TaskData                  => TaskMag._TaskData;
+        public static  JSONObject Task                      => TaskData["Task"];
+        public static  JSONObject GetTaskIdData(int taskId) => Task[taskId.ToString()];
+        public static  int        GetFinalIndex(int taskID) => TaskMag.getFinallyIndex(taskID);
+        public static  int        GetNowIndex(int   taskID) => TaskMag.GetTaskNowIndex(taskID);
+        public static  bool       HasTask(int       taskID) => TaskMag.isHasTask(taskID);
+        public static  bool       NotHasTask(int    taskID) => !HasTask(taskID);
 
         public static bool IsOverFinalIndex(int taskID, int index) => index > GetFinalIndex(taskID);
 
@@ -71,8 +71,8 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 taskIdData["AllIndex"].Add(taskIndex);
             }
 
-            taskIdData.SetField("NowIndex", taskIndex);
-            taskIdData.SetField("isComplete", isFinish);
+            taskIdData.SetField("NowIndex",    taskIndex);
+            taskIdData.SetField("isComplete",  isFinish);
             taskIdData.SetField("disableTask", isFinish);
             return true;
         }
@@ -91,10 +91,10 @@ namespace SkySwordKill.NextMoreCommand.Utils
             }
 
             var finalIndex = GetFinalIndex(taskId);
-            var nowIndex = GetNowIndex(taskId);
-            var nextIndex = nowIndex + 1;
-            var isFinish = nowIndex == finalIndex;
-            var index = nextIndex > finalIndex ? nowIndex : nextIndex;
+            var nowIndex   = GetNowIndex(taskId);
+            var nextIndex  = nowIndex + 1;
+            var isFinish   = nowIndex == finalIndex;
+            var index      = nextIndex > finalIndex ? nowIndex : nextIndex;
             SetTaskNextIndex(taskId, index, isFinish);
             return true;
         }
@@ -121,15 +121,15 @@ namespace SkySwordKill.NextMoreCommand.Utils
             return true;
         }
 
-        public static string GetTaskNameById(int taskId) => TaskJsonData.DataDict[taskId].Name;
+        public static string GetTaskNameById(int  taskId) => TaskJsonData.DataDict[taskId].Name;
         public static string GetTaskName(this int taskId) => GetTaskNameById(taskId);
 
         public static void SetTaskPop(int taskId, bool isFinish = false)
         {
-            var name = TaskJsonData.DataDict[taskId].Name;
+            var name        = TaskJsonData.DataDict[taskId].Name;
             var isFinishMsg = isFinish ? "已完成" : "进度已更新";
-            var msg = $"<color=#FF0000> {name} </color> {isFinishMsg}";
-            var popTips = isFinish ? PopTipIconType.任务完成 : PopTipIconType.任务进度;
+            var msg         = $"<color=#FF0000> {name} </color> {isFinishMsg}";
+            var popTips     = isFinish ? PopTipIconType.任务完成 : PopTipIconType.任务进度;
             UIPopTip.Inst.Pop(msg, popTips);
         }
     }

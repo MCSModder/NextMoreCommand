@@ -10,9 +10,9 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Utils
     {
         public object Execute(DialogEnvQueryContext context)
         {
-            var group = context.GetMyArgs(0,"");
-            var key = context.GetMyArgs(1,"");
-            return DialogAnalysis.GetInt(group,key);
+            var group = context.GetMyArgs(0, "");
+            var key   = context.GetMyArgs(1, "");
+            return DialogAnalysis.GetInt(group, key);
         }
     }
 }

@@ -22,7 +22,7 @@ public static class ExtendsMethods
 public class CustomNpc
 {
     public readonly static Dictionary<string, CustomNpc> CustomNpcs = new Dictionary<string, CustomNpc>();
-    public static CustomNpc GetNpc(string npc) => CustomNpcs[npc];
+    public static          CustomNpc                     GetNpc(string npc) => CustomNpcs[npc];
 
     [JsonProperty("角色Id", Order = 0)]
     [JsonRequired]
@@ -33,7 +33,7 @@ public class CustomNpc
     public string Title { get; set; } = string.Empty;
 
     [JsonProperty("姓氏", Order = 2)] public string FirstName { get; set; } = string.Empty;
-    [JsonProperty("名字", Order = 3)] public string Name { get; set; } = string.Empty;
+    [JsonProperty("名字", Order = 3)] public string Name      { get; set; } = string.Empty;
 
     [JsonProperty("性别", Order = 4)] [JsonRequired]
     private SexType _sexType = NPC.SexType.男;

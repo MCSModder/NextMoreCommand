@@ -7,9 +7,9 @@ namespace SkySwordKill.NextMoreCommand.CustomModDebug.NextMoreCore
 {
     public partial class UI_ComState : GComponent
     {
-        public GTextField m_resetState;
-        public GButton m_resetButton;
-        public const string URL = "ui://kxq1c75y1101q5m";
+        public       GTextField m_resetState;
+        public       GButton    m_resetButton;
+        public const string     URL = "ui://kxq1c75y1101q5m";
 
         public static UI_ComState CreateInstance()
         {

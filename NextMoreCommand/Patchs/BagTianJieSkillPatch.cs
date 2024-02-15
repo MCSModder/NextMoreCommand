@@ -10,7 +10,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs;
 [HarmonyPatch(typeof(BagTianJieSkill), MethodType.Constructor, new Type[] { typeof(TianJieMiShuData) })]
 public static class BagTianJieSkillPatch
 {
-    public static Avatar Player => PlayerEx.Player;
+    public static Avatar     Player                => PlayerEx.Player;
     public static JSONObject TianJieYiLingWuSkills => Player.TianJieYiLingWuSkills;
     public static bool Prefix(ref BagTianJieSkill __instance, TianJieMiShuData miShu)
     {
@@ -40,4 +40,3 @@ public static class BagTianJieSkillPatch
         return false;
     }
 }
-

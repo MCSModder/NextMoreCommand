@@ -15,8 +15,8 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fight
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
             var player = env.player;
-            var skill = command.GetStr(0);
-            var index = command.GetInt(1, 0);
+            var skill  = command.GetStr(0);
+            var index  = command.GetInt(1, 0);
             index = index <= 0 ? 0 : index >= 12 ? 12 : index;
             var end = command.GetInt(2, 12);
             end = end <= 0 ? 0 : end >= 12 ? 12 : end;

@@ -14,7 +14,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fungus
     public class RunFungusItemId : IDialogEvent
     {
         private string tagBlock;
-        private int itemId;
+        private int    itemId;
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
@@ -30,9 +30,9 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fungus
             }
             else
             {
-                var flowchart = env.flowchart;
+                var flowchart     = env.flowchart;
                 var flowchartName = flowchart.GetName();
-                var index = flowchart.FindIndex(tagBlock, itemId, out var block);
+                var index         = flowchart.FindIndex(tagBlock, itemId, out var block);
                 MyLog.Log(command, $"开始执行官方流程对话ID 流程名:{flowchartName} 模块名:{tagBlock} 对话Id:{itemId}");
                 if (block == null)
                 {

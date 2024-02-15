@@ -11,9 +11,9 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc
     [DialogEvent("设置角色死亡")]
     public class SetNpcDeath : IDialogEvent
     {
-        private int _deathType;
-        private int _npcId;
-        private int _killNpcId;
+        private int  _deathType;
+        private int  _npcId;
+        private int  _killNpcId;
         private bool _after;
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)

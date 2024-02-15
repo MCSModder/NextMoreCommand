@@ -15,7 +15,7 @@ public class ShowGaoshi : IDialogEvent
         MyLog.LogCommand(command);
         _sceneName = command.GetStr(0);
         UiUtils.ShowGaoShi(_sceneName);
-        MyLog.Log(command,$"显示告示 告示场景:{_sceneName}");
+        MyLog.Log(command, $"显示告示 告示场景:{_sceneName}");
         MyLog.LogCommand(command, false);
         callback?.Invoke();
     }

@@ -15,7 +15,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fungus
     {
         private string _flowchartName;
         private string _tagBlock;
-        private int _itemId;
+        private int    _itemId;
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {

@@ -15,19 +15,16 @@ public class BuffInfo
     {
         return raw.Split('|').Where(text => !string.IsNullOrWhiteSpace(text)).Select(buff => new BuffInfo(buff)).ToList();
     }
-    [JsonProperty("ID")] public int ID = 0;
-    [JsonProperty("数量")] public int Count = 0;
-    [JsonIgnore] public string Raw = string.Empty;
+    [JsonProperty("ID")] public int    ID    = 0;
+    [JsonProperty("数量")] public int    Count = 0;
+    [JsonIgnore]         public string Raw   = string.Empty;
 
-    private Tools Tools => Tools.instance;
-    public bool IsEmpty => string.IsNullOrWhiteSpace(Raw);
+    private Tools Tools   => Tools.instance;
+    public  bool  IsEmpty => string.IsNullOrWhiteSpace(Raw);
     public BuffInfo(string str)
     {
         Raw = str;
-        var split = str.Split(new[]
-        {
-            ','
-        }, 2);
+        var split = str.Split(new[] { ',' }, 2);
         if (split.Length == 2)
         {
             ID = int.Parse(split[0]);
@@ -48,7 +45,7 @@ public class BuffInfo
         }
         else
         {
-            player.Add(ID,Count);
+            player.Add(ID, Count);
         }
     }
     public void SetEnemy()
@@ -60,24 +57,24 @@ public class BuffInfo
         }
         else
         {
-            enemy.Add(ID,Count);
+            enemy.Add(ID, Count);
         }
     }
 }
 
 public interface IFightInfo
 {
-    public int Id { get; set; }
-    public int NpcId { get; set; }
-    public int CanRun { get; set; }
-    public StartFight.FightEnumType FightType { get; set; }
-    public int Background { get; set; }
-    public string Music { get; set; }
-    public List<BuffInfo> PlayerBuff { get; set; }
-    public List<BuffInfo> EnemyBuff { get; set; }
-    public string VictoryEvent { get; set; }
-    public string DefeatEvent { get; set; }
-    public List<string> Tags { get; set; }
+    public int                      Id           { get; set; }
+    public int                      NpcId        { get; set; }
+    public int                      CanRun       { get; set; }
+    public StartFight.FightEnumType FightType    { get; set; }
+    public int                      Background   { get; set; }
+    public string                   Music        { get; set; }
+    public List<BuffInfo>           PlayerBuff   { get; set; }
+    public List<BuffInfo>           EnemyBuff    { get; set; }
+    public string                   VictoryEvent { get; set; }
+    public string                   DefeatEvent  { get; set; }
+    public List<string>             Tags         { get; set; }
 }
 
 [JsonObject]
@@ -94,13 +91,13 @@ public class FightInfoJson : IFightInfo
     [JsonProperty("战斗类型", Required = Required.Always, Order = 2)]
     public StartFight.FightEnumType FightType { get; set; } = StartFight.FightEnumType.Normal;
 
-    [JsonProperty("战斗背景")] public int Background { get; set; } = 0;
-    [JsonProperty("战斗背景")] public string Music { get; set; } = string.Empty;
-    [JsonProperty("战斗标签")] public List<string> Tags { get; set; } = new List<string>();
-    [JsonProperty("玩家BUFF")] public List<BuffInfo> PlayerBuff { get; set; } = new List<BuffInfo>();
-    [JsonProperty("敌方BUFF")] public List<BuffInfo> EnemyBuff { get; set; } = new List<BuffInfo>();
-    [JsonProperty("胜利事件")] public string VictoryEvent { get; set; } = string.Empty;
-    [JsonProperty("战败事件")] public string DefeatEvent { get; set; } = string.Empty;
+    [JsonProperty("战斗背景")]   public int            Background   { get; set; } = 0;
+    [JsonProperty("战斗背景")]   public string         Music        { get; set; } = string.Empty;
+    [JsonProperty("战斗标签")]   public List<string>   Tags         { get; set; } = new List<string>();
+    [JsonProperty("玩家BUFF")] public List<BuffInfo> PlayerBuff   { get; set; } = new List<BuffInfo>();
+    [JsonProperty("敌方BUFF")] public List<BuffInfo> EnemyBuff    { get; set; } = new List<BuffInfo>();
+    [JsonProperty("胜利事件")]   public string         VictoryEvent { get; set; } = string.Empty;
+    [JsonProperty("战败事件")]   public string         DefeatEvent  { get; set; } = string.Empty;
 }
 
 public class FightInfoExcel : IFightInfo
@@ -121,11 +118,11 @@ public class FightInfoExcel : IFightInfo
         set => FightType = (StartFight.FightEnumType)value;
     }
 
-    [ExcelColumnName("战斗背景")] public int Background { get; set; } = 0;
-    [ExcelColumnName("战斗背景")] public string Music { get; set; } = string.Empty;
-    [ExcelIgnore] public List<string> Tags { get; set; } = new List<string>();
-    [ExcelIgnore] public List<BuffInfo> PlayerBuff { get; set; } = new List<BuffInfo>();
-    [ExcelIgnore] public List<BuffInfo> EnemyBuff { get; set; } = new List<BuffInfo>();
+    [ExcelColumnName("战斗背景")] public int            Background { get; set; } = 0;
+    [ExcelColumnName("战斗背景")] public string         Music      { get; set; } = string.Empty;
+    [ExcelIgnore]             public List<string>   Tags       { get; set; } = new List<string>();
+    [ExcelIgnore]             public List<BuffInfo> PlayerBuff { get; set; } = new List<BuffInfo>();
+    [ExcelIgnore]             public List<BuffInfo> EnemyBuff  { get; set; } = new List<BuffInfo>();
 
     [ExcelColumnName("战斗标签")]
     public string RawTags
@@ -135,14 +132,14 @@ public class FightInfoExcel : IFightInfo
     }
 
     [ExcelColumnName("玩家BUFF")] public string RawPlayerBuff { get; set; }
-    [ExcelColumnName("敌方BUFF")] public string RawEnemyBuff { get; set; }
-    [ExcelColumnName("胜利事件")] public string VictoryEvent { get; set; } = string.Empty;
-    [ExcelColumnName("战败事件")] public string DefeatEvent { get; set; } = string.Empty;
+    [ExcelColumnName("敌方BUFF")] public string RawEnemyBuff  { get; set; }
+    [ExcelColumnName("胜利事件")]   public string VictoryEvent  { get; set; } = string.Empty;
+    [ExcelColumnName("战败事件")]   public string DefeatEvent   { get; set; } = string.Empty;
 
     private string GetTagsToString()
     {
         var count = Tags.Count - 1;
-        var msg = "";
+        var msg   = "";
         for (var i = 0; i <= count; i++)
         {
             if (i == count)

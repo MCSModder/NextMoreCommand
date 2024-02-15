@@ -54,9 +54,9 @@ namespace Zerxz.BetterSeidOptimization.Patch
                 return true;
             }
             var seidJson = __instance.GetSeidJson<SkillSeidJsonData4>(seid);
-            var xJson = seidJson.value1;
-            var yJson = seidJson.value2;
-            var num = damage[4] > 1 ? damage[4] : 1;
+            var xJson    = seidJson.value1;
+            var yJson    = seidJson.value2;
+            var num      = damage[4] > 1 ? damage[4] : 1;
             for (var index1 = 0; index1 < xJson.Count; index1++)
             {
                 var xValue = xJson[index1];
@@ -88,7 +88,7 @@ namespace Zerxz.BetterSeidOptimization.Patch
 
             var xJson = seidJson.value1;
             var yJson = seidJson.value2;
-            var num = damage[4] > 1 ? damage[4] : 1;
+            var num   = damage[4] > 1 ? damage[4] : 1;
 
             for (var index1 = 0; index1 < xJson.Count; index1++)
             {
@@ -115,17 +115,17 @@ namespace Zerxz.BetterSeidOptimization.Patch
         [HarmonyPrefix]
         [HarmonyPatch(nameof(Skill.triggerBuffEndSeid))]
         public static bool TriggerBuffEndSeid(Skill __instance, List<int> SeidList,
-            List<int> infoFlag,
-            Entity _attaker,
-            Entity _receiver,
-            int type)
+            List<int>                               infoFlag,
+            Entity                                  _attaker,
+            Entity                                  _receiver,
+            int                                     type)
         {
             if (!BetterSeidOptimization.BetterMode)
             {
                 return true;
             }
             List<int> TempSeid = new List<int>();
-            SeidList.ForEach((Action<int>) (aa => TempSeid.Add(aa)));
+            SeidList.ForEach((Action<int>)(aa => TempSeid.Add(aa)));
             int _index = 0;
             foreach (int seid in TempSeid)
             {
@@ -150,8 +150,8 @@ namespace Zerxz.BetterSeidOptimization.Patch
                 }
                 catch (Exception ex)
                 {
-                    UnityEngine.Debug.LogError((object) ("检测到技能错误！错误 SkillID:" + (object) __instance.skill_ID + " 技能特性:" + (object) seid + "额外数据：" + infoFlag.ToString()));
-                    UnityEngine.Debug.LogError((object) ex);
+                    UnityEngine.Debug.LogError((object)("检测到技能错误！错误 SkillID:" + (object)__instance.skill_ID + " 技能特性:" + (object)seid + "额外数据：" + infoFlag.ToString()));
+                    UnityEngine.Debug.LogError((object)ex);
                 }
                 _index++;
             }
@@ -160,10 +160,10 @@ namespace Zerxz.BetterSeidOptimization.Patch
         [HarmonyPrefix]
         [HarmonyPatch(nameof(Skill.triggerSkillFinalSeid))]
         public static bool TriggerSkillFinalSeid(Skill __instance, List<int> SeidList,
-            List<int> infoFlag,
-            Entity _attaker,
-            Entity _receiver,
-            int type)
+            List<int>                                  infoFlag,
+            Entity                                     _attaker,
+            Entity                                     _receiver,
+            int                                        type)
         {
             if (!BetterSeidOptimization.BetterMode)
             {
@@ -205,10 +205,10 @@ namespace Zerxz.BetterSeidOptimization.Patch
         [HarmonyPrefix]
         [HarmonyPatch(nameof(Skill.triggerStartSeid))]
         public static bool TriggerStartSeid(Skill __instance, List<int> SeidList,
-            List<int> infoFlag,
-            Entity _attaker,
-            Entity _receiver,
-            int type)
+            List<int>                             infoFlag,
+            Entity                                _attaker,
+            Entity                                _receiver,
+            int                                   type)
         {
             if (!BetterSeidOptimization.BetterMode)
             {
@@ -217,7 +217,7 @@ namespace Zerxz.BetterSeidOptimization.Patch
             List<int> tempSeid = new List<int>();
             SeidList.ForEach((Action<int>)(aa => tempSeid.Add(aa)));
             int _index = 0;
-            int num = -1;
+            int num    = -1;
             foreach (int seid in tempSeid)
             {
                 try

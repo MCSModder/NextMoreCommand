@@ -10,7 +10,7 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Npc.Wudao
     {
         public object Execute(DialogEnvQueryContext context)
         {
-            var npc = context.GetNpcID(0,1);
+            var npc     = context.GetNpcID(0, 1);
             var wudaoID = context.GetMyArgs(1, -1);
             if (WuDaoAllTypeJson.DataDict.ContainsKey(wudaoID) && npc > 0)
             {
@@ -22,7 +22,7 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Npc.Wudao
                     default:
                         return WuDaoUtils.GetWudao(npc, wudaoID);
                 }
-             
+
             }
             return null;
         }

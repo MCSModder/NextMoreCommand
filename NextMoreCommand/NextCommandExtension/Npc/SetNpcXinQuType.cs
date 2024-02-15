@@ -17,7 +17,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc
     [DialogEvent("添加角色兴趣类型")]
     public class SetNpcXinQuType : IDialogEvent
     {
-        private int npc;
+        private int          npc;
         private List<string> list;
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
@@ -32,7 +32,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc
                 var tempList = list
                     .Select(item => new XinQuInfo(item));
                 var xinQuInfos = tempList.ToList();
-                var xinQuList = xinQuInfos.Where(item => item.IsValid).ToList();
+                var xinQuList  = xinQuInfos.Where(item => item.IsValid).ToList();
                 MyLog.Log(command,
                     $"角色ID:{npc} 角色名:{npc.GetNpcName()} 兴趣列表:{JArray.FromObject(xinQuList.Select(item => item.Name)).ToString(Formatting.None)}");
 

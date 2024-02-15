@@ -23,7 +23,8 @@ public class SetWaitForSeconds : IDialogEvent
     }
     IEnumerator Wait(int second, Action callback)
     {
-        yield return new WaitForSeconds(second); ;
+        yield return new WaitForSeconds(second);
+        ;
         callback?.Invoke();
     }
 }

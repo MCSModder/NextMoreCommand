@@ -14,7 +14,7 @@ public class SetRecordShengPing : IDialogEvent
     {
         MyLog.LogCommand(command);
         var shengPingId = command.GetStr(0);
-        var dict = new Dictionary<string, string>();
+        var dict        = new Dictionary<string, string>();
         MyLog.Log(command, $"记录生平ID:{shengPingId}");
         var list = command.ParamList;
         for (var i = 1; i < list.Length; i++)
@@ -22,13 +22,13 @@ public class SetRecordShengPing : IDialogEvent
             var param = list[i];
             if (!param.Contains(":")) continue;
             var split = param.Split(':');
-            var key = split[0];
+            var key   = split[0];
             var value = split[1];
-            dict.Add(key,value);
+            dict.Add(key, value);
             MyLog.Log(command, $"记录生平 参数名:{key} 参数值:{value} ");
         }
-        PlayerEx.RecordShengPing(shengPingId,dict);
-        
+        PlayerEx.RecordShengPing(shengPingId, dict);
+
         MyLog.LogCommand(command, false);
         callback?.Invoke();
     }

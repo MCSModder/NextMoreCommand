@@ -10,10 +10,10 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Npc
 
         public object Execute(DialogEnvQueryContext context)
         {
-            var npc = context.GetNpcID(0);
+            var npc  = context.GetNpcID(0);
             var json = npc.NPCJson();
-            
-            return  json.HasField("Type") ? json.GetField("Type").I.GetTypeName() : "" ;
+
+            return json.HasField("Type") ? json.GetField("Type").I.GetTypeName() : "";
         }
     }
 }

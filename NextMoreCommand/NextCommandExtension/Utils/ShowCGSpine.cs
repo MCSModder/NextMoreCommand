@@ -23,7 +23,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
-            var spine = command.GetStr(0);
+            var spine  = command.GetStr(0);
             var @event = command.GetStr(1);
             // var animation = command.GetStr(2);
             // var skin = command.GetStr(3, "default");
@@ -35,7 +35,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
             }
             else
             {
-                
+
                 if (DialogAnalysis.IsRunningEvent)
                 {
                     DialogAnalysis.CancelEvent();
@@ -52,10 +52,10 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
                     {
                         DialogAnalysis.StartDialogEvent(@event);
                     }
-                  
+
                 });
             }
-        
+
         }
     }
 
@@ -65,23 +65,23 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
-            var spineKey = command.GetStr(0);
-            var spine = command.GetStr(1);
-            var animation = command.GetStr(2);
-            var skin = command.GetStr(3, "default").Trim();
+            var spineKey       = command.GetStr(0);
+            var spine          = command.GetStr(1);
+            var animation      = command.GetStr(2);
+            var skin           = command.GetStr(3, "default").Trim();
             var cgSpineManager = CGSpineManager.Instance;
             MyLog.Log($"spine:{spine} animation:{animation} skin:{skin}");
             // DialogAnalysis.SetStr("CG_SPINE",spineKey,new PrepareCGSpineInfo(spine,$"{spineKey}:{animation}:{skin}").ToString());
-            cgSpineManager.PrepareSpine(spineKey, spine, animation, skin,callback);
+            cgSpineManager.PrepareSpine(spineKey, spine, animation, skin, callback);
         }
     }
 
     public class PrepareCGSpineInfo
     {
-        public string SpineName { get; private set; }
+        public string SpineName      { get; private set; }
         public string SpineAnimation { get; private set; } = "";
-        public string SpineSkin { get; private set; } = "default";
-        public string SpineKey{ get; private set; }
+        public string SpineSkin      { get; private set; } = "default";
+        public string SpineKey       { get; private set; }
         public void Prepare()
         {
             var cgSpineManager = CGSpineManager.Instance;
@@ -89,7 +89,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
         }
         public PrepareCGSpineInfo()
         {
-            
+
         }
         public PrepareCGSpineInfo(string spine, string text)
         {
@@ -103,12 +103,12 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
                 {
                     SpineAnimation = split[1];
                 }
-                if (split.Length>= 3)
+                if (split.Length >= 3)
                 {
                     SpineSkin = split[2].Trim();
                 }
-               
-           
+
+
             }
             else
             {
@@ -120,14 +120,15 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
             return JObject.FromObject(this).ToString();
         }
     }
+
     [DialogEvent("PrepareMultiCGSpine")]
     public class PrepareMultiCGSpine : IDialogEvent
     {
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
-            var spine = command.GetStr(0);
-            var spineInfo = command.ToListString(1).Select(text=>new PrepareCGSpineInfo(spine,text)).ToList();
+            var spine          = command.GetStr(0);
+            var spineInfo      = command.ToListString(1).Select(text => new PrepareCGSpineInfo(spine, text)).ToList();
             var cgSpineManager = CGSpineManager.Instance;
             foreach (var info in spineInfo)
             {
@@ -140,9 +141,10 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
                     callback?.Invoke();
                 }
             );
-           
+
         }
     }
+
     public class SpineCreateOption
     {
         public SpineCreateOption(string spineName, string spineAnimation, string spineSkin, GameObject parent)
@@ -152,11 +154,11 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
             SpineSkin = spineSkin;
             Parent = parent;
         }
-        public string SpineName { get; private set; }
-        public string SpineAnimation { get; private set; }
-        public string SpineSkin { get; private set; }
-        public GameObject Parent { get; private set; }
-        public Transform ParentTransform => Parent.transform;
+        public string     SpineName       { get; private set; }
+        public string     SpineAnimation  { get; private set; }
+        public string     SpineSkin       { get; private set; }
+        public GameObject Parent          { get; private set; }
+        public Transform  ParentTransform => Parent.transform;
         public GameObject SetSpine(GameObject prefab)
         {
             if (prefab.activeSelf)
@@ -164,7 +166,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
                 prefab.SetActive(false);
             }
             prefab.AddMissingComponent<CustomSpine>();
-            var skeletonGraphic = prefab.GetComponent<SkeletonGraphic>();
+            var skeletonGraphic   = prefab.GetComponent<SkeletonGraphic>();
             var originalAnimation = skeletonGraphic.startingAnimation;
             // skeletonGraphic.initialSkinName = SpineSkin;
             skeletonGraphic.startingAnimation = SpineAnimation;
@@ -191,10 +193,10 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
 
     public class SpineObject
     {
-        public GameObject GameObject { get; private set; }
+        public GameObject      GameObject      { get; private set; }
         public SkeletonGraphic SkeletonGraphic { get; private set; }
-        public CustomSpine CustomSpine { get; private set; }
-        public string SpineName { get; private set; }
+        public CustomSpine     CustomSpine     { get; private set; }
+        public string          SpineName       { get; private set; }
         public bool Enable
         {
             get => GameObject && GameObject.activeSelf;
@@ -283,7 +285,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
                 SpinePrefab.Add(spineName, prefab);
             }
 
-            var go = spineCreateOption.SetSpine(prefab);
+            var go  = spineCreateOption.SetSpine(prefab);
             var obj = new SpineObject(spineName, go);
             spineObject = obj;
             return true;
@@ -292,12 +294,12 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
 
     public class CGSpineManager : MonoBehaviour
     {
-        public static CGSpineManager Instance { get; private set; }
-        public static CGManager CgManager => CGManager.Instance;
-        public Canvas Canvas { get; set; }
-        public GameObject CgSpine { get; set; }
-        public Dictionary<string, SpineObject> SpineObjects = new Dictionary<string, SpineObject>();
-        public SpineObject NowSpineObject { get; set; }
+        public static CGSpineManager                  Instance  { get; private set; }
+        public static CGManager                       CgManager => CGManager.Instance;
+        public        Canvas                          Canvas    { get; set; }
+        public        GameObject                      CgSpine   { get; set; }
+        public        Dictionary<string, SpineObject> SpineObjects = new Dictionary<string, SpineObject>();
+        public        SpineObject                     NowSpineObject { get; set; }
 
         private bool _isInit;
         public bool Enable
@@ -319,7 +321,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
                 return;
             }
             Instance = this;
-            
+
             CgSpine = new GameObject("CGSpine");
             Canvas = CgSpine.AddMissingComponent<Canvas>();
             Canvas.sortingOrder = 20;
@@ -341,10 +343,10 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
         {
             NowSpineObject?.SetAnimation(animation, isLoop, _isInit);
         }
-        public async void PrepareSpine(string spineKey, string spine, string animation, string skin,Action callback)
+        public async void PrepareSpine(string spineKey, string spine, string animation, string skin, Action callback)
         {
             PrepareSpine(spineKey, spine, animation, skin);
-            await  UniTask.Delay(TimeSpan.FromSeconds(1), DelayType.Realtime);
+            await UniTask.Delay(TimeSpan.FromSeconds(1), DelayType.Realtime);
             callback?.Invoke();
         }
         public bool PrepareSpine(string spineKey, string spine, string animation, string skin)
@@ -395,9 +397,9 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
             }
             foreach (var spineObj in SpineObjects.Select(obj => obj.Value).Where(obj => obj.Enable))
             {
-                spineObj.GameObject.SetActive(false); 
+                spineObj.GameObject.SetActive(false);
             }
-          
+
             MyLog.Log("开始初始化");
             MyLog.Log($"spineObject:{spineObject}");
             NowSpineObject = spineObject;
@@ -414,7 +416,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
         }
         public void SetCG(string cgName)
         {
-            var path = $"Assets/CG/{cgName}.png";
+            var path    = $"Assets/CG/{cgName}.png";
             var texture = Main.Res.LoadAsset<Texture2D>(path);
             if (texture is not null)
             {

@@ -5,6 +5,6 @@ namespace SkySwordKill.NextMoreCommand.NextSeachNpcExtension
     public interface ISearchNpcMatch
     {
         List<string> Alias { get; }
-        bool Match(SearchNpcDataInfo searchNpcDataInfo);
+        bool         Match(SearchNpcDataInfo searchNpcDataInfo);
     }
 }

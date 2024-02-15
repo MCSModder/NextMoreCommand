@@ -8,12 +8,12 @@ namespace SkySwordKill.NextMoreCommand.CustomModDebug.NextMoreCore
 {
     public partial class UI_ModDialogDebug : GComponent
     {
-        public UI_WindowFrameDialogStyle2 m_frame;
-        public UI_ComDrama m_drama;
-        public UI_ComDramaCommandDebug m_command;
-        public UI_ComDebugBar m_debugBar;
-        public GTextField m_debugText;
-        public const string URL = "ui://kxq1c75yui2j5c";
+        public       UI_WindowFrameDialogStyle2 m_frame;
+        public       UI_ComDrama                m_drama;
+        public       UI_ComDramaCommandDebug    m_command;
+        public       UI_ComDebugBar             m_debugBar;
+        public       GTextField                 m_debugText;
+        public const string                     URL = "ui://kxq1c75yui2j5c";
 
         public static UI_ModDialogDebug CreateInstance()
         {

@@ -21,7 +21,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc
             money = command.GetInt(1, 0);
             if (npc > 0)
             {
-                var data = jsonData.instance.AvatarBackpackJsonData[npc.ToNpcId()];
+                var data     = jsonData.instance.AvatarBackpackJsonData[npc.ToNpcId()];
                 var nowMoney = data.GetInt("money");
                 MyLog.Log(command, $"角色ID:{npc} 角色名:{npc.GetNpcName()} 当前灵石:{nowMoney} 设置灵石:{money}");
                 MyLog.Log(command, $"");

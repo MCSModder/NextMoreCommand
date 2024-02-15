@@ -7,10 +7,7 @@ using SkySwordKill.NextMoreCommand.Utils;
 
 namespace SkySwordKill.NextMoreCommand.Patchs
 {
-    [HarmonyPatch(typeof(NPCTalkCmdHelper), nameof(NPCTalkCmdHelper.ReplaceTalkWord), new Type[]
-    {
-        typeof(string), typeof(UINPCData)
-    })]
+    [HarmonyPatch(typeof(NPCTalkCmdHelper), nameof(NPCTalkCmdHelper.ReplaceTalkWord), new Type[] { typeof(string), typeof(UINPCData) })]
     public static class NPCTalkCmdHelperPatch
     {
         public static void Prefix(ref string str, UINPCData npc)
@@ -27,8 +24,8 @@ namespace SkySwordKill.NextMoreCommand.Patchs
     [HarmonyPatch(typeof(Say), nameof(Say.Execute))]
     public static class DialogEventSayPatch
     {
-        public static DialogCommand Command { get; private set; }
-        public static DialogEnvironment Env { get; private set; }
+        public static DialogCommand     Command { get; private set; }
+        public static DialogEnvironment Env     { get; private set; }
         public static void Prefix(DialogCommand command, DialogEnvironment env)
         {
             Command = command;
@@ -50,8 +47,8 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             {
                 return;
             }
-            var env = DialogEventSayPatch.Env ?? new DialogEnvironment();
-            var npc = env.bindNpc;
+            var env   = DialogEventSayPatch.Env ?? new DialogEnvironment();
+            var npc   = env.bindNpc;
             var npcId = env.roleID.ToNpcNewId();
             if (sayRoleID == 1)
             {

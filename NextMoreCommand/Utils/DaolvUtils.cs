@@ -12,8 +12,8 @@ namespace SkySwordKill.NextMoreCommand.Utils;
 /// </summary>
 public static class DaolvUtils
 {
-    public static Avatar Player => PlayerEx.Player;
-    public static JSONObject DaolvId => Player.DaoLvId;
+    public static Avatar            Player            => PlayerEx.Player;
+    public static JSONObject        DaolvId           => Player.DaoLvId;
     public static NpcJieSuanManager NpcJieSuanManager => NpcJieSuanManager.inst;
 
     /// <summary>
@@ -37,7 +37,7 @@ public static class DaolvUtils
     /// <returns>获得道侣死亡ID列表</returns>
     public static List<int> SetAllDaolvDeath(params int[] filterNpc)
     {
-        var list = new List<int>();
+        var list      = new List<int>();
         var daolvList = DaolvId.ToList();
         PlayerEx.Player.DaoLvId = JSONObject.Create(JSONObject.Type.ARRAY);
         var filter = filterNpc.Select(NPCEx.NPCIDToNew).ToList();
@@ -47,7 +47,7 @@ public static class DaolvUtils
             {
                 continue;
             }
-            
+
             if (filter.Contains(id))
             {
                 DaolvId.Add(id);

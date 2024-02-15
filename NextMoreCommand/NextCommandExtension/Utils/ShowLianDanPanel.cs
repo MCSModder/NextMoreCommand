@@ -16,7 +16,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
             _type = command.GetInt(0);
             const PanelMamager.PanelType panelType = (PanelMamager.PanelType)0;
             PanelMamager.inst.OpenPanel(panelType, _type);
-      
+
             MyLog.Log(command, $"显示面板 显示面板:{panelType.GetName()} 类型:{_type} ");
             MyLog.LogCommand(command, false);
             callback?.Invoke();

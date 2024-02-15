@@ -16,7 +16,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fight
 {
     class BuffInfo
     {
-        public int Id { get; } = 0;
+        public int Id    { get; } = 0;
         public int Value { get; }
         public BuffInfo(string str)
         {
@@ -45,7 +45,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fight
     [DialogEvent("增加战斗Buff")]
     public class AddFightBuff : IDialogEvent
     {
-        private MonstarMag MonstarMag => Tools.instance.monstarMag;
+        private MonstarMag     MonstarMag => Tools.instance.monstarMag;
         private List<BuffInfo> _buffList;
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
@@ -66,7 +66,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fight
                         case < 0 when avatar.buffmag.HasBuff(id):
                         {
                             var reduceBuff = -value;
-                            var buffSum = avatar.buffmag.GetBuffSum(id);
+                            var buffSum    = avatar.buffmag.GetBuffSum(id);
 
                             var buffByID = avatar.buffmag.getBuffByID(id);
                             if (reduceBuff > buffSum)
@@ -124,7 +124,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fight
 
                 foreach (var buff in _buffList)
                 {
-                    var id = buff.Id;
+                    var id    = buff.Id;
                     var value = buff.Value;
                     command.LogInfos($"战斗前BUFF添加 ID:{id} 数量:{value}");
                     if (dict.ContainsKey(id))

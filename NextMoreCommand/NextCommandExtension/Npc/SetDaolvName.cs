@@ -12,11 +12,11 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
-            var npcId = command.ToNpcId();
+            var npcId   = command.ToNpcId();
             var chengHu = command.GetStr(1);
             if (PlayerEx.IsDaoLv(npcId) && !string.IsNullOrWhiteSpace(chengHu))
             {
-                PlayerEx.SetDaoLvChengHu(npcId,chengHu);
+                PlayerEx.SetDaoLvChengHu(npcId, chengHu);
             }
             callback?.Invoke();
         }

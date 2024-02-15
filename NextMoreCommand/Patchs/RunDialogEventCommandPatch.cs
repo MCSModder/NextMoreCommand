@@ -18,13 +18,13 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             }
             if (OnEnterThreeScene.ThreeSceneMag != null)
             {
-              var go =  OnEnterThreeScene.ThreeSceneMag.gameObject;
-              Object.DestroyImmediate(OnEnterThreeScene.ThreeSceneMag);
-              go.AddMissingComponent<ThreeSceneMag>();
+                var go = OnEnterThreeScene.ThreeSceneMag.gameObject;
+                Object.DestroyImmediate(OnEnterThreeScene.ThreeSceneMag);
+                go.AddMissingComponent<ThreeSceneMag>();
             }
-            var normalShow = MapPlayerController.Inst.NormalShow;
+            var normalShow   = MapPlayerController.Inst.NormalShow;
             var nowSpineName = Traverse.Create(normalShow).Field<string>("nowSpineName");
-            var old = nowSpineName.Value;
+            var old          = nowSpineName.Value;
             if (_original.Contains(old) || string.IsNullOrWhiteSpace(old))
             {
                 return;

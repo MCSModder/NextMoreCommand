@@ -13,9 +13,9 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
-            var spine = command.GetStr(0, "");
+            var spine     = command.GetStr(0, "");
             var spineSkin = command.GetStr(1, "default");
-            DialogAnalysis.SetStr("PLAYER_SPINE", spine);
+            DialogAnalysis.SetStr("PLAYER_SPINE",      spine);
             DialogAnalysis.SetStr("PLAYER_SPINE_SKIN", spineSkin);
             var inst = UIHeadPanel.Inst;
             if (inst != null)

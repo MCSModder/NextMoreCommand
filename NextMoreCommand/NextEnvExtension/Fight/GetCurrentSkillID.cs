@@ -16,7 +16,7 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Fight
             MyLog.FungusLog($"触发GetCurrentSkillID");
             var id = SkillComboManager.GetSkillId(OnUseSkill.NowSkill.SkillID);
             MyLog.FungusLog($"SkillID:{id}");
-            return id  as object;
+            return id as object;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Npc
     {
         public object Execute(DialogEnvQueryContext context)
         {
-            var npc = context.GetNpcID(0, -1);
+            var npc  = context.GetNpcID(0, -1);
             var data = NpcJieSuanManager.inst.GetNpcData(npc);
             if (npc > 0 && data.HasField("face"))
             {

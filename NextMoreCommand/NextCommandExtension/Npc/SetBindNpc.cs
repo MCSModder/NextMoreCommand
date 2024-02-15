@@ -21,7 +21,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc
                 env.roleID = npc.ID;
                 env.roleName = npc.Name;
             }
-   
+
             callback?.Invoke();
         }
     }

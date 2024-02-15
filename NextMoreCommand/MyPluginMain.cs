@@ -40,20 +40,20 @@ namespace SkySwordKill.NextMoreCommand
     public class MyPluginMain : BaseUnityPlugin
     {
         private static KeyCode DramaDebugKey;
-        public static bool IsDebugMode = false;
+        public static  bool    IsDebugMode = false;
         // public static long JSDebugPort = -1;
         // public static bool JSDebugMode = false;
 
         public static MyPluginMain Instance;
-        public static MyPluginMain I => Instance;
-        public static void LogInfo(object obj) => I.Logger.LogInfo(obj);
-        public static void LogWarning(object obj) => I.Logger.LogWarning(obj);
-        public static void LogError(object obj) => I.Logger.LogError(obj);
-        public static void LogDebug(object obj) => I.Logger.LogDebug(obj);
-        public static void LogFatal(object obj) => I.Logger.LogFatal(obj);
-        public static void LogMessage(object obj) => I.Logger.LogMessage(obj);
-        private Harmony _harmony;
-        public List<string> files;
+        public static MyPluginMain I                      => Instance;
+        public static void         LogInfo(object    obj) => I.Logger.LogInfo(obj);
+        public static void         LogWarning(object obj) => I.Logger.LogWarning(obj);
+        public static void         LogError(object   obj) => I.Logger.LogError(obj);
+        public static void         LogDebug(object   obj) => I.Logger.LogDebug(obj);
+        public static void         LogFatal(object   obj) => I.Logger.LogFatal(obj);
+        public static void         LogMessage(object obj) => I.Logger.LogMessage(obj);
+        private       Harmony      _harmony;
+        public        List<string> files;
 
         private void Awake()
         {
@@ -116,8 +116,8 @@ namespace SkySwordKill.NextMoreCommand
         private void RegisterCustomModSetting()
         {
             var registerCommandType = typeof(RegisterCustomModSettingAttribute);
-            var types = Assembly.GetAssembly(registerCommandType).GetTypes();
-            var init = "".PadLeft(25, '=');
+            var types               = Assembly.GetAssembly(registerCommandType).GetTypes();
+            var init                = "".PadLeft(25, '=');
             LogInfo(init);
             LogInfo($"注册自定义Mod设置开始.");
             LogInfo(init);
@@ -141,8 +141,8 @@ namespace SkySwordKill.NextMoreCommand
         private void RegisterCommand()
         {
             var registerCommandType = typeof(RegisterCommandAttribute);
-            var types = Assembly.GetAssembly(registerCommandType).GetTypes();
-            var init = "".PadLeft(25, '=');
+            var types               = Assembly.GetAssembly(registerCommandType).GetTypes();
+            var init                = "".PadLeft(25, '=');
             LogInfo(init);
             LogInfo($"注册指令开始.");
             LogInfo(init);

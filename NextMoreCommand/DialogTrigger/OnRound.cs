@@ -61,7 +61,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
         #region 触发器类型
 
         public static bool StartRound(bool isBefore = true) => isBefore ? StartRoundBefore() : StartRoundAfter();
-        public static bool EndRound(bool isBefore = true) => isBefore ? EndRoundBefore() : EndRoundAfter();
+        public static bool EndRound(bool   isBefore = true) => isBefore ? EndRoundBefore() : EndRoundAfter();
 
         public static bool PlayerEndRound(bool isBefore = true) =>
             isBefore ? PlayerEndRoundBefore() : PlayerEndRoundAfter();
@@ -78,14 +78,14 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
         private static bool PlayerUseSkillAfter(DialogEnvironment env = null) =>
             TryTrigger(env ?? NewEnv, true, "PlayerUseSkillAfter", "玩家技能使用后");
 
-        public static bool FightFinish() => TryTrigger("FightFinish", "结束战斗");
-        public static bool FightStart() => TryTrigger("FightStart", "开始战斗");
-        private static bool StartRoundBefore() => TryTrigger("StartRoundBefore", "回合开始前");
-        private static bool StartRoundAfter() => TryTrigger("StartRoundAfter", "回合开始后");
-        private static bool EndRoundBefore() => TryTrigger("EndRoundBefore", "回合结束前");
-        private static bool EndRoundAfter() => TryTrigger("EndtRoundAfter", "回合结束后");
+        public static  bool FightFinish()          => TryTrigger("FightFinish",          "结束战斗");
+        public static  bool FightStart()           => TryTrigger("FightStart",           "开始战斗");
+        private static bool StartRoundBefore()     => TryTrigger("StartRoundBefore",     "回合开始前");
+        private static bool StartRoundAfter()      => TryTrigger("StartRoundAfter",      "回合开始后");
+        private static bool EndRoundBefore()       => TryTrigger("EndRoundBefore",       "回合结束前");
+        private static bool EndRoundAfter()        => TryTrigger("EndtRoundAfter",       "回合结束后");
         private static bool PlayerEndRoundBefore() => TryTrigger("PlayerEndRoundBefore", "玩家回合结束前");
-        private static bool PlayerEndRoundAfter() => TryTrigger("PlayerEndRoundAfter", "玩家回合结束后");
+        private static bool PlayerEndRoundAfter()  => TryTrigger("PlayerEndRoundAfter",  "玩家回合结束后");
 
         #endregion
     }
@@ -196,8 +196,8 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
     [HarmonyPatch(typeof(RoundManager), nameof(RoundManager.UseSkill))]
     public static class OnUseSkill
     {
-        private static RoundManager Instance => RoundManager.instance;
-        public static GUIPackage.Skill NowSkill => Instance.ChoiceSkill ?? Instance.CurSkill;
+        private static RoundManager     Instance => RoundManager.instance;
+        public static  GUIPackage.Skill NowSkill => Instance.ChoiceSkill ?? Instance.CurSkill;
         public static bool Prefix()
         {
             var env = RoundUtils.NewEnv;

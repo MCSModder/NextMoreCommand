@@ -14,7 +14,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc.Teleport
     [DialogEvent("设置角色传送")]
     public class SetNpcTeleport : IDialogEvent
     {
-        private string sceneName;
+        private string    sceneName;
         private List<int> npcIds;
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)

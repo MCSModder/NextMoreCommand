@@ -31,7 +31,7 @@ namespace SkySwordKill.NextMoreCommand.NextSeachNpcExtension
             {
                 foreach (var match in skillMatch.Where(match => skillName.Contains(match)))
                 {
-                    MyLog.Log("触发NPC搜索匹配",$"[匹配字段:{match} 功法:{skillName}]");
+                    MyLog.Log("触发NPC搜索匹配", $"[匹配字段:{match} 功法:{skillName}]");
                     return true;
                 }
 

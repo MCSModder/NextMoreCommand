@@ -16,9 +16,9 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fight;
 public class SetFightCustomFace : IDialogEvent
 {
 
-    public JSONObject AvatarRandomJsonData => jsonData.instance.AvatarRandomJsonData;
-    public JSONObject PlayerFace => AvatarRandomJsonData[NPCEx.NPCIDToNew(0)];
-    private int _faceId;
+    public  JSONObject AvatarRandomJsonData => jsonData.instance.AvatarRandomJsonData;
+    public  JSONObject PlayerFace           => AvatarRandomJsonData[NPCEx.NPCIDToNew(0)];
+    private int        _faceId;
     public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
     {
         MyLog.LogCommand(command);
@@ -39,7 +39,7 @@ public class SetFightCustomFace : IDialogEvent
             MyLog.Log(command, $"开始替换换装 CustomFaceId:{_faceId}");
             if (StaticFaceUtils.HasFace(_faceId))
             {
-                var face = StaticFaceUtils.GetFace(_faceId);
+                var face  = StaticFaceUtils.GetFace(_faceId);
                 var clone = new JSONObject(PlayerFace.ToString());
                 foreach (var info in face.RandomInfos)
                 {

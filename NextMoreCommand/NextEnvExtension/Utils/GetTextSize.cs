@@ -9,10 +9,10 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Utils
     {
         public object Execute(DialogEnvQueryContext context)
         {
-            var text = context.GetMyArgs(0, "");
-            var size = context.GetMyArgs(1, 32);
+            var text  = context.GetMyArgs(0, "");
+            var size  = context.GetMyArgs(1, 32);
             var split = context.GetMyArgs(2, 0);
-            var add = context.GetMyArgs(3, 0);
+            var add   = context.GetMyArgs(3, 0);
             if (string.IsNullOrWhiteSpace(text) || size <= 0)
             {
                 return text;

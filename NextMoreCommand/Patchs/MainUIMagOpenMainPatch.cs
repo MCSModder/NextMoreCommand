@@ -10,7 +10,7 @@ public static class MainUIMagRefreshSavePatch
 {
     public static void Prefix(MainUIMag __instance)
     {
-    
+
         if (ModManager.TryGetModSetting("Quick_SaveSlotDebug", out long saveSlotDebug))
         {
             if (saveSlotDebug > 9)
@@ -32,7 +32,7 @@ public static class MainUIMagOpenMainPatch
 {
     public static void Prefix()
     {
-       
+
         AssetsUtils.Clear();
     }
 }

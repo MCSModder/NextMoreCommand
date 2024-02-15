@@ -13,10 +13,10 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc.Wudao
     [DialogEvent("增加角色悟道技能")]
     public class AddNpcWudaoSkill : IDialogEvent
     {
-        private int npc;
-        private int wudaoSkill;
-        private Dictionary<int, WuDaoAllTypeJson> WuDaoAllType => WuDaoAllTypeJson.DataDict;
-        private string GetWudaoName(int wudaoId) => WuDaoAllType[wudaoId].name1;
+        private int                               npc;
+        private int                               wudaoSkill;
+        private Dictionary<int, WuDaoAllTypeJson> WuDaoAllType              => WuDaoAllTypeJson.DataDict;
+        private string                            GetWudaoName(int wudaoId) => WuDaoAllType[wudaoId].name1;
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {

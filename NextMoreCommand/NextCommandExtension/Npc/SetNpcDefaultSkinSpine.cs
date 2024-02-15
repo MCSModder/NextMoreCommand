@@ -11,7 +11,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc
     [DialogEvent("设置角色默认皮肤骨骼")]
     public class SetNpcDefaultSkinSpine : IDialogEvent
     {
-        private int npc;
+        private int    npc;
         private string skin;
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)

@@ -22,7 +22,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
             }
             else
             {
-                var index = TaskUtils.GetNowIndex(taskID);
+                var index        = TaskUtils.GetNowIndex(taskID);
                 var finallyIndex = TaskUtils.GetFinalIndex(taskID);
                 MyLog.Log(command, $"任务ID:{taskID} 任务名字:{taskID.GetTaskName()} 当前任务索引:{index} 最终任务索引:{finallyIndex}");
                 if (finallyIndex == 0)

@@ -13,18 +13,18 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc.Wudao
     [DialogEvent("增加角色悟道经验")]
     public class AddNpcWudaoExp : IDialogEvent
     {
-        private int npc;
-        private int wudaoId;
-        private int exp;
-        private Dictionary<int, WuDaoAllTypeJson> WuDaoAllType => WuDaoAllTypeJson.DataDict;
-        private string GetWudaoName(int wudaoId) => WuDaoAllType[wudaoId].name1;
+        private int                               npc;
+        private int                               wudaoId;
+        private int                               exp;
+        private Dictionary<int, WuDaoAllTypeJson> WuDaoAllType              => WuDaoAllTypeJson.DataDict;
+        private string                            GetWudaoName(int wudaoId) => WuDaoAllType[wudaoId].name1;
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
             MyLog.LogCommand(command);
             npc = command.ToNpcId();
             wudaoId = command.GetInt(1, 0);
-            exp = command.GetInt(2, 0);
+            exp = command.GetInt(2,     0);
             if (npc > 0 && WuDaoAllType.ContainsKey(wudaoId))
             {
                 MyLog.Log(command, $"角色ID:{npc} 角色名:{npc.GetNpcName()} ");
@@ -38,7 +38,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc.Wudao
                 {
                     MyLog.Log(command, $"悟道ID:{wudaoId} 不存在,建议查看WuDaoAllTypeJson.json文件", true, false);
                 }
-      
+
             }
 
             MyLog.LogCommand(command, false);

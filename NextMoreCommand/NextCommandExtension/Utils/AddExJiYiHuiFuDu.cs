@@ -11,8 +11,8 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
-            var memory = command.GetInt(0);
-            var isAdd = command.GetBool(1, true);
+            var memory          = command.GetInt(0);
+            var isAdd           = command.GetBool(1, true);
             var jianLingManager = env.player.jianLingManager;
             if (isAdd)
             {
@@ -21,7 +21,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
             jianLingManager.AddExJiYiHuiFuDu(memory);
             callback?.Invoke();
 
-                
+
         }
     }
 }

@@ -35,7 +35,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc
     [DialogEvent("设置角色随机立绘")]
     public class SetNpcRandomFace : IDialogEvent
     {
-        private int npc;
+        private int               npc;
         private List<NpcFaceInfo> value;
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)

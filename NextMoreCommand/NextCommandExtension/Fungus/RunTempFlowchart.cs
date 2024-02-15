@@ -14,7 +14,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fungus
     {
         private string key;
         private string tagBlock;
-        private int itemId;
+        private int    itemId;
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {

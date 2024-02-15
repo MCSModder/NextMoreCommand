@@ -17,11 +17,11 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
             group = command.GetStr(0, "");
-            key = command.GetStr(1, "");
+            key = command.GetStr(1,   "");
             value = command.GetStr(2, "");
             if (string.IsNullOrWhiteSpace(group) && string.IsNullOrWhiteSpace(key))
             {
-     
+
             }
             else
             {

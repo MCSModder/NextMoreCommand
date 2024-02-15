@@ -16,7 +16,7 @@ namespace SkySwordKill.NextMoreCommand.NextSeachNpcExtension
         public static void Init()
         {
             foreach (var types in AppDomain.CurrentDomain.GetAssemblies()
-                         .Select(assembly => assembly?.GetTypes()).Where(types=>types is not null))
+                         .Select(assembly => assembly?.GetTypes()).Where(types => types is not null))
             {
                 foreach (var type in types)
                 {
@@ -34,7 +34,7 @@ namespace SkySwordKill.NextMoreCommand.NextSeachNpcExtension
         {
             foreach (var searchNpcMatch in SearchNpcMatchEvent)
             {
-                var name = searchNpcMatch.Key;
+                var name  = searchNpcMatch.Key;
                 var value = searchNpcMatch.Value;
                 if (!value.Alias.Contains(searchNpcDataInfo.Key) || !value.Match(searchNpcDataInfo)) continue;
                 //MyPluginMain.LogInfo($"[触发NPC搜索匹配][{name}]");
@@ -45,9 +45,9 @@ namespace SkySwordKill.NextMoreCommand.NextSeachNpcExtension
         // public delegate bool SearchNpcDataMatch(SearchNpcDataInfo searchNpcData);
         //
         // public static event SearchNpcDataMatch OnSearchNpcDataMatch;
-        public static SkillDatebase SkillDataBase => SkillDatebase.instence;
+        public static SkillDatebase       SkillDataBase       => SkillDatebase.instence;
         public static SkillStaticDatebase StaticSkillDataBase => SkillStaticDatebase.instence;
-        public static ItemDatebase ItemDataBase => ItemDatebase.Inst;
+        public static ItemDatebase        ItemDataBase        => ItemDatebase.Inst;
         public static bool TryGetSkill(int id, out Skill skill)
         {
             var dict = SkillDataBase.dicSkills;

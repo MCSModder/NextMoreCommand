@@ -41,7 +41,8 @@ namespace UnsubscribeNextMoreCommandOld
             return false;
         }
     }
-    [HarmonyPatch(typeof(MainUIMag),(nameof(MainUIMag.OpenMain)))]
+
+    [HarmonyPatch(typeof(MainUIMag), (nameof(MainUIMag.OpenMain)))]
     public static class MainUIMagOpenMainPatch
     {
         public static void Postfix(MainUIMag __instance)
@@ -82,7 +83,7 @@ namespace UnsubscribeNextMoreCommandOld
                 {
                     UIPopTip.Inst.Pop("检测到老版Next更多指令Mod");
                     UIPopTip.Inst.Pop("开始取消订阅老版Next更多指令Mod");
-           
+
                     var result = SteamUGC.UnsubscribeItem(new PublishedFileId_t(id));
 
                     UIPopTip.Inst.Pop("取消订阅老版Next更多指令Mod成功", PopTipIconType.叹号);

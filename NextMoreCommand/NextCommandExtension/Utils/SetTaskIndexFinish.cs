@@ -15,7 +15,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
         {
             MyLog.LogCommand(command);
             var taskID = command.GetInt(0, -1);
-            var index = command.GetInt(1, -1);
+            var index  = command.GetInt(1, -1);
             if (taskID < 0 || index < 0)
             {
                 MyLog.Log(command, $"[执行失败] 任务ID:{taskID} 任务索引:{index} 不能小于0 ", true);

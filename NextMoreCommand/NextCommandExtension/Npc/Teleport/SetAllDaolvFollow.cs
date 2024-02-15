@@ -14,7 +14,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc.Teleport
     [DialogEvent("设置所有道侣跟随")]
     public class SetAllDaolvFollow : IDialogEvent
     {
-        public bool m_isAdd;
+        public bool          m_isAdd;
         public List<NpcInfo> NpcInfos = new List<NpcInfo>();
 
 

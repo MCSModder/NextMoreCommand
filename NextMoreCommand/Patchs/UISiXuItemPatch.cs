@@ -28,7 +28,7 @@ public static class UISiXuItemPatch
         MyLog.Log("UISiXuItem", $"开始加载资源  加载路径:{path}");
         var texture2D = Main.Res.LoadAsset<Texture2D>(path);
         if (texture2D is null) return false;
-        
+
         MyLog.Log("UISiXuItem", $"加载资源完毕  加载路径:{path} 图片:{texture2D.name}");
         __instance.SiXuImage.sprite = Main.Res.GetSpriteCache(texture2D);
 

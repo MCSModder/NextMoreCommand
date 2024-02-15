@@ -46,7 +46,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
         // }
         private static List<Flowchart> _flowchartsInScene = new List<Flowchart>();
         private static List<Flowchart> _flowchartsInPatch = new List<Flowchart>();
-        public static ThreeSceneMag ThreeSceneMag;
+        public static  ThreeSceneMag   ThreeSceneMag;
         // [HarmonyP(nameof(ThreeSceneMag.init))]
         [HarmonyPostfix]
         [HarmonyPatch("OnDestroy")]
@@ -75,10 +75,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
             //         JsonConvert.DeserializeObject<PrepareCGSpineInfo>(cgSpine.Value)?.Prepare();
             //     }
             // }
-            if (DialogAnalysis.TryTrigger(new[]
-                {
-                    "进入场景后", "AfterEnterScene"
-                }, env, true))
+            if (DialogAnalysis.TryTrigger(new[] { "进入场景后", "AfterEnterScene" }, env, true))
             {
                 MyPluginMain.LogInfo("触发进入场景后触发器");
             }
@@ -145,10 +142,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
             {
                 mapScene = Tools.getScreenName(),
             };
-            if (DialogAnalysis.TryTrigger(new[]
-                {
-                    "NPC列表刷新前", "BeforeNpcRefreshNow"
-                }, env, true))
+            if (DialogAnalysis.TryTrigger(new[] { "NPC列表刷新前", "BeforeNpcRefreshNow" }, env, true))
             {
                 MyPluginMain.LogInfo("触发NPC列表刷新前触发器");
             }
@@ -168,10 +162,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
             {
                 mapScene = Tools.getScreenName()
             };
-            if (DialogAnalysis.TryTrigger(new[]
-                {
-                    "NPC列表刷新后", "AfterNpcRefreshNow"
-                }, env, true))
+            if (DialogAnalysis.TryTrigger(new[] { "NPC列表刷新后", "AfterNpcRefreshNow" }, env, true))
             {
                 MyPluginMain.LogInfo("触发NPC列表刷新前触发器");
             }
@@ -234,10 +225,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
                 {
                     mapScene = Tools.getScreenName()
                 };
-                if (DialogAnalysis.TryTrigger(new[]
-                    {
-                        "进入战斗场景", "EnterFightScene"
-                    }, env, true))
+                if (DialogAnalysis.TryTrigger(new[] { "进入战斗场景", "EnterFightScene" }, env, true))
                 {
                     MyPluginMain.LogInfo("触发进入场景后触发器");
                 }
@@ -259,10 +247,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
                 roleName = npc.Name,
                 mapScene = Tools.getScreenName()
             };
-            if (DialogAnalysis.TryTrigger(new[]
-                {
-                    "点击角色列表", "NPCSVItemOnClick"
-                }, env)) return false;
+            if (DialogAnalysis.TryTrigger(new[] { "点击角色列表", "NPCSVItemOnClick" }, env)) return false;
             if (!NpcUtils.IsFightScene) return true;
             npc.RefreshData();
             MyPluginMain.LogInfo($"[当前点击的npc]ID:{npc.ID} 名字:{npc.Name}");
@@ -279,15 +264,12 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
             }
             else
             {
-          
 
-                if (DialogAnalysis.TryTrigger(new[]
-                    {
-                        "围观战斗群众"
-                    }, env)) return false;
+
+                if (DialogAnalysis.TryTrigger(new[] { "围观战斗群众" }, env)) return false;
                 var sb = new StringBuilder($"SetChar*gz#{npc.ID}\n");
                 sb.AppendLine("gz#{daoyou}加油ヾ(◍°∇°◍)ﾉﾞ!!");
-                DialogAnalysis.StartTestDialogEvent(sb.ToString(),env);
+                DialogAnalysis.StartTestDialogEvent(sb.ToString(), env);
             }
 
             return false;

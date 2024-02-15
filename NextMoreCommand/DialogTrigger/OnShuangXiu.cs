@@ -2,12 +2,13 @@
 using SkySwordKill.Next.DialogSystem;
 
 namespace SkySwordKill.NextMoreCommand.DialogTrigger;
+
 [HarmonyPatch(typeof(PlayerEx), nameof(PlayerEx.DoShuangXiu))]
 public static class OnShuangXiu
 {
     public static void Prefix(int skillID, UINPCData npc)
     {
-     
+
         var env = new DialogEnvironment()
         {
             bindNpc = npc,
@@ -26,7 +27,7 @@ public static class OnShuangXiu
     {
         var env = new DialogEnvironment()
         {
-                 
+
             bindNpc = npc,
             roleBindID = npc.ZhongYaoNPCID,
             roleID = npc.ID,
@@ -38,6 +39,6 @@ public static class OnShuangXiu
             MyPluginMain.LogInfo("触发双修后触发器");
         }
 
-   
+
     }
 }

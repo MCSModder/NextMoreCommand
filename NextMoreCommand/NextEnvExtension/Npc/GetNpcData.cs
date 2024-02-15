@@ -10,10 +10,10 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Npc
         {
             Id = id.ToNpcNewId();
         }
-        public int Id { get; }
-        public JSONObject AvatarJsonData => jsonData.instance.AvatarJsonData[Id.ToString()];
-        public string Str => AvatarJsonData?.ToString(true);
-        public UINPCJiaoHu UiNpcJiaoHu => UINPCJiaoHu.Inst;
+        public int         Id             { get; }
+        public JSONObject  AvatarJsonData => jsonData.instance.AvatarJsonData[Id.ToString()];
+        public string      Str            => AvatarJsonData?.ToString(true);
+        public UINPCJiaoHu UiNpcJiaoHu    => UINPCJiaoHu.Inst;
         public int Hp
         {
             get => GetInt("HP");

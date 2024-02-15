@@ -29,7 +29,7 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Npc.Wudao
 
         public object GetNpcWudao()
         {
-            var npc = _context.GetNpcID(0, 1);
+            var npc        = _context.GetNpcID(0, 1);
             var wudaoSkill = _context.GetMyArgs(1, -1);
             if (npc > 0)
             {

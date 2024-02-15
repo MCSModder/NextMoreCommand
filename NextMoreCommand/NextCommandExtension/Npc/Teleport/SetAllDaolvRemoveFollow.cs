@@ -19,7 +19,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc.Teleport
             var daolvId = PlayerEx.Player.DaoLvId.ToList().ToArray();
             MyLog.Log(command, $"开始执行所有道侣取消跟随 角色ID列表:{JArray.FromObject(daolvId).ToString(Formatting.None)}");
             NpcUtils.RemoveNpcFollow(daolvId);
-            MyLog.LogCommand(command,false);
+            MyLog.LogCommand(command, false);
             callback?.Invoke();
         }
     }

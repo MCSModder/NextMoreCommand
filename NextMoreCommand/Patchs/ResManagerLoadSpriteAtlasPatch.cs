@@ -38,7 +38,7 @@ public static class ResourcesLoadPatch
             return true;
         }
         var nowDunShuSpineSeid = MapPlayerController.Inst.NormalShow.NowDunShuSpineSeid;
-        var name = Tools.instance.getStaticSkillName(nowDunShuSpineSeid.skillid);
+        var name               = Tools.instance.getStaticSkillName(nowDunShuSpineSeid.skillid);
         if (!AssetsUtils.GetCustomMapPlayerSpine(name, out var customMapPlayerSpine)) return true;
         __result = customMapPlayerSpine.LoadSkeletonDataAsset(spine.ToLower());
         return false;

@@ -21,7 +21,7 @@ namespace SkySwordKill.NextMoreCommand.CustomModData
         }
         public bool Check(ModConfig modConfig)
         {
-            var path = modConfig.Path;
+            var path        = modConfig.Path;
             var modNDataDir = modConfig.GetNDataDir();
             return !path.Contains(@"workshop\content\1189490") && modNDataDir.CombinePath("CustomNpc").HasPath();
         }
@@ -67,9 +67,9 @@ namespace SkySwordKill.NextMoreCommand.CustomModData
             }
 
             var modData = modConfig.GetDataDir();
-            SaveJson(modData.CombinePath("AvatarJsonData.json"), customNpcs, SaveAvatar);
+            SaveJson(modData.CombinePath("AvatarJsonData.json"),   customNpcs, SaveAvatar);
             SaveJson(modData.CombinePath("NPCImportantDate.json"), customNpcs, SaveNpcImportant);
-            SaveJson(modData.CombinePath("WuJiangBangDing.json"), customNpcs, SaveWuJiang);
+            SaveJson(modData.CombinePath("WuJiangBangDing.json"),  customNpcs, SaveWuJiang);
             SaveJson(modData.CombinePath("BackpackJsonData.json"), customNpcs, SaveBackPack);
         }
 
@@ -140,7 +140,7 @@ namespace SkySwordKill.NextMoreCommand.CustomModData
             if (File.Exists(filename))
             {
                 var jObject = JObject.Parse(File.ReadAllText(filename));
-                var file = jObject.ToObject<Dictionary<string, JObject>>();
+                var file    = jObject.ToObject<Dictionary<string, JObject>>();
                 if (file != null)
                 {
                     // MyPluginMain.LogInfo(jObject);

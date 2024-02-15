@@ -9,7 +9,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc;
 [DialogEvent("设置角色名字")]
 public class SetNpcName : IDialogEvent
 {
-    private int npcId;
+    private int           npcId;
     private DialogCommand _command;
 
     public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
@@ -41,7 +41,7 @@ public class SetNpcName : IDialogEvent
             case 2:
             case 3:
                 var surname = command.GetStr(1, null);
-                var name = command.GetStr(2, null);
+                var name    = command.GetStr(2, null);
                 MyLog.Log(command, $"姓氏:{surname} 名字:{name} ");
                 NpcUtils.SetNpcFullName(npcId, surname, name);
 
@@ -56,7 +56,7 @@ public class SetNpcName : IDialogEvent
         UInputBox.Show($"给{DialogAnalysis.GetNpcName(npcId)}设置全名'姓氏 名字'", (fullname) =>
         {
             var length = fullname.Length;
-            var str = length.ToString();
+            var str    = length.ToString();
             MyLog.LogCommand(_command);
             MyLog.Log(_command, $"开始设置名字为:{fullname} 长度:{str} 角色ID:{npcId}");
             if (length > 16)
@@ -73,16 +73,17 @@ public class SetNpcName : IDialogEvent
             MyLog.LogCommand(_command, false);
             if (fullname.Contains(" "))
             {
-                var split = fullname.Split(' ');;
-               var surname = split[0];
-               var name = split[1];
-               NpcUtils.SetNpcFullName(npcId, surname, name);
+                var split = fullname.Split(' ');
+                ;
+                var surname = split[0];
+                var name    = split[1];
+                NpcUtils.SetNpcFullName(npcId, surname, name);
             }
             else
             {
                 NpcUtils.SetNpcName(npcId, fullname);
             }
-    
+
         });
     }
 }

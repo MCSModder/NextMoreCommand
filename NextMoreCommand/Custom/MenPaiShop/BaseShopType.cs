@@ -18,18 +18,18 @@ namespace SkySwordKill.NextMoreCommand.Custom.MenPaiShop
         public void OnClick(CustomMenPaiShopItem customMenPaiShopItem, MenPaiShopItemInfo itemInfo, DialogEnvironmentContext env = null)
         {
 
-            OnClickAction?.Invoke(customMenPaiShopItem, itemInfo, env?? new DialogEnvironmentContext());
+            OnClickAction?.Invoke(customMenPaiShopItem, itemInfo, env ?? new DialogEnvironmentContext());
         }
         public void OnComplete(CustomMenPaiShopItem customMenPaiShopItem, MenPaiShopItemInfo itemInfo, DialogEnvironmentContext env = null)
         {
-            OnCompleteAction?.Invoke(customMenPaiShopItem, itemInfo, env?? new DialogEnvironmentContext());
+            OnCompleteAction?.Invoke(customMenPaiShopItem, itemInfo, env ?? new DialogEnvironmentContext());
         }
         public void OnCancel(CustomMenPaiShopItem customMenPaiShopItem, MenPaiShopItemInfo itemInfo, DialogEnvironmentContext env = null)
         {
-            OnCancelAction?.Invoke(customMenPaiShopItem, itemInfo, env?? new DialogEnvironmentContext());
+            OnCancelAction?.Invoke(customMenPaiShopItem, itemInfo, env ?? new DialogEnvironmentContext());
         }
-        public Action<CustomMenPaiShopItem, MenPaiShopItemInfo, DialogEnvironmentContext> OnClickAction { get; set; }
+        public Action<CustomMenPaiShopItem, MenPaiShopItemInfo, DialogEnvironmentContext> OnClickAction    { get; set; }
         public Action<CustomMenPaiShopItem, MenPaiShopItemInfo, DialogEnvironmentContext> OnCompleteAction { get; set; }
-        public Action<CustomMenPaiShopItem, MenPaiShopItemInfo, DialogEnvironmentContext> OnCancelAction { get; set; }
+        public Action<CustomMenPaiShopItem, MenPaiShopItemInfo, DialogEnvironmentContext> OnCancelAction   { get; set; }
     }
 }

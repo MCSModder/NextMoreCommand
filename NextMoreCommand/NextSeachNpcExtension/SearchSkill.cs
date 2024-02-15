@@ -18,7 +18,7 @@ namespace SkySwordKill.NextMoreCommand.NextSeachNpcExtension
         };
         public bool Match(SearchNpcDataInfo searchNpcDataInfo)
         {
-            var skillList = searchNpcDataInfo.GetSkillList().Select(skill =>  Tools.instance.getSkillName(skill.skill_ID));
+            var skillList = searchNpcDataInfo.GetSkillList().Select(skill => Tools.instance.getSkillName(skill.skill_ID));
             var skillMatch = searchNpcDataInfo.ValueSplit('|').Where(text => !string.IsNullOrWhiteSpace(text)).Select(text =>
             {
                 if (int.TryParse(text, out var id) && SearchNpcDataManager.TryGetSkill(id, out var skill))
@@ -31,7 +31,7 @@ namespace SkySwordKill.NextMoreCommand.NextSeachNpcExtension
             {
                 foreach (var match in skillMatch.Where(match => skillName.Contains(match)))
                 {
-                    MyLog.Log("触发NPC搜索匹配",$"[匹配字段:{match} 神通:{skillName}]");
+                    MyLog.Log("触发NPC搜索匹配", $"[匹配字段:{match} 神通:{skillName}]");
                     return true;
                 }
 

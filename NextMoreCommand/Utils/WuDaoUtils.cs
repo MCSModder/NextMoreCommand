@@ -12,10 +12,10 @@ public class CustomWuDaoInfo
 
 public class WudaoJsonInfo
 {
-    [JsonProperty("id")] public int WudaoId = 0;
-    [JsonProperty("level")] public int Level = 0;
-    [JsonProperty("exp")] public int Exp = 0;
-    [JsonIgnore] public string Id => WudaoId.ToString();
+    [JsonProperty("id")]    public int    WudaoId = 0;
+    [JsonProperty("level")] public int    Level   = 0;
+    [JsonProperty("exp")]   public int    Exp     = 0;
+    [JsonIgnore]            public string Id => WudaoId.ToString();
 
     public void SetExpByLevel()
     {
@@ -35,8 +35,8 @@ public class WudaoJsonInfo
 
 public static class WuDaoExtends
 {
-    private static NpcJieSuanManager NpcJieSuanManager => NpcJieSuanManager.inst;
-    public static JSONObject GetNpcData(this int id) => NpcJieSuanManager.GetNpcData(id.ToNpcNewId());
+    private static NpcJieSuanManager NpcJieSuanManager       => NpcJieSuanManager.inst;
+    public static  JSONObject        GetNpcData(this int id) => NpcJieSuanManager.GetNpcData(id.ToNpcNewId());
 
     public static void AddNpcWuDaoExp(this int id, int wudaoId, int exp) =>
         NpcJieSuanManager.npcSetField.AddNpcWuDaoExp(id.ToNpcNewId(), wudaoId, exp);
@@ -70,7 +70,7 @@ public static class WuDaoUtils
 
     public static void SetWudaoExp(int npcId, int wudaoId, int exp = 0)
     {
-        var npc = npcId.GetNpcData();
+        var npc       = npcId.GetNpcData();
         var wudaoJson = npc["wuDaoJson"];
         var json = new WudaoJsonInfo()
         {
@@ -96,8 +96,8 @@ public static class WuDaoUtils
 
     public static void AddWudaoExp(int npcId, int wudaoId, int exp = 0)
     {
-        var npc = npcId.GetNpcData();
-        var wudaoJson = npc["wuDaoJson"];
+        var npc        = npcId.GetNpcData();
+        var wudaoJson  = npc["wuDaoJson"];
         var wudaoIdStr = wudaoId.ToString();
         if (wudaoJson.HasField(wudaoIdStr))
         {
@@ -119,8 +119,8 @@ public static class WuDaoUtils
     public static WudaoJsonInfo GetWudao(int npcId, int wudaoId)
     {
 
-        var npc = npcId.GetNpcData();
-        var wudaoJson = npc["wuDaoJson"];
+        var npc        = npcId.GetNpcData();
+        var wudaoJson  = npc["wuDaoJson"];
         var wudaoIdStr = wudaoId.ToString();
         if (wudaoJson.HasField(wudaoIdStr))
         {

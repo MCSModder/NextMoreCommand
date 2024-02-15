@@ -7,7 +7,7 @@ using Skill = GUIPackage.Skill;
 
 namespace SkySwordKill.NextMoreCommand.Custom.RealizeSeid.Skills;
 
-public class SeidSkillData:DialogEnvironment
+public class SeidSkillData : DialogEnvironment
 {
     public static SeidSkillData Create(Skill skill, int seid, List<int> damage, int type) =>
         new SeidSkillData(skill, seid, damage, type);
@@ -18,7 +18,7 @@ public class SeidSkillData:DialogEnvironment
         _seid = seid;
         _type = type;
         _damage = damage;
-       
+
     }
 
     public void SetSeidSkillData(Skill skill, int seid, List<int> damage, int type)
@@ -29,12 +29,12 @@ public class SeidSkillData:DialogEnvironment
         _damage = damage;
     }
 
-    private Skill _skill;
-    private int _seid;
-    private int _type;
+    private Skill     _skill;
+    private int       _seid;
+    private int       _type;
     private List<int> _damage;
-    private Avatar _attaker;
-    private Avatar _receiver;
+    private Avatar    _attaker;
+    private Avatar    _receiver;
 
     public int Damage
     {
@@ -68,13 +68,13 @@ public class SeidSkillData:DialogEnvironment
     {
         SeidSkill = new SeidSkill();
     }
-    
+
     public void SetAvatar(Entity attaker,
-        Entity receiver)
+        Entity                   receiver)
     {
         _attaker = (Avatar)attaker;
         _receiver = (Avatar)receiver;
-        
+
     }
     public void SetDamage(int damage)
     {
@@ -92,12 +92,12 @@ public class SeidSkillData:DialogEnvironment
     {
         Damage -= health;
     }
-    public void AddLateDamage(int skillId,int damage)
+    public void AddLateDamage(int skillId, int damage)
     {
-       _skill.LateDamages.Add(new LateDamage()
-       {
-           Damage = damage,
-           SkillId = skillId
-       });
+        _skill.LateDamages.Add(new LateDamage()
+        {
+            Damage = damage,
+            SkillId = skillId
+        });
     }
 }

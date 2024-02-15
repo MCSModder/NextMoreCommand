@@ -11,7 +11,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc
     [DialogEvent("设置角色战斗骨骼")]
     public class SetNpcFightSpine : IDialogEvent
     {
-        private int npc;
+        private int  npc;
         private bool show;
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)

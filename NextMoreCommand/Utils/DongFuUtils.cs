@@ -29,7 +29,7 @@ public class DongFuInfo
         RawID = id;
     }
 
-    public string RawID;
+    public string     RawID;
     public JSONObject JsonRaw => DongFuUtils.DongFuData[RawID];
 
     public int ID => Convert.ToInt32(RawID.Replace("DongFu", ""));
@@ -134,8 +134,8 @@ public class DongFuInfo
 
 public static class DongFuUtils
 {
-    public static JSONObject DongFuData => PlayerEx.Player.DongFuData;
-    public static string DongFuDataStr => DongFuData.ToString(true);
+    public static JSONObject DongFuData    => PlayerEx.Player.DongFuData;
+    public static string     DongFuDataStr => DongFuData.ToString(true);
 
     public static Dictionary<int, DongFuInfo> DongFuInfo =>
         DongFuData.Count != _dongFuInfo.Count ? GetDongFuDataInfos() : _dongFuInfo;
@@ -149,7 +149,7 @@ public static class DongFuUtils
             return new DongFuInfo($"DongFu{dongFuID}");
         }
 
-        
+
         return null;
     }
 
@@ -165,7 +165,7 @@ public static class DongFuUtils
         foreach (var key in DongFuData.keys)
         {
             var dongFuInfo = new DongFuInfo(key);
-            var id = dongFuInfo.ID;
+            var id         = dongFuInfo.ID;
             _dongFuInfo[id] = dongFuInfo;
         }
 

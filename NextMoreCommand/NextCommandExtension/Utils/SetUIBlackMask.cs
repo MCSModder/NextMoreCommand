@@ -21,7 +21,7 @@ public class SetUIBlackMask : IDialogEvent
                 inst.UIBlackMaskGameObject.SetActive(true);
             }
         }
-       
+
         MyLog.Log(command, "开始执行黑屏指令");
         MyLog.LogCommand(command, false);
         callback?.Invoke();

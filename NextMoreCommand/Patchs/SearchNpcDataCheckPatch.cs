@@ -12,8 +12,6 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             SearchNpcDataInfo.Clear();
         }
     }
-  
-
 
 
     [HarmonyPatch(typeof(SearchNpcData), nameof(SearchNpcData.Check))]
@@ -22,14 +20,14 @@ namespace SkySwordKill.NextMoreCommand.Patchs
 
         public static bool Prefix(string matchStr, SearchNpcData __instance, ref bool __result)
         {
-           // MyLog.Log("SearchNpcDataCheckPatch", $"matchStr:{matchStr}");
+            // MyLog.Log("SearchNpcDataCheckPatch", $"matchStr:{matchStr}");
             var npcJson = __instance.ID.NPCJson();
             if (!matchStr.Contains(":") || npcJson == null)
             {
                 return true;
             }
             var searchNpcDataInfo = SearchNpcDataInfo.Inst;
-            searchNpcDataInfo.SetSearchNpcDataInfo(matchStr,__instance);
+            searchNpcDataInfo.SetSearchNpcDataInfo(matchStr, __instance);
             if (!SearchNpcDataManager.Match(searchNpcDataInfo))
             {
                 searchNpcDataInfo = null;

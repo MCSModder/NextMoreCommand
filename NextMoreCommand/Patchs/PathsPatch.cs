@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace SkySwordKill.NextMoreCommand.Patchs;
 
-[HarmonyPatch(typeof(Paths),nameof(Paths.GetNewSavePath))]
+[HarmonyPatch(typeof(Paths), nameof(Paths.GetNewSavePath))]
 public static class PathsPatchs
 {
     public static void Prefix()
@@ -13,5 +13,5 @@ public static class PathsPatchs
             NextMoreCommand.Create();
         }
     }
-    
+
 }

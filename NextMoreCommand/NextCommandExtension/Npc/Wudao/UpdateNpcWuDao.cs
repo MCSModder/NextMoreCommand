@@ -21,7 +21,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc.Wudao
             {
                 MyLog.Log(command, $"角色ID:{npc} 角色名:{npc.GetNpcName()} ");
                 WuDaoUtils.UpdateNpcWuDao(npc);
-      
+
             }
             else
             {

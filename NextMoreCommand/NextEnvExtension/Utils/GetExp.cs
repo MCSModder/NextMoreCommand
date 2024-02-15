@@ -11,7 +11,7 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Utils
     {
         public object Execute(DialogEnvQueryContext context)
         {
-      
+
 
             return (int)context.Env.player.exp;
 

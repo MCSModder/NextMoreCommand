@@ -10,7 +10,7 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Utils
     {
         public object Execute(DialogEnvQueryContext context)
         {
-            var key = context.GetMyArgs(0,"");
+            var key = context.GetMyArgs(0, "");
             return Convert.ToInt32(DialogAnalysis.GetStr(key));
         }
     }

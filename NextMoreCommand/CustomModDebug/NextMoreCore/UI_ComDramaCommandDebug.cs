@@ -7,18 +7,18 @@ namespace SkySwordKill.NextMoreCommand.CustomModDebug.NextMoreCore
 {
     public partial class UI_ComDramaCommandDebug : GComponent
     {
-        public GList m_commandList;
-        public UI_ComboCommand m_addCommand;
-        public GList m_optionList;
-        public GList m_charaIdList;
-        public GButton m_runButton;
-        public GButton m_copyJsonButton;
-        public GButton m_saveJsonButton;
-        public UI_ComInput m_jsonID;
-        public UI_ComState m_resetState;
-        public GButton m_addOptionButton;
-        public GButton m_addCharacterIdButton;
-        public const string URL = "ui://kxq1c75yfvcj5g";
+        public       GList           m_commandList;
+        public       UI_ComboCommand m_addCommand;
+        public       GList           m_optionList;
+        public       GList           m_charaIdList;
+        public       GButton         m_runButton;
+        public       GButton         m_copyJsonButton;
+        public       GButton         m_saveJsonButton;
+        public       UI_ComInput     m_jsonID;
+        public       UI_ComState     m_resetState;
+        public       GButton         m_addOptionButton;
+        public       GButton         m_addCharacterIdButton;
+        public const string          URL = "ui://kxq1c75yfvcj5g";
 
         public static UI_ComDramaCommandDebug CreateInstance()
         {

@@ -5,17 +5,14 @@ using SkySwordKill.Next.DialogSystem;
 
 namespace SkySwordKill.NextMoreCommand.Patchs
 {
-    [HarmonyPatch(typeof(PlayerEx),nameof(PlayerEx.RecordShengPing))]
+    [HarmonyPatch(typeof(PlayerEx), nameof(PlayerEx.RecordShengPing))]
     public static class PlayerRecordShengPing
     {
         public static string shengPing = string.Empty;
         public static void Prefix(string shengPingID, Dictionary<string, string> args)
         {
             shengPing = shengPingID;
-            DialogAnalysis.TryTrigger(new[]
-            {
-                "PlayerRecordShengPing", "记录生平"
-            }, null, true);
+            DialogAnalysis.TryTrigger(new[] { "PlayerRecordShengPing", "记录生平" }, null, true);
         }
     }
 }

@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using JSONClass;
-
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace SkySwordKill.NextMoreCommand.Custom.NPC;
+
 [JsonObject]
 public class CustomNpcImportantDate : CustomBase
 {
@@ -33,13 +33,13 @@ public class CustomNpcImportantDate : CustomBase
     [JsonProperty("截杀变量")] public List<int> EventValue { get; set; } = new List<int>();
 
 
-    [JsonProperty("变量关系")] public string Fuhao { get; set; } = string.Empty;
-    [JsonIgnore] public  int Id     { get; set; }
-    [JsonProperty("出场境界")] public int Level { get; set; } = 1;
-    [JsonIgnore] public int SexType { get; set; } = 1;
-    [JsonProperty("出场资质")] public int ZiZhi { get; set; } = 15;
-    [JsonProperty("出场年龄")] public int Age { get; set; } = 16;
-    [JsonProperty("出场悟性")] public int WuXin { get; set; } = 15;
+    [JsonProperty("变量关系")] public string Fuhao   { get; set; } = string.Empty;
+    [JsonIgnore]           public int    Id      { get; set; }
+    [JsonProperty("出场境界")] public int    Level   { get; set; } = 1;
+    [JsonIgnore]           public int    SexType { get; set; } = 1;
+    [JsonProperty("出场资质")] public int    ZiZhi   { get; set; } = 15;
+    [JsonProperty("出场年龄")] public int    Age     { get; set; } = 16;
+    [JsonProperty("出场悟性")] public int    WuXin   { get; set; } = 15;
 
     public override JObject ToJObject()
     {

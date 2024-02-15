@@ -14,8 +14,8 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
     public class SetShengWangDecrease : IDialogEvent
     {
         private string type;
-        private int add;
-        private bool show;
+        private int    add;
+        private bool   show;
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {

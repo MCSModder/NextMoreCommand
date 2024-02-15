@@ -15,7 +15,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
             var tianfuID = command.GetInt(0);
-            var mode = command.GetInt(1);
+            var mode     = command.GetInt(1);
             if (tianfuID > 0 && CreateAvatarJsonData.DataDict.Keys.Contains(tianfuID))
             {
                 var list = env.player.SelectTianFuID.ToList();

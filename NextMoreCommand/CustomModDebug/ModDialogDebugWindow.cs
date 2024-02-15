@@ -41,7 +41,7 @@ public enum DramaState
 public struct NextEventCharacter
 {
     public string Name;
-    public int Id;
+    public int    Id;
 
     public NextEventCharacter(string name, int id)
     {
@@ -202,11 +202,11 @@ public class NextReloadManager : MonoBehaviour
             tools.isNeedSetTalk = true;
             tools.CanOpenTab = false;
             ModManager.ReloadAllModAsync();
-            
+
             DestroyImmediate(this);
         }, null, true);
     }
-    
+
 
     private IEnumerator ReloadModCheckBox()
     {
@@ -273,7 +273,7 @@ public struct NextEventCommand
 public class ModDialogDebugWindow : FGUIWindowBase
 {
     public static ModDialogDebugWindow Instance;
-    public UI_ModDialogDebug MainView => (UI_ModDialogDebug)contentPane;
+    public        UI_ModDialogDebug    MainView => (UI_ModDialogDebug)contentPane;
 
     public ModDialogDebugWindow() : base("NextMoreCore", "ModDialogDebug")
     {
@@ -281,7 +281,7 @@ public class ModDialogDebugWindow : FGUIWindowBase
 
     private ConfigTarget<bool> DebugMode => Main.I.DebugMode;
 
-    private bool _isGame = false;
+    private bool                       _isGame  = false;
     private Dictionary<string, string> _tempVar = new Dictionary<string, string>();
 
     protected override void OnUpdate()
@@ -376,8 +376,8 @@ public class ModDialogDebugWindow : FGUIWindowBase
         command.m_addCommand.m_addButton.onClick.Add((() =>
         {
             var index = command.m_addCommand.SearchBox.SelectedIndex;
-            var s = command.m_addCommand.m_commandInput.m_inContent.text;
-            var _com = new NextEventCommand(_commandKeys.ToList()[index], s);
+            var s     = command.m_addCommand.m_commandInput.m_inContent.text;
+            var _com  = new NextEventCommand(_commandKeys.ToList()[index], s);
             _nextEventCommands.Add(_com);
             var item = (UI_ComboCommandItem)command.m_commandList.AddItemFromPool().asCom;
 
@@ -428,9 +428,9 @@ public class ModDialogDebugWindow : FGUIWindowBase
         set => _currentState = value;
     }
 
-    private float _refreshSeachBox = 0f;
-    private List<string> _recentDramaId = new List<string>(20);
-    private string _seachText;
+    private float        _refreshSeachBox = 0f;
+    private List<string> _recentDramaId   = new List<string>(20);
+    private string       _seachText;
 
     private void OnChangedSearch(string obj)
     {
@@ -460,7 +460,7 @@ public class ModDialogDebugWindow : FGUIWindowBase
         for (int i = _recentDramaId.Count - 1; i >= 0; i--)
         {
             var item = dramaIdList.AddItemFromPool().asButton;
-            var key = _recentDramaId[i];
+            var key  = _recentDramaId[i];
             item.text = key;
             item.onClick.Add((() => DialogAnalysis.StartDialogEvent(key)));
             item.cursor = FGUIManager.MOUSE_HAND;
@@ -533,8 +533,8 @@ public class ModDialogDebugWindow : FGUIWindowBase
     #region 指令调试相关
 
     private List<NextEventCharacter> _nextEventCharacters = new List<NextEventCharacter>();
-    private List<NextEventCommand> _nextEventCommands = new List<NextEventCommand>();
-    private List<NextEventOption> _nextEventOptions = new List<NextEventOption>();
+    private List<NextEventCommand>   _nextEventCommands   = new List<NextEventCommand>();
+    private List<NextEventOption>    _nextEventOptions    = new List<NextEventOption>();
 
     private void RefreshCommandList()
     {

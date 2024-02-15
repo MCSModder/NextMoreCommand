@@ -9,8 +9,8 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.DongFu;
 [DialogEvent("设置新洞府")]
 public class SetNewDongFu : IDialogEvent
 {
-    private int id;
-    private int level;
+    private int    id;
+    private int    level;
     private string name;
     /// <summary>
     /// 设置新洞府<br/>

@@ -9,11 +9,11 @@ namespace SkySwordKill.NextMoreCommand.CustomModDebug.NextMoreCore
 {
     public partial class UI_ComboCommand : GComponent
     {
-        public UI_ComboSearchBox m_commandSeach;
-        public CtlComboSearchBox SearchBox;
-        public GButton m_addButton;
-        public UI_ComInput m_commandInput;
-        public const string URL = "ui://kxq1c75yfvcj5h";
+        public       UI_ComboSearchBox m_commandSeach;
+        public       CtlComboSearchBox SearchBox;
+        public       GButton           m_addButton;
+        public       UI_ComInput       m_commandInput;
+        public const string            URL = "ui://kxq1c75yfvcj5h";
 
         public static UI_ComboCommand CreateInstance()
         {

@@ -7,11 +7,11 @@ namespace SkySwordKill.NextMoreCommand.CustomModDebug.NextMoreCore
 {
     public partial class UI_ComDebugBar : GComponent
     {
-        public GButton m_dramaIdButton;
-        public GButton m_commandButton;
-        public GButton m_mainMenuButton;
-        public GButton m_debugButton;
-        public const string URL = "ui://kxq1c75y1101q5l";
+        public       GButton m_dramaIdButton;
+        public       GButton m_commandButton;
+        public       GButton m_mainMenuButton;
+        public       GButton m_debugButton;
+        public const string  URL = "ui://kxq1c75y1101q5l";
 
         public static UI_ComDebugBar CreateInstance()
         {

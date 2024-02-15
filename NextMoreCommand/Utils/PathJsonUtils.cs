@@ -17,7 +17,7 @@ public static class PathJsonUtils
         {
             if (jsonObjects[i] == null)
                 continue;
-            PatchJsonObject(fieldInfo, jsonObjects[i],jsonDatas[i]);
+            PatchJsonObject(fieldInfo, jsonObjects[i], jsonDatas[i]);
         }
     }
 
@@ -66,7 +66,7 @@ public static class PathJsonUtils
                 }
             }
 
-           MyPluginMain.LogInfo(string.Format("ModManager.LoadData".I18N(), $"{fieldInfo.Name}"));
+            MyPluginMain.LogInfo(string.Format("ModManager.LoadData".I18N(), $"{fieldInfo.Name}"));
         }
         catch (Exception e)
         {
@@ -124,7 +124,7 @@ public static class PathJsonUtils
                 }
             }
 
-           MyPluginMain.LogInfo(string.Format("ModManager.LoadData".I18N(),
+            MyPluginMain.LogInfo(string.Format("ModManager.LoadData".I18N(),
                 $"{Path.GetFileNameWithoutExtension(filePath)}.json"));
         }
         catch (Exception e)

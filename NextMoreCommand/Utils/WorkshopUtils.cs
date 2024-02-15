@@ -12,7 +12,7 @@ namespace MCSSubscribeDependencies;
 
 public class WorkshopItemInfo
 {
-    public ulong Id { get; }
+    public ulong             Id              { get; }
     public PublishedFileId_t PublishedFileId { get; }
 
     public CallResult<RemoteStorageGetPublishedFileDetailsResult_t> CallResult;
@@ -69,21 +69,22 @@ public static class WorkshopUtils
     public class ModInfo
     {
         public WorkShopItem WorkShopItem { get; private set; }
-        public ulong Id { get; private set; }
-        public string Title { get; private set; }
-        public bool IsActive{ get; private set; }
-        
+        public ulong        Id           { get; private set; }
+        public string       Title        { get; private set; }
+        public bool         IsActive     { get; private set; }
+
         public ModInfo(WorkShopItem workShopItem)
         {
-            
+
             WorkShopItem = workShopItem;
             Id = workShopItem.SteamID;
             Title = workShopItem.Title;
             IsActive = !WorkshopTool.CheckModIsDisable(Id.ToString());
         }
     }
-    public static List<WorkShopItem> WorkShopItems;
-    public static Dictionary<ulong,WorkShopItem> WorkShopItemsDict = new Dictionary<ulong, WorkShopItem>();
+
+    public static List<WorkShopItem>              WorkShopItems;
+    public static Dictionary<ulong, WorkShopItem> WorkShopItemsDict = new Dictionary<ulong, WorkShopItem>();
     public static void InitWorkShopItems()
     {
         WorkShopItemsDict.Clear();
@@ -96,7 +97,11 @@ public static class WorkshopUtils
     public static void Subscribe(params ulong[] items)
     {
         var isAdd = false;
-        var banList = new List<ulong>() { 2921046709, 2862679721 };
+        var banList = new List<ulong>()
+        {
+            2921046709,
+            2862679721
+        };
         var allMod = GetAllMod();
         foreach (var id in items)
         {
@@ -142,14 +147,14 @@ public static class WorkshopUtils
             .Where(item => File.Exists(Path.Combine(item.FullName, "mod.bin")))
             .Select(item =>
             {
-                var file = Path.Combine(item.FullName, "mod.bin");
-                var fileStream = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read);
+                var file         = Path.Combine(item.FullName, "mod.bin");
+                var fileStream   = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read);
                 var workShopItem = (WorkShopItem)new BinaryFormatter().Deserialize(fileStream);
                 fileStream.Close();
                 return workShopItem;
             }).ToList();
-    }   
-  
+    }
+
     public static List<List<ulong>> HasAllModLastDependencies()
     {
         return GetAllModWorkshopItem().Where(item => item.LastDependencies != null && item.LastDependencies.Count != 0)
@@ -164,7 +169,7 @@ public static class WorkshopUtils
 
     public static List<ulong> GetAllModDependencies()
     {
-        var dependencies = new List<ulong>();
+        var dependencies  = new List<ulong>();
         var workshopItems = HasAllModDependencies();
         foreach (var item in workshopItems)
         {

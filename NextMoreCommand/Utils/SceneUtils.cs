@@ -6,12 +6,12 @@ namespace SkySwordKill.NextMoreCommand.Utils;
 
 public class Scene
 {
-    public int MapIndex { get; private set; }
-    public string Name { get; private set; }
-    public string SceneName { get; private set; }
-    public MapArea MapArea { get; set; }
+    public int     MapIndex  { get; private set; }
+    public string  Name      { get; private set; }
+    public string  SceneName { get; private set; }
+    public MapArea MapArea   { get; set; }
 
-    public Scene(string name, string scene,int mapIndex,MapArea mapArea)
+    public Scene(string name, string scene, int mapIndex, MapArea mapArea)
     {
         Name = name;
         SceneName = scene;
@@ -19,12 +19,13 @@ public class Scene
         MapArea = mapArea;
     }
 }
+
 public static class SceneUtils
 {
-    public static readonly List< Scene> Scenes = new List< Scene>();
+    public static readonly List<Scene> Scenes = new List<Scene>();
     public static void Init()
     {
-        foreach (var scene in  SceneNameJsonData.DataList)
+        foreach (var scene in SceneNameJsonData.DataList)
         {
             MapArea mapArea;
             switch (scene.MoneyType)
@@ -39,14 +40,15 @@ public static class SceneUtils
                 default:
                     mapArea = MapArea.Unknow;
                     break;
-                    
+
             }
 
             int mapIndex = 0;
             if (scene.id.StartsWith("S"))
             {
                 mapIndex = Convert.ToInt32(scene.id.Replace("S", String.Empty));
-            }else if (scene.id.StartsWith("F"))
+            }
+            else if (scene.id.StartsWith("F"))
             {
                 mapIndex = Convert.ToInt32(scene.id.Replace("F", String.Empty));
             }
@@ -55,7 +57,7 @@ public static class SceneUtils
                 mapIndex = Convert.ToInt32(scene.id.Replace("Sea", String.Empty));
             }
 
-            Scenes.Add(new Scene(scene.MapName,scene.id,mapIndex,mapArea));
+            Scenes.Add(new Scene(scene.MapName, scene.id, mapIndex, mapArea));
         }
     }
 }

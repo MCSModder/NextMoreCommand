@@ -19,10 +19,10 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
             TabUIMag.OpenTab2(4);
             if (TabUIMag.Instance != null)
             {
-              
+
                 var itemPanel = TabUIMag.Instance.WuPingPanel;
-                var list = command.ToListInt();
-                var dict = itemPanel.EquipDict;
+                var list      = command.ToListInt();
+                var dict      = itemPanel.EquipDict;
                 foreach (var type in list)
                 {
                     if (dict.TryGetValue(type, out var equipSlot) && equipSlot.Item != null)

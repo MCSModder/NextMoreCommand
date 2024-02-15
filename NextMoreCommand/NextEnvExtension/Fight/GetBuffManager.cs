@@ -11,8 +11,8 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Fight
     {
         public object Execute(DialogEnvQueryContext context)
         {
-            var target =context.GetMyArgs(0, 0);
-            var avatar = target == 0 ? context.Env.player : context.Env.player.OtherAvatar;
+            var target  = context.GetMyArgs(0, 0);
+            var avatar  = target == 0 ? context.Env.player : context.Env.player.OtherAvatar;
             var buffMag = avatar.buffmag;
             return buffMag;
         }

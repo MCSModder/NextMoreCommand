@@ -9,14 +9,14 @@ namespace SkySwordKill.NextMoreCommand.CustomModDebug.NextMoreCore
 {
     public partial class UI_ComDrama : GComponent
     {
-        public UI_ComToolsSearchBox m_search;
-        public CtlToolsSearchBox SearchBox;
-        public GList m_list;
-        public GList m_listDramaId;
-        public GList m_listString;
-        public GList m_ListInt;
-        public UI_ComState m_resetState;
-        public const string URL = "ui://kxq1c75yfvcj5f";
+        public       UI_ComToolsSearchBox m_search;
+        public       CtlToolsSearchBox    SearchBox;
+        public       GList                m_list;
+        public       GList                m_listDramaId;
+        public       GList                m_listString;
+        public       GList                m_ListInt;
+        public       UI_ComState          m_resetState;
+        public const string               URL = "ui://kxq1c75yfvcj5f";
 
         public static UI_ComDrama CreateInstance()
         {

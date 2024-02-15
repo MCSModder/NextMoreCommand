@@ -11,9 +11,9 @@ namespace SkySwordKill.NextMoreCommand.Custom.SkillCombo;
 
 public class SkillInfoReplace
 {
-    public readonly int OldSkillId;
-    public readonly int NewSkillId;
-    public readonly int Index;
+    public readonly int    OldSkillId;
+    public readonly int    NewSkillId;
+    public readonly int    Index;
     public readonly string OldSkillName;
     public readonly string NewSkillName;
 
@@ -67,17 +67,17 @@ public class SkillInfoReplace
 
 public static class SkillComboManager
 {
-    public static readonly Dictionary<string, SkillCombo> SkillCombos = new Dictionary<string, SkillCombo>();
-    public static readonly Dictionary<string, int> SkillName = new Dictionary<string, int>();
-    public static readonly List<CacheSkillCombo> CacheSkillCombos = new List<CacheSkillCombo>();
-    public static Skill ChoiceSkill => RoundManager.instance.ChoiceSkill ?? RoundManager.instance.CurSkill;
-    private static Tools Tools => Tools.instance;
-    private static Avatar Player => Tools.getPlayer();
-    private static List<UIFightSkillItem> SkillFight => UIFightPanel.Inst.FightSkills;
+    public static readonly Dictionary<string, SkillCombo> SkillCombos      = new Dictionary<string, SkillCombo>();
+    public static readonly Dictionary<string, int>        SkillName        = new Dictionary<string, int>();
+    public static readonly List<CacheSkillCombo>          CacheSkillCombos = new List<CacheSkillCombo>();
+    public static          Skill                          ChoiceSkill => RoundManager.instance.ChoiceSkill ?? RoundManager.instance.CurSkill;
+    private static         Tools                          Tools       => Tools.instance;
+    private static         Avatar                         Player      => Tools.getPlayer();
+    private static         List<UIFightSkillItem>         SkillFight  => UIFightPanel.Inst.FightSkills;
 
     public static int GetSkillId(int skill)
     {
-        
+
         return Tools.getSkillKeyByID(skill, Player);
     }
 
@@ -224,10 +224,10 @@ public static class SkillComboManager
                 continue;
             }
 
-            var oldSkill = skillCombo.SkillComboData;
+            var oldSkill    = skillCombo.SkillComboData;
             var triggerType = oldSkill.TriggerType;
             var isLastSkill = oldSkill.LastSkill;
-            var isTrigger = param.Contains(triggerType) && oldSkill.GetCondition(env);
+            var isTrigger   = param.Contains(triggerType) && oldSkill.GetCondition(env);
             MyPluginMain.LogInfo($"选中技能名字:{name} 遍历技能名字:{skillCombo.Name}");
             MyPluginMain.LogInfo($"触发器:{triggerType}");
             if (isTrigger)

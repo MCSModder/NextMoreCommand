@@ -14,8 +14,8 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Utils
     {
         public object Execute(DialogEnvQueryContext context)
         {
-          
-            return WorkshopUtils.WorkShopItems.Select(item =>new WorkshopUtils.ModInfo(item)).ToList();
+
+            return WorkshopUtils.WorkShopItems.Select(item => new WorkshopUtils.ModInfo(item)).ToList();
 
         }
     }

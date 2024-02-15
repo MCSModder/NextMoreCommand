@@ -12,7 +12,7 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Utils
         public object Execute(DialogEnvQueryContext context)
         {
             var level = context.GetMyArgs(0, -1);
-            var dict = LevelUpDataJsonData.DataDict;
+            var dict  = LevelUpDataJsonData.DataDict;
             if (level <= 0)
             {
                 level = context.Env.GetLevel();
@@ -20,7 +20,7 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Utils
             var maxLevel = LevelUpDataJsonData.DataList.Count;
             if (level >= maxLevel)
             {
-                level = LevelUpDataJsonData.DataList[maxLevel- 1].id;
+                level = LevelUpDataJsonData.DataList[maxLevel - 1].id;
             }
 
             return dict[level].MaxExp;

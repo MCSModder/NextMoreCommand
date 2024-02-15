@@ -9,7 +9,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc;
 [DialogEvent("设置角色称呼")]
 public class SetNpcCallName : IDialogEvent
 {
-    private int npcId;
+    private int           npcId;
     private DialogCommand _command;
 
     public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
@@ -41,22 +41,22 @@ public class SetNpcCallName : IDialogEvent
                 NpcUtils.SetCallName(npcId, name);
                 break;
             case 3:
-                var man = command.GetStr(1, "");
+                var man   = command.GetStr(1, "");
                 var woman = command.GetStr(2, "");
                 name = env.player.Sex == 2 ? woman : man;
                 MyLog.Log(_command, $"成功设置称呼为:{name} 角色ID:{npcId}");
                 NpcUtils.SetCallName(npcId, name);
                 break;
         }
-        if (command.ParamList.Length  > 1)
+        if (command.ParamList.Length > 1)
         {
-      
+
         }
         else
         {
-          
+
         }
-       
+
         MyLog.Log(command,
             $"要替换称呼 角色ID:{npcId} 角色名:{npcId.GetNpcName()} 称呼:{NpcUtils.GetCallName(npcId)} ");
         MyLog.LogCommand(command, false);

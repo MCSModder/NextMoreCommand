@@ -7,8 +7,8 @@ namespace SkySwordKill.NextMoreCommand.Utils.Fight
     public class FightManager : MonoBehaviour
     {
 
-        public static FightManager Inst { get; private set; }
-        public static FightInfo NowFightInfo { get; private set; }
+        public static FightManager Inst         { get; private set; }
+        public static FightInfo    NowFightInfo { get; private set; }
         public static void ResetEventFight()
         {
             FightInfo.ResetEventFight();

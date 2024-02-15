@@ -9,17 +9,17 @@ namespace SkySwordKill.NextMoreCommand.Utils;
 
 public static class PlayTimeUtils
 {
-    public static float Now => Time.realtimeSinceStartup;
-    private static int _playHourTime = 0;
-    private static string[] ignoreScene = new[] { "MainMenu", "Loading" };
+    public static  float    Now => Time.realtimeSinceStartup;
+    private static int      _playHourTime = 0;
+    private static string[] ignoreScene   = new[] { "MainMenu", "Loading" };
 
     public static bool HasPlayHour()
     {
         var hour = Convert.ToInt32(GetHours());
-       MyPluginMain.LogInfo(hour);
+        MyPluginMain.LogInfo(hour);
         if (hour > _playHourTime && !ignoreScene.Contains(SceneManager.GetActiveScene().name))
         {
-           MyPluginMain.LogInfo($"触发每小时游玩触发器");
+            MyPluginMain.LogInfo($"触发每小时游玩触发器");
 
             DialogAnalysis.TryTrigger(new[] { "游玩每小时", "HasPlayHour" }, null, true);
 

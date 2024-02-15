@@ -12,7 +12,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fungus
     [DialogEvent("运行官方对话")]
     public class RunFungusTalk : IDialogEvent
     {
-        private int talkID;
+        private int    talkID;
         private string tagBlock;
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)

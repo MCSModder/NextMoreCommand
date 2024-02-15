@@ -16,8 +16,8 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
     public class SetTeleport : IDialogEvent
     {
         private List<int> npcIds;
-        private int mapIndex;
-        private string sceneName;
+        private int       mapIndex;
+        private string    sceneName;
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {

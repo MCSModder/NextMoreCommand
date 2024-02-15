@@ -39,13 +39,13 @@ public class SetLoadDongFu : IDialogEvent
     /// <param name="callback"></param>
     public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
     {
-        
+
         MyLog.LogCommand(command);
         id = command.GetInt(0);
         MyLog.Log(command, $"洞府ID:{id}");
         if (DongFuManager.PlayerHasDongFu(id))
         {
-          
+
             MyLog.Log(command, $"洞府ID:{id} 洞府名:{DongFuManager.GetDongFuName(id)} ");
             DongFuManager.LoadDongFuScene(id);
         }

@@ -12,7 +12,7 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Utils
 
             var key = context.GetMyArgs(0, "");
 
-            return !string.IsNullOrWhiteSpace(key)&&context.Env.GetInt(key) != 0;
+            return !string.IsNullOrWhiteSpace(key) && context.Env.GetInt(key) != 0;
         }
     }
 }

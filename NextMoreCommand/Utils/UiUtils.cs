@@ -21,7 +21,7 @@ namespace SkySwordKill.NextMoreCommand.Utils;
 public static class UiUtils
 {
     private static Sprite _spriteMoney;
-    public static Sprite SpriteMoney => GetSpriteMoney();
+    public static  Sprite SpriteMoney => GetSpriteMoney();
     private static Sprite GetSpriteMoney()
     {
         if (_spriteMoney != null)
@@ -43,7 +43,7 @@ public static class UiUtils
         UIMiniShop.Show(itemID, price, maxSellCount);
     }
     private static UIGaoShi UIGaoShi => UIGaoShi.Inst;
-    private static Avatar Player => PlayerEx.Player;
+    private static Avatar   Player   => PlayerEx.Player;
     public static void ShowGaoShi(string sceneName)
     {
         var dataDict = GaoShiLeiXing.DataDict;
@@ -57,16 +57,16 @@ public static class UiUtils
         var uiGaoShi = UIGaoShi;
         uiGaoShi.ScaleObj.SetActive(true);
         uiGaoShi.ContentRT.DestoryAllChild();
-        var player = Player;
+        var player        = Player;
         var gaoShiLeiXing = dataDict[sceneName];
-        var gaoShiJson = player.GaoShi;
+        var gaoShiJson    = player.GaoShi;
         if (gaoShiJson.HasField(sceneName) && gaoShiLeiXing != null)
         {
             uiGaoShi.Title.text = gaoShiLeiXing.name;
             var list = gaoShiJson[sceneName]["GaoShiList"].list;
             foreach (var jsonObject in list)
             {
-                var id = jsonObject["GaoShiID"].I;
+                var id     = jsonObject["GaoShiID"].I;
                 var gaoShi = GaoShi.DataDict[id];
                 switch (gaoShi.type)
                 {
@@ -99,7 +99,7 @@ public static class UiUtils
         }
 
         TabUIMag.OpenTab(3);
-        var tabUIMag = TabUIMag.Instance;
+        var tabUIMag    = TabUIMag.Instance;
         var spriteMoney = SpriteMoney;
         tabUIMag.TryEscClose();
         if (isMoney && spriteMoney == null)
@@ -110,10 +110,10 @@ public static class UiUtils
         MusicMag.instance.PlayEffectMusic("open_tradepage");
         uiMenPaiShop.ScaleObj.SetActive(true);
         uiMenPaiShop.ShopTitle.text = title;
-        var player = Player;
-        var levelType = player.getLevelType();
+        var player       = Player;
+        var levelType    = player.getLevelType();
         var itemDatebase = jsonData.instance.GetComponent<ItemDatebase>();
-        var exGoodsID = 0;
+        var exGoodsID    = 0;
         for (var index = 0; index < 3; ++index)
         {
             var count = all.Count - 1;
@@ -153,7 +153,7 @@ public static class UiUtils
                 shopItem.IconShow.Count = 1;
                 shopItem.IconShow.OnClick += (p =>
                 {
-                    var num = isMoney ? (int)(player.money / (ulong)price) : player.getItemNum(good.EXGoodsID) / price;
+                    var num    = isMoney ? (int)(player.money / (ulong)price) : player.getItemNum(good.EXGoodsID) / price;
                     var maxNum = Mathf.Min(num, item.maxNum);
 
 
@@ -167,9 +167,9 @@ public static class UiUtils
                             USelectBox.Show("是否兑换" + item.name + " x1", (() =>
                             {
                                 var itemName = _ItemJsonData.DataDict[good.GoodsID].name;
-                                var name = isMoney ? "灵石" : _ItemJsonData.DataDict[good.EXGoodsID].name;
-                                var avatar = PlayerEx.Player;
-                                var isShop = isMoney ? avatar.money >= (ulong)price : avatar.getItemNum(good.EXGoodsID) >= price;
+                                var name     = isMoney ? "灵石" : _ItemJsonData.DataDict[good.EXGoodsID].name;
+                                var avatar   = PlayerEx.Player;
+                                var isShop   = isMoney ? avatar.money >= (ulong)price : avatar.getItemNum(good.EXGoodsID) >= price;
                                 if (isShop)
                                 {
                                     if (isMoney)
@@ -193,10 +193,10 @@ public static class UiUtils
                             USelectNum.Show("兑换数量 x{num}", 1, maxNum, (i =>
                             {
                                 var itemName = _ItemJsonData.DataDict[good.GoodsID].name;
-                                var name = isMoney ? "灵石" : _ItemJsonData.DataDict[good.EXGoodsID].name;
-                                var avatar = PlayerEx.Player;
-                                var total = i * price;
-                                var isShop = isMoney ? avatar.money >= (ulong)total : avatar.getItemNum(good.EXGoodsID) >= total;
+                                var name     = isMoney ? "灵石" : _ItemJsonData.DataDict[good.EXGoodsID].name;
+                                var avatar   = PlayerEx.Player;
+                                var total    = i * price;
+                                var isShop   = isMoney ? avatar.money >= (ulong)total : avatar.getItemNum(good.EXGoodsID) >= total;
                                 if (isShop)
                                 {
                                     if (isMoney)

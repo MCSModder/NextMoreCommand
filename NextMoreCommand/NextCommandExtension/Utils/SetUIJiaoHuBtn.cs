@@ -12,7 +12,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils;
 
 public enum EJiaoHuBtn
 {
-    交谈 ,
+    交谈,
     论道,
     交易,
     切磋,
@@ -34,9 +34,9 @@ public enum EJiaoHuBtnState
 
 public class UIJiaoHuBtnInfo
 {
-    public EJiaoHuBtn Type { get; }
-    public EJiaoHuBtnState State { get; }
-    public bool IsValid { get; }
+    public EJiaoHuBtn      Type    { get; }
+    public EJiaoHuBtnState State   { get; }
+    public bool            IsValid { get; }
     public UIJiaoHuBtnInfo(string input)
     {
         IsValid = false;
@@ -44,10 +44,7 @@ public class UIJiaoHuBtnInfo
         {
             return;
         }
-        var split = input.Split(new[]
-        {
-            ':'
-        }, 2);
+        var split = input.Split(new[] { ':' }, 2);
         if (int.TryParse(split[0], out var btn))
         {
             Type = (EJiaoHuBtn)btn;
@@ -100,8 +97,8 @@ public class UIJiaoHuBtnInfo
 
 public static class UINPCJiaoHuPopExtends
 {
-    public static UINPCJiaoHu UiNPCJiaoHu => UINPCJiaoHu.Inst;
-    public static UINPCJiaoHuPop UiNPCJiaoHuPop => UiNPCJiaoHu.JiaoHuPop;
+    public static UINPCJiaoHu                    UiNPCJiaoHu    => UINPCJiaoHu.Inst;
+    public static UINPCJiaoHuPop                 UiNPCJiaoHuPop => UiNPCJiaoHu.JiaoHuPop;
     public static Dictionary<EJiaoHuBtn, Button> JiaoHuBtn = new Dictionary<EJiaoHuBtn, Button>();
     public static void InitButton(this UINPCJiaoHuPop inst)
     {

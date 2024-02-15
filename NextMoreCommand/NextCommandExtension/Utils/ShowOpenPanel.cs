@@ -16,13 +16,13 @@ public class ShowOpenPanel : IDialogEvent
         MyLog.LogCommand(command);
         _panelType = command.GetInt(0, -1);
         _type = command.GetInt(1);
-        if (_panelType is > 5 or < 0 )
+        if (_panelType is > 5 or < 0)
         {
             _panelType = 5;
         }
         var panelType = (PanelMamager.PanelType)_panelType;
         PanelMamager.inst.OpenPanel(panelType, _type);
-      
+
         MyLog.Log(command, $"显示面板 显示面板:{panelType.GetName()} 类型:{_type} ");
         MyLog.LogCommand(command, false);
         callback?.Invoke();

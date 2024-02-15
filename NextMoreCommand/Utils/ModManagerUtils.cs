@@ -7,10 +7,10 @@ namespace SkySwordKill.NextMoreCommand.Utils
 {
     public static class ModManagerUtils
     {
-        public static bool TryGetModSetting( string key,out KeyCode keyCode)
+        public static bool TryGetModSetting(string key, out KeyCode keyCode)
         {
-          
-            if ( ModManager.TryGetModSetting(key,out string value))
+
+            if (ModManager.TryGetModSetting(key, out string value))
             {
                 if (Enum.TryParse(value, true, out keyCode))
                 {

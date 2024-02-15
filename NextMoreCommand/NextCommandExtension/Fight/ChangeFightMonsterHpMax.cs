@@ -13,7 +13,7 @@ public class ChangeFightMonsterHpMax : IDialogEvent
 {
     public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
     {
-        var value = command.GetInt(0, 0);
+        var value   = command.GetInt(0, 0);
         var monster = PlayerEx.Player.OtherAvatar;
         Tools.instance.MonstarID.AddNpcHp(value);
         monster.HP_Max += value;

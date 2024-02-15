@@ -16,7 +16,7 @@ public class GetStaticSkillLevel : IDialogEnvQuery
             return 0;
         }
         var staticSkillIDByKey = Tools.instance.getStaticSkillIDByKey(skillID);
-        var list = Tools.instance.getPlayer().hasStaticSkillList;
+        var list               = Tools.instance.getPlayer().hasStaticSkillList;
         return (from skillItem in list where staticSkillIDByKey == skillItem.itemId select skillItem.level).FirstOrDefault();
 
     }

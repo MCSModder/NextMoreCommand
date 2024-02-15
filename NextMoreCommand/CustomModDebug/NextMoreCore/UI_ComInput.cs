@@ -7,8 +7,8 @@ namespace SkySwordKill.NextMoreCommand.CustomModDebug.NextMoreCore
 {
     public partial class UI_ComInput : GComponent
     {
-        public GTextInput m_inContent;
-        public const string URL = "ui://kxq1c75yfvcj5j";
+        public       GTextInput m_inContent;
+        public const string     URL = "ui://kxq1c75yfvcj5j";
 
         public static UI_ComInput CreateInstance()
         {

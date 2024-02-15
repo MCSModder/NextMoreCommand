@@ -12,11 +12,11 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
-            var id = command.GetStr(0);
+            var id        = command.GetStr(0);
             var condition = command.GetStr(1);
-            var @event = command.GetStr(2).Split('|').ToList();
-            var priority = command.GetInt(3);
-            var bindNpc = command.GetInt(4);
+            var @event    = command.GetStr(2).Split('|').ToList();
+            var priority  = command.GetInt(3);
+            var bindNpc   = command.GetInt(4);
             if (!string.IsNullOrWhiteSpace(id))
             {
                 var chat = new ChatInfo()

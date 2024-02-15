@@ -25,16 +25,16 @@ namespace SkySwordKill.NextMoreCommand;
 public class NextMoreCommand : MonoBehaviour
 {
     private static NextMoreCommand instance;
-    public static NextMoreCommand Instance => instance;
-    public bool? AchivementDebug;
-    private long _saveSlotDebug = 9;
-    public long SaveSlotDebug => _saveSlotDebug <= 9 ? 9 : _saveSlotDebug;
-    public bool IsRefresh = false;
-    private static KeyCode ReloadModKey;
+    public static  NextMoreCommand Instance => instance;
+    public         bool?           AchivementDebug;
+    private        long            _saveSlotDebug = 9;
+    public         long            SaveSlotDebug => _saveSlotDebug <= 9 ? 9 : _saveSlotDebug;
+    public         bool            IsRefresh = false;
+    private static KeyCode         ReloadModKey;
 
     public static NextMoreCommand Create()
     {
-        var go = new GameObject(nameof(NextMoreCommand), typeof(NextMoreCommand));
+        var go        = new GameObject(nameof(NextMoreCommand), typeof(NextMoreCommand));
         var component = go.GetComponent<NextMoreCommand>();
         if (component == null)
         {
@@ -54,19 +54,19 @@ public class NextMoreCommand : MonoBehaviour
         }
 
         instance = this;
-      
-        
-         gameObject.AddMissingComponent<FightManager>();
+
+
+        gameObject.AddMissingComponent<FightManager>();
         DontDestroyOnLoad(this);
         ModManager.TryGetModSetting("Quick_AchivementDebug", out AchivementDebug);
-        ModManager.TryGetModSetting("Quick_SaveSlotDebug", out _saveSlotDebug);
+        ModManager.TryGetModSetting("Quick_SaveSlotDebug",   out _saveSlotDebug);
         ModManagerUtils.TryGetModSetting("Quick_ReloadModKey", out ReloadModKey);
 
 
         ModManager.ModSettingChanged += () =>
         {
             ModManager.TryGetModSetting("Quick_AchivementDebug", out AchivementDebug);
-            ModManager.TryGetModSetting("Quick_SaveSlotDebug", out _saveSlotDebug);
+            ModManager.TryGetModSetting("Quick_SaveSlotDebug",   out _saveSlotDebug);
             if (_saveSlotDebug < 9)
             {
                 _saveSlotDebug = 9;
@@ -79,7 +79,7 @@ public class NextMoreCommand : MonoBehaviour
         ModManager.ModLoadComplete += () =>
         {
             ModManager.TryGetModSetting("Quick_AchivementDebug", out AchivementDebug);
-            ModManager.TryGetModSetting("Quick_SaveSlotDebug", out _saveSlotDebug);
+            ModManager.TryGetModSetting("Quick_SaveSlotDebug",   out _saveSlotDebug);
             if (_saveSlotDebug < 9)
             {
                 _saveSlotDebug = 9;
@@ -92,10 +92,10 @@ public class NextMoreCommand : MonoBehaviour
         };
 
     }
-    public static void SetParent(Transform transform) => instance.transform.SetParent(transform);
-    public static Transform SearchTransform(string path) => instance.FindTransform(path);
-    public static GameObject SearchGameObject(string path) => instance.FindGameObject(path);
-    public Transform FindTransform(string path) => transform.Find(path);
+    public static void       SetParent(Transform     transform) => instance.transform.SetParent(transform);
+    public static Transform  SearchTransform(string  path)      => instance.FindTransform(path);
+    public static GameObject SearchGameObject(string path)      => instance.FindGameObject(path);
+    public        Transform  FindTransform(string    path)      => transform.Find(path);
     public GameObject FindGameObject(string path)
     {
         var tranform1 = FindTransform(path);

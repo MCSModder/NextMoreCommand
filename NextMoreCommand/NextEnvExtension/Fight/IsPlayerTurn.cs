@@ -10,7 +10,7 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Fight
     {
         public object Execute(DialogEnvQueryContext context)
         {
-            
+
             return UIFightPanel.Inst.UIFightState != UIFightState.敌人回合;
         }
     }

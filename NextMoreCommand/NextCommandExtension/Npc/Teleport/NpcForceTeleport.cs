@@ -15,14 +15,14 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc.Teleport
     [DialogEvent("角色多人强制传送")]
     public class NpcForceTeleport : IDialogEvent
     {
-        public bool m_isAdd;
-        public List<NpcInfo> NpcInfos = new List<NpcInfo>();
+        public        bool          m_isAdd;
+        public        List<NpcInfo> NpcInfos          = new List<NpcInfo>();
         public static List<NpcInfo> NotDialogNpcInfos = new List<NpcInfo>();
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
             MyLog.LogCommand(command);
             string dialog;
-            int npc;
+            int    npc;
             switch (command.Command)
             {
                 case "NpcForceTeleport":

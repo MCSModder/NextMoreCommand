@@ -21,7 +21,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc
             fightFace = command.GetInt(1, 0);
             if (npc > 0)
             {
-                var data = npc.NPCJson();
+                var data         = npc.NPCJson();
                 var nowFightFace = data.GetInt("fightFace").ToString();
                 MyLog.Log(command, $"角色ID:{npc} 角色名:{npc.GetNpcName()} 当前战斗立绘:{nowFightFace} 设置战斗立绘:{fightFace}");
                 MyLog.Log(command, $"");

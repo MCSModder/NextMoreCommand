@@ -9,11 +9,10 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Utils
     {
         public object Execute(DialogEnvQueryContext context)
         {
-            var player = context.Env.player;
+            var player   = context.Env.player;
             var fullname = player.firstName + player.lastName;
-            return fullname.TextHelper(1,@char => @char + "!");
+            return fullname.TextHelper(1, @char => @char + "!");
 
         }
     }
 }
-

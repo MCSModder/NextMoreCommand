@@ -7,10 +7,10 @@ namespace SkySwordKill.NextMoreCommand.CustomModDebug.NextMoreCore
 {
     public partial class UI_ComboCommandCharacterItem : GComponent
     {
-        public UI_ComInput m_itemInput;
-        public GComboBox m_itemBox;
-        public GButton m_deleteButton;
-        public const string URL = "ui://kxq1c75yfvcj5k";
+        public       UI_ComInput m_itemInput;
+        public       GComboBox   m_itemBox;
+        public       GButton     m_deleteButton;
+        public const string      URL = "ui://kxq1c75yfvcj5k";
 
         public static UI_ComboCommandCharacterItem CreateInstance()
         {

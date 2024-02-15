@@ -9,19 +9,19 @@ namespace SkySwordKill.NextMoreCommand.NextSeachNpcExtension
 {
     public class SearchNpcDataInfo
     {
-        private static jsonData JsonData => jsonData.instance;
-        private static Tools Tools => Tools.instance;
-        public static SearchNpcDataInfo Inst { get; } = new SearchNpcDataInfo();
-        public static void Clear() => Inst?.Reset();
-        public int Id { get; private set; }
-        public string RawMatchStr { get; private set; }
-        public SearchNpcData SearchNpcData { get; private set; }
-        public string Key { get; private set; }
-        public string Value { get; private set; }
-        public JSONObject NpcJson { get; private set; }
-        public List<item> Items { get; private set; } = new List<item>();
-        public List<Skill> Skills { get; private set; } = new List<Skill>();
-        public List<Skill> StaticSkill { get; private set; } = new List<Skill>();
+        private static jsonData          JsonData      => jsonData.instance;
+        private static Tools             Tools         => Tools.instance;
+        public static  SearchNpcDataInfo Inst          { get; } = new SearchNpcDataInfo();
+        public static  void              Clear()       => Inst?.Reset();
+        public         int               Id            { get; private set; }
+        public         string            RawMatchStr   { get; private set; }
+        public         SearchNpcData     SearchNpcData { get; private set; }
+        public         string            Key           { get; private set; }
+        public         string            Value         { get; private set; }
+        public         JSONObject        NpcJson       { get; private set; }
+        public         List<item>        Items         { get; private set; } = new List<item>();
+        public         List<Skill>       Skills        { get; private set; } = new List<Skill>();
+        public         List<Skill>       StaticSkill   { get; private set; } = new List<Skill>();
         public UINPCData GetNpcData()
         {
             var npcData = new UINPCData(SearchNpcData.ID);
@@ -31,10 +31,7 @@ namespace SkySwordKill.NextMoreCommand.NextSeachNpcExtension
         public void SetSearchNpcDataInfo(string matchStr, SearchNpcData searchNpcData)
         {
             RawMatchStr = matchStr;
-            var split = RawMatchStr.Split(new[]
-            {
-                ':'
-            }, 2);
+            var split = RawMatchStr.Split(new[] { ':' }, 2);
             Key = split[0].ToLower();
             Value = split[1];
             if (SearchNpcData == searchNpcData)
@@ -103,7 +100,7 @@ namespace SkySwordKill.NextMoreCommand.NextSeachNpcExtension
             if (isRefresh)
             {
                 var backpackJsonData = JsonData.AvatarBackpackJsonData.GetField(Id.ToString());
-                var backpack = JsonConvert.DeserializeObject<List<ItemInfo>>(backpackJsonData.GetField("Backpack").ToString());
+                var backpack         = JsonConvert.DeserializeObject<List<ItemInfo>>(backpackJsonData.GetField("Backpack").ToString());
                 Items = backpack.Select(item => item.ToItem()).ToList();
             }
 

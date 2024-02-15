@@ -18,9 +18,9 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Utils
                 return text;
             }
 
-            return text.TextHelper( size, item => item.RandomColor());
+            return text.TextHelper(size, item => item.RandomColor());
         }
     }
 
-  
+
 }

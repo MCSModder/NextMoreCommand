@@ -13,18 +13,18 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc.Wudao
     [DialogEvent("设置角色悟道经验")]
     public class SetNpcWudaoExp : IDialogEvent
     {
-        private int npc;
-        private int wudaoId;
-        private int exp;
-        private Dictionary<int, WuDaoAllTypeJson> WuDaoAllType => WuDaoAllTypeJson.DataDict;
-        private string GetWudaoName(int wudaoId) => WuDaoAllType[wudaoId].name1;
+        private int                               npc;
+        private int                               wudaoId;
+        private int                               exp;
+        private Dictionary<int, WuDaoAllTypeJson> WuDaoAllType              => WuDaoAllTypeJson.DataDict;
+        private string                            GetWudaoName(int wudaoId) => WuDaoAllType[wudaoId].name1;
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
             MyLog.LogCommand(command);
             npc = command.ToNpcId();
             wudaoId = command.GetInt(1, 0);
-            exp = command.GetInt(2, 0);
+            exp = command.GetInt(2,     0);
             if (npc > 0 && WuDaoAllType.ContainsKey(wudaoId) && exp >= 0)
             {
                 MyLog.Log(command, $"角色ID:{npc} 角色名:{npc.GetNpcName()} ");
@@ -43,7 +43,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc.Wudao
                 {
                     MyLog.Log(command, $"设置经验值:{exp} 不能为小于 0", true, false);
                 }
-       
+
             }
 
             MyLog.LogCommand(command, false);

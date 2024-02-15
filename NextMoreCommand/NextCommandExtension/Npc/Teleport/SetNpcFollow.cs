@@ -15,11 +15,11 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc.Teleport
     [DialogEvent("设置角色多人跟随")]
     public class SetNpcFollow : IDialogEvent
     {
-        public bool m_isAdd;
+        public bool          m_isAdd;
         public List<NpcInfo> NpcInfos = new List<NpcInfo>();
 
         private string dialog;
-        private int npc;
+        private int    npc;
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
@@ -56,7 +56,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc.Teleport
                 {
                     m_isAdd = true;
                 }
-                
+
                 NpcUtils.SetNpcFollow(npcInfo);
                 MyLog.Log(command, $"添加角色跟随 角色ID:{npcInfo.Id} 角色名:{npcInfo.Name} 剧情ID:{npcInfo.GetDialogName()}");
             }

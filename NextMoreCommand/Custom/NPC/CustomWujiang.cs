@@ -8,11 +8,11 @@ namespace SkySwordKill.NextMoreCommand.Custom.NPC;
 [JsonObject]
 public class CustomWujiang : CustomBase
 {
-    [JsonProperty("武将ID")] public int Id { get; set; }
+    [JsonProperty("武将ID")]   public int       Id     { get; set; }
     [JsonProperty("角色ID绑定")] public List<int> Avatar { get; set; } = new List<int>();
 
     [JsonProperty("开始时间")] public string TimeStart { get; set; } = string.Empty;
-    [JsonProperty("结束时间")] public string TimeEnd { get; set; } = string.Empty;
+    [JsonProperty("结束时间")] public string TimeEnd   { get; set; } = string.Empty;
 
     [JsonProperty("名字", NullValueHandling = NullValueHandling.Ignore)]
     public string Name { get; set; }
@@ -21,8 +21,8 @@ public class CustomWujiang : CustomBase
     public string Title { get; set; }
 
     [JsonProperty("立绘", NullValueHandling = NullValueHandling.Ignore)]
-    public int Image { get; set; } = 0;
-    [JsonProperty("拍卖行", NullValueHandling = NullValueHandling.Ignore)] public int PaiMaiHang { get; set; }= 0;
+    public int Image { get;                                                                          set; } = 0;
+    [JsonProperty("拍卖行", NullValueHandling = NullValueHandling.Ignore)] public int PaiMaiHang { get; set; } = 0;
 
     public override JObject ToJObject()
     {

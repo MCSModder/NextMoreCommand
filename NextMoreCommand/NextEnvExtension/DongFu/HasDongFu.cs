@@ -9,7 +9,7 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.DongFu
     {
         public object Execute(DialogEnvQueryContext context)
         {
-            
+
             var dongfuID = context.GetMyArgs(0, 0);
             return DongFuManager.PlayerHasDongFu(dongfuID);
         }

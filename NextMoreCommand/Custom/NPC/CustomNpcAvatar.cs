@@ -14,7 +14,7 @@ public class CustomNpcAvatar : CustomBase
 {
     [JsonProperty("立绘")] public int Face { get; set; } = 0;
 
-    [JsonProperty("战场形象")]  public int FightFace { get; set; }= 0;
+    [JsonProperty("战场形象")] public int FightFace { get; set; } = 0;
 
 
     [JsonProperty("种族")] public int AvatarType { get; set; } = 1;
@@ -46,13 +46,32 @@ public class CustomNpcAvatar : CustomBase
     [JsonProperty("饰品")] public int EquipRing { get; set; }
 
 
-    [JsonProperty("灵根权重")] public List<int> LingGen { get; set; } = new List<int>() { 10, 10, 10, 10, 10 };
+    [JsonProperty("灵根权重")] public List<int> LingGen { get; set; } = new List<int>()
+    {
+        10,
+        10,
+        10,
+        10,
+        10
+    };
 
 
-    [JsonProperty("神通")] public List<int> Skills { get; set; } = new List<int>(){1,201,101,301,401,501,504};
+    [JsonProperty("神通")] public List<int> Skills { get; set; } = new List<int>()
+    {
+        1,
+        201,
+        101,
+        301,
+        401,
+        501,
+        504
+    };
 
 
-    [JsonProperty("功法")] public List<int> StaticSkills { get; set; } = new List<int>(){1};
+    [JsonProperty("功法")] public List<int> StaticSkills { get; set; } = new List<int>()
+    {
+        1
+    };
 
 
     [JsonProperty("元婴特有功法")] public int YuanYing { get; set; }
@@ -87,13 +106,13 @@ public class CustomNpcAvatar : CustomBase
         set => _IsRefresh = value != 0;
     }
 
-    [JsonProperty("Id",NullValueHandling = NullValueHandling.Ignore)] public int Id { get; set; }
+    [JsonProperty("Id", NullValueHandling = NullValueHandling.Ignore)] public int Id { get; set; }
 
-    [JsonProperty("称号",NullValueHandling = NullValueHandling.Ignore)] public string Title { get; set; } = string.Empty;
+    [JsonProperty("称号", NullValueHandling = NullValueHandling.Ignore)] public string Title { get; set; } = string.Empty;
 
-    [JsonProperty("姓氏",NullValueHandling = NullValueHandling.Ignore)] public string FirstName { get; set; } = string.Empty;
+    [JsonProperty("姓氏", NullValueHandling = NullValueHandling.Ignore)] public string FirstName { get; set; } = string.Empty;
 
-    [JsonProperty("名字",NullValueHandling = NullValueHandling.Ignore)] public string Name { get; set; } = string.Empty;
+    [JsonProperty("名字", NullValueHandling = NullValueHandling.Ignore)] public string Name { get; set; } = string.Empty;
 
     [JsonIgnore] private SexType _sexType;
 
@@ -118,9 +137,16 @@ public class CustomNpcAvatar : CustomBase
         }
     }
 
-    public void SetLingGen(int gold = 10,int wood= 10,int water= 10,int fire= 10,int earth= 10)
+    public void SetLingGen(int gold = 10, int wood = 10, int water = 10, int fire = 10, int earth = 10)
     {
-        LingGen = new List<int>() { gold, wood, water, fire, earth };
+        LingGen = new List<int>()
+        {
+            gold,
+            wood,
+            water,
+            fire,
+            earth
+        };
     }
     public override JObject ToJObject()
     {
@@ -163,7 +189,7 @@ public class CustomNpcAvatar : CustomBase
             paimaifenzu = Paimaifenzu,
         };
         var obj = JObject.FromObject(avatar);
-        obj.Add("zizhi", ZiZhi);
+        obj.Add("zizhi",  ZiZhi);
         obj.Add("wuxing", WuXin);
         return obj;
     }

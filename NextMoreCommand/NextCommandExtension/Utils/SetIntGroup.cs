@@ -12,13 +12,13 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
     {
         private string group;
         private string key;
-        private int value;
+        private int    value;
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
             MyLog.LogCommand(command);
             group = command.GetStr(0, "");
-            key = command.GetStr(1, "");
+            key = command.GetStr(1,   "");
             value = command.GetInt(2, 0);
             if (string.IsNullOrWhiteSpace(group) && string.IsNullOrWhiteSpace(key))
             {

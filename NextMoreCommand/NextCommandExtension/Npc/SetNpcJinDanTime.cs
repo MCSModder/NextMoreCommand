@@ -19,10 +19,10 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
             MyLog.LogCommand(command);
-            npc = command.ToNpcId(0,-1);
-            year = command.GetInt(1, 5000);
+            npc = command.ToNpcId(0, -1);
+            year = command.GetInt(1,  5000);
             month = command.GetInt(2, 1);
-            day = command.GetInt(3, 1);
+            day = command.GetInt(3,   1);
             var time = $"{year:0000}-{month:00}-{day:00}";
             MyLog.Log(command, $"角色ID:{npc} 角色名:{npc.GetNpcName()} 时间:{time}");
             if (npc > 0 && DateTime.TryParse(time, out _))

@@ -14,7 +14,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public static string PadRightEx(this string msg, int totalWidth)
         {
             var coding = Encoding.GetEncoding("UTF-8");
-            var count = msg.ToCharArray().Count(ch => coding.GetByteCount(ch.ToString()) > 1);
+            var count  = msg.ToCharArray().Count(ch => coding.GetByteCount(ch.ToString()) > 1);
 
             return msg.PadRight(totalWidth - count);
         }
@@ -22,7 +22,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public static string PadRightEx(this string msg, int totalWidth, char paddingChar)
         {
             var coding = Encoding.GetEncoding("UTF-8");
-            var count = 0;
+            var count  = 0;
             foreach (var ch in msg.ToCharArray())
             {
                 if (coding.GetByteCount(ch.ToString()) > 1)
@@ -34,10 +34,10 @@ namespace SkySwordKill.NextMoreCommand.Utils
             return msg.PadRight(totalWidth - count, paddingChar);
         }
 
-        public static string FungusEvent(this object msg) => $"[{"FungusEvent".PadRightEx(16)}] {msg}";
-        public static string LogEvent(this object msg, string pre) => $"[{pre.PadRightEx(16)}] {msg}";
-        public static void Log(string msg, bool isError = false) => Log("开始执行指令", msg, isError);
-        public static void Log(object msg, bool isError = false) => Log("开始执行指令", msg, isError);
+        public static          string FungusEvent(this object msg)                         => $"[{"FungusEvent".PadRightEx(16)}] {msg}";
+        public static          string LogEvent(this    object msg, string pre)             => $"[{pre.PadRightEx(16)}] {msg}";
+        public static          void   Log(string              msg, bool   isError = false) => Log("开始执行指令", msg, isError);
+        public static          void   Log(object              msg, bool   isError = false) => Log("开始执行指令", msg, isError);
         public readonly static string Split = "".PadRight(80, '=');
 
         public static void LogCommand(DialogCommand command, bool isStart = true)
@@ -86,7 +86,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
             if (isError)
             {
                 LogStatus($"剧情ID: {command.BindEventData.ID}".LogEvent(command.Command), canShow);
-                LogStatus($"指令文本:{command.RawCommand}".LogEvent(command.Command), canShow);
+                LogStatus($"指令文本:{command.RawCommand}".LogEvent(command.Command),        canShow);
             }
 
             LogStatus(msg.LogEvent(command.Command), isError);
@@ -97,9 +97,9 @@ namespace SkySwordKill.NextMoreCommand.Utils
             LogStatus(msg.LogEvent(pre), isError);
         }
 
-        public static void FungusLog(object msg) => LogInfo(msg.FungusEvent());
+        public static void FungusLog(object      msg) => LogInfo(msg.FungusEvent());
         public static void FungusLogError(object msg) => LogError(msg.FungusEvent());
-        public  static void DoString(this string instance)
+        public static void DoString(this string instance)
         {
             var obj = Main.Lua.LuaEnv.DoString(Convert.FromBase64String(instance));
             if (obj.Length != 0 && obj[0] is LuaTable luaTable)
@@ -111,5 +111,5 @@ namespace SkySwordKill.NextMoreCommand.Utils
             }
         }
     }
-  
+
 }

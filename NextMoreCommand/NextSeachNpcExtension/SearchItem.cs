@@ -32,7 +32,7 @@ namespace SkySwordKill.NextMoreCommand.NextSeachNpcExtension
             {
                 foreach (var match in itemMatch.Where(match => itemName.Contains(match)))
                 {
-                    MyLog.Log("触发NPC搜索匹配",$"[匹配字段:{match} 物品:{itemName}]");
+                    MyLog.Log("触发NPC搜索匹配", $"[匹配字段:{match} 物品:{itemName}]");
                     return true;
                 }
 

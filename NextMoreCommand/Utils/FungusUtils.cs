@@ -17,8 +17,8 @@ namespace SkySwordKill.NextMoreCommand.Utils
     public class PlayFlowchart : MonoBehaviour
     {
         private GameObject go;
-        private Flowchart _flowchart;
-        private bool _isFlowchartNull;
+        private Flowchart  _flowchart;
+        private bool       _isFlowchartNull;
 
 
         private void Awake()
@@ -76,8 +76,8 @@ namespace SkySwordKill.NextMoreCommand.Utils
     public class NextFlowchart
     {
         public GameObject GameObject => Flowchart.transform.parent.gameObject;
-        public Flowchart Flowchart;
-        public string Name => Flowchart.GetParentName() ?? Flowchart.gameObject.name;
+        public Flowchart  Flowchart;
+        public string     Name => Flowchart.GetParentName() ?? Flowchart.gameObject.name;
 
         public NextFlowchart(Flowchart flowchart)
         {
@@ -90,7 +90,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
             var go = GameObject.transform.Find("Flowchart").gameObject;
             go.SetActive(false);
             var gameObject = Object.Instantiate(GameObject);
-            var flowchart = gameObject.GetComponentInChildren<Flowchart>();
+            var flowchart  = gameObject.GetComponentInChildren<Flowchart>();
             gameObject.AddComponent<PlayFlowchart>();
             go.SetActive(true);
             return flowchart;
@@ -99,12 +99,12 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
     public static class FungusUtils
     {
-        public static bool isTalkActive = false;
-        public static Func<Flowchart, bool> TalkFunc;
-        public static Action TalkOnComplete;
-        public static Action TalkOnFailed;
-        public static string TalkBlockName;
-        public static int TalkItemId;
+        public static bool                              isTalkActive = false;
+        public static Func<Flowchart, bool>             TalkFunc;
+        public static Action                            TalkOnComplete;
+        public static Action                            TalkOnFailed;
+        public static string                            TalkBlockName;
+        public static int                               TalkItemId;
         public static Dictionary<string, NextFlowchart> Flowcharts { get; } = new Dictionary<string, NextFlowchart>();
 
         public static int FindIndex(this Flowchart flowchart, string tagBlock, int itemId, out Block block)

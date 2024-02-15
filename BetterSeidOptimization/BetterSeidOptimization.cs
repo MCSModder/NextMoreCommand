@@ -8,10 +8,10 @@ namespace Zerxz.BetterSeidOptimization;
 [BepInPlugin("zerxz.plugin.BetterSeidOptimization", "BetterSeidOptimization", "1.0.0")]
 public class BetterSeidOptimization : BaseUnityPlugin
 {
-    private Harmony _harmony;
-    public static BetterSeidOptimization Inst;
-    public static bool BetterMode => _betterMode.Value;
-    private static ConfigEntry<bool> _betterMode;
+    private        Harmony                _harmony;
+    public static  BetterSeidOptimization Inst;
+    public static  bool                   BetterMode => _betterMode.Value;
+    private static ConfigEntry<bool>      _betterMode;
     private void Awake()
     {
         _betterMode = Config.Bind("开启优化模式", "Seid优化", false, "");

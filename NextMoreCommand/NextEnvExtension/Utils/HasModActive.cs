@@ -14,7 +14,7 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Utils
     {
         public object Execute(DialogEnvQueryContext context)
         {
-            
+
             if (ulong.TryParse(context.GetMyArgs<string>(0), out var modId) && WorkshopUtils.WorkShopItemsDict.ContainsKey(modId))
             {
                 return !WorkshopTool.CheckModIsDisable(modId.ToString());

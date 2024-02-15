@@ -10,7 +10,7 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Fight
     {
         public object Execute(DialogEnvQueryContext context)
         {
-            
+
             return Tools.instance.monstarMag.FightType.GetName();
         }
     }

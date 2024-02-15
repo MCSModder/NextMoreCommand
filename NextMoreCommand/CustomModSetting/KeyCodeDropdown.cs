@@ -12,17 +12,17 @@ namespace SkySwordKill.NextMoreCommand.CustomModSetting
     [RegisterCustomModSetting]
     public class KeyCodeDropdown : ICustomSetting
     {
-        public string[] Options => Enum.GetNames(typeof(KeyCode));
-        public string DefaultValue { get; set; } = "None";
+        public string[] Options      => Enum.GetNames(typeof(KeyCode));
+        public string   DefaultValue { get; set; } = "None";
 
         public void OnInit(ModSettingDefinition_Custom customSetting)
         {
             var defaultValue = customSetting.GetConfig<string>("DefaultValue");
             DefaultValue = defaultValue == string.Empty ? "None" : defaultValue;
             customSetting.InitString(customSetting.Key, DefaultValue);
-            var hasKey = ModManager.TryGetModSetting(customSetting.Key, out string key);
+            var hasKey     = ModManager.TryGetModSetting(customSetting.Key, out string key);
             var hasKeyCode = Enum.TryParse(key, true, out KeyCode keyCode);
-            var value = Array.IndexOf(Options, Enum.GetName(typeof(KeyCode), (object)keyCode));
+            var value      = Array.IndexOf(Options, Enum.GetName(typeof(KeyCode), (object)keyCode));
             if (hasKeyCode && (value < 0 || value >= Options.Length))
             {
                 ModManager.SetModSetting(customSetting.Key, DefaultValue);

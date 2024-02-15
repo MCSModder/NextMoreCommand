@@ -13,14 +13,14 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Utils
     {
         public object Execute(DialogEnvQueryContext context)
         {
-            var spine = DialogAnalysis.GetStr("PLAYER_SPINE");
+            var spine     = DialogAnalysis.GetStr("PLAYER_SPINE");
             var spineSkin = DialogAnalysis.GetStr("PLAYER_SPINE_SKIN");
-            
+
             return new
             {
                 Name = spine,
                 Skin = spineSkin,
-                IsDefault =  spineSkin == "default"
+                IsDefault = spineSkin == "default"
             };
         }
     }

@@ -146,7 +146,7 @@ public static class DeathUtilsExtends
     /// <returns>角色类型名字</returns>
     public static string GetTypeName(this int type)
     {
-        return  Enum.GetName(typeof(NpcType), (NpcType)type);
+        return Enum.GetName(typeof(NpcType), (NpcType)type);
     }
 
 
@@ -220,12 +220,12 @@ public enum NpcType
 /// </summary>
 public class NpcDeathInfo
 {
-    [JsonProperty("deathType")] public NpcDeathType DeathType = NpcDeathType.无;
-    [JsonProperty("deathId")] public int DeathID = -1;
-    [JsonProperty("deathName")] public string DeathName = "没有该角色";
-    [JsonProperty("deathChengHao")] public string DeathTitle = "没有该角色";
-    [JsonProperty("deathTime")] public string DeathTime = "5000-01-01";
-    [JsonProperty("type")] public NpcType Type = NpcType.无;
+    [JsonProperty("deathType")]     public NpcDeathType DeathType  = NpcDeathType.无;
+    [JsonProperty("deathId")]       public int          DeathID    = -1;
+    [JsonProperty("deathName")]     public string       DeathName  = "没有该角色";
+    [JsonProperty("deathChengHao")] public string       DeathTitle = "没有该角色";
+    [JsonProperty("deathTime")]     public string       DeathTime  = "5000-01-01";
+    [JsonProperty("type")]          public NpcType      Type       = NpcType.无;
 
     /// <summary>
     /// 凶手ID 小于等于0代表 不存在凶手
@@ -234,7 +234,7 @@ public class NpcDeathInfo
     public int KillerId = 0;
 
     [JsonIgnore] public string DeathTypeName => DeathType.GetTypeName();
-    [JsonIgnore] public string TypeName => Type.GetTypeName();
+    [JsonIgnore] public string TypeName      => Type.GetTypeName();
 
     /// <summary>
     /// 获得角色死亡时间

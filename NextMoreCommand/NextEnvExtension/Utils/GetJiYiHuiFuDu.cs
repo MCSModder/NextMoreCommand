@@ -3,7 +3,7 @@
 namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Utils
 {
     [DialogEnvQuery("GetJiYiHuiFuDu")]
-    public class GetJiYiHuiFuDu:IDialogEnvQuery
+    public class GetJiYiHuiFuDu : IDialogEnvQuery
     {
 
 

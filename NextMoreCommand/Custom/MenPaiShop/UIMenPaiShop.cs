@@ -13,7 +13,7 @@ using static UnityEngine.Random;
 
 namespace SkySwordKill.NextMoreCommand.Custom.MenPaiShop
 {
- 
+
 
     [RequireComponent(typeof(UIMenPaiShop))]
     public class CustomMenPaiShop : MonoBehaviour, IESCClose
@@ -44,8 +44,8 @@ namespace SkySwordKill.NextMoreCommand.Custom.MenPaiShop
             var count = Instance.ItemKey.Count;
             return Instance.ItemKey[Range(0, count - 1)];
         }
-        private static Sprite SpriteMoney => UiUtils.SpriteMoney;
-        public static CustomMenPaiShop Instance => _instance ? _instance : Create();
+        private static Sprite           SpriteMoney => UiUtils.SpriteMoney;
+        public static  CustomMenPaiShop Instance    => _instance ? _instance : Create();
         private static CustomMenPaiShop _instance;
         private static CustomMenPaiShop Create()
         {
@@ -63,11 +63,11 @@ namespace SkySwordKill.NextMoreCommand.Custom.MenPaiShop
             transform.Find("Scale/CloseBtn")?.GetComponent<Button>()?.onClick.AddListener(Close);
 
         }
-        private static UIMenPaiShop UIMenPaiShop => UIMenPaiShop.Inst;
-        private static ItemDatebase ItemDatabase => ItemDatebase.Inst;
+        private static UIMenPaiShop                   UIMenPaiShop => UIMenPaiShop.Inst;
+        private static ItemDatebase                   ItemDatabase => ItemDatebase.Inst;
         private static Dictionary<int, _ItemJsonData> ItemJsonData => _ItemJsonData.DataDict;
-        private static Avatar Player => PlayerEx.Player;
-        private GameObject ScaleObj => UIMenPaiShop.ScaleObj;
+        private static Avatar                         Player       => PlayerEx.Player;
+        private        GameObject                     ScaleObj     => UIMenPaiShop.ScaleObj;
         public string ShopTitle
         {
             get => UIMenPaiShop.ShopTitle.text;
@@ -146,13 +146,13 @@ namespace SkySwordKill.NextMoreCommand.Custom.MenPaiShop
             }
             return parent == null ? null : Instantiate(UIMenPaiShop.UIMenPaiShopItemPrefab, parent).GetComponent<UIMenPaiShopItem>();
         }
-        public int moneyType = 0;
-        public Sprite GetMoneySprite() => moneyType == 0 ? SpriteMoney : ItemDatabase.items[moneyType].itemIconSprite;
-        public item GetItemData(int itemId) => ItemDatabase.items[itemId];
+        public int    moneyType = 0;
+        public Sprite GetMoneySprite()        => moneyType == 0 ? SpriteMoney : ItemDatabase.items[moneyType].itemIconSprite;
+        public item   GetItemData(int itemId) => ItemDatabase.items[itemId];
         public void SetMoney(int moneyID)
         {
             moneyType = moneyID;
-            var player = Player;
+            var    player = Player;
             string money;
             Sprite sprite = null;
             if (moneyID == 0)
@@ -184,13 +184,13 @@ namespace SkySwordKill.NextMoreCommand.Custom.MenPaiShop
             {
                 return;
             }
-            var all = Array.Empty<NomelShopJsonData>();
+            var all          = Array.Empty<NomelShopJsonData>();
             var uiMenPaiShop = UIMenPaiShop;
 
 
             uiMenPaiShop.ScaleObj.SetActive(true);
             uiMenPaiShop.ShopTitle.text = title;
-            var player = Player;
+            var player    = Player;
             var levelType = player.getLevelType();
             for (var index = 0; index < 3; ++index)
             {
@@ -212,7 +212,7 @@ namespace SkySwordKill.NextMoreCommand.Custom.MenPaiShop
                     var item = _ItemJsonData.DataDict[good.GoodsID];
                     if (nomelShopJsonData.SType == 1 && levelType < item.quality && (item.type == 3 || item.type == 4)) continue;
                     var shopItem = Object.Instantiate(uiMenPaiShop.UIMenPaiShopItemPrefab, uiMenPaiShop.ShopRT[index]).GetComponent<UIMenPaiShopItem>();
-                    var price = item.price;
+                    var price    = item.price;
                     if (ratio > 0)
                     {
                         price = (int)(price * ratio);
@@ -224,7 +224,7 @@ namespace SkySwordKill.NextMoreCommand.Custom.MenPaiShop
                     shopItem.IconShow.Count = 1;
                     shopItem.IconShow.OnClick += (p =>
                     {
-                        var num = (int)(player.money / (ulong)price);
+                        var num    = (int)(player.money / (ulong)price);
                         var maxNum = Mathf.Min(num, item.maxNum);
 
 
@@ -237,9 +237,9 @@ namespace SkySwordKill.NextMoreCommand.Custom.MenPaiShop
                                 USelectBox.Show("是否兑换" + item.name + " x1", (() =>
                                 {
                                     var itemName = _ItemJsonData.DataDict[good.GoodsID].name;
-                                    var name = "灵石";
-                                    var avatar = PlayerEx.Player;
-                                    var isShop = avatar.money >= (ulong)price;
+                                    var name     = "灵石";
+                                    var avatar   = PlayerEx.Player;
+                                    var isShop   = avatar.money >= (ulong)price;
                                     if (isShop)
                                     {
                                         avatar.AddMoney(-price);
@@ -255,9 +255,9 @@ namespace SkySwordKill.NextMoreCommand.Custom.MenPaiShop
                                 USelectNum.Show("兑换数量 x{num}", 1, maxNum, (num =>
                                 {
                                     var itemName = _ItemJsonData.DataDict[good.GoodsID].name;
-                                    var avatar = PlayerEx.Player;
-                                    var total = num * price;
-                                    var isShop = avatar.money >= (ulong)total;
+                                    var avatar   = PlayerEx.Player;
+                                    var total    = num * price;
+                                    var isShop   = avatar.money >= (ulong)total;
                                     if (isShop)
                                     {
                                         avatar.AddMoney(-price);

@@ -14,8 +14,8 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
     public class SetShengWangIncrease : IDialogEvent
     {
         private string type;
-        private int add;
-        private bool show;
+        private int    add;
+        private bool   show;
 
         public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
         {
@@ -33,8 +33,8 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
                 callback?.Invoke();
                 return;
             }
-             if (type == "宁州" ||
-                     !list.Contains(type))
+            if (type == "宁州" ||
+                !list.Contains(type))
             {
                 MyLog.Log(command, $"给玩家减少宁州{add.ToString()}声望");
                 MyLog.LogCommand(command, false);

@@ -9,7 +9,7 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Utils
     {
         public object Execute(DialogEnvQueryContext context)
         {
-            var text = context.GetMyArgs(0, "");
+            var text  = context.GetMyArgs(0, "");
             var color = context.GetMyArgs(1, "");
             if (string.IsNullOrWhiteSpace(text) || string.IsNullOrWhiteSpace(color))
             {

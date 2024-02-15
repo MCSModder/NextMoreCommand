@@ -7,7 +7,7 @@ using SkySwordKill.NextMoreCommand.Utils;
 
 namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Npc
 {
-    public  class AvatarJsonData
+    public class AvatarJsonData
     {
 
         public AvatarJsonData(int id)
@@ -15,8 +15,8 @@ namespace SkySwordKill.NextMoreCommand.NextEnvExtension.Npc
             Id = id.ToNpcNewId();
         }
         private JSONObject AvatarRandomJsonData => jsonData.instance.AvatarRandomJsonData[Id.ToString()];
-        private string Str => AvatarRandomJsonData?.ToString(true);
-        public int Id { get; }
+        private string     Str                  => AvatarRandomJsonData?.ToString(true);
+        public  int        Id                   { get; }
 
 
         public string Name

@@ -19,11 +19,11 @@ public static class SlaveUtils
     }
 
     public static GameObject SayDialog;
-    public static PlayerSetRandomFace CreateFace(string json,Transform parent)
+    public static PlayerSetRandomFace CreateFace(string json, Transform parent)
     {
         SayDialog ??= Resources.Load<GameObject>("Prefabs/SayDialog")
             .GetComponentInChildren<PlayerSetRandomFace>().transform.parent.gameObject;
-        var setRandomFace = Object.Instantiate(SayDialog,parent).GetComponentInChildren<PlayerSetRandomFace>();
+        var setRandomFace = Object.Instantiate(SayDialog, parent).GetComponentInChildren<PlayerSetRandomFace>();
         setRandomFace.setFaceByJson(JSONObject.CreateStringObject(json));
         return setRandomFace;
     }

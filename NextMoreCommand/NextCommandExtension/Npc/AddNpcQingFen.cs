@@ -21,7 +21,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Npc
             _qingFeng = command.GetInt(1, 0);
             if (_npc > 0)
             {
-                var nowQinFeng = NPCEx.GetFavor(_npc);
+                var nowQinFeng    = NPCEx.GetFavor(_npc);
                 var resultQinFeng = nowQinFeng + _qingFeng;
                 MyLog.Log(command, $"开始执行增加角色情分 角色ID:{_npc} 角色名:{_npc.GetNpcName()} 增加情分:{_qingFeng}");
                 MyLog.Log(command, $"执行增加角色情分 当前情分:{nowQinFeng} 增加情分:{_qingFeng} 情分结果:{resultQinFeng}");

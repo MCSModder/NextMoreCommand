@@ -26,7 +26,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Utils
                     {
                         continue;
                     }
-         
+
                     itemPanel.RmoveEquip((EquipSlotType)equipSlot.Key);
                 }
                 TabUIMag.Instance.TryEscClose();

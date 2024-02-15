@@ -13,7 +13,7 @@ namespace SkySwordKill.NextMoreCommand.Patchs
             {
                 MyLog.Log("计算表白分数触发器", "触发计算表白分数");
             }
-            
+
         }
     }
 }
