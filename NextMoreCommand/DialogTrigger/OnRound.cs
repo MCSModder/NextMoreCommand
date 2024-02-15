@@ -69,6 +69,7 @@ namespace SkySwordKill.NextMoreCommand.DialogTrigger
         public static bool UseSkill(DialogEnvironment env = null, bool isBefore = true) =>
             isBefore ? PlayerUseSkillBefore(env) : PlayerUseSkillAfter(env);
 
+        
         private static bool PlayerUseSkillBefore(DialogEnvironment env = null) =>
             TryTrigger(env ?? NewEnv, true, "PlayerUseSkillBefore", "玩家技能使用前");
 

@@ -12,7 +12,7 @@ public static class PlayTimeUtils
     public static  float    Now => Time.realtimeSinceStartup;
     private static int      _playHourTime = 0;
     private static string[] ignoreScene   = new[] { "MainMenu", "Loading" };
-
+    private static string[] _triggerType  = { "游玩每小时", "HasPlayHour" };
     public static bool HasPlayHour()
     {
         var hour = Convert.ToInt32(GetHours());
@@ -21,7 +21,7 @@ public static class PlayTimeUtils
         {
             MyPluginMain.LogInfo($"触发每小时游玩触发器");
 
-            DialogAnalysis.TryTrigger(new[] { "游玩每小时", "HasPlayHour" }, null, true);
+            DialogAnalysis.TryTrigger(_triggerType, null, true);
 
             _playHourTime++;
             return true;
