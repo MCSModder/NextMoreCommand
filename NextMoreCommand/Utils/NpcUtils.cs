@@ -17,7 +17,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
     public struct NpcInfo
     {
         public string Dialog;
-        public int Id;
+        public int    Id;
         public string Name => Id.GetNpcName();
 
         public NpcInfo(int id, string dialog = "")
@@ -41,12 +41,13 @@ namespace SkySwordKill.NextMoreCommand.Utils
             }
         }
 
-        public bool IsEmpty => string.IsNullOrWhiteSpace(Dialog);
+        public bool   IsEmpty         => string.IsNullOrWhiteSpace(Dialog);
         public string GetDialogName() => IsEmpty ? "无" : Dialog;
     }
 
     public static class NpcUtilsExtends
     {
+        public static NpcJieSuanManager NpcJieSuanManager => NpcJieSuanManager.inst;
         public static int ToNpcId(this string instance)
         {
             if (int.TryParse(instance, out var result) && result > 0)
@@ -60,6 +61,10 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public static string GetNpcName(this int instance)
         {
             return DialogAnalysis.GetNpcName(instance.ToNpcNewId());
+        }
+        public static void AddNpcHp(this int npc, int hp)
+        {
+            NpcJieSuanManager.npcSetField.AddNpcHp(npc.ToNpcNewId(), hp);
         }
 
         public static string ToNpcId(this int instance)
@@ -152,24 +157,24 @@ namespace SkySwordKill.NextMoreCommand.Utils
     public static class NpcUtils
     {
 
-        public static JSONObject AvatarRandomJsonData => jsonData.instance.AvatarRandomJsonData;
-        public static JSONObject AvatarJsonData => jsonData.instance.AvatarJsonData;
-        public static bool IsNpc(int id) => NPCEx.NPCIDToNew(id) <= 1;
-        public static bool IsNpc(string id) => IsNpc(Convert.ToInt32(id));
-        public const string NpcFollow = "NPC_FOLLOW_NEXT";
-        public const string NpcFightFace = "NPC_FIGHT_FACE";
-        public const string NpcFightSpine = "NPC_FIGHT_Spine";
-        public const string NpcFaceSpine = "NPC_FACE_Spine";
-        public const string NpcSkinSpine = "NPC_SKIN_Spine";
-        public const string NpcDefaultSkinSpine = "NPC_DEFAULT_SKIN_Spine";
-        public const string CallName = "CALL_NAME";
-        public static DataGroup<string> StrGroup => DialogAnalysis.AvatarNextData.StrGroup;
-        public static DataGroup<int> IntGroup => DialogAnalysis.AvatarNextData.IntGroup;
-        public static Dictionary<string, string> NpcFollowGroup => StrGroup.GetNpcFollowGroup();
-        public static Dictionary<string, int> NpcFightFaceGroup => IntGroup.GetNpcFightFaceGroup();
-        public static bool IsFightScene => Tools.getScreenName().ToUpper().Contains("YSNEW");
-        public static event Action OnCompleteAddNpcNotDialogFollow;
-        public static event Action<NpcInfo> OnAddNpcNotDialogFollow;
+        public static JSONObject                 AvatarRandomJsonData => jsonData.instance.AvatarRandomJsonData;
+        public static JSONObject                 AvatarJsonData       => jsonData.instance.AvatarJsonData;
+        public static bool                       IsNpc(int    id)     => NPCEx.NPCIDToNew(id) <= 1;
+        public static bool                       IsNpc(string id)     => IsNpc(Convert.ToInt32(id));
+        public const  string                     NpcFollow           = "NPC_FOLLOW_NEXT";
+        public const  string                     NpcFightFace        = "NPC_FIGHT_FACE";
+        public const  string                     NpcFightSpine       = "NPC_FIGHT_Spine";
+        public const  string                     NpcFaceSpine        = "NPC_FACE_Spine";
+        public const  string                     NpcSkinSpine        = "NPC_SKIN_Spine";
+        public const  string                     NpcDefaultSkinSpine = "NPC_DEFAULT_SKIN_Spine";
+        public const  string                     CallName            = "CALL_NAME";
+        public static DataGroup<string>          StrGroup          => DialogAnalysis.AvatarNextData.StrGroup;
+        public static DataGroup<int>             IntGroup          => DialogAnalysis.AvatarNextData.IntGroup;
+        public static Dictionary<string, string> NpcFollowGroup    => StrGroup.GetNpcFollowGroup();
+        public static Dictionary<string, int>    NpcFightFaceGroup => IntGroup.GetNpcFightFaceGroup();
+        public static bool                       IsFightScene      => Tools.getScreenName().ToUpper().Contains("YSNEW");
+        public static event Action               OnCompleteAddNpcNotDialogFollow;
+        public static event Action<NpcInfo>      OnAddNpcNotDialogFollow;
 
         public static void AddNpcNotDialogFollow()
         {
@@ -186,7 +191,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
             OnCompleteAddNpcNotDialogFollow?.Invoke();
             UINPCJiaoHu.Inst.NPCList.needRefresh = true;
         }
-        public static event Action OnCompleteAddNpcFollow;
+        public static event Action          OnCompleteAddNpcFollow;
         public static event Action<NpcInfo> OnAddNpcFollow;
 
         public static void AddNpcFollow()
@@ -300,7 +305,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 return null;
             }
 
-            var id = num.ToString();
+            var        id         = num.ToString();
             JSONObject jsonObject = null;
             if (jsonData.instance == null) return null;
             if (AvatarRandomJsonData.HasField(id))
@@ -336,7 +341,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
             {
                 return false;
             }
-            var hasName = !string.IsNullOrWhiteSpace(name);
+            var hasName    = !string.IsNullOrWhiteSpace(name);
             var hasSurname = !string.IsNullOrWhiteSpace(surname);
 
             switch (hasSurname)
@@ -383,12 +388,12 @@ namespace SkySwordKill.NextMoreCommand.Utils
             var roundManager = RoundManager.instance;
             if (roundManager != null && Tools.instance.MonstarID == id)
             {
-                var target = roundManager.GetMonstar();
+                var target    = roundManager.GetMonstar();
                 var renderObj = target.renderObj as GameObject;
 
                 if (renderObj != null)
                 {
-                    var customSpine = renderObj.GetComponentInChildren<CustomSpine>();
+                    var customSpine       = renderObj.GetComponentInChildren<CustomSpine>();
                     var skeletonAnimation = customSpine.gameObject.GetComponent<SkeletonAnimation>();
                     if (skeletonAnimation == null)
                     {
@@ -397,9 +402,9 @@ namespace SkySwordKill.NextMoreCommand.Utils
                     }
                     else
                     {
-                        var old = NPCEx.NPCIDToOld(id);
+                        var old      = NPCEx.NPCIDToOld(id);
                         var skinName = NpcUtils.GetNpcSkinSpine(old);
-                        var skin = AssetsUtils.CheckSkin(old, skinName) ? skinName : GetNpcDefaultSkinSpine(old);
+                        var skin     = AssetsUtils.CheckSkin(old, skinName) ? skinName : GetNpcDefaultSkinSpine(old);
 
 
                         skeletonAnimation.initialSkinName = skin;
@@ -502,7 +507,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
         public static List<int> GetNpcList(DialogCommand command, int minCount, int restCount)
         {
-            var list = new List<int>();
+            var list       = new List<int>();
             var paramCount = command.ParamList.Length;
             if (paramCount < minCount)
             {
@@ -511,7 +516,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
             if (paramCount == restCount)
             {
-                var npcId = command.GetStr(1, string.Empty);
+                var npcId  = command.GetStr(1, string.Empty);
                 var npcArr = npcId.Split(',');
                 foreach (var npc in npcArr)
                 {
@@ -607,10 +612,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
             NpcUtils.RemoveBindDialogEvent(npc);
         }
-        public static bool RemoveNpc(int npc) => RemoveNpc(new[]
-        {
-            npc
-        });
+        public static bool RemoveNpc(int npc) => RemoveNpc(new[] { npc });
         public static bool RemoveNpc(params int[] npcList)
         {
             var list = npcList.Select(NPCEx.NPCIDToNew).Where(UINPCJiaoHu.Inst.TNPCIDList.Contains).ToList();
@@ -648,23 +650,23 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
     public class XinQuTypeInfo
     {
-        [JsonProperty("id")] public int Id;
+        [JsonProperty("id")]   public int    Id;
         [JsonProperty("name")] public string Name;
     }
 
     public class XinQuInfo
     {
-        public string Raw;
-        public string Name => GetTypeName();
-        public int Type => GetTypeId();
-        public int Percent => GetPercent();
-        private int _id = -1;
-        public JSONObject XinQu => GetXinQu();
-        public string TypeRaw;
-        public string PercentRaw;
-        private bool _isNumber;
-        private readonly bool m_isSep;
-        private JObject AllItemLeiXin => jsonData.instance.AllItemLeiXin;
+        public           string     Raw;
+        public           string     Name    => GetTypeName();
+        public           int        Type    => GetTypeId();
+        public           int        Percent => GetPercent();
+        private          int        _id = -1;
+        public           JSONObject XinQu => GetXinQu();
+        public           string     TypeRaw;
+        public           string     PercentRaw;
+        private          bool       _isNumber;
+        private readonly bool       m_isSep;
+        private          JObject    AllItemLeiXin => jsonData.instance.AllItemLeiXin;
 
         public Dictionary<int, XinQuTypeInfo> XinQuTypeInfos =>
             AllItemLeiXin.ToObject<Dictionary<int, XinQuTypeInfo>>();
@@ -701,7 +703,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public int GetTypeId()
         {
             var dict = XinQuTypeInfos;
-            var id = _id > 0 ? _id : -1;
+            var id   = _id > 0 ? _id : -1;
             if (_isNumber && dict.ContainsKey(id))
             {
                 return id;
@@ -720,7 +722,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
         public string GetTypeName()
         {
-            var id = _id > 0 ? _id : -1;
+            var id   = _id > 0 ? _id : -1;
             var dict = XinQuTypeInfos;
             if (_isNumber && dict.TryGetValue(id, out var value))
             {
@@ -739,7 +741,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
         public JSONObject GetXinQu()
         {
             var xinQuType = new JSONObject(JSONObject.Type.OBJECT);
-            xinQuType.SetField("type", Type);
+            xinQuType.SetField("type",    Type);
             xinQuType.SetField("percent", Percent);
             return xinQuType;
         }
