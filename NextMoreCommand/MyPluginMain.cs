@@ -36,7 +36,7 @@ using Input = UnityEngine.Input;
 namespace SkySwordKill.NextMoreCommand
 {
     [BepInDependency("skyswordkill.plugin.Next", BepInDependency.DependencyFlags.HardDependency)]
-    [BepInPlugin("skyswordkill.plugin.NextMoreCommands", "NextMoreCommands", "1.0.3")]
+    [BepInPlugin("skyswordkill.plugin.NextMoreCommands", "NextMoreCommands", "1.0.4")]
     public class MyPluginMain : BaseUnityPlugin
     {
         private static KeyCode DramaDebugKey;

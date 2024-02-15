@@ -11,8 +11,9 @@ namespace SkySwordKill.NextMoreCommand.CustomModData
 {
     public static class CustomModDataManager
     {
-        public static bool   HasPath(this     string path)                => Directory.Exists(path);
-        public static string CombinePath(this string path, string folder) => Path.Combine(path, folder);
+        public static event Action<ModConfig> OnLoadModData;
+        public static bool                    HasPath(this     string path)                => Directory.Exists(path);
+        public static string                  CombinePath(this string path, string folder) => Path.Combine(path, folder);
 
         public static bool HasDirectory(params string[] paths)
         {
@@ -57,6 +58,7 @@ namespace SkySwordKill.NextMoreCommand.CustomModData
         }
         public static void Read(ModConfig modConfig)
         {
+            
             MyPluginMain.LogInfo($"=================== NextMore开始生成 =====================");
             foreach (var data in ModDataDict.Select(modData => modData.Value).Where(data => data.Check(modConfig)))
             {
@@ -70,6 +72,7 @@ namespace SkySwordKill.NextMoreCommand.CustomModData
                 }
             }
             MyPluginMain.LogInfo($"=================== NextMore结束加载 =====================");
+            OnLoadModData?.Invoke(modConfig);
 
         }
     }

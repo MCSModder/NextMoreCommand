@@ -28,7 +28,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
             _flowchart.enabled = false;
         }
 
-        private void Start()
+        private async void Start()
         {
             _isFlowchartNull = _flowchart == null;
             if (_isFlowchartNull)
@@ -39,15 +39,15 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
             if (FungusUtils.isTalkActive)
             {
-                StartCoroutine(RunFungus());
+                await RunFungus();
             }
         }
 
-        public IEnumerator RunFungus()
+        public async UniTask RunFungus()
         {
             if (!go.activeSelf) go.SetActive(true);
 
-            yield return new WaitForSeconds(1);
+            await UniTask.Delay(TimeSpan.FromSeconds(0.8));
             _flowchart.enabled = true;
             var result = FungusUtils.TalkFunc?.Invoke(_flowchart);
             if (result != null && (bool)result)
