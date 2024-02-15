@@ -367,6 +367,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 var isMatch = abpath.EndsWith(_path);
                 if (!isMatch) continue;
                 abRefAsset = asset;
+                
                 CacheAbRefAsset[path] = abRefAsset;
                 return true;
             }

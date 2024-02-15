@@ -361,6 +361,7 @@
         <Compile Include="Patchs\XiangShengXiangKePatch.cs" />
         <Compile Include="Puerts\JSEnvManager.cs" />
         <Compile Include="Puerts\NextLoader.cs" />
+        <Compile Include="Singleton.cs" />
         <Compile Include="Slave\SkillUtils.cs" />
         <Compile Include="Slave\SlaveUtils.cs" />
         <Compile Include="Utils\DialogAnalysisUtils.cs" />
