@@ -2,6 +2,7 @@
 using SkySwordKill.Next.DialogEvent;
 using SkySwordKill.Next.DialogSystem;
 using SkySwordKill.NextMoreCommand.Attribute;
+using SkySwordKill.NextMoreCommand.Utils;
 
 namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fight;
 
@@ -13,11 +14,8 @@ public class ChangeFightMonsterHpMax : IDialogEvent
     public void Execute(DialogCommand command, DialogEnvironment env, Action callback)
     {
         var value = command.GetInt(0, 0);
-
-        var npc = NpcJieSuanManager.inst.GetNpcData(NPCEx.NPCIDToNew(Tools.instance.MonstarID));
         var monster = PlayerEx.Player.OtherAvatar;
-
-        npc.SetField("HP", npc.GetField("HP").I + value);
+        Tools.instance.MonstarID.AddNpcHp(value);
         monster.HP_Max += value;
 
         callback?.Invoke();
