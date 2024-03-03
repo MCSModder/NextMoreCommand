@@ -45,7 +45,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fungus
                     MyLog.Log(command, $"执行失败官方对话流程 流程名:{_flowchartName} 模块名:{_tagBlock} 找不到对应模块名", true);
                     MyLog.LogCommand(command, false);
                 };
-                FungusUtils.isTalkActive = true;
+                FungusUtils.IsTalkActive = true;
             }
 
             MyLog.LogCommand(command, false);

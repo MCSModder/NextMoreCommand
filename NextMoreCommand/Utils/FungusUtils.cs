@@ -7,6 +7,7 @@ using Cysharp.Threading.Tasks;
 using Fungus;
 using SkySwordKill.Next;
 using SkySwordKill.Next.DialogSystem;
+using SkySwordKill.Next.Patch;
 using SkySwordKill.NextMoreCommand.Utils;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -16,15 +17,15 @@ namespace SkySwordKill.NextMoreCommand.Utils
 {
     public class PlayFlowchart : MonoBehaviour
     {
-        private GameObject go;
+        private GameObject _go;
         private Flowchart  _flowchart;
         private bool       _isFlowchartNull;
 
 
         private void Awake()
         {
-            go = transform.Find("Flowchart").gameObject;
-            _flowchart = go.GetComponent<Flowchart>();
+            _go = transform.Find("Flowchart").gameObject;
+            _flowchart = _go.GetComponentInChildren<Flowchart>();
             _flowchart.enabled = false;
         }
 
@@ -37,7 +38,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 return;
             }
 
-            if (FungusUtils.isTalkActive)
+            if (FungusUtils.IsTalkActive)
             {
                 await RunFungus();
             }
@@ -45,7 +46,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
         public async UniTask RunFungus()
         {
-            if (!go.activeSelf) go.SetActive(true);
+            if (!_go.activeSelf) _go.SetActive(true);
 
             await UniTask.Delay(TimeSpan.FromSeconds(0.8));
             _flowchart.enabled = true;
@@ -64,7 +65,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
         private void OnDestroy()
         {
-            FungusUtils.isTalkActive = false;
+            FungusUtils.IsTalkActive = false;
             FungusUtils.TalkFunc = null;
             FungusUtils.TalkOnComplete = null;
             FungusUtils.TalkOnFailed = null;
@@ -89,8 +90,8 @@ namespace SkySwordKill.NextMoreCommand.Utils
             Main.FPatch.PatchFlowchart(Flowchart);
             var go = GameObject.transform.Find("Flowchart").gameObject;
             go.SetActive(false);
+            var flowchart = GameObject.GetComponentInChildren<Flowchart>();
             var gameObject = Object.Instantiate(GameObject);
-            var flowchart  = gameObject.GetComponentInChildren<Flowchart>();
             gameObject.AddComponent<PlayFlowchart>();
             go.SetActive(true);
             return flowchart;
@@ -99,7 +100,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
 
     public static class FungusUtils
     {
-        public static bool                              isTalkActive = false;
+        public static bool                              IsTalkActive = false;
         public static Func<Flowchart, bool>             TalkFunc;
         public static Action                            TalkOnComplete;
         public static Action                            TalkOnFailed;
@@ -119,10 +120,23 @@ namespace SkySwordKill.NextMoreCommand.Utils
             return -1;
         }
 
+        public static Flowchart[] FlowchartsArray => Object.FindObjectsOfType<Flowchart>();
         public static Flowchart GetFlowchart(string key)
         {
-            GameObject gameObject = GameObject.Find($"{key}(Clone)");
+            GameObject gameObject     = null;
+            var        flowchartArray = FlowchartsArray;
 
+            foreach (var flowchart in flowchartArray)
+            {
+                if (!flowchart.GetParentName().StartsWith(key)) continue;
+                gameObject = flowchart.transform.parent.gameObject;
+                if (gameObject.GetComponent<PlayFlowchart>() == null)
+                {
+                    gameObject.AddComponent<PlayFlowchart>();
+                }
+                return flowchart;
+            }
+            gameObject = GameObject.Find(key) ?? GameObject.Find(key + "(Clone)");
             if (gameObject != null)
             {
                 if (gameObject.GetComponent<PlayFlowchart>() == null)
@@ -147,7 +161,7 @@ namespace SkySwordKill.NextMoreCommand.Utils
                 var nextFlowchart = new NextFlowchart(gameObject.GetComponentInChildren<Flowchart>());
                 Flowcharts.Add(nextFlowchart.Name, nextFlowchart);
                 nextFlowchart.GetFlowchart();
-                MyPluginMain.LogInfo("Resources.Load<GameObject>(talkPrefab/TalkPrefab/{key});");
+                MyPluginMain.LogInfo($"Resources.Load<GameObject>(talkPrefab/TalkPrefab/{key});");
                 return nextFlowchart.Flowchart;
             }
 
