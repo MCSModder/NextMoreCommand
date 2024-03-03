@@ -69,7 +69,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fungus
                         true);
                     MyLog.LogCommand(command, false);
                 };
-                FungusUtils.isTalkActive = true;
+                FungusUtils.IsTalkActive = true;
             }
 
             MyLog.LogCommand(command);

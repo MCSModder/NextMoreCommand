@@ -45,7 +45,7 @@ namespace SkySwordKill.NextMoreCommand.NextCommandExtension.Fungus
                     MyLog.Log(command, $"执行失败官方对话 流程名:Talk{talkID}  模块名:{tagBlock} 找不到对应模块名", true);
                     MyLog.LogCommand(command, false);
                 };
-                FungusUtils.isTalkActive = true;
+                FungusUtils.IsTalkActive = true;
             }
 
             MyLog.LogCommand(command, false);
